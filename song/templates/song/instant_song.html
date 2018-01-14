@@ -1,0 +1,139 @@
+{% extends "somto_base.html" %}
+{% load static %}
+{% load blog_ttags %}
+
+{% block wrap_filter %}{% endblock wrap_filter %}
+
+{% block content_content %}
+<div class="container">
+
+    <!-- search box -->
+    <div class="row">
+        <div class="col-sm-12">
+            <input id="q" name="q" placeholder="Type to find songs" autocomplete="off" autocorrect="false" spellcheck="false" class="form-control" type="search">
+        </div>
+    </div>
+    <!-- end search box -->
+
+    <div class="row">
+        <div class="col-sm-12" id="hits-stat"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 d-none" id="no-hits"></div>
+    </div>
+
+    {% if song_list %}
+    <div class="list-group" id="hits-container">
+        {% for song in song_list %}
+    
+        <div class="list-group-item list-group-item-action list-group-item-primary">
+            <a href="{% url 'song:detail' song.pk song.slug %}">
+            <h5 class="list-group-item-heading" id="songTitle">{{ song.title }}</h5></a>
+            <p class="list-group-item-text" id="songFirstLine">{{ song.first_line }}</p>
+    
+            <span class="h6 float-sm-left">
+                <a href="{% url 'song:reader' song.pk song.slug %}">
+                    <i class="fa fa-minus-square" aria-hidden="true"></i>
+                </a>
+                <a href="{% url 'blog:new_song' song.pk %}" data-toggle="tooltip" data-placement="top" title="Blog this song">
+                    <i class="fa fa-rss-square" aria-hidden="true"></i>
+                </a>
+                <a href="" data-toggle="tooltip" data-placement="top" title="Share on facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+                <a href="" data-toggle="tooltip" data-placement="top" title="Share by email"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+                <a href="" data-toggle="tooltip" data-placement="top" title="Add to cart"><i class="fa fa-cart-plus" aria-hidden="true"></i></a>
+                <a href="" data-toggle="tooltip" data-placement="top" title="Reader view"><i class="fa fa-book" aria-hidden="true"></i></a>
+            </span>
+    
+            <span class="h5 float-sm-right">
+                <span class="badge badge-light badge-pill">{{ song.song_likes }}</span>
+                <span class="badge badge-light badge-pill">
+                    <a href="#"><i class="fa fa-star" aria-hidden="true"></i></a>
+                </span>
+            </span>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p>No songs to display</p>
+    {% endif %}
+</div>
+{% endblock content_content %}
+{% block wrap_forms %}{% endblock wrap_forms %}
+
+
+{% block javascript %}
+<script src="//cdn.jsdelivr.net/hogan.js/3.0.2/hogan.min.js"></script>
+
+{% verbatim %}
+<script type="text/template" id="hit-template">
+
+    <div class="list-group-item list-group-item-action list-group-item-primary">
+            
+        <a href="{{ get_absolute_url }}">
+            <h5 class="list-group-item-heading">{{{ _highlightResult.title.value }}}</h5>
+        </a>
+        
+        <p class="list-group-item-text">{{{ _highlightResult.all_authors.value }}}</p>
+        <p class="list-group-item-text">{{{ _highlightResult.all_seasons.value }}}</p>
+        <p class="list-group-item-text">{{{ _highlightResult.all_masspart.value }}}</p>
+
+        <p class="list-group-item-text">{{{ _highlightResult.lyrics.value }}}</p>
+    </div>
+</script>
+{% endverbatim %}
+
+<script>
+$(document).ready(function() {
+    var $inputField = $('#q');
+    var $hitsContainer = $('#hits-container');
+    var $noHits = $('#no-hits');
+    var $hitsStat = $('#hits-stat');
+    var hitTemplate = Hogan.compile($('#hit-template').text());
+
+    var client = algoliasearch('{{ appID }}', '{{ searchKey }}');
+    var helper = algoliasearchHelper(client, '{{ indexName }}');
+
+    $('.search-terms a').click(function(e) {
+        $inputField.val($(this).text()).change().focus();
+        $inputField.keyup();
+    });
+
+    $inputField.on('keyup', function() {
+        var query = $inputField.val();
+        helper.setQuery(query).search();
+    }).focus();
+
+    helper.on('result', function(data) {
+    renderHits(data);
+    });
+
+    helper.search(); // first search
+
+    function renderHits(content) {
+    var hitsHtml = '';
+
+    if (content.hits.length === 0) {
+        hitsHtml = '<p class="text-center text-danger lead">We didn\'t find any results for your search.</p>';
+        $noHits.html(hitsHtml);
+        $noHits.removeClass('d-none');
+        $hitsContainer.addClass('d-none');
+    } else {
+        for (var i = 0; i < content.hits.length; ++i) {
+        hitsHtml += hitTemplate.render(content.hits[i]);
+        }
+
+        $hitsContainer.html(hitsHtml);
+        $hitsContainer.removeClass('d-none');
+        $noHits.addClass('d-none');
+    }
+
+    $hitsStat.html('<p class="text-right">Found <b>' +
+        content.nbHits + '</b> results in <b>' + content.processingTimeMS + '</b>ms - ' +
+        'by <a href="http://www.algolia.com"><img src="{% static "img/logo-algolia.png" %}" /></a></p>'
+    );
+    }
+});
+</script>
+{% endblock %}
+

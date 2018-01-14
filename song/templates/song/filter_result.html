@@ -1,0 +1,55 @@
+{% extends "somto_base.html" %}
+
+{% block title %}Filter songs{% endblock title %}
+
+{% block content_content %}
+
+<div class="container">
+
+	<div class="row">
+		<div class="col-sm-12">
+			<p>
+				{{ total_found }} matches
+			</p>
+		</div>
+	</div>
+
+	{% if filtered %}
+
+	<div class="list-group">
+		{% for song in filtered.object_list %}
+		<div class="list-group-item list-group-item-action list-group-item-primary">
+			<a href="{% url 'song:detail' song.pk song.slug %}">
+			<h5 class="list-group-item-heading">{{ song.title }}</h5></a>
+			<p class="list-group-item-text">{{ song.first_line }}</p>
+
+			<span class="h6 float-sm-left">
+				<a href="{% url 'song:reader' song.pk song.slug %}">
+					<i class="fa fa-minus-square" aria-hidden="true"></i>
+				</a>
+				<a href="{% url 'blog:new_song' song.pk %}"><i class="fa fa-rss-square" aria-hidden="true"></i></a>
+				<a href=""><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+				<a href=""><i class="fa fa-envelope" aria-hidden="true"></i></a>
+				<a href="#"><i class="fa fa-cart-plus" aria-hidden="true"></i></a>
+			</span>
+
+			<span class="h5 float-sm-right">
+				<span class="badge badge-light badge-pill">{{ song.song_likes }}</span>
+				<span class="badge badge-light badge-pill">
+					<a href="#"><i class="fa fa-star" aria-hidden="true"></i></a>
+				</span>
+			</span>
+		</div>
+		{% endfor %}
+	</div>
+	{% else %}
+		<p>No matches found</p>
+	{% endif %}
+</div>
+
+<div id="pagination">
+	{{ filtered.render }}
+</div>
+
+{% endblock content_content %}
+{% block wrap_forms %}{% endblock wrap_forms %}

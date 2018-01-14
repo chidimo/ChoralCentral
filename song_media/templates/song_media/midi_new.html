@@ -1,0 +1,46 @@
+{% extends "somto_base.html" %}
+{% block title %}New midi file{% endblock %}
+{% block wrap_filter %}{% endblock wrap_filter %}
+{% block wrap_content  %}{% endblock wrap_content  %}
+{% block search %}{% endblock search %}
+
+{% block content_forms %}
+
+<div class="container upload-forms">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>New midi file</h2>                
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-12">
+            {% if error_message %}
+                <p class="text-danger">{{ error_message }}</p>
+            {% endif %}
+        </div>
+    </div>
+    
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+    
+        <div class="row">
+            <div class="col-sm-12">{{ form.song }}</div>
+        </div>
+    
+        <div class="row">
+            <div class="col-sm-12">{{ form.part }}</div>
+        </div>
+    
+        <div class="row">
+            <div class="col-sm-12">{{ form.file }}</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <button  class="btn btn-primary btn-md btn-block" type="submit" value="Save">Save</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+

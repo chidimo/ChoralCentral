@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta content="text/html">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>ChoralCentral &raquo; {% block title %}Where sheet music lives{% endblock title %}</title>
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">		
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+		
+		<!-- Algolia search javascript -->
+		<script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+		
+		<script src="//cdn.jsdelivr.net/g/algoliasearch,algoliasearch.helper"></script>
+		
+		<!-- font awesome for icons -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+		<script src="//cdn.jsdelivr.net/hogan.js/3.0.2/hogan.min.js"></script>
+		
+		{% comment %}[if lt IE 9] {% endcomment %}
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		{% comment %} [endif] {% endcomment %}
+
+		{% load static %}
+		<link rel="shortcut icon" type="image/png" href="{% static 'favicons/favicon.ico' %}"/>
+		<link rel="stylesheet" href="{% static 'css/somto.css' %}">
+		<link rel="stylesheet" href="{% static 'css/boostrap_override.css' %}">
+		<script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>		
+		<script type="text/javascript" src="{% static 'js/somto.js' %}"></script>
+		{{ form.media }}
+
+	</head>
+	<body>
+		{% block navigation %}
+		<nav class="navbar navbar-light fixed-top navbar-expand-md" role="navigation">
+			<div class="container">
+
+				<a class="navbar-brand navbar-left" href="{% url 'song:index' %}">
+					<img src="{% static 'img/logo-somto.png' %}">
+				</a>
+
+				<button type="button" class="navbar-toggler my-toggler" data-toggle="collapse" data-target=".navcontent">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				
+
+				<div class="collapse navbar-collapse navcontent">
+					<ul class="nav navbar-nav">
+
+						<li class="nav-item"><a class="nav-link" href="{% url 'author:index' %}">Authors</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'request:index' %}">Requests</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'blog:index' %}">Blog</a></li>
+						{% if user.is_admin %}
+						<li class="nav-item"><a class="nav-link" href="{% url 'siteuser:index' %}">Members</a></li>
+						{% endif %}
+
+						<li class="nav-item dropdown">
+							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" id="NewDrawer" aria-haspopup="true">New <b class="caret"></b></a>
+							<div class="dropdown-menu" id=DropdownMenu>
+								<a class="dropdown-item" href="{% url 'song:new' %}">Song</a>
+								<a class="dropdown-item" href="{% url 'song-media:sheet_add' %}">Sheet</a>
+								<a class="dropdown-item" href="{% url 'song-media:midi_add' %}">Midi file</a>
+								<a class="dropdown-item" href="{% url 'song-media:videolink_new' %}">Video Link</a>
+								<a class="dropdown-item" href="{% url 'blog:new' %}">Blog post</a>
+								<a class="dropdown-item" href="{% url 'request:new' %}">Request</a>
+
+								{% if user.is_admin %}
+								<a class="dropdown-item" href="{% url 'author:new' %}">Author</a>
+								<a class="dropdown-item" href="{% url 'voicing:new' %}">Voicing</a>
+								<a class="dropdown-item" href="{% url 'language:new' %}">Language</a>
+								{% endif %}
+								
+							</div>
+						</li>
+					</ul>
+
+					<ul class="nav navbar-nav ml-auto" id="rightNavLinks">
+						{% if user.is_authenticated %}
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'siteuser:dashboard' %}">{{ user.siteuser.screen_name }}</a>									
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'siteuser:logout' %}">Logout</a>
+							</li>
+						{% else %}
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'siteuser:login' %}">Login</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'siteuser:new' %}">Join</a>
+							</li>
+						{% endif %}
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'cart:detail' %}"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		{% endblock navigation %}
+
+		{% block wrap_filter %}
+		<div class="container-fluid" style="background: #FF3B3F; padding: 10px;">
+			<div class="filter-block">
+				{% block filter %}
+					{% include "song/filter_form.html" %}
+				{% endblock filter %}
+			</div>
+		</div>
+		{% endblock wrap_filter %}
+
+
+		{% block search %}
+		<div class="instant-search text-center">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-12">
+						<h3>Search
+							<a href="{% url 'song:instant_song' %}">songs</a>
+								or try <a href="{% url 'song:auto_song' %}">autocomplete</a>
+						</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endblock search %}
+
+		{% block wrap_content %}
+		<div class="content-block">
+				{% block content_content %}
+				block content_content
+				{% endblock content_content %}
+		</div>
+		{% endblock wrap_content %}
+
+		{% block wrap_forms %}
+		<div class="form-group">
+			{% block content_forms %}
+				block content_forms
+			{% endblock content_forms %}
+		</div>
+		{% endblock wrap_forms %}
+
+		{% block javascript %}{% endblock javascript %}
+
+		{% if is_paginated %}
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12">{% include "pure_pagination.html" %}</div>
+			</div>
+		</div>
+		{% endif %}
+
+		
+		{% block footer %}
+			{% include "footer.html" %}
+		{% endblock footer %}
+
+		<script type="text/javascript" >
+			// add attributes to form input elements
+			$(document).ready(function(){
+				$("#id_username").attr('placeholder', '{{ form.username.label }}');
+				$("#id_username").attr('class', 'form-control');
+				
+				$("#id_password").attr('placeholder', '{{ form.password.label }}');
+				$("#id_password").attr('class', 'form-control');
+
+				$("#id_email").attr('class', 'form-control');
+				$("#id_email").attr('placeholder', '{{ form.email.label }}');
+
+
+				$("#id_old_password").attr('class', 'form-control');
+				$("#id_old_password").attr('placeholder', '{{ form.old_password.label }}');
+				$("#id_new_password1").attr('class', 'form-control');
+				$("#id_new_password1").attr('placeholder', '{{ form.new_password1.label }}');
+				$("#id_new_password2").attr('class', 'form-control');
+				$("#id_new_password2").attr('placeholder', '{{ form.new_password2.label }}');
+			});
+		</script>
+
+		<script>
+			// Initialize tooltip component
+			$(function () {
+				$('[data-toggle="tooltip"]').tooltip()
+			})
+			// Initialize popover component
+			$(function () {
+				$('[data-toggle="popover"]').popover()
+			})
+		</script>
+	</body>
+</html>

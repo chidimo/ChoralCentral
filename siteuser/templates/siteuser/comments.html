@@ -1,0 +1,37 @@
+{% extends "somto_base.html" %}
+
+{% block title %} {{ siteuser.screen_name }}'s siteuser{% endblock title %}
+{% block wrap_filter %}{% endblock wrap_filter %}
+
+{% block content_content %}
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h2><a href="{% url 'siteuser:detail' siteuser.pk %}">{{ siteuser.screen_name }}</a>'s comments</h2>
+        </div>
+    </div>
+    
+    {% if siteuser_comments %}
+        <div class="list-group">
+            {% for comment in siteuser.comment_set.all %}
+                <div class="list-group-item list-group-item-action list-group-item-primary">
+                    <h5><a href="{% url 'blog:detail' comment.post.pk %}">{{ comment.post }}</a></h5>
+                        <span>{{ comment.comment|linebreaks }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+    {% if siteuser.user == user %}
+        <p>You haven't made any comments.</p>
+    {% else %}
+        <p>{{ siteuser.screen_name }} hasn't made any comments.</p>
+    {% endif %}
+        
+    {% endif %}
+</div>
+
+{% endblock content_content %}
+
+{% block wrap_forms %}{% endblock wrap_forms %}

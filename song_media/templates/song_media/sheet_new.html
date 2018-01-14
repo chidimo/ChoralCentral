@@ -1,0 +1,55 @@
+{% extends "somto_base.html" %}
+{% block title %}New music sheet{% endblock %}
+{% block wrap_filter %}{% endblock wrap_filter %}
+{% block wrap_content  %}{% endblock wrap_content  %}
+{% block search %}{% endblock search %}
+
+{% block content_forms %}
+
+<div class="container upload-forms">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>New music sheet</h2>                
+        </div>
+    </div>
+    
+    {% if error_message %}
+    <div class="row">
+        <div class="col-sm-12">
+            <p class="text-danger">{{ error_message }}</p>
+        </div>
+    </div>
+    {% endif %}
+    
+    
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+    
+        <div class="row">
+            <div class="col-sm-12">{{ form.song }}</div>
+        </div>
+    
+        <div class="row">
+            <div class="col-sm-12">{{ form.part }}</div>
+        </div>
+    
+        <div class="row">
+            <div class="col-sm-12">{{ form.notation }}</div>
+        </div>
+    
+        <div class="row">
+            <div class="col-sm-12">{{ form.likes }}</div>
+        </div>
+    
+        <div class="row">
+            <div class="col-sm-12">{{ form.file }}</div>
+        </div>
+    
+        <div class="row">
+            <div class="col-sm-12">
+                <button  class="btn btn-primary btn-md btn-block" type="submit" value="Save">Save</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

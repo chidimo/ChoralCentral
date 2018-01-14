@@ -1,0 +1,51 @@
+{% extends "somto_base.html" %}
+
+{% block title %}New post{% endblock %}
+{% block wrap_filter %}{% endblock wrap_filter %}
+{% block wrap_content  %}{% endblock wrap_content  %}
+
+{% block search %}{% endblock search %}
+
+
+{% block content_forms %}
+
+<div class="container upload-forms">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Edit post</h2>
+        </div>
+    </div>
+    
+    {% if error_message %}
+    <div class="row">
+        <p><strong>{{ error_message }}</strong></p>
+    </div>
+    {% endif %}
+    
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+    
+        <div class="row">
+            <div class="col-sm-12">{{ form.status }}</div>
+        </div>
+    
+        <div class="row">
+            <div class="col-sm-12">{{ form.song }}</div>
+        </div>
+    
+        <div class="row">
+            <div class="col-sm-12">{{ form.title }}</div>
+        </div>
+    
+        <div class="row">
+            <div class="col-sm-12">{{ form.body }}</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <button  class="btn btn-primary btn-md btn-block" type="submit" value="Save">Save</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+

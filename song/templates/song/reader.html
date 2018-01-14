@@ -1,0 +1,101 @@
+{% extends "somto_base.html" %}
+
+{% if song %}{% block title %}{{ song }}{% endblock title %} {% endif %}
+{% block wrap_filter %}{% endblock wrap_filter %}
+{% load song_ttags %}
+
+{% block content_content %}
+{% if song %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <p class="section-heading">{{ song }}</p>
+        </div>
+    </div>
+
+
+    <div class="list-group-item list-group-item-action list-group-item-primary">
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="h4">For</p>
+                    <p>{{ song.voicing }}</p>
+                </div>
+
+                <div class="col-sm-3">
+                    <p class="h4">Performed</p>
+                    <p>{{ song.tempo_text }}</p>
+                </div>
+
+
+                <div class="col-sm-3">
+                    <p class="h4">Tempo</p>
+                    <p>{{ song.tempo }}</p>
+                </div>
+
+                <div class="col-sm-3"><p class="h4">Timing</p>
+                    <p>{{ song.bpm }}/{{ song.divisions }}</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="list-group-item list-group-item-action list-group-item-primary">
+
+            <div class="row">
+                <div class="col-sm-3"><p class="h4">Scripture</p>
+                    <p>{{ song.scripture_ref }}</p>
+                </div>
+
+                <div class="col-sm-3"><p class="h4">Started by</p>
+                    <a href="{% url 'siteuser:detail' song.originator.pk %}">{{ song.originator.screen_name }}</a>
+                </div>
+
+                <div class="col-sm-3"><p class="h4">Started</p>
+                    <p>{{ song.created|date:"Y-M-d" }}</p>
+                </div>
+
+                <div class="col-sm-3"><p class="h4">Composed</p>
+                    <p>{{ song.compose_date }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="list-group-item list-group-item-action list-group-item-primary">
+            <div class="row">
+                <div class="col-sm-4">
+                    <p class="h4">Season(s)</p>
+                    <p>{{ song.all_seasons }}</p>
+                </div>
+
+                <div class="col-sm-4">
+                    <p class="h4">Mass Part</p>
+                    <p>{{ song.all_masspart }}</p>
+                </div>
+
+                <div class="col-sm-4">
+                    <p class="h4">Authors</p>
+                    <p>
+                        {% for author in song.authors.all %}
+                            <a href="{% url 'author:detail' author.pk %}">{{ author }}</a>{% if not forloop.last %},{% endif %}
+                        {% endfor %}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="list-group-item list-group-item-action list-group-item-primary">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h4>Lyrics</h4>
+                    {{ song.lyrics|markdown_format }}
+                </div>
+            </div>
+        </div>
+</div>
+{% else %}
+    <p>Song does not exist</p>
+{% endif %}
+
+
+{% endblock content_content %}

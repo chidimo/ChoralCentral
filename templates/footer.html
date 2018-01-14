@@ -1,0 +1,63 @@
+<footer>
+    <div class="large-print">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6 large-print-item">
+                    <h3><span class=""></span>Find music</h3>
+                    <p>Looking for a needle in a haystack?<br>
+                        No worries. Our instant search feature is sure to get you whatever you're looking for at the snap of a finger.
+                         Download sheet music in various notations and in different parts.</p>
+                    <p><a class="btn btn-primary" href="{% url 'song:instant_song' %}">Get started</a></p>
+                </div>
+
+                <div class="col-md-3 col-sm-6 large-print-item">
+                    <h3><span class=""></span>Contribute</h3>
+                    <p>We appreciate you.<br>
+                        This community wouldn't be complete without every single one of our awesome
+                        members taking their time to give us great music.
+                    </p>
+                    <p><a class="btn btn-primary" href="{% url 'song:new' %}">Upload</a></p>
+                </div>
+
+                <div class="col-md-3 col-sm-6 large-print-item">
+                    <h3><span class=""></span>Blog</h3>
+                    <p>Unleash your musical musings.<br>
+                        Start a thread to talk about your favourite song or any other musical topic for that matter.
+                    </p>
+                    <p><a class="btn btn-primary" href="{% url 'blog:new' %}">Blog</a></p>
+                </div>
+
+                <div class="col-md-3 col-sm-6 large-print-item">
+                    <h3><span class=""></span>Request</h3>
+                    <p>Trust in the community.<br>
+                        Request for your favourite scores and get instant notification as soon as someone responds</p>
+                    <p><a class="btn btn-primary" href="{% url 'request:new' %}">Request</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="feeds text-center">
+        <div class="container">
+                <p>
+                    <a aria-hidden="true" href="{% url 'song:popular_song_feed' %}">Popular songs feed</a> &#124;
+                    <a aria-hidden="true" href="{% url 'song:popular_song_feed' %}">Latest songs feed</a> &#124;
+                    <a aria-hidden="true" href="{% url 'blog:post_feed' %}">Blog feed</a>
+                </p>
+        </div>
+    </div>
+
+    <div class="fine-prints text-center">
+        <div class="container">
+                <p><a href="/"><i class="fa fa-home"></i>Home</a>
+                    &#124;
+                    <a href="">Terms</a>
+                    &#124;
+                    <a href="">Contact</a>
+                    &#124;
+                    <a href="">Disclaimer</a>
+                </p>
+                <p class="copyright">&#169; Copyright 2017 somto.com</p>
+        </div>
+    </div>
+</footer>

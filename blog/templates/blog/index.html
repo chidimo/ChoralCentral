@@ -1,0 +1,64 @@
+{% extends "somto_base.html" %}
+
+{% block title %}Blog{% endblock %}
+{% block wrap_filter %}{% endblock wrap_filter %}
+
+{% block search %}
+<div class="instant-search text-center">
+    <div class="container">
+        <div class="row">
+           <div class="col-sm-12">
+                <h4>Search 
+                    <a href="{% url 'blog:instant_blog' %}">posts</a>
+                     or try <a href="{% url 'blog:auto_blog' %}">autocomplete</a>
+                </h4>
+           </div>
+        </div>
+    </div>
+</div>
+{% endblock search %}
+
+{% block content_content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Blog Posts <a href="{% url 'blog:new' %}"><i class="fa fa-plus"></i></a></h2>
+        </div>
+    </div>
+
+    {% if posts %}
+        <div class="list-group">
+            {% for post in posts %}
+                <div class="list-group-item list-group-item-action  list-group-item-primary">
+                    <h5><a href="{% url 'blog:detail' post.pk %}">
+                        {{ post }}</a>
+                    </h5>
+
+                    <span class="h6 float-sm-left">
+                        <p> by
+                            <a href="{% url 'siteuser:detail' post.creator.pk %}">
+                            {{ post.creator.screen_name }}</a> on {{ post.created }}
+                        </p>
+                        
+                        {% if post.song %}
+                            <h6> on <a href="{% url 'song:detail' post.song.pk post.song.slug %}">{{ post.song }}</a></h6>
+                        {% endif %}
+                    </span>
+
+                    <span class="h6 float-sm-right">
+                        {% with post.comment_set.count as total_comments %}
+                            <span class="badge badge-light badge-pill">{{ total_comments }}</span> comment{{ total_comments|pluralize }}
+                        {% endwith %}
+                        <a href=""><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+                        <a href=""><i class="fa fa-envelope" aria-hidden="true"></i></a>
+                    </span>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No posts added yet</p>
+    {% endif %}
+</div>
+{% endblock content_content %}
+
+{% block wrap_forms %}{% endblock wrap_forms %}

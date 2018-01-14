@@ -1,0 +1,39 @@
+{% extends "somto_base.html" %}
+{# https://docs.djangoproject.com/en/1.11/topics/forms/#rendering-fields-manually #}
+
+{% block title %}New Voicing{% endblock %}
+{% block wrap_filter %}{% endblock wrap_filter %}
+
+
+{% block content %}
+
+<div class="container upload-forms">
+    <div class="row">
+        <div class="col-sm-12">
+            <p class="section-heading">Add Voicing</p>
+        </div>
+    </div>
+    
+    {% if error_message %}
+    <div class="row">
+        <div class="col-sm-12">
+            <p>{{ error_message }}</p>
+        </div>
+    </div>
+    {% endif %}
+                
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-sm-3">{{ form.voicing.label_tag }}</div>
+            <div class="col-sm-9">{{ form.voicing }}</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-9">{{ form.voicing.errors }}</div>
+        </div>
+        <input class="save-btn btn btn-primary" type="submit" value="Save">
+    </form>
+
+</div>
+{% endblock %}

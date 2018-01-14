@@ -1,0 +1,11 @@
+{% extends "somto_base.html" %}
+
+{% block title %}roles{% endblock title %}
+
+{% block n-active %}class="active"{% endblock %}
+
+{% block content %}
+    {% for role in role_list %}
+        <h4><a href="">{{ role.role }}</a></h4>
+    {% endfor %}
+{% endblock content %}

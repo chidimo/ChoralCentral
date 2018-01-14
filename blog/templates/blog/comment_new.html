@@ -1,0 +1,38 @@
+{% extends "somto_base.html" %}
+
+{% block title %}New Comment{% endblock %}
+{% block introBlock %}{% endblock introBlock %}
+{% block wrap_filter %}{% endblock wrap_filter %}
+
+{% block search %}
+<div class="container">
+    <div class="row">
+        <div class="instant-search">
+            <p class="text-dark h4">Search 
+                <a href="{% url 'blog:instant_blog' %}">posts</a>
+                 or try <a href="{% url 'blog:auto_blog' %}">autocomplete</a></p>
+        </div>
+    </div>
+</div>
+{% endblock search %}
+
+
+{% block content %}
+    <h4>Add Comment</h4>
+  
+    {% if error_message %}
+        <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
+
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <table>
+        {{ form }}
+        </table>
+        <input type="submit" value="Save">
+            </div>
+        </div>
+    </form>
+{% endblock %}
+

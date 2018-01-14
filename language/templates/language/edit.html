@@ -1,0 +1,27 @@
+{% extends "somto_base.html" %}
+{# https://docs.djangoproject.com/en/1.11/topics/forms/#rendering-fields-manually #}
+
+{% block title %}Edit Language{% endblock %}
+{% block wrap_filter %}{% endblock wrap_filter %}
+
+{% block content %}
+    <h4>new {{ form.name.label_tag|title }}</h4>
+  
+    {% if error_message %}
+        <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
+
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <table>
+
+        {{ form.as_table }}
+
+        </table>
+        <input type="submit" value="Update">
+            </div>
+        </div>
+    </form>
+{% endblock %}
+

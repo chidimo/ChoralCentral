@@ -1,0 +1,30 @@
+{% if form.errors %}
+    <div class="row">
+        {{ form.errors }}
+    </div>
+{% endif %}
+
+<form action="{% url 'song:filter' %}" method="get" enctype="multipart/form-data">
+
+    <div class="row">
+        <div class="col-sm-12">{{ form.season }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">{{ form.mass_part }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">{{ form.voicing }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">{{ form.language }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <button  class="btn btn-primary btn-md btn-block" type="submit" value="Filter">Filter</button>
+        </div>
+    </div>
+</form>

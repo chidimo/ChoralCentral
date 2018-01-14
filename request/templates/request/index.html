@@ -1,0 +1,47 @@
+{% extends "somto_base.html" %}
+
+{% block title %}Requests{% endblock %}
+
+{% block wrap_filter %}{% endblock wrap_filter %}
+
+{% block content_content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Requests <a href="{% url 'request:new' %}"><i class="fa fa-plus" aria-hidden="true"></i></a></h2>
+        </div>
+    </div>
+
+    <table class="table table-responsive-md">
+        <thead class="thead-light">
+            <caption>requests</caption>
+        </thead>
+        <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>User</th>
+            <th>Date</th>
+            <th>Replies</th>
+            <th>Rescue</th>
+        </tr>
+
+        {% if requests %}
+        <tbody>
+            {% for request in requests %}
+                <tr>
+                    <td><a href="{% url 'request:detail' request.pk request.slug %}">{{ request }}</td>
+                    <td><a href="{% url 'request:filter' %}?status={{ request.status }}">{{ request.status }}</td>
+                    <td><a href="{% url 'siteuser:detail' request.originator.pk request.originator.slug %}">{{request.originator.screen_name }}</td>
+                    <td><a href="#">{{ request.created|date }}</a></td>
+                    <td>{{ request.reply_set.count }}</td>
+                    <td><a href="{% url 'request:reply_new_from_request' request.pk %}"><i class="fa fa-medkit" aria-hidden="true"></i></a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        {% else %}
+            <p>No requests found</p>
+        {% endif %}
+    </table>
+</div>
+{% endblock content_content %}
+{% block wrap_forms %}{% endblock wrap_forms %}

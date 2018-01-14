@@ -1,0 +1,36 @@
+{% extends "somto_base.html" %}
+
+{% block title %}Cart{% endblock %}
+{% block wrap_filter %}{% endblock wrap_filter %}
+
+{% block search %}
+<div class="container">
+    <div class="row">
+        <div class="instant-search">
+            <p class="text-dark h4">Search
+                <a href="{% url 'song:instant_song' %}">songs</a>
+                 or try <a href="{% url 'song:auto_song' %}">autocomplete</a></p>
+        </div>
+    </div>
+</div>
+{% endblock search %}
+
+{% block content_content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Cart</h2>
+        </div>
+    </div>
+
+    {% if cart %}
+        
+        {{ cart }}
+
+    {% else %}
+        <p>No song in your cart</p>
+    {% endif %}
+</div>
+{% endblock content_content %}
+
+{% block wrap_forms %}{% endblock wrap_forms %}

@@ -1,0 +1,118 @@
+{% extends "somto_base.html" %}
+
+{% block title %}Dashboard{% endblock title %}
+{% block wrap_filter %}{% endblock wrap_filter %}
+
+
+{% block content_content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 text-center"><h2>Dashboard</h2></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 dash-main-col">
+            <div class="container dash-main-cont">
+                <div class="row">
+                    <div class="col-sm-6 dash-subject">
+                        <h5>First name</h5>
+                    </div>
+
+                    <div class="col-sm-6 dash-values">
+                        <p>{{ user.siteuser.first_name }}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 dash-subject">
+                        <h5>Last name</h5>
+                    </div>
+
+                    <div class="col-sm-6 dash-values">
+                        <p>{{ user.siteuser.last_name }}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 dash-subject">
+                        <h5>Email</h5>
+                    </div>
+
+                    <div class="col-sm-6 dash-values">
+                        <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-6 dash-subject">
+                        <h5>Location</h5>
+                    </div>
+
+                    <div class="col-sm-6 dash-values">
+                        <p>{{ user.siteuser.location }}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 dash-subject">
+                        <h5>Last seen</h5>
+                    </div>
+
+                    <div class="col-sm-6 dash-values">
+                        <p>last seen</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 dash-subject">
+                        <h5>Member since</h5>
+                    </div>
+
+                    <div class="col-sm-6 dash-values">
+                        <p>{{ user.siteuser.join_date }}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 dash-subject">
+                        <h5>Comments</h5>
+                    </div>
+
+                    <div class="col-sm-6 dash-values">
+                        <p><a href="{% url 'siteuser:comments' user.siteuser.pk %}">{{ user.siteuser.comment_set.count }}</a></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-6 dash-main-col">
+            <div class="container dash-main-cont">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h5>My <a href="{% url 'siteuser:detail' user.siteuser.pk user.siteuser.slug %}">activities</a></h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h5>Profile <a href="{% url 'siteuser:edit' user.siteuser.pk user.siteuser.slug %}">edit</a></h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h5>Password <a href="{% url 'siteuser:change_password' %}">change</a> or <a href="{% url 'siteuser:reset_password' %}">reset</a></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content_content %}
+
+{% block wrap_forms %}{% endblock wrap_forms %}

@@ -1,0 +1,87 @@
+{% extends "somto_base.html" %}
+{% load static %}
+{% load song_ttags %}
+
+{% block wrap_filter %}{% endblock wrap_filter %}
+
+{% block search %}
+<div class="instant-search text-center">
+    <div class="container">
+        <div class="row">
+           <div class="col-sm-12">
+                <h4>Search 
+                    <a href="{% url 'blog:instant_blog' %}">posts</a>
+                     or try <a href="{% url 'blog:auto_blog' %}">autocomplete</a>
+                </h4>
+           </div>
+        </div>
+    </div>
+</div>
+{% endblock search %}
+
+
+{% block content_content %}
+<div class="container">
+
+<div class="row">
+    <div class="col-sm-12">
+        <p class="lead">A modern auto-complete field based on <code>typeahead.js</code> + <code>Hogan</code> and <code>AlgoliaSearch JS Client</code> example.</p>
+    </div>
+</div>
+
+<!-- search box -->
+<div class="row">
+    <div class="col-sm-12">
+        <input id="q" name="q" placeholder="Search posts" autocomplete="off" autocorrect="false" spellcheck="false" class="form-control" type="search">
+    </div>
+</div>
+<!-- end search box -->
+
+{% endblock content_content %}
+{% block wrap_forms %}{% endblock wrap_forms %}
+
+
+{% block javascript %}
+<script src="//cdn.jsdelivr.net/typeahead.js/0.10/typeahead.jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/hogan.js/3.0.2/hogan.min.js"></script>
+
+{% verbatim %}
+<script type="text/template" id="autocomplete">
+    <p>
+        {{{ _highlightResult.title.value }}}({{{ _highlightResult.email.value }}})
+    </p>
+</script>
+{% endverbatim %}
+
+<script>
+    $(document).ready(function() {
+        var $inputField = $('#q');
+
+        var template = Hogan.compile($('#autocomplete').text());
+
+        var client = algoliasearch('{{ appID }}', '{{ searchKey }}');
+        var index = client.initIndex('{{ indexName }}');
+
+        $('.search-terms a').click(function(e) {
+        $inputField.val($(this).text()).change().focus();
+        });
+
+        $inputField.typeahead({hint: false}, {
+        source: index.ttAdapter(),
+        displayKey: 'title',
+        templates: {
+            suggestion: function(hit) {
+            return template.render(hit);
+            }
+        }
+        }).on('change', function(e) {
+        console.log('on(change): ' + $inputField.val());
+        }).on('keypress', function(e) {
+        console.log('on(submit): ' + $inputField.val());
+        }).on('typeahead:selected', function(e) {
+        console.log('on(selected): ' + $inputField.val());
+        });
+    });
+</script>
+{% endblock %}
+

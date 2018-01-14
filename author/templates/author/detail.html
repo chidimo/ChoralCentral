@@ -1,0 +1,51 @@
+{% extends "somto_base.html" %}
+
+{% block title %}{{ author }}{% endblock title %}
+{% block wrap_filter %}{% endblock wrap_filter %}
+{% load author_ttags %}
+
+{% block content_content %}
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>{{ author }} - {{ author.author_type|title}}
+                {% if author.originator.user == user %}
+                    <a href="{% url 'author:edit' author.pk %}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a href="{% url 'author:delete' author.pk %}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                {% endif %}
+            </h2>
+        </div>
+    </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>Biography</h3><span class="body-text">{{ author.bio|markdown_format }}</span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>Published works</h3>
+            </div>
+        </div>
+    {% if author.song_set.all %}
+        <div class="list-group">
+            {% for song in author.song_set.all|published_author_songs %}
+                <div class="list-group-item list-group-item-action  list-group-item-primary">
+                    <a href="{% url 'song:detail' song.pk song.slug %}">{{ song }}</a>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No song from this author yet</p>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-sm-12">
+            <p class="profile">First added by <a href="{% url 'siteuser:detail' author.originator.pk %}">{{ author.originator.screen_name }}</a></p>                  
+        </div>
+    </div>
+</div>
+{% endblock content_content %}
+{% block wrap_forms %}{% endblock wrap_forms %}

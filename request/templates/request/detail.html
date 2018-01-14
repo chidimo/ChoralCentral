@@ -1,0 +1,30 @@
+{% extends "somto_base.html" %}
+
+{% block title %}{{ request }}{% endblock title %}
+{% block wrap_filter %}{% endblock wrap_filter %}
+
+{% block content_content %}
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Replies to {{ request }}</h2>
+        </div>
+    </div>
+
+
+    {% if request.reply_set.all %}
+    <div class="list-group">
+        {% for reply in request.reply_set.all %}
+            <div class="list-group-item list-group-item-action list-group-item-primary">
+                <a href="{% url 'song:detail' reply.song.pk reply.song.slug %}">{{ reply.song }}</a>
+            </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p>No posts for this request yet</p>
+    {% endif %}
+</div>
+{% endblock %}
+{% block wrap_forms %}{% endblock wrap_forms %}

@@ -1,0 +1,275 @@
+{% extends "somto_base.html" %}
+
+{% block title %}{{ siteuser.screen_name }}'s activity{% endblock title %}
+{% block wrap_filter %}{% endblock wrap_filter %}
+
+{% block content_content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>{{ siteuser.screen_name }}'s activity
+                <a href="#" title="follow"><i class="fa fa-handshake-o" aria-hidden="true"></i></a>
+            </h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="container dash-main-cont">
+                <div class="row">
+                    <div class="col-sm-6 dash-subject">
+                        <h5>First name</h5>
+                    </div>
+    
+                    <div class="col-sm-6 dash-values">
+                        <p>{{ siteuser.first_name }}</p>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="col-sm-6 dash-subject">
+                        <h5>Last name</h5>
+                    </div>
+    
+                    <div class="col-sm-6 dash-values">
+                        <p>{{ siteuser.last_name }}</p>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="col-sm-6 dash-subject">
+                        <h5>Email</h5>
+                    </div>
+    
+                    <div class="col-sm-6 dash-values">
+                        <a href="mailto:{{ user.email }}">{{ siteuser.user.email }}</a>
+                    </div>
+                </div>
+    
+    
+                <div class="row">
+                    <div class="col-sm-6 dash-subject">
+                        <h5>Location</h5>
+                    </div>
+    
+                    <div class="col-sm-6 dash-values">
+                        <p>{{ siteuser.location }}</p>
+                    </div>
+                </div>    
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="container dash-main-cont">
+                <div class="row">
+                    <div class="col-sm-6 dash-subject">
+                        <h5>Last seen</h5>
+                    </div>
+    
+                    <div class="col-sm-6 dash-values">
+                        <p>last seen</p>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="col-sm-6 dash-subject">
+                        <h5>Member since</h5>
+                    </div>
+    
+                    <div class="col-sm-6 dash-values">
+                        <p>{{ siteuser.created }}</p>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="col-sm-6 dash-subject">
+                        <h5>Comments</h5>
+                    </div>
+    
+                    <div class="col-sm-6 dash-values">
+                        <p><a href="{% url 'siteuser:comments' siteuser.pk %}">{{ siteuser.comment_set.count }}</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <div class="list-group-item list-group-item-action list-group-item-primary">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>Roles <a href="{% url 'siteuser:edit' siteuser.pk siteuser.slug %}"><i class="fa fa-plus"></i></a></h3>
+                {% for role in siteuser.roles.all %}
+                    <a href="#">{{ role.role }}</a>{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>    
+
+    <div class="list-group-item list-group-item-action list-group-item-primary">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>Song threads <a href="{% url 'song:new' %}"><i class="fa fa-plus"></i></a></h2>
+            </div>
+        </div>
+
+        {% if siteuser.song_set.all %}
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h3>Published</h3>
+                    </div>
+                </div>
+
+                request user---{{ request.user }}<br>
+
+                logg in siteuser---{{ user.siteuser }}<br>
+
+                siteuser uer -- {{ request.user.siteuser }}
+
+                {% for song in siteuser.song_set.all %}
+                    {% if song.status == "PUBLISHED" %}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <a href="{% url 'song:detail' song.pk song.slug %}">{{ song }}</a>
+                            {% if siteuser.user == user %}
+                            <a href="{% url 'song:edit' song.pk %}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h3>Unpublished</h3>
+                    </div>
+                </div>
+
+                {% for song in siteuser.song_set.all %}
+                    {% if siteuser.user == user %}
+                        {% if song.status == "DRAFT" %}
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <a href="{% url 'song:detail' song.pk song.slug %}">{{ song }}</a>
+                                {% if siteuser.user == user %}
+                                <a href="{% url 'song:edit' song.pk %}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        {% else %}
+            <p>There are no songs in {% if siteuser.user == user %}your{% else %}{{ siteuser.screen_name }}'s{% endif %} library</p>
+        {% endif %}
+    </div><!-- END SONG -->
+
+
+    <div class="list-group-item list-group-item-action list-group-item-primary">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>Requests <a href="{% url 'request:new' %}"><i class="fa fa-plus"></i></a></h2>
+            </div>
+        </div>
+
+        {% if siteuser.request_set.all %}
+            {% for request in siteuser.request_set.all %}
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="{% url 'request:detail' request.pk request.pk %}">{{ request }}</a>
+
+                    {% if siteuser.user == user %}
+                    <a href="{% url 'request:edit' request.pk %}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a href=""><i class="fa fa-check" aria-hidden="true"></i></a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="row">
+                <div class="col-sm-12">
+                    <p>No pending request</p>
+                </div>
+            </div>
+        {% endif %}
+    </div> <!-- END REQUESTS -->
+
+
+    <div class="list-group-item list-group-item-action list-group-item-primary">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>Blog Posts <a href="{% url 'blog:new' %}"><i class="fa fa-plus"></i></a></h2>
+            </div>
+        </div>
+
+        {% if siteuser.post_set.all %}
+            {% for post in siteuser.post_set.all %}
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="{% url 'blog:detail' post.pk post.slug %}">{{ post.title }}</a>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="row">
+                <div class="col-sm-12">
+                    <p>You haven't made any post</p>
+                </div>
+            </div>
+        {% endif %}
+    </div><!-- END BLOG -->
+
+    <div class="list-group-item list-group-item-action list-group-item-primary">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>Authors</h2>
+                {% if siteuser.author_set.all %}
+                    {% for author in siteuser.author_set.all %}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <a href="{% url 'author:detail' author.pk author.slug %}">{{ author }} - {{ author.author_type|title }}</a>
+                            {% if siteuser.user == user %}
+                            <a href="{% url 'author:edit' author.pk author.slug %}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            {% endif %}                  
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>You have not added any authors</p>
+                {% endif %}
+            </div>
+        </div>
+    </div><!-- END AUTHOR -->
+
+
+    <div class="list-group-item list-group-item-action list-group-item-primary">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>Languages</h2>
+                {% if siteuser.language_set.all %}
+                    {% for language in siteuser.language_set.all %}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <a href="#">{{ language }}</a>                        
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                <p>You haven't added any language yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content_content %}
+{% block wrap_forms %}{% endblock wrap_forms %}

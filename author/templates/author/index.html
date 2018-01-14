@@ -1,0 +1,44 @@
+{% extends "somto_base.html" %}
+{% block title %}Lyricists and Composers{% endblock %}
+{% block wrap_filter %}{% endblock wrap_filter %}
+{% load author_ttags %}
+
+{% block content_content %}
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Lyricists and Composers</h2>
+        </div>
+    </div>
+
+    {% if authors %}
+
+    <div class="list-group">
+        {% for author in authors %}
+        <div class="list-group-item list-group-item-action  list-group-item-primary">
+            <a href="{% url 'author:detail' author.pk author.slug %}">
+                <h5>{{ author }}</h5>
+            </a>
+            <p>{{ author.author_type|title }} &raquo;
+                {% with auth=author.song_set.all|published_author_songs %}
+                    {{ auth.count }}
+                {% endwith %}
+                published works</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% else %}
+        <div class="row">
+            <div class="col-sm-12">
+                <p>No authors added yet</p>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock content_content %}
+
+{% block wrap_forms %}{% endblock wrap_forms %}

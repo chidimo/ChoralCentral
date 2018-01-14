@@ -1,0 +1,1 @@
+web: gunicorn funnshopp.wsgi --log-file -

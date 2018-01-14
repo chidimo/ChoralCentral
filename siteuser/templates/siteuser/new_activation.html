@@ -1,0 +1,19 @@
+{% extends "somto_base.html" %}
+{% block title %}Activate {{ screen_name }}{% endblock %}
+{% block wrap_filter %}{% endblock wrap_filter %}
+
+{% block content_content %}
+
+<div class="container">
+    <h4>Profile activation successful</h4>
+            {% if active %}
+                <p>Thank you but your profile is already active.<br>
+                Please <a href="{% url 'login' %}?next={% url 'siteuser:siteuser_detail' profile.pk %}">login</a> to continue</p>
+            {% else %}
+                <p class="card-title">Thank you for activating your profile.<br>
+                    Please <a href="{% url 'login' %}?next={% url 'siteuser:siteuser_detail' profile.pk }}">login</a> to continue</p>
+            {% endif %}
+</div>
+{% endblock content_content %}
+{% block wrap_forms %}{% endblock wrap_forms %}
+{% block footer %}{% endblock footer %}

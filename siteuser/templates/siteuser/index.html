@@ -1,0 +1,34 @@
+{% extends "somto_base.html" %}
+
+{% block title %}Site siteusers{% endblock title %}
+{% block wrap_filter %}{% endblock wrap_filter %}
+
+{% block content_content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Members</h2>
+        </div>
+    </div>
+
+    {% if siteuser_list %}
+    <div class="list-group">
+        {% for siteuser in siteuser_list %}
+
+        <div class="list-group-item list-group-item-action list-group-item-primary">
+                <a href="{% url 'siteuser:detail' siteuser.pk siteuser.slug %}">{{ siteuser.screen_name }}</a>
+                {% if siteuser.user == user %}
+                    <a href="{% url 'siteuser:edit' siteuser.pk siteuser.slug %}"><i class="fa fa-pencil" aria-hidden="true"></i></a>    
+                {% endif %}
+                <p>{{ siteuser.published.count }} uploads</p>
+        </div>
+
+        {% endfor %}
+    </div>
+    {% else %}
+        <p>No profiles added yet.</p>
+    {% endif %}
+</div>
+{% endblock content_content %}
+
+{% block wrap_forms %}{% endblock wrap_forms %}

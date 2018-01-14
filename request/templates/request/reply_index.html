@@ -1,0 +1,37 @@
+{% extends "somto_base.html" %}
+
+{% block title %}Fulfilled Requests{% endblock %}
+{% block wrap_filter %}{% endblock wrap_filter %}
+
+{% block content_content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Fulfilled Requests</h2>
+        </div>
+    </div>
+
+    {% if replys %}
+    <div class="list-group">
+        {% for reply in replys %}
+        <div class="list-group-item list-group-item-action list-group-item-primary">
+            <h5><a href="#">{{ reply }}</a> replied by 
+                <a href="{% url 'siteuser:siteuser_detail' reply.originator.pk %}">{{ reply.originator.screen_name }}</a>
+            </h5>
+            <h5>
+                <a href="{% url 'song:song_detailview' reply.song.pk reply.song.slug %}">{{ reply.song }}</a>
+            </h5>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <div class="row">
+            <div class="col-sm-12">
+                <p>No requests met</p>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock content_content %}
+{% block wrap_forms %}{% endblock wrap_forms %}
