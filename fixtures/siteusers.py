@@ -21,18 +21,18 @@ def create_roles():
 
 def createsuperuser():
     try:
-        su = CustomUser.objects.create_user(email='admin@somto.com', password='dwarfstar')
+        su = CustomUser.objects.create_user(email='admin@choralcentral.com', password='dwarfstar')
         su.is_superuser = True
         su.is_admin = True
         su.is_active = True
         su.save()
-        pro = SiteUser(user=su,first_name="somto",
+        pro = SiteUser(user=su,first_name="choralcentral",
                      last_name="chukwu", location="somewhere",
                      screen_name="Somto")
         pro.save()
 
     except IntegrityError:
-        su = CustomUser.objects.get(email='admin@somto.com')
+        su = CustomUser.objects.get(email='admin@choralcentral.com')
         print("Superuser {} already exists".format(su.email))
 
 def create_siteusers(n):

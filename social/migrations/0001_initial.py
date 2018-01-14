@@ -12,45 +12,34 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('song', '0001_initial'),
-        ('siteuser', '__first__'),
+        ('siteuser', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Reply',
+            name='Collection',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created', universal.fields.AutoCreatedField(default=django.utils.timezone.now, editable=False, verbose_name='created')),
                 ('modified', universal.fields.AutoLastModifiedField(default=django.utils.timezone.now, editable=False, verbose_name='modified')),
-                ('originator', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='siteuser.SiteUser')),
+                ('collector', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='siteuser.SiteUser')),
+                ('song', models.ManyToManyField(to='song.Song')),
             ],
             options={
-                'ordering': ['request'],
+                'abstract': False,
             },
         ),
         migrations.CreateModel(
-            name='Request',
+            name='Favorite',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created', universal.fields.AutoCreatedField(default=django.utils.timezone.now, editable=False, verbose_name='created')),
                 ('modified', universal.fields.AutoLastModifiedField(default=django.utils.timezone.now, editable=False, verbose_name='modified')),
-                ('request', models.CharField(max_length=200)),
-                ('slug', universal.fields.AutoSlugField(blank=True, editable=False, set_once=True, set_using='request')),
-                ('status', models.CharField(choices=[('MET', 'Met'), ('UNMET', 'Unmet')], default='UNMET', max_length=15)),
-                ('originator', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='siteuser.SiteUser')),
+                ('favoriter', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='siteuser.SiteUser')),
+                ('song', models.ManyToManyField(to='song.Song')),
             ],
             options={
-                'ordering': ['-created', 'status'],
+                'abstract': False,
             },
-        ),
-        migrations.AddField(
-            model_name='reply',
-            name='request',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='request.Request'),
-        ),
-        migrations.AddField(
-            model_name='reply',
-            name='song',
-            field=models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, to='song.Song'),
         ),
     ]

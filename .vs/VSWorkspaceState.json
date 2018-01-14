@@ -5,9 +5,9 @@
     "\\blog",
     "\\language",
     "\\request",
-    "\\somto",
+    "\\choralcentral",
     "\\voicing"
   ],
-  "SelectedNode": "\\somto\\urls.py",
+  "SelectedNode": "\\choralcentral\\urls.py",
   "PreviewInSolutionExplorer": true
 }

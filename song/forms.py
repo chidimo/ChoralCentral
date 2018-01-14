@@ -35,32 +35,32 @@ PARTS = [
     "COMMUNION", "SANCTUS", "AGNUS DEI", "RECESSION", "GENERAL","CAROL"
     ]
 
-SEASON_CHOICES = [[each, each] for each in SEAS]
-SEASON_CHOICES.insert(0, ("", "Select Season"))
+# SEASON_CHOICES = [[each, each] for each in SEAS]
+# SEASON_CHOICES.insert(0, ("", "Select Season"))
 
-MASS_CHOICES = [[each, each] for each in PARTS]
-MASS_CHOICES.insert(0, ("", "Select Masspart"))
+# MASS_CHOICES = [[each, each] for each in PARTS]
+# MASS_CHOICES.insert(0, ("", "Select Masspart"))
 
-VOICING_CHOICES = [(each.voicing, each.voicing) for each in Voicing.objects.all()]
-VOICING_CHOICES.insert(0, ("", "Select Voicing"))
+# VOICING_CHOICES = [(each.voicing, each.voicing) for each in Voicing.objects.all()]
+# VOICING_CHOICES.insert(0, ("", "Select Voicing"))
 
-LANGUAGE_CHOICES = [(each.language, each.language) for each in Language.objects.all()]
-LANGUAGE_CHOICES.insert(0, ("", "Select Language"))
+# LANGUAGE_CHOICES = [(each.language, each.language) for each in Language.objects.all()]
+# LANGUAGE_CHOICES.insert(0, ("", "Select Language"))
 
 class SongFilterForm(forms.Form):
-    # pass
-    season = forms.ChoiceField(
-        required=False, choices=SEASON_CHOICES, widget=forms.Select(
-            attrs={'class':'form-control'}))
-    mass_part = forms.ChoiceField(
-        required=False, choices=MASS_CHOICES, widget=forms.Select(
-            attrs={'class':'form-control'}))
-    voicing = forms.ChoiceField(
-        required=False, choices=VOICING_CHOICES, widget=forms.Select(
-            attrs={'class':'form-control'}))
-    language = forms.ChoiceField(
-        required=False, choices=LANGUAGE_CHOICES, widget=forms.Select(
-            attrs={'class':'form-control'}))
+    pass
+    # season = forms.ChoiceField(
+    #     required=False, choices=SEASON_CHOICES, widget=forms.Select(
+    #         attrs={'class':'form-control'}))
+    # mass_part = forms.ChoiceField(
+    #     required=False, choices=MASS_CHOICES, widget=forms.Select(
+    #         attrs={'class':'form-control'}))
+    # voicing = forms.ChoiceField(
+    #     required=False, choices=VOICING_CHOICES, widget=forms.Select(
+    #         attrs={'class':'form-control'}))
+    # language = forms.ChoiceField(
+    #     required=False, choices=LANGUAGE_CHOICES, widget=forms.Select(
+    #         attrs={'class':'form-control'}))
 
 class SongCreateForm(forms.ModelForm):
     class Meta:

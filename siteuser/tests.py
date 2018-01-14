@@ -4,7 +4,7 @@ class SiteUserViewTests(TestCase):
     fixtures = ["fixtures/siteusers.json",]
 
     def test_user_can_login(self):
-        goodlogin = self.client.post("/siteuser/login/", {"username" : "admin@somto.com", "password" : "dwarfstar"})
+        goodlogin = self.client.post("/siteuser/login/", {"username" : "admin@choralcentral.com", "password" : "dwarfstar"})
         self.assertEqual(goodlogin.status_code, 302) # my login page redirects
         self.assertEqual(goodlogin["location"], "/siteuser/dashboard/")
 

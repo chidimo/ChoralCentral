@@ -27,10 +27,10 @@
 
 		{% load static %}
 		<link rel="shortcut icon" type="image/png" href="{% static 'favicons/favicon.ico' %}"/>
-		<link rel="stylesheet" href="{% static 'css/somto.css' %}">
+		<link rel="stylesheet" href="{% static 'css/choralcentral.css' %}">
 		<link rel="stylesheet" href="{% static 'css/boostrap_override.css' %}">
 		<script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>		
-		<script type="text/javascript" src="{% static 'js/somto.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/choralcentral.js' %}"></script>
 		{{ form.media }}
 
 	</head>
@@ -40,7 +40,7 @@
 			<div class="container">
 
 				<a class="navbar-brand navbar-left" href="{% url 'song:index' %}">
-					<img src="{% static 'img/logo-somto.png' %}">
+					<img src="{% static 'img/logo-choralcentral.png' %}">
 				</a>
 
 				<button type="button" class="navbar-toggler my-toggler" data-toggle="collapse" data-target=".navcontent">

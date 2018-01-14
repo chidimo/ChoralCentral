@@ -119,7 +119,7 @@ class UsageTest(LiveServerTestCase):
         self.browser.implicitly_wait(150)
 
         # login
-        self.browser.find_element_by_id("id_username").send_keys("admin@somto.com")
+        self.browser.find_element_by_id("id_username").send_keys("admin@choralcentral.com")
         self.browser.find_element_by_id("id_password").send_keys("dwarfstar")
         self.browser.find_element_by_xpath("//input[@type='submit']").click()
 
