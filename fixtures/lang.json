@@ -1,0 +1,72 @@
+[
+{
+    "model": "language.language",
+    "pk": 1,
+    "fields": {
+        "created": "2018-01-16T20:06:43.237Z",
+        "modified": "2018-01-16T20:06:43.237Z",
+        "originator": 6,
+        "language": "ENGLISH"
+    }
+},
+{
+    "model": "language.language",
+    "pk": 2,
+    "fields": {
+        "created": "2018-01-16T20:06:43.237Z",
+        "modified": "2018-01-16T20:06:43.237Z",
+        "originator": 1,
+        "language": "IGBO"
+    }
+},
+{
+    "model": "language.language",
+    "pk": 3,
+    "fields": {
+        "created": "2018-01-16T20:06:43.237Z",
+        "modified": "2018-01-16T20:06:43.237Z",
+        "originator": 4,
+        "language": "BINI"
+    }
+},
+{
+    "model": "language.language",
+    "pk": 4,
+    "fields": {
+        "created": "2018-01-16T20:06:43.237Z",
+        "modified": "2018-01-16T20:06:43.237Z",
+        "originator": 2,
+        "language": "IBIBIO"
+    }
+},
+{
+    "model": "language.language",
+    "pk": 5,
+    "fields": {
+        "created": "2018-01-16T20:06:43.237Z",
+        "modified": "2018-01-16T20:06:43.237Z",
+        "originator": 4,
+        "language": "HAUSA"
+    }
+},
+{
+    "model": "language.language",
+    "pk": 6,
+    "fields": {
+        "created": "2018-01-16T20:06:43.237Z",
+        "modified": "2018-01-16T20:06:43.237Z",
+        "originator": 6,
+        "language": "CHINESE"
+    }
+},
+{
+    "model": "language.language",
+    "pk": 7,
+    "fields": {
+        "created": "2018-01-16T20:06:43.252Z",
+        "modified": "2018-01-16T20:06:43.252Z",
+        "originator": 4,
+        "language": "YORUBA"
+    }
+}
+]

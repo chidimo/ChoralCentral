@@ -10,10 +10,10 @@ if __name__=="__main__":
     setupshell()
     create_seasons()
     create_masspart()
-    create_voicing_language()
-    createsuperuser()
+    createsuperuser() #run fixtures/siteusers.py
     create_roles()
     create_siteusers(int(input("Enter number of users to create: ")))
+    create_voicing_language()
     # create_authors() # optional
     create_songs("fixtures/hymnal.json")
     add_manyfields()

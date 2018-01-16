@@ -1,0 +1,293 @@
+[
+{
+    "model": "siteuser.customuser",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$100000$qe0RJwTUR6aM$79FsVZRukE6tspz9Fse0jAiWDo+F51/ZBkHOuOEdKk8=",
+        "last_login": null,
+        "email": "admin@choralcentral.com",
+        "is_active": true,
+        "is_admin": true
+    }
+},
+{
+    "model": "siteuser.customuser",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$100000$MTGHSDcURVTP$RAifGUAUSa9ccwlhe1K/xoy4ztxxDV853zhlhEWMEmg=",
+        "last_login": null,
+        "email": "ojiugo@amachi.org",
+        "is_active": true,
+        "is_admin": false
+    }
+},
+{
+    "model": "siteuser.customuser",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$100000$7Y9dKA7P0eAU$uvAGEsKyokgSClp14rd6qttu+URZMU3hmS3xm0uSh8Y=",
+        "last_login": null,
+        "email": "amada@okwukweka.info",
+        "is_active": true,
+        "is_admin": false
+    }
+},
+{
+    "model": "siteuser.customuser",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$100000$O7kEkGXY8ASy$EHsnA6Lnbc8mjpbyloBZ/m7CiYG9n67yy+6+nWci0Es=",
+        "last_login": null,
+        "email": "chinwe@louanne.info",
+        "is_active": true,
+        "is_admin": false
+    }
+},
+{
+    "model": "siteuser.customuser",
+    "pk": 5,
+    "fields": {
+        "password": "pbkdf2_sha256$100000$JN8VgWJK0Rdm$s2klTLRuFPGwbbfFS35O5Oz9JnmPHdpachHQx6bvTqY=",
+        "last_login": null,
+        "email": "amadi@chibuzor.info",
+        "is_active": true,
+        "is_admin": false
+    }
+},
+{
+    "model": "siteuser.customuser",
+    "pk": 6,
+    "fields": {
+        "password": "pbkdf2_sha256$100000$VWGjXlmSTC2K$yMZRgE300sSi67LhNZcpUsxNj6Oesgixva9gOzqt7vY=",
+        "last_login": null,
+        "email": "onyekachi@kamsiyonna.org",
+        "is_active": true,
+        "is_admin": false
+    }
+},
+{
+    "model": "siteuser.role",
+    "pk": 1,
+    "fields": {
+        "created": "2018-01-16T20:06:37.574Z",
+        "modified": "2018-01-16T20:06:37.574Z",
+        "role": "COMPOSER"
+    }
+},
+{
+    "model": "siteuser.role",
+    "pk": 2,
+    "fields": {
+        "created": "2018-01-16T20:06:37.574Z",
+        "modified": "2018-01-16T20:06:37.574Z",
+        "role": "CHOIR MASTER"
+    }
+},
+{
+    "model": "siteuser.role",
+    "pk": 3,
+    "fields": {
+        "created": "2018-01-16T20:06:37.574Z",
+        "modified": "2018-01-16T20:06:37.574Z",
+        "role": "CHOIR CONDUCTOR"
+    }
+},
+{
+    "model": "siteuser.role",
+    "pk": 4,
+    "fields": {
+        "created": "2018-01-16T20:06:37.574Z",
+        "modified": "2018-01-16T20:06:37.574Z",
+        "role": "CHOIR CHAIRMAN"
+    }
+},
+{
+    "model": "siteuser.role",
+    "pk": 5,
+    "fields": {
+        "created": "2018-01-16T20:06:37.574Z",
+        "modified": "2018-01-16T20:06:37.574Z",
+        "role": "ORGANIST"
+    }
+},
+{
+    "model": "siteuser.role",
+    "pk": 6,
+    "fields": {
+        "created": "2018-01-16T20:06:37.574Z",
+        "modified": "2018-01-16T20:06:37.574Z",
+        "role": "GUITARIST"
+    }
+},
+{
+    "model": "siteuser.role",
+    "pk": 7,
+    "fields": {
+        "created": "2018-01-16T20:06:37.590Z",
+        "modified": "2018-01-16T20:06:37.590Z",
+        "role": "DRUMMER"
+    }
+},
+{
+    "model": "siteuser.role",
+    "pk": 8,
+    "fields": {
+        "created": "2018-01-16T20:06:37.590Z",
+        "modified": "2018-01-16T20:06:37.590Z",
+        "role": "MUSIC LOVER"
+    }
+},
+{
+    "model": "siteuser.role",
+    "pk": 9,
+    "fields": {
+        "created": "2018-01-16T20:06:37.590Z",
+        "modified": "2018-01-16T20:06:37.590Z",
+        "role": "SOPRANO"
+    }
+},
+{
+    "model": "siteuser.role",
+    "pk": 10,
+    "fields": {
+        "created": "2018-01-16T20:06:37.590Z",
+        "modified": "2018-01-16T20:06:37.590Z",
+        "role": "ALTO"
+    }
+},
+{
+    "model": "siteuser.role",
+    "pk": 11,
+    "fields": {
+        "created": "2018-01-16T20:06:37.590Z",
+        "modified": "2018-01-16T20:06:37.590Z",
+        "role": "TENOR"
+    }
+},
+{
+    "model": "siteuser.role",
+    "pk": 12,
+    "fields": {
+        "created": "2018-01-16T20:06:37.590Z",
+        "modified": "2018-01-16T20:06:37.590Z",
+        "role": "BASS"
+    }
+},
+{
+    "model": "siteuser.role",
+    "pk": 13,
+    "fields": {
+        "created": "2018-01-16T20:06:37.590Z",
+        "modified": "2018-01-16T20:06:37.590Z",
+        "role": "BARITONE"
+    }
+},
+{
+    "model": "siteuser.role",
+    "pk": 14,
+    "fields": {
+        "created": "2018-01-16T20:06:37.590Z",
+        "modified": "2018-01-16T20:06:37.590Z",
+        "role": "OTHER"
+    }
+},
+{
+    "model": "siteuser.siteuser",
+    "pk": 1,
+    "fields": {
+        "created": "2018-01-16T20:06:37.574Z",
+        "modified": "2018-01-16T20:06:37.574Z",
+        "user": 1,
+        "slug": "somto",
+        "screen_name": "Somto",
+        "first_name": "Choralcentral",
+        "last_name": "Chukwu",
+        "location": "somewhere",
+        "roles": []
+    }
+},
+{
+    "model": "siteuser.siteuser",
+    "pk": 2,
+    "fields": {
+        "created": "2018-01-16T20:06:40.074Z",
+        "modified": "2018-01-16T20:06:40.074Z",
+        "user": 2,
+        "slug": "illo",
+        "screen_name": "illo",
+        "first_name": "Hinchman",
+        "last_name": "Eberechukwu",
+        "location": "onyinyechi",
+        "roles": [
+            1
+        ]
+    }
+},
+{
+    "model": "siteuser.siteuser",
+    "pk": 3,
+    "fields": {
+        "created": "2018-01-16T20:06:40.219Z",
+        "modified": "2018-01-16T20:06:40.219Z",
+        "user": 3,
+        "slug": "quia",
+        "screen_name": "quia",
+        "first_name": "Anuli",
+        "last_name": "Kosisochukwu",
+        "location": "chidike",
+        "roles": []
+    }
+},
+{
+    "model": "siteuser.siteuser",
+    "pk": 4,
+    "fields": {
+        "created": "2018-01-16T20:06:40.360Z",
+        "modified": "2018-01-16T20:06:40.360Z",
+        "user": 4,
+        "slug": "atque",
+        "screen_name": "atque",
+        "first_name": "Kenechukwu",
+        "last_name": "Chimdindu",
+        "location": "kamsiyonna",
+        "roles": [
+            1
+        ]
+    }
+},
+{
+    "model": "siteuser.siteuser",
+    "pk": 5,
+    "fields": {
+        "created": "2018-01-16T20:06:40.512Z",
+        "modified": "2018-01-16T20:06:40.512Z",
+        "user": 5,
+        "slug": "quam",
+        "screen_name": "quam",
+        "first_name": "Chidozie",
+        "last_name": "Udochukwu",
+        "location": "chiesa",
+        "roles": [
+            2,
+            1
+        ]
+    }
+},
+{
+    "model": "siteuser.siteuser",
+    "pk": 6,
+    "fields": {
+        "created": "2018-01-16T20:06:40.652Z",
+        "modified": "2018-01-16T20:06:40.652Z",
+        "user": 6,
+        "slug": "sequi",
+        "screen_name": "sequi",
+        "first_name": "Amara",
+        "last_name": "Rodi",
+        "location": "obiageli",
+        "roles": [
+            1
+        ]
+    }
+}
+]
