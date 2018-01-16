@@ -216,7 +216,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'somto_production.log'),
+            'filename': os.path.join(BASE_DIR, 'choralcentral_production.log'),
             'formatter': 'verbose'
         },
     },
