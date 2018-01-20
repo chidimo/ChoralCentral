@@ -1,4 +1,4 @@
-# Somtochukwu (join me in praising the Lord)
+# Choralcentral
 
 A music sharing site
 
