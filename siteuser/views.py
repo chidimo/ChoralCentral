@@ -28,7 +28,7 @@ CustomUser = get_user_model()
 def siteuser_dashboard(request):
     context = {"section" : "dashboard"}
     template = "siteuser/dashboard.html"
-    return render(request, template, context)  
+    return render(request, template, context)
 
 class SiteUserIndex(PaginationMixin, generic.ListView):
     model = SiteUser
@@ -82,7 +82,7 @@ def new_siteuser(request):
 
             # 2. send email
             activation_link = request.build_absolute_uri(prof.get_user_creation_url())
-            send_mail("Welcome to Chinemerem {}.".format(prof.screen_name),
+            send_mail("Welcome to ChoralCentral {}.".format(prof.screen_name),
                       "To activate your account, click this link {}".format(activation_link),
                       settings.EMAIL_HOST_USER,
                       [email],

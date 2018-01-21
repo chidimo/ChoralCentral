@@ -42,7 +42,7 @@ class CustomUser(AbstractBaseUser):
         return self.email
 
     def __str__(self):
-        return self.email
+        return "User - {}".format(self.email)
 
     def has_module_perms(self, app_label):
         return True

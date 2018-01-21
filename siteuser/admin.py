@@ -8,7 +8,7 @@ from .models import CustomUser, Role, SiteUser, HandShake
 from .forms import UserChangeForm, UserCreationForm
 
 class SiteUserAdmin(admin.ModelAdmin):
-    list_display = ("screen_name", "user", "first_name", "last_name", "location")
+    list_display = ("screen_name", "user", "first_name", "last_name", "slug", "location")
 
 class HandShakeAdmin(admin.ModelAdmin):
     list_display = ("from_siteuser", "to_siteuser", "created")

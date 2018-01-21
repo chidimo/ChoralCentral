@@ -1,10 +1,12 @@
 """views"""
 
-from django.db.models import Count, Sum
+from django.db.models import Count
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django_addanother.views import CreatePopupMixin
 from django.urls import reverse_lazy
+
+from siteuser.models import SiteUser
 
 from pure_pagination.mixins import PaginationMixin
 

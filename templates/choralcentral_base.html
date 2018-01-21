@@ -6,21 +6,21 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<title>ChoralCentral &raquo; {% block title %}Where sheet music lives{% endblock title %}</title>
 
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">		
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-		
+
 		<!-- Algolia search javascript -->
 		<script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
-		
+
 		<script src="//cdn.jsdelivr.net/g/algoliasearch,algoliasearch.helper"></script>
-		
+
 		<!-- font awesome for icons -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 		<script src="//cdn.jsdelivr.net/hogan.js/3.0.2/hogan.min.js"></script>
-		
+
 		{% comment %}[if lt IE 9] {% endcomment %}
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		{% comment %} [endif] {% endcomment %}
@@ -29,7 +29,7 @@
 		<link rel="shortcut icon" type="image/png" href="{% static 'favicons/favicon.ico' %}"/>
 		<link rel="stylesheet" href="{% static 'css/choralcentral.css' %}">
 		<link rel="stylesheet" href="{% static 'css/boostrap_override.css' %}">
-		<script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>		
+		<script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
 		<script type="text/javascript" src="{% static 'js/choralcentral.js' %}"></script>
 		{{ form.media }}
 
@@ -48,7 +48,7 @@
 					<span class="navbar-toggler-icon"></span>
 				</button>
 
-				
+
 
 				<div class="collapse navbar-collapse navcontent">
 					<ul class="nav navbar-nav">
@@ -64,7 +64,7 @@
 							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" id="NewDrawer" aria-haspopup="true">New <b class="caret"></b></a>
 							<div class="dropdown-menu" id=DropdownMenu>
 								<a class="dropdown-item" href="{% url 'song:new' %}">Song</a>
-								<a class="dropdown-item" href="{% url 'song-media:sheet_add' %}">Sheet</a>
+								<a class="dropdown-item" href="{% url 'song-media:new_score' %}">Sheet</a>
 								<a class="dropdown-item" href="{% url 'song-media:midi_add' %}">Midi file</a>
 								<a class="dropdown-item" href="{% url 'song-media:videolink_new' %}">Video Link</a>
 								<a class="dropdown-item" href="{% url 'blog:new' %}">Blog post</a>
@@ -75,7 +75,7 @@
 								<a class="dropdown-item" href="{% url 'voicing:new' %}">Voicing</a>
 								<a class="dropdown-item" href="{% url 'language:new' %}">Language</a>
 								{% endif %}
-								
+
 							</div>
 						</li>
 					</ul>
@@ -83,7 +83,7 @@
 					<ul class="nav navbar-nav ml-auto" id="rightNavLinks">
 						{% if user.is_authenticated %}
 							<li class="nav-item">
-								<a class="nav-link" href="{% url 'siteuser:dashboard' %}">{{ user.siteuser.screen_name }}</a>									
+								<a class="nav-link" href="{% url 'siteuser:dashboard' %}">{{ user.siteuser.screen_name }}</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="{% url 'siteuser:logout' %}">Logout</a>
@@ -157,7 +157,7 @@
 		</div>
 		{% endif %}
 
-		
+
 		{% block footer %}
 			{% include "footer.html" %}
 		{% endblock footer %}
@@ -167,7 +167,7 @@
 			$(document).ready(function(){
 				$("#id_username").attr('placeholder', '{{ form.username.label }}');
 				$("#id_username").attr('class', 'form-control');
-				
+
 				$("#id_password").attr('placeholder', '{{ form.password.label }}');
 				$("#id_password").attr('class', 'form-control');
 

@@ -5,7 +5,7 @@ from . import views
 
 app_name = 'song-media'
 urlpatterns = [
-    path('new/score/', views.NewScore.as_view(), name='score_add'),
+    path('new/score/', views.NewScore.as_view(), name='new_score'),
     path('new/score/<int:pk>/', views.NewScore.as_view(), name='score_add_song'),
     path('view/score/<int:pk>/', views.DisplayScore.as_view(), name='score_view'),
 ]
