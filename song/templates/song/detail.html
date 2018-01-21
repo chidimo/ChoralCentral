@@ -158,7 +158,7 @@
                             <td>{{ score.score_notations }}</td>
                             <td><a href="{% url 'siteuser:detail' score.uploader.pk score.uploader.slug %}">{{ score.uploader.screen_name }}</a></td>
                             <td><a href="">{{ score.score_likes }}</a></td>
-                            <td><a href="" class="fa fa-pencil"></a> | <a href="" class="fa fa-trash"></a></td>
+                            <td><a href="" class="fa fa-pencil"></a> | <a href="{% url 'song-media:delete_score' score.pk song.pk song.slug %}" class="fa fa-trash"></a></td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -195,7 +195,7 @@
                         <td><a href="{% url 'song-media:play_midiview' midi.pk %}" target="blank">{{ midi.midi_parts }}</a></td>
                         <td><a href="{% url 'siteuser:detail' midi.uploader.pk midi.uploader.slug %}">{{ midi.uploader.screen_name }}</a></td>
                         <td><a href="">{{ midi.midi_likes }}</a></td>
-                        <td><a href="" class="fa fa-pencil"></a> | <a href="" class="fa fa-trash"></a></td>
+                        <td><a href="" class="fa fa-pencil"></a> | <a href="{% url 'song-media:delete_midi' midi.pk song.pk song.slug %}" class="fa fa-trash"></a></td>
                     </tr>
                 {% endfor %}
                 </tbody>

@@ -107,7 +107,6 @@ class NewSong(LoginRequiredMixin, generic.CreateView):
             form.instance.first_line = form.instance.lyrics.split("\n")[0]
         self.object = form.save()
         self.object.likes.add(SiteUser.objects.get(user=self.request.user))
-
         return redirect(self.get_success_url())
 
 class SongEdit(LoginRequiredMixin, generic.UpdateView):
@@ -118,7 +117,7 @@ class SongEdit(LoginRequiredMixin, generic.UpdateView):
 class SongDelete(generic.DeleteView):
     model = Song
     success_url = reverse_lazy('song:index')
-    template_name = "confirm_delete.html"
+    template_name = "song/song_delete.html"
 
     def get_context_data(self, **kwargs):
         context = super(SongDelete, self).get_context_data(**kwargs)

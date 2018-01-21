@@ -1,0 +1,33 @@
+{% extends "choralcentral_base.html" %}
+
+{% if song %}{% block title %}Delete {{ object }}{% endblock title %} {% endif %}
+{% block wrap_filter %}{% endblock wrap_filter %}
+
+
+{% block content_content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Delete midi</h2>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-12">
+            <p>Are you sure you want to delete <span class="text-danger">{{ object }}</span> midi?</p>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-12">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input class="bg-danger btn" type="submit" action="" value="Yes, Delete" style="color:white;" />
+            </form>
+        </div>
+    </div>
+</div>
+    
+{% endblock content_content %}
+{% block wrap_forms %}{% endblock wrap_forms %}

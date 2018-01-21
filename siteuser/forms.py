@@ -101,7 +101,7 @@ class SiteUserEditForm(forms.ModelForm):
                 forms.SelectMultiple(attrs={'class' : 'form-control'}),
                 reverse_lazy('siteuser:role_create')),}
 
-class RoleCreateForm(forms.ModelForm):
+class NewRoleForm(forms.ModelForm):
     class Meta:
         model = Role
         fields = ("role", )

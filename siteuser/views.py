@@ -20,7 +20,7 @@ from pure_pagination.mixins import PaginationMixin
 from .models import SiteUser, Role
 from blog.models import Comment
 from .forms import (
-    SiteUserRegistrationForm, SiteUserEditForm, RoleCreateForm, RoleEditForm
+    SiteUserRegistrationForm, SiteUserEditForm, NewRoleForm, RoleEditForm
     )
 
 CustomUser = get_user_model()
@@ -126,8 +126,8 @@ class SiteUserEdit(LoginRequiredMixin, generic.UpdateView):
     form_class = SiteUserEditForm
     template_name = 'siteuser/edit.html'
 
-class RoleCreate(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
-    form_class = RoleCreateForm
+class NewRole(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
+    form_class = NewRoleForm
     template_name = 'siteuser/role_new.html'
 
 class RoleIndex(generic.ListView):

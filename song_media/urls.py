@@ -17,6 +17,11 @@ urlpatterns += [
 ]
 
 urlpatterns += [
+    path('score/delete/<int:pk>/<int:song_pk>/<slug:slug>/', views.DeleteScore.as_view(), name="delete_score"),
+    path('midi/delete/<int:pk>/<int:song_pk>/<slug:slug>/', views.DeleteMidi.as_view(), name="delete_midi"),
+]
+
+urlpatterns += [
     path('new/video/', views.NewVideoLink.as_view(), name='videolink_new'),
     path('new/video/<int:pk>/', views.NewVideoLink.as_view(), name='videolink_new_song'),
 ]

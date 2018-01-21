@@ -4,6 +4,8 @@ import os
 from django.http import FileResponse
 from django.conf import settings
 from django.views import generic, View
+from django.shortcuts import reverse
+from django.urls import reverse_lazy
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django_addanother.views import CreatePopupMixin
@@ -54,6 +56,13 @@ class DisplayScore(View):
         response["Content-Disposition"] = "filename={}_{}".format(score_doc.part, fname)
         return response
 
+class DeleteScore(LoginRequiredMixin, generic.DeleteView):
+    model = Score
+    template_name = "song_media/score_delete.html"
+
+    def get_success_url(self):
+        return reverse("song:detail", kwargs={'pk' : self.kwargs['song_pk'], 'slug' : self.kwargs['slug']})   
+
 class NewMidi(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
     model = Midi
     template_name = 'song_media/midi_new.html'
@@ -83,6 +92,13 @@ class PlayMidi(View):
         response = FileResponse(open(path, 'rb'), content_type="audio/midi")
         response["Content-Disposition"] = "filename={}_{}".format(midi.part, fname)
         return response
+
+class DeleteMidi(LoginRequiredMixin, generic.DeleteView):
+    model = Midi
+    template_name = "song_media/midi_delete.html"
+
+    def get_success_url(self):
+        return reverse("song:detail", kwargs={'pk' : self.kwargs['song_pk'], 'slug' : self.kwargs['slug']})  
 
 class NewVideoLink(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
     model = VideoLink

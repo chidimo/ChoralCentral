@@ -16,7 +16,7 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    path("new-role/", views.RoleCreate.as_view(), name="role_create"),
+    path("new-role/", views.NewRole.as_view(), name="role_create"),
     path("view/roles/", views.RoleIndex.as_view(), name="role_index"),
 ]
 

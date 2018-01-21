@@ -69,7 +69,7 @@ class Score(mdl.TimeStampedModel):
         return self.filename().split('.')[0]
 
     def __str__(self):
-        return "{}_score_{}".format(self.song.title, self.part.lower())
+        return "{}_score_{}".format(self.song.title, self.score_parts.lower())
 
     def get_absolute_url(self):
         return reverse('song:detail', args=[str(self.song.id), str(self.song.slug)])
@@ -88,11 +88,11 @@ class Midi(mdl.TimeStampedModel):
         return ", ".join([each.name for each in self.part.all()])
 
     def __str__(self):
-        return "{}_{}_{} midi".format(self.song.title, self.pk, self.part)
+        return "{}_{}_{} midi".format(self.song.title, self.pk, self.midi_parts)
 
     @property
     def template_name(self):
-        return "{}_{}".format(os.path.basename(self.file.name), self.part.lower())
+        return "{}_{}".format(os.path.basename(self.file.name), self.midi_parts.lower())
 
     def get_absolute_url(self):
         return reverse('song:detail', args=[str(self.song.id), str(self.song.slug)])
