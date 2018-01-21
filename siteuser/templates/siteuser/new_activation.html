@@ -8,10 +8,10 @@
     <h4>Profile activation successful</h4>
             {% if active %}
                 <p>Thank you but your profile is already active.<br>
-                Please <a href="{% url 'login' %}?next={% url 'siteuser:siteuser_detail' profile.pk %}">login</a> to continue</p>
+                Please <a href="{% url 'siteuser:login' %}">login</a> to continue</p>
             {% else %}
                 <p class="card-title">Thank you for activating your profile.<br>
-                    Please <a href="{% url 'login' %}?next={% url 'siteuser:siteuser_detail' profile.pk }}">login</a> to continue</p>
+                    Please <a href="{% url 'siteuser:login' %}">login</a> to continue</p>
             {% endif %}
 </div>
 {% endblock content_content %}
