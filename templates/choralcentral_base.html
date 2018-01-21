@@ -83,7 +83,10 @@
 					<ul class="nav navbar-nav ml-auto" id="rightNavLinks">
 						{% if user.is_authenticated %}
 							<li class="nav-item">
-								<a class="nav-link" href="{% url 'siteuser:dashboard' %}">{{ user.siteuser.screen_name }}</a>
+								<a class="nav-link" href="{% url 'siteuser:dashboard' %}">Dash</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'siteuser:detail' request.user.siteuser.pk request.user.siteuser.slug %}">{{ user.siteuser.screen_name }}</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="{% url 'siteuser:logout' %}">Logout</a>

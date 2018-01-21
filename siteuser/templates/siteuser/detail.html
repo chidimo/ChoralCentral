@@ -36,7 +36,7 @@
                         <div class="col-sm-12">
                             <a href="{% url 'song:detail' song.pk song.slug %}">{{ song }}</a>
                             {% if siteuser.user == user %}
-                            <a href="{% url 'song:edit' song.pk %}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            <a href="{% url 'song:edit' song.pk song.slug %}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                             {% endif %}
                         </div>
                     </div>
