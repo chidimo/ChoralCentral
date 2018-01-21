@@ -15,5 +15,9 @@ if __name__=="__main__":
     create_siteusers(int(input("Enter number of users to create: ")))
     create_voicing_language()
     # create_authors() # optional
-    create_songs("fixtures/hymnal.json")
+    create_songs("fixtures/data_hymnal.json")
     add_manyfields()
+
+# run fixtures/season_masspart.py
+# run fixtures/siteusers.py
+# run fixtures/author.py # optional

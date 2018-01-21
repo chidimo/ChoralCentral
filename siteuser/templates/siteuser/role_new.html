@@ -13,9 +13,9 @@
     </div>
 </div>
 
-{% if error_message %}
+{% if form.errors %}
 <div class="row">
-    <p>{{ error_message }}</p>
+    <p>{{ form.errors }}</p>
 </div>
 {% endif %}
 

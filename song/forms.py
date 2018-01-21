@@ -1,6 +1,8 @@
 """Forms"""
 
 from django import forms
+from django.utils import timezone
+from django.forms.fields import DateField
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import get_user_model
@@ -62,7 +64,7 @@ class SongFilterForm(forms.Form):
         required=False, choices=LANGUAGE_CHOICES, widget=forms.Select(
             attrs={'class':'form-control'}))
 
-class SongCreateForm(forms.ModelForm):
+class NewSongForm(forms.ModelForm):
     class Meta:
         model = Song
         fields = ["status", "title", "compose_date",

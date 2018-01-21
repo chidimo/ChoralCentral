@@ -150,9 +150,10 @@ else:
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'atest4067@gmail.com'
-EMAIL_HOST_PASSWORD = get_env_variable('DEFAULT_EMAIL_PASS')
+EMAIL_HOST_USER = 'choralcentral@gmail.com'
 DEFAULT_FROM_EMAIL = 'choralcentral@gmail.com'
+if ENV_ROLE == 'production':
+    EMAIL_HOST_PASSWORD = get_env_variable('DEFAULT_EMAIL_PASS')
 
 deployment_platform = get_env_variable("DEPLOYMENT_PLATFORM")
 if deployment_platform == "localsqlite3":

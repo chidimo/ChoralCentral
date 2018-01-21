@@ -43,7 +43,7 @@
 
     <div class="row">
         <div class="col-sm-12">
-            <p class="profile">First added by <a href="{% url 'siteuser:detail' author.originator.pk %}">{{ author.originator.screen_name }}</a></p>                  
+            <p class="profile">First added by <a href="{% url 'siteuser:detail' author.originator.pk author.originator.slug %}">{{ author.originator.screen_name }}</a></p>                  
         </div>
     </div>
 </div>

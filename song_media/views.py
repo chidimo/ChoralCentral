@@ -52,7 +52,7 @@ class DisplayScore(View):
         response["Content-Disposition"] = "filename={}_{}".format(score_doc.part, fname)
         return response
 
-class MidiAdd(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
+class NewMidi(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
     model = Midi
     template_name = 'song_media/midi_new.html'
     form_class = NewMidiForm
@@ -65,10 +65,10 @@ class MidiAdd(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
 
     def form_valid(self, form):
         form.instance.uploader = SiteUser.objects.get(user=self.request.user)
-        return super(MidiAdd, self).form_valid(form)
+        return super(NewMidi, self).form_valid(form)
 
     def get_form_kwargs(self):
-        kwargs = super(MidiAdd, self).get_form_kwargs()
+        kwargs = super(NewMidi, self).get_form_kwargs()
         kwargs['user'] = self.request.user
         kwargs['pk'] = self.kwargs.get('pk', None)
         return kwargs
@@ -82,17 +82,17 @@ class PlayMidi(View):
         response["Content-Disposition"] = "filename={}_{}".format(midi.part, fname)
         return response
 
-class VideoLinkAdd(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
+class NewVideoLink(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
     model = VideoLink
     template_name = 'song_media/videolink_new.html'
     form_class = NewVideoLinkForm
 
     def form_valid(self, form):
         form.instance.uploader = SiteUser.objects.get(user=self.request.user)
-        return super(VideoLinkAdd, self).form_valid(form)
+        return super(NewVideoLink, self).form_valid(form)
 
     def get_form_kwargs(self):
-        kwargs = super(VideoLinkAdd, self).get_form_kwargs()
+        kwargs = super(NewVideoLink, self).get_form_kwargs()
         kwargs['user'] = self.request.user
         kwargs['pk'] = self.kwargs.get('pk', None)
         return kwargs

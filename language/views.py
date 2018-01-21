@@ -8,20 +8,23 @@ from django.urls import reverse_lazy
 from .models import Language
 from .forms import NewLanguageForm, EditLanguageForm
 
+from siteuser.models import SiteUser
+
 class LanguageIndex(generic.ListView):
     template_name = "language/index.html"
     context_object_name = 'languages'
     model = Language
 
-class LanguageCreate(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
+class NewLanguage(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
     form_class = NewLanguageForm
     template_name = 'language/new.html'
 
     def form_valid(self, form):
         form.instance.originator = SiteUser.objects.get(user=self.request.user)
-        return super(LanguageAdd, self).form_valid(form)
+        return super(NewLanguage, self).form_valid(form)
 
 class LanguageEdit(LoginRequiredMixin, generic.CreateView):
+    model = Language
     form_class = NewLanguageForm
     template_name = 'language/new.html'
 

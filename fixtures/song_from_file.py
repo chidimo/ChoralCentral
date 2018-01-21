@@ -66,6 +66,6 @@ def add_manyfields():
 
 if __name__ == "__main__":
     setupshell()
-    create_songs("fixtures/hymnal.json")
+    create_songs("fixtures/data_hymnal.json")
     add_manyfields()
     print("Songs created")

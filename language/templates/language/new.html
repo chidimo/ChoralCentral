@@ -1,8 +1,9 @@
 {% extends "choralcentral_base.html" %}
-{% block title %}New Voicing{% endblock %}
+{% block title %}New Language{% endblock %}
 {% block wrap_filter %}{% endblock wrap_filter %}
 {% block wrap_content  %}{% endblock wrap_content  %}
 {% block search %}{% endblock search %}
+
 
 {% block content_forms %}
 
@@ -13,10 +14,10 @@
         </div>
     </div>
     
-    {% if error_message %}
+    {% if form.errors %}
     <div class="row">
         <div class="col-sm-12">
-            <p>{{ error_message }}</p>
+            <p>{{ form.errors }}</p>
         </div>
     </div>
     {% endif %}
@@ -34,4 +35,5 @@
         </div>
     </form>
 </div>
-{% endblock %}
+{% endblock content_forms %}
+

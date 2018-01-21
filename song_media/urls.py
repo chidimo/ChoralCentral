@@ -11,14 +11,14 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    path('new/midi/', views.MidiAdd.as_view(), name='midi_add'),
-    path('new/midi/<int:pk>/', views.MidiAdd.as_view(), name='midi_add_song'),
+    path('new/midi/', views.NewMidi.as_view(), name='midi_add'),
+    path('new/midi/<int:pk>/', views.NewMidi.as_view(), name='midi_add_song'),
     path('play/midi/<int:pk>/', views.PlayMidi.as_view(), name='play_midiview'),
 ]
 
 urlpatterns += [
-    path('new/video/', views.VideoLinkAdd.as_view(), name='videolink_new'),
-    path('new/video/<int:pk>/', views.VideoLinkAdd.as_view(), name='videolink_new_song'),
+    path('new/video/', views.NewVideoLink.as_view(), name='videolink_new'),
+    path('new/video/<int:pk>/', views.NewVideoLink.as_view(), name='videolink_new_song'),
 ]
 
 urlpatterns += [

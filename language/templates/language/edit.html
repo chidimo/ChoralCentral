@@ -7,8 +7,8 @@
 {% block content %}
     <h4>new {{ form.name.label_tag|title }}</h4>
   
-    {% if error_message %}
-        <p><strong>{{ error_message }}</strong></p>
+    {% if form.errors %}
+        <p><strong>{{ form.errors }}</strong></p>
     {% endif %}
 
     <form action="" method="post" enctype="multipart/form-data">

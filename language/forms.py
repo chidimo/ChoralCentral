@@ -2,12 +2,13 @@
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
+
 from .models import Language
 
 class NewLanguageForm(forms.ModelForm):
     class Meta:
         model = Language
-        fields = ("language",)
+        fields = ("language", )
 
         widgets = {
             "language" : forms.TextInput(

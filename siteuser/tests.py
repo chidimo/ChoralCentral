@@ -9,8 +9,8 @@ class SiteUserViewTests(TestCase):
         self.assertEqual(goodlogin["location"], "/siteuser/dashboard/")
 
         badlogin = self.client.post("/siteuser/login/", {"username" : "admin@chin", "password" : "dwar"})
-        # self.assertEqual(badlogin.context["error_message"], "Your username and password didn't match. Please try again.")
-        print(badlogin["error_messages"])
+        # self.assertEqual(badlogin.context["form.errors"], "Your username and password didn't match. Please try again.")
+        print(badlogin["form.errorss"])
 
     def test_non_existent_user(self):
         resp = self.client.get("/siteuser/10000/")

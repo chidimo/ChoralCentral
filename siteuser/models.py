@@ -88,8 +88,8 @@ class SiteUser(mdl.TimeStampedModel):
     def get_absolute_url(self):
         return reverse('siteuser:detail', args=[str(self.id), str(self.slug)])
 
-    # def get_user_success_url(self):
-    #     return reverse()
+    def get_user_success_url(self):
+        return reverse()
 
     def get_user_creation_url(self):
         return reverse('siteuser:new_activation', args=[str(self.user.id), str(self.screen_name)])

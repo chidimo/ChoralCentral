@@ -32,7 +32,7 @@ from season.models import Season
 from language.models import Language
 from voicing.models import Voicing
 
-from .forms import SongCreateForm, SongEditForm, SongFilterForm
+from .forms import NewSongForm, SongEditForm, SongFilterForm
 
 # pylint: disable=R0901, C0111
 
@@ -96,9 +96,9 @@ class SongReader(generic.DetailView):
     context_object_name = 'song'
     template_name = 'song/reader.html'
 
-class SongCreate(LoginRequiredMixin, generic.CreateView):
+class NewSong(LoginRequiredMixin, generic.CreateView):
     template_name = 'song/new.html'
-    form_class = SongCreateForm
+    form_class = NewSongForm
 
     def form_valid(self, form):
         form.instance.originator = SiteUser.objects.get(user=self.request.user)

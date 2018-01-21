@@ -15,9 +15,9 @@
         </div>
     </div>
     
-    {% if error_message %}
+    {% if form.errors %}
     <div class="row">
-        <p><strong>{{ error_message }}</strong></p>
+        <p><strong>{{ form.errors }}</strong></p>
     </div>
     {% endif %}
     

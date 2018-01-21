@@ -4,7 +4,7 @@ def setupshell():
     global datetime, django, randint, choice, timezone, get_user_model, slugify,\
         Author, Post, Comment, MassPart, Season, Language,\
         Request, Reply, Collection, Favorites, SiteUser, Role,\
-        Song, Sheet, Midi, VideoLink, Voicing
+        Song, Score, Midi, VideoLink, Voicing
 
     import datetime
     import django
@@ -23,7 +23,7 @@ def setupshell():
     from social.models import Collection, Favorite
     from siteuser.models import SiteUser, Role
     from song.models import Song
-    from song_media.models import Sheet, Midi, VideoLink
+    from song_media.models import Score, Midi, VideoLink
     from voicing.models import Voicing
     
     django.setup()

@@ -34,7 +34,7 @@ class SiteUserIndex(PaginationMixin, generic.ListView):
     model = SiteUser
     context_object_name = 'siteuser_list'
     template_name = "siteuser/index.html"
-    paginate_by = 10
+    paginate_by = 20
 
 class SiteUserDetail(LoginRequiredMixin, generic.DetailView):
     model = SiteUser

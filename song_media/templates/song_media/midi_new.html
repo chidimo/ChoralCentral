@@ -15,8 +15,8 @@
     
     <div class="row">
         <div class="col-sm-12">
-            {% if error_message %}
-                <p class="text-danger">{{ error_message }}</p>
+            {% if form.errors %}
+                <p class="text-danger">{{ form.errors }}</p>
             {% endif %}
         </div>
     </div>
