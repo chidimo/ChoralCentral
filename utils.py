@@ -42,7 +42,7 @@ def upload_midi(instance, filename):
     """Take the midi instance and original filename and return appropriate name"""
     filename, ext = splitext(filename)
     normalized_song_name = "_".join([each.lower() for each in instance.song.title.split()])
-    return "midi/{}_{}{}".format(normalized_song_name,
+    return "midis/{}_{}{}".format(normalized_song_name,
                                  instance._meta.get_field('file').help_text, ext)
 
 def upload_pdf(instance, filename):
@@ -52,7 +52,7 @@ def upload_pdf(instance, filename):
     """
     filename, ext = splitext(filename)
     normalized_song_name = "_".join([each.lower() for each in instance.song.title.split()])
-    return "sheets/{}_{}{}".format(normalized_song_name, instance.song.pk, ext)
+    return "scores/{}_{}.{}".format(normalized_song_name, instance.song.pk, ext)
 
 
 # def author_filter(author_object):

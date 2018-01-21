@@ -7,9 +7,9 @@ from django.template.defaultfilters import truncatewords
 from .models import Song
 
 class PopularSongFeed(Feed):
-    title = "Song"
+    title = "ChoralCentral"
     link = "/song/"
-    description = "Get the latest update."
+    description = "Catch the most popular scores on http://choralcentral.net/"
 
     def items(self):
         return Song.published_set.all().annotate(Count("likes")).order_by("-likes__count")[:10]
@@ -18,18 +18,18 @@ class PopularSongFeed(Feed):
         return item.title
 
     def item_description(self, item):
-        return "/n".join([item.first_line, item.scripture_ref])
+        return "/n".join([item.first_line, item.scripture_ref, item.lyrics])
 
 class LatestSongFeed(Feed):
-    title = "Song"
+    title = "ChoralCentral"
     link = "/song/"
-    description = "Get the latest update."
+    description = "Catch the latest scores on http://choralcentral.net/."
 
     def items(self):
-        return Song.published_set.all()[:10]
+        return Song.published_set.all()[:15]
 
     def item_title(self, item):
         return item.title
 
     def item_description(self, item):
-        return "/n".join([item.first_line, item.scripture_ref])
+        return "/n".join([item.first_line, item.scripture_ref, item.lyrics])

@@ -21,42 +21,42 @@
                     <div class="col-sm-6 dash-subject">
                         <h5>First name</h5>
                     </div>
-    
+
                     <div class="col-sm-6 dash-values">
                         <p>{{ siteuser.first_name }}</p>
                     </div>
                 </div>
-    
+
                 <div class="row">
                     <div class="col-sm-6 dash-subject">
                         <h5>Last name</h5>
                     </div>
-    
+
                     <div class="col-sm-6 dash-values">
                         <p>{{ siteuser.last_name }}</p>
                     </div>
                 </div>
-    
+
                 <div class="row">
                     <div class="col-sm-6 dash-subject">
                         <h5>Email</h5>
                     </div>
-    
+
                     <div class="col-sm-6 dash-values">
                         <a href="mailto:{{ user.email }}">{{ siteuser.user.email }}</a>
                     </div>
                 </div>
-    
-    
+
+
                 <div class="row">
                     <div class="col-sm-6 dash-subject">
                         <h5>Location</h5>
                     </div>
-    
+
                     <div class="col-sm-6 dash-values">
                         <p>{{ siteuser.location }}</p>
                     </div>
-                </div>    
+                </div>
             </div>
         </div>
 
@@ -66,27 +66,27 @@
                     <div class="col-sm-6 dash-subject">
                         <h5>Last seen</h5>
                     </div>
-    
+
                     <div class="col-sm-6 dash-values">
                         <p>last seen</p>
                     </div>
                 </div>
-    
+
                 <div class="row">
                     <div class="col-sm-6 dash-subject">
                         <h5>Member since</h5>
                     </div>
-    
+
                     <div class="col-sm-6 dash-values">
                         <p>{{ siteuser.created }}</p>
                     </div>
                 </div>
-    
+
                 <div class="row">
                     <div class="col-sm-6 dash-subject">
                         <h5>Comments</h5>
                     </div>
-    
+
                     <div class="col-sm-6 dash-values">
                         <p><a href="{% url 'siteuser:comments' siteuser.pk %}">{{ siteuser.comment_set.count }}</a></p>
                     </div>
@@ -94,9 +94,9 @@
             </div>
         </div>
     </div>
-    
 
-    
+
+
     <div class="list-group-item list-group-item-action list-group-item-primary">
         <div class="row">
             <div class="col-sm-12">
@@ -106,7 +106,7 @@
                 {% endfor %}
             </div>
         </div>
-    </div>    
+    </div>
 
     <div class="list-group-item list-group-item-action list-group-item-primary">
         <div class="row">
@@ -123,12 +123,6 @@
                         <h3>Published</h3>
                     </div>
                 </div>
-
-                request user---{{ request.user }}<br>
-
-                logg in siteuser---{{ user.siteuser }}<br>
-
-                siteuser uer -- {{ request.user.siteuser }}
 
                 {% for song in siteuser.song_set.all %}
                     {% if song.status == "PUBLISHED" %}
@@ -159,7 +153,7 @@
                             <div class="col-sm-12">
                                 <a href="{% url 'song:detail' song.pk song.slug %}">{{ song }}</a>
                                 {% if siteuser.user == user %}
-                                <a href="{% url 'song:edit' song.pk %}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                <a href="{% url 'song:edit' song.pk song.slug %}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                 {% endif %}
                             </div>
                         </div>
@@ -186,10 +180,10 @@
             {% for request in siteuser.request_set.all %}
             <div class="row">
                 <div class="col-sm-12">
-                    <a href="{% url 'request:detail' request.pk request.pk %}">{{ request }}</a>
+                    <a href="{% url 'request:detail' request.pk request.slug %}">{{ request }}</a>
 
                     {% if siteuser.user == user %}
-                    <a href="{% url 'request:edit' request.pk %}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a href="{% url 'request:edit' request.pk request.slug %}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                     <a href=""><i class="fa fa-check" aria-hidden="true"></i></a>
                     {% endif %}
                 </div>
@@ -240,7 +234,7 @@
                             <a href="{% url 'author:detail' author.pk author.slug %}">{{ author }} - {{ author.author_type|title }}</a>
                             {% if siteuser.user == user %}
                             <a href="{% url 'author:edit' author.pk author.slug %}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                            {% endif %}                  
+                            {% endif %}
                         </div>
                     </div>
                     {% endfor %}
@@ -251,7 +245,6 @@
         </div>
     </div><!-- END AUTHOR -->
 
-
     <div class="list-group-item list-group-item-action list-group-item-primary">
         <div class="row">
             <div class="col-sm-12">
@@ -260,7 +253,7 @@
                     {% for language in siteuser.language_set.all %}
                     <div class="row">
                         <div class="col-sm-12">
-                            <a href="#">{{ language }}</a>                        
+                            <a href="#">{{ language }}</a>
                         </div>
                     </div>
                     {% endfor %}
