@@ -142,14 +142,17 @@ LOGIN_REDIRECT_URL = reverse_lazy('siteuser:dashboard')
 LOGIN_URL = reverse_lazy('siteuser:login')
 LOGOUT_URL = reverse_lazy('siteuser:logout')
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+if ENV_ROLE == "development":
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'atest4067@gmail.com'
-EMAIL_HOST_PASSWORD = 'dwarfstar'
-DEFAULT_FROM_EMAIL = 'atest4067@gmail.com'
-# DEFAULT_TO_EMAIL = 'uwakeke@gmail.com'
+EMAIL_HOST_PASSWORD = get_env_variable('DEFAULT_EMAIL_PASS')
+DEFAULT_FROM_EMAIL = 'choralcentral@gmail.com'
 
 deployment_platform = get_env_variable("DEPLOYMENT_PLATFORM")
 if deployment_platform == "localsqlite3":

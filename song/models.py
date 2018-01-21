@@ -36,7 +36,7 @@ class Song(mdl.TimeStampedModel):
 
     title           = models.CharField(max_length=100)
     compose_date    = models.DateField(null=True, blank=True)
-    likes           = models.ManyToManyField(SiteUser, related_name="score_likes")
+    likes           = models.ManyToManyField(SiteUser, related_name="song_likes")
     slug            = fdl.AutoSlugField(set_using="title")
 
     lyrics          = models.TextField(blank=True)
@@ -51,7 +51,7 @@ class Song(mdl.TimeStampedModel):
     authors         = models.ManyToManyField(Author)
     seasons         = models.ManyToManyField(Season)
     mass_parts      = models.ManyToManyField(MassPart)
-    
+
     objects         = models.Manager()
     published_set   = PublishedManager()
 
