@@ -2,9 +2,10 @@
 """Views"""
 
 from django.utils import timezone
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMultiAlternatives
 from django.db.models import Count
 from django.shortcuts import redirect
+from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect
 from django.views.decorators.http import require_POST
 from django.views import generic
@@ -74,20 +75,27 @@ def new_siteuser(request):
 
             user = CustomUser(email=email)
             user.set_password(password1)
-
             user.save()
 
-            prof = SiteUser(user=user, screen_name=screen_name)
-            prof.save()
+            new_user = SiteUser(user=user, screen_name=screen_name)
+            new_user.save()
 
             # 2. send email
-            activation_link = request.build_absolute_uri(prof.get_user_creation_url())
-            send_mail("Welcome to ChoralCentral {}.".format(prof.screen_name),
-                      "To activate your account, click this link {}".format(activation_link),
-                      settings.EMAIL_HOST_USER,
-                      [email],
-                      fail_silently=False)
-            return HttpResponseRedirect(reverse('siteuser:new_success', args=[prof.screen_name]))
+            activation_link = request.build_absolute_uri(new_user.get_user_creation_url())
+            screen_name = new_user.screen_name
+            renderer = {'screen_name' : screen_name, 'activation_link' : activation_link}
+
+            subject = "Welcome to ChoralCentral {}.".format(screen_name)
+            from_email = settings.EMAIL_HOST_USER
+
+            text_email = render_to_string("welcome_email_template.txt", renderer)
+            html_email = render_to_string("welcome_email_template.html", renderer)
+
+            msg = EmailMultiAlternatives(subject, text_email, from_email, [email])
+            msg.attach_alternative(html_email, "text/html")
+            msg.send()
+
+            return redirect(reverse('siteuser:new_success', args=[screen_name]))
     else:
         form = SiteUserRegistrationForm()
     return render(request, template, {'form' : form})

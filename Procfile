@@ -1,1 +1,1 @@
-web: gunicorn funnshopp.wsgi --log-file -
+web: gunicorn form.funnshopp.wsgi --log-file -
