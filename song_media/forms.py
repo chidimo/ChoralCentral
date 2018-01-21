@@ -21,6 +21,12 @@ class NewVocalPartForm(forms.ModelForm):
                 attrs={'class' : 'form-control', 'placeholder' : 'Part name'})
                 }
 
+    def clean_name(self):
+        name = self.cleaned_data.get("name", None).upper()
+        if VocalPart.objects.filter(name=name).exists():
+            raise forms.ValidationError(_("{} already exists".format(name)))
+        return name
+
 class NewScoreNotationForm(forms.ModelForm):
     class Meta:
         model = ScoreNotation
@@ -30,6 +36,12 @@ class NewScoreNotationForm(forms.ModelForm):
             'name' : forms.TextInput(
                 attrs={'class' : 'form-control', 'placeholder' : 'Notation name'})
                 }
+
+    def clean_name(self):
+        name = self.cleaned_data.get("name", None).upper()
+        if VocalPart.objects.filter(name=name).exists():
+            raise forms.ValidationError(_("{} already exists".format(name)))
+        return name
 
 class NewScoreForm(forms.ModelForm):
     class Meta:

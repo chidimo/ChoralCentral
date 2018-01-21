@@ -21,6 +21,11 @@ class VocalPart(mdl.TimeStampedModel):
     # def get_absolute_url(self):
     #     return reverse()
 
+
+    def save(self, *args, **kwargs):
+        self.name = self.name.upper()
+        super(VocalPart, self).save(*args, **kwargs)
+
 class ScoreNotation(mdl.TimeStampedModel):
     name = models.CharField(max_length=30, default='Solfa', unique=True)
 
@@ -32,6 +37,10 @@ class ScoreNotation(mdl.TimeStampedModel):
 
     # def get_absolute_url(self):
     #     return reverse()
+
+    def save(self, *args, **kwargs):
+        self.name = self.name.upper()
+        super(ScoreNotation, self).save(*args, **kwargs)
 
 class Score(mdl.TimeStampedModel):
     uploader = models.ForeignKey(SiteUser, null=True, on_delete=models.SET_NULL)
@@ -46,11 +55,11 @@ class Score(mdl.TimeStampedModel):
 
     @property
     def score_parts(self):
-        return [", ".join([each.name for each in self.part.all()])]
+        return ", ".join([each.name for each in self.part.all()])
 
     @property
     def score_notations(self):
-        return [", ".join([each.name for each in self.notation.all()])]
+        return ", ".join([each.name for each in self.notation.all()])
 
     @property
     def score_likes(self):
@@ -76,7 +85,7 @@ class Midi(mdl.TimeStampedModel):
 
     @property
     def midi_parts(self):
-        return [", ".join([each.name for each in self.part.all()])]
+        return ", ".join([each.name for each in self.part.all()])
 
     def __str__(self):
         return "{}_{}_{} midi".format(self.song.title, self.pk, self.part)
