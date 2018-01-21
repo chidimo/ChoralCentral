@@ -19,6 +19,7 @@ class NewLanguageForm(forms.ModelForm):
         language = self.cleaned_data.get("language", None).upper()
         if Language.objects.filter(language=language):
             raise forms.ValidationError(_("{} already exists".format(language)))
+        return language
 
 class EditLanguageForm(forms.ModelForm):
     class Meta:

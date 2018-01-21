@@ -49,6 +49,7 @@ class DisplayScore(View):
         fname = os.path.basename(score_doc.file.url)
         path = os.path.join(settings.MEDIA_ROOT, 'scores\\' + fname)
         response = FileResponse(open(path, 'rb'), content_type="application/pdf")
+        print("++++5555*************",  path)
         response["Content-Disposition"] = "filename={}_{}".format(score_doc.part, fname)
         return response
 
