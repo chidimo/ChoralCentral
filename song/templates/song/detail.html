@@ -78,8 +78,23 @@
                     </tr>
                 </tbody>
             </table>
+<<<<<<< HEAD
         </div>
     </div>
+=======
+            {% else %}
+            <p>No music score uploaded for this song</p>
+            {% endif %}
+        </div><!-- END SHEET -->
+
+        <!-- midi -->
+        <div class="">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h4>Midis <a href="{% url 'song-media:midi_add_song' song.pk %}"><i class="fa fa-plus"></i></a></h4>
+                </div>
+            </div>
+>>>>>>> bc059f71851b27c9f260a468cdd54513d5cb27e9
 
     <div class="row">
         <div class="col-sm-12">
