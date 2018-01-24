@@ -9,186 +9,170 @@
 
 <div class="container">
 
-    <div class="list-group">
-        {% if song %}
-        <div class="row">
-            <div class="col-sm-12">
-                <h2>{{ song.title }}
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>{{ song.title }}
 
-                    {% if song.originator.user == user %}
+                {% if user.is_authenticated %}
 
-                            <a href="{% url 'song:edit' song.pk song.pk %}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                            <a href="{% url 'song:delete' song.pk %}"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                    {% endif %}
+                <!-- like script -->
+                <button class="fa fa-star btn btn-primary" type="submit" id="like" title="{{ song.pk }}" value="Like"></button>
 
-                    {% if user.is_authenticated %}
+                <script>
+                $('#like').click(function(){
+                    $.ajax({
+                        type: "POST",
+                        url: "{% url 'song:like_song' %}",
+                        data: {'pk': $(this).attr('title'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                        dataType: "json",
+                        success: function(response) {
+                                alert(response.message);
+                        },
+                        error: function(rs, e) {
+                                alert(rs.responseText);
+                        }
+                    });
+                    })
+                </script>
 
-                    <!-- like script -->
-                    <button class="fa fa-star btn btn-primary" type="submit" id="like" title="{{ song.pk }}" value="Like"></button>
-
-                    <script>
-                    $('#like').click(function(){
-                        $.ajax({
-                            type: "POST",
-                            url: "{% url 'song:like_song' %}",
-                            data: {'pk': $(this).attr('title'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
-                            dataType: "json",
-                            success: function(response) {
-                                    alert(response.message);
-                            },
-                            error: function(rs, e) {
-                                    alert(rs.responseText);
-                            }
-                        });
-                        })
-                    </script>
-
-                    {% else %}
-                        <p class="h4"><a href="{% url 'login' %}?next={{ request.path }}">login</a> to give a star</p>
-                    {% endif %}
-                    <!-- end like script -->
-                </h2>
-            </div>
+                {% else %}
+                    <p class="h4"><a href="{% url 'login' %}?next={{ request.path }}">login</a> to give a star</p>
+                {% endif %}
+                <!-- end like script -->
+                {% if song.originator.user == user %}
+                <span class="mx-right">
+                    <a class="fa fa-pencil" aria-hidden="true" href="{% url 'song:edit' song.pk song.slug %}"></a> |
+                    <a class="fa fa-trash" aria-hidden="true" href="{% url 'song:delete' song.pk %}"></a>
+                </span>
+            {% endif %}
+            </h2>
         </div>
+    </div>
 
-        <div class="list-group-item list-group-item-action list-group-item-primary">
-            <div class="row">
-                <div class="col-sm-3">
-                    <p class="h4">For</p>
-                    <p>{{ song.voicing }}</p>
-                </div>
-
-                <div class="col-sm-3">
-                    <p class="h4">Performed</p>
-                    <p>{{ song.tempo_text }}</p>
-                </div>
-
-
-                <div class="col-sm-3">
-                    <p class="h4">Tempo</p>
-                    <p>{{ song.tempo }}</p>
-                </div>
-
-                <div class="col-sm-3"><p class="h4">Timing</p>
-                    <p>{{ song.bpm }}/{{ song.divisions }}</p>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="list-group-item list-group-item-action list-group-item-primary">
-
-            <div class="row">
-                <div class="col-sm-3"><p class="h4">Scripture</p>
-                    <p>{{ song.scripture_ref }}</p>
-                </div>
-
-                <div class="col-sm-3"><p class="h4">Started by</p>
-                    <a href="{% url 'siteuser:detail' song.originator.pk song.originator.slug %}">{{ song.originator.screen_name }}</a>
-                </div>
-
-                <div class="col-sm-3"><p class="h4">Started</p>
-                    <p>{{ song.created|date:"Y-M-d" }}</p>
-                </div>
-
-                <div class="col-sm-3"><p class="h4">Composed</p>
-                    <p>{{ song.compose_date }}</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="list-group-item list-group-item-action list-group-item-primary">
-            <div class="row">
-                <div class="col-sm-4">
-                    <p class="h4">Season(s)</p>
-                    <p>{{ song.all_seasons }}</p>
-                </div>
-
-                <div class="col-sm-4">
-                    <p class="h4">Mass Part</p>
-                    <p>{{ song.all_masspart }}</p>
-                </div>
-
-                <div class="col-sm-4">
-                    <p class="h4">Authors</p>
-                    <p>
-                        {% for author in song.authors.all %}
-                            <a href="{% url 'author:detail' author.pk author.slug %}">{{ author }}</a>{% if not forloop.last %},{% endif %}
-                        {% endfor %}
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="list-group-item list-group-item-action list-group-item-primary">
-            <div class="row">
-                <div class="col-sm-12">
-                    <h4>Lyrics</h4>
-                    {{ song.lyrics|markdown_format }}
-                </div>
-            </div>
-        </div>
-
-        <!-- scores -->
-        <div class="list-group-item list-group-item-action list-group-item-primary">
-            <div class="row">
-                <div class="col-sm-12">
-                    <h4>Scores <a href="{% url 'song-media:score_add_song' song.pk %}"><i class="fa fa-plus" aria-hidden="true"></i></a></h4>
-                </div>
-            </div>
-
+    <div class="row">
+        <div class="col-sm-12">
             <table class="table table-responsive-md">
                 <thead class="thead-light">
-                    <caption>Uploaded scores</caption>
+                    <caption>Performance metadata</caption>
                     <tr>
-                        <th>#</th>
-                        <th>Parts</th>
-                        <th>Notations</th>
-                        <th>Uploader</th>
-                        <th><i class="fa fa-star" aria-hidden="true"></th>
-                        <th>Action</th>
+                        <th>For</th>
+                        <th>Performed</th>
+                        <th>Tempo</th>
+                        <th>Timing</th>
+                        <th>Scripture</th>
+                        <th>By</th>
+                        <th>Date</th>
+                        <th>Composed</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% if song.score_set.all %}
-                    {% for score in song.score_set.all %}
-                        <tr>
-                            <th>{{ forloop.counter }}</th>
-                            <td><a href="{% url 'song-media:score_view' score.pk %}" target="blank">{{ score.score_parts }}</a></td>
-                            <td>{{ score.score_notations }}</td>
-                            <td><a href="{% url 'siteuser:detail' score.uploader.pk score.uploader.slug %}">{{ score.uploader.screen_name }}</a></td>
-                            <td><a href="">{{ score.score_likes }}</a></td>
-                            <td><a href="" class="fa fa-pencil"></a> | <a href="{% url 'song-media:delete_score' score.pk song.pk song.slug %}" class="fa fa-trash"></a></td>
-                        </tr>
-                    {% endfor %}
+                    <tr>
+                        <td>{{ song.voicing }}</td>
+                        <td>{{ song.tempo_text }}</td>
+                        <td>{{ song.tempo }}</td>
+                        <td>{{ song.bpm }}/{{ song.divisions }}</td>
+                        <td>{{ song.scripture_ref }}</td>
+                        <td><a href="{% url 'siteuser:detail' song.originator.pk song.originator.slug %}">{{ song.originator.screen_name }}</td>
+                        <td>{{ song.created|date:"d-M-Y" }}</td>
+                        <td>{{ song.compose_date }}</td>
+                    </tr>
                 </tbody>
             </table>
-            {% else %}
-            <p>No music score uploaded for this song</p>
-            {% endif %}
-        </div><!-- END SHEET -->
+        </div>
+    </div>
 
-        <!-- midi -->
-        <div class="list-group-item list-group-item-action list-group-item-primary">
-            <div class="row">
-                <div class="col-sm-12">
-                    <h4>Midis <a href="{% url 'song-media:midi_add_song' song.pk %}"><i class="fa fa-plus"></i></a></h4>
-                </div>
-            </div>
-
+    <div class="row">
+        <div class="col-sm-12">
             <table class="table table-responsive-md">
                 <thead class="thead-light">
-                    <caption>Uploaded midis</caption>
+                    <caption>Metadata</caption>
                     <tr>
-                        <th>#</th>
-                        <th>Parts</th>
-                        <th>Uploader</th>
-                        <th><i class="fa fa-star" aria-hidden="true"></th>
-                        <th>Action</th>
+                        <th>Seasons</th>
+                        <th>Masspart</th>
+                        <th>Authors</th>
                     </tr>
                 </thead>
                 <tbody>
-            {% if song.midi_set.all %}
+                    <tr>
+                        <td>
+                            {% for season in song.seasons.all %}
+                                <a href="#">{{ season }}</a>{% if not forloop.last %},{% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for masspart in song.mass_parts.all %}
+                                <a href="#">{{ masspart }}</a>{% if not forloop.last %},{% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for author in song.authors.all %}
+                                <a href="{% url 'author:detail' author.pk author.slug %}">{{ author }}</a>{% if not forloop.last %},{% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- scores -->
+    <div class="row">
+        <div class="col-sm-12">
+            <h4>Scores <a href="{% url 'song-media:score_add_song' song.pk %}"><i class="fa fa-plus" aria-hidden="true"></i></a></h4>
+        </div>
+    </div>
+
+    <table class="table table-responsive-md">
+        <thead class="thead-light">
+            <caption>Scores</caption>
+            <tr>
+                <th>#</th>
+                <th>Parts</th>
+                <th>Notations</th>
+                <th>Uploader</th>
+                <th><i class="fa fa-star" aria-hidden="true"></th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        {% if song.score_set.all %}
+        <tbody>
+            {% for score in song.score_set.all %}
+                <tr>
+                    <th>{{ forloop.counter }}</th>
+                    <td><a href="{% url 'song-media:score_view' score.pk %}" target="blank">{{ score.score_parts }}</a></td>
+                    <td>{{ score.score_notations }}</td>
+                    <td><a href="{% url 'siteuser:detail' score.uploader.pk score.uploader.slug %}">{{ score.uploader.screen_name }}</a></td>
+                    <td><a href="">{{ score.score_likes }}</a></td>
+                    <td><a href="" class="fa fa-pencil"></a> | <a href="{% url 'song-media:delete_score' score.pk song.pk song.slug %}" class="fa fa-trash"></a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        {% else %}
+            <p>No music score uploaded for this song</p>
+        {% endif %}
+    </table>
+        <!-- END SHEET -->
+
+    <!-- midi -->
+    <div class="row">
+        <div class="col-sm-12">
+            <h4>Midis <a href="{% url 'song-media:midi_add_song' song.pk %}"><i class="fa fa-plus"></i></a></h4>
+        </div>
+    </div>
+
+    <table class="table table-responsive-md">
+        <thead class="thead-light">
+            <caption>Midis</caption>
+            <tr>
+                <th>#</th>
+                <th>Parts</th>
+                <th>Uploader</th>
+                <th><i class="fa fa-star" aria-hidden="true"></th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        {% if song.midi_set.all %}
+            <tbody>
                 {% for midi in song.midi_set.all %}
                     <tr>
                         <th>{{ forloop.counter }}</th>
@@ -198,30 +182,30 @@
                         <td><a href="" class="fa fa-pencil"></a> | <a href="{% url 'song-media:delete_midi' midi.pk song.pk song.slug %}" class="fa fa-trash"></a></td>
                     </tr>
                 {% endfor %}
-                </tbody>
-            </table>
-            {% else %}
-                <p>No midis uploaded for this song</p>
-            {% endif %}
-        </div> <!-- END AUDIO -->
-
-        <div class="list-group-item list-group-item-action list-group-item-primary">
-            <div class="row">
-                <div class="col-sm-12">
-                    <h4>Videos <a href="{% url 'song-media:videolink_new_song' song.pk %}"><i class="fa fa-plus"></i></a></h4>
-                    {% if song.videolink_set.all %}
-                        {% for link in  song.videolink_set.all %}
-                            <a href="{{ link.video_link }}" target="_blank">{{ link.video_link }}</a>{% if not forloop.last %} | {% endif %}
-                        {% endfor %}
-                    {% else %}
-                        <p>No video links added for this song</p>
-                    {% endif %}
-                </div>
-            </div>
-        </div> <!-- END VIDEO -->
+            </tbody>
         {% else %}
-            <p>Song does not exist</p>
+            <p>No midis uploaded for this song</p>
         {% endif %}
+    </table><!-- END AUDIO -->
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h4>Videos <a href="{% url 'song-media:videolink_new_song' song.pk %}"><i class="fa fa-plus"></i></a></h4>
+            {% if song.videolink_set.all %}
+                {% for link in  song.videolink_set.all %}
+                    <a href="{{ link.video_link }}" target="_blank">{{ link.video_link }}</a>{% if not forloop.last %} | {% endif %}
+                {% endfor %}
+            {% else %}
+                <p>No video links added for this song</p>
+            {% endif %}
+        </div>
+    </div><!-- END VIDEO -->
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h4>Lyrics</h4>
+            {{ song.lyrics|markdown_format }}
+        </div>
     </div>
 </div>
 {% endblock content_content %}

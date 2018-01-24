@@ -23,34 +23,36 @@
         <div class="col-sm-12 d-none" id="no-hits"></div>
     </div>
 
-    {% if song_list %}
+    {% if songs %}
     <div class="list-group" id="hits-container">
-        {% for song in song_list %}
-    
-        <div class="list-group-item list-group-item-action list-group-item-primary">
-            <a href="{% url 'song:detail' song.pk song.slug %}">
-            <h5 class="list-group-item-heading" id="songTitle">{{ song.title }}</h5></a>
-            <p class="list-group-item-text" id="songFirstLine">{{ song.first_line }}</p>
-    
-            <span class="h6 float-sm-left">
-                <a href="{% url 'song:reader' song.pk song.slug %}">
-                    <i class="fa fa-minus-square" aria-hidden="true"></i>
-                </a>
-                <a href="{% url 'blog:new_song' song.pk %}" data-toggle="tooltip" data-placement="top" title="Blog this song">
-                    <i class="fa fa-rss-square" aria-hidden="true"></i>
-                </a>
-                <a href="" data-toggle="tooltip" data-placement="top" title="Share on facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
-                <a href="" data-toggle="tooltip" data-placement="top" title="Share by email"><i class="fa fa-envelope" aria-hidden="true"></i></a>
-                <a href="" data-toggle="tooltip" data-placement="top" title="Add to cart"><i class="fa fa-cart-plus" aria-hidden="true"></i></a>
-                <a href="" data-toggle="tooltip" data-placement="top" title="Reader view"><i class="fa fa-book" aria-hidden="true"></i></a>
-            </span>
-    
-            <span class="h5 float-sm-right">
-                <span class="badge badge-light badge-pill">{{ song.song_likes }}</span>
-                <span class="badge badge-light badge-pill">
-                    <a href="#"><i class="fa fa-star" aria-hidden="true"></i></a>
+        {% for song in songs %}
+
+        <div class="row">
+            <div class="col-sm-12">
+                <a href="{% url 'song:detail' song.pk song.slug %}">
+                <h5 class="list-group-item-heading" id="songTitle">{{ song.title }}</h5></a>
+                <p class="list-group-item-text" id="songFirstLine">{{ song.first_line }}</p>
+
+                <span class="h6 float-sm-left">
+                    <a href="{% url 'song:reader' song.pk song.slug %}">
+                        <i class="fa fa-minus-square" aria-hidden="true"></i>
+                    </a>
+                    <a href="{% url 'blog:new_song' song.pk %}" data-toggle="tooltip" data-placement="top" title="Blog this song">
+                        <i class="fa fa-rss-square" aria-hidden="true"></i>
+                    </a>
+                    <a href="" data-toggle="tooltip" data-placement="top" aria-hidden="true" title="Share on facebook" class="fa fa-facebook-official"></a>
+                    <a href="" data-toggle="tooltip" data-placement="top" aria-hidden="true" title="Share by email" class="fa fa-envelope"></a>
+                    <a href="" data-toggle="tooltip" data-placement="top" aria-hidden="true" title="Add to cart" class="fa fa-cart-plus"></a>
+                    <a href="" data-toggle="tooltip" data-placement="top" aria-hidden="true" title="Reader view" class="fa fa-book"></a>
                 </span>
-            </span>
+
+                <span class="h5 float-sm-right">
+                    <span class="badge badge-light badge-pill">{{ song.song_likes }}</span>
+                    <span class="badge badge-light badge-pill">
+                        <a href="#"><i class="fa fa-star" aria-hidden="true"></i></a>
+                    </span>
+                </span>
+            </div>
         </div>
         {% endfor %}
     </div>
@@ -69,11 +71,11 @@
 <script type="text/template" id="hit-template">
 
     <div class="list-group-item list-group-item-action list-group-item-primary">
-            
+
         <a href="{{ get_absolute_url }}">
             <h5 class="list-group-item-heading">{{{ _highlightResult.title.value }}}</h5>
         </a>
-        
+
         <p class="list-group-item-text">{{{ _highlightResult.all_authors.value }}}</p>
         <p class="list-group-item-text">{{{ _highlightResult.all_seasons.value }}}</p>
         <p class="list-group-item-text">{{{ _highlightResult.all_masspart.value }}}</p>

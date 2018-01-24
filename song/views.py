@@ -41,7 +41,7 @@ def instant_song(request):
     context['appID'] = settings.ALGOLIA['APPLICATION_ID']
     context['searchKey'] = settings.ALGOLIA['SEARCH_API_KEY']
     context['indexName'] = get_adapter(Song).index_name
-    context['song_list'] = Song.published_set.all()
+    context['songs'] = Song.published_set.all()
     return render(request, 'song/instant_song.html', context)
 
 def auto_song(request):
@@ -69,9 +69,9 @@ def song_like_view(request):
 
 class SongIndex(PaginationMixin, generic.ListView):
     model = Song
-    context_object_name = 'song_list'
-    template_name = 'song/song_index.html'
-    paginate_by = 15
+    context_object_name = 'songs'
+    template_name = 'song/index.html'
+    paginate_by = 30
 
     def get_context_data(self, **kwargs):
         print("IP Address for debug-toolbar: " + self.request.META['REMOTE_ADDR'])
