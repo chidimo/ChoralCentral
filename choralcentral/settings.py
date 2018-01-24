@@ -155,26 +155,8 @@ DEFAULT_FROM_EMAIL = 'choralcentral@gmail.com'
 if ENV_ROLE == 'production':
     EMAIL_HOST_PASSWORD = get_env_variable('DEFAULT_EMAIL_PASS')
 
-deployment_platform = get_env_variable("DEPLOYMENT_PLATFORM")
-if deployment_platform == "localsqlite3":
-    DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'choralcentral.sqlite3'),
-        }
-    }
-elif deployment_platform == "pythonanywhere":
-    DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {'sql_mode' : 'traditional'},
-        'NAME': 'sohtire$choralcentral',
-        'USER': 'sohtire',
-        'PASSWORD': get_env_variable('CENTRAL_PASS'),
-        'HOST': 'sohtire.mysql.pythonanywhere-services.com',
-        }
-    }
-elif deployment_platform == "heroku":
+DEPLOYMENT_PLATFORM = get_env_variable("DEPLOYMENT_PLATFORM")
+if DEPLOYMENT_PLATFORM == "heroku-plus-local":
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -185,6 +167,18 @@ elif deployment_platform == "heroku":
             'PORT': 5432
         }
     }
+else:
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {'sql_mode' : 'traditional'},
+        'NAME': 'sohtire$choralcentral',
+        'USER': 'sohtire',
+        'PASSWORD': get_env_variable('CENTRAL_PASS'),
+        'HOST': 'sohtire.mysql.pythonanywhere-services.com',
+        }
+    }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
