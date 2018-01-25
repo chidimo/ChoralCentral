@@ -4,11 +4,27 @@
 {% block content_content %}
 <div class="container">
 
-    <div class="row">
-        <div class="col-sm-12">
-            <p>Over {{ song_count }} high quality songs published till date...</p>
+    {% if form.errors %}
+        <div class="row">
+            {{ form.errors }}
+        </div>
+    {% endif %}
+
+    <div class="container-fluid" style="background: #FF3B3F; padding: 10px;">
+        <div class="filter-block">
+            <form action="{% url 'song:filter' %}" method="get" enctype="multipart/form-data">
+                <div class="row"><div class="col-sm-12">{{ form.season }}</div></div>
+                <div class="row"><div class="col-sm-12">{{ form.masspart }}</div></div>
+                <div class="row"><div class="col-sm-12">{{ form.voicing }}</div></div>
+                <div class="row"><div class="col-sm-12">{{ form.language }}</div></div>
+                <div class="row"><div class="col-sm-12">
+                    <button  class="btn btn-primary btn-md btn-block" type="submit" value="Filter">Filter</button></div>
+                </div>
+            </form>
         </div>
     </div>
+
+    {% if total_found %}{{ total_found }} results{% endif %}
 
     {% if songs %}
         <div class="list-group" id="hits-container">

@@ -10,6 +10,8 @@ from django_addanother.widgets import AddAnotherWidgetWrapper
 
 from siteuser.models import SiteUser
 from .models import Song
+from season.models import Season
+from masspart.models import MassPart
 from voicing.models import Voicing
 from language.models import Language
 
@@ -25,44 +27,32 @@ DIVS = "Divisions (optional)"
 LYRICS_HELP = """Markdown supported.
 See basic markdown syntax [here](https://daringfireball.net/projects/markdown/basics)"""
 
-
 # pylint: disable=C0326, C0301, C0103, C0111
 
-SEAS = [
-    "ORDINARY TIME", "ADVENT", "CHRISTMAS", "LENT",
-    "EASTER", "PENTECOST", "OTHER"
-    ]
-PARTS = [
-    "ENTRANCE", "KYRIE", "GLORIA", "ACCLAMATION", "OFFERTORY",
-    "COMMUNION", "SANCTUS", "AGNUS DEI", "RECESSION", "GENERAL","CAROL"
-    ]
-
-SEASON_CHOICES = [[each, each] for each in SEAS]
-SEASON_CHOICES.insert(0, ("", "Select Season"))
-
-MASS_CHOICES = [[each, each] for each in PARTS]
-MASS_CHOICES.insert(0, ("", "Select Masspart"))
-
-VOICING_CHOICES = [(each.voicing, each.voicing) for each in Voicing.objects.all()]
-VOICING_CHOICES.insert(0, ("", "Select Voicing"))
-
-LANGUAGE_CHOICES = [(each.language, each.language) for each in Language.objects.all()]
-LANGUAGE_CHOICES.insert(0, ("", "Select Language"))
-
 class SongFilterForm(forms.Form):
-    # pass
-    season = forms.ChoiceField(
-        required=False, choices=SEASON_CHOICES, widget=forms.Select(
-            attrs={'class':'form-control'}))
-    mass_part = forms.ChoiceField(
-        required=False, choices=MASS_CHOICES, widget=forms.Select(
-            attrs={'class':'form-control'}))
-    voicing = forms.ChoiceField(
-        required=False, choices=VOICING_CHOICES, widget=forms.Select(
-            attrs={'class':'form-control'}))
-    language = forms.ChoiceField(
-        required=False, choices=LANGUAGE_CHOICES, widget=forms.Select(
-            attrs={'class':'form-control'}))
+    season = forms.ModelChoiceField(
+        queryset=Season.objects.all(),
+        # initial=0,
+        required=False,
+        widget=forms.Select(attrs={"class" : "form-control",}))
+
+    masspart = forms.ModelChoiceField(
+        queryset=MassPart.objects.all(),
+        # initial=0,
+        required=False,
+        widget=forms.Select(attrs={"class" : "form-control",}))
+
+    voicing = forms.ModelChoiceField(
+        queryset=Voicing.objects.all(),
+        # initial=0,
+        required=False,
+        widget=forms.Select(attrs={"class" : "form-control",}))
+
+    language = forms.ModelChoiceField(
+        queryset=Language.objects.all(),
+        # initial=0,
+        required=False,
+        widget=forms.Select(attrs={"class" : "form-control",}))
 
 class NewSongForm(forms.ModelForm):
     class Meta:

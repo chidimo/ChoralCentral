@@ -125,7 +125,7 @@ class SongDelete(generic.DeleteView):
         return context
 
 class FilterSongs(generic.ListView):
-    context_object_name = "filtered"
+    context_object_name = "songs"
     template_name = "song/filter_result.html"
 
     def get_queryset(self):
@@ -135,59 +135,59 @@ class FilterSongs(generic.ListView):
         pass # finish later
 
 def filter_songs(request):
-    if "season" in request.GET:
+    if request.GET:
         form = SongFilterForm(request.GET)
-        template = "song/filter_result.html"
+        template = "song/index.html"
         if form.is_valid():
             form = form.cleaned_data
-            print(form)
             season = form['season']
-            mass_part = form['mass_part']
+            masspart = form['masspart']
             voicing = form["voicing"]
             language = form["language"]
 
-            filtered = Song.published_set.all()
+            songs = Song.published_set.all()
+            songs = Song.published_set.filter(
+                seasons__season=season,
+                mass_parts__part=masspart,
+                voicing__voicing=voicing,
+                language__language=language)
 
-            if season == "":
-                pass
-            else:
-                seas = Season.objects.get(season=season)
-                filtered = filtered.filter(seasons=seas)
+            # if season == "":
+            #     pass
+            # else:
+            #     songs = songs.filter(seasons__season=season)
 
-            if mass_part == "":
-                pass
-            else:
-                mps = MassPart.objects.get(part=mass_part)
-                filtered = filtered.filter(mass_parts=mps)
+            # if masspart == "":
+            #     pass
+            # else:
+            #     songs = songs.filter(mass_parts__part=masspart)
 
-            if voicing == "":
-                pass
-            else:
-                voi = Voicing.objects.get(voicing=voicing)
-                filtered = filtered.filter(voicing=voi)
+            # if voicing == "":
+            #     pass
+            # else:
+            #     songs = songs.filter(voicing__voicing=voicing)
 
-            if language == "":
-                pass
-            else:
-                lan = Language.objects.get(language=language)
-                filtered = filtered.filter(language=lan)
+            # if language == "":
+            #     pass
+            # else:
+            #     songs = songs.filter(language__language=language)
 
             form = SongFilterForm()
-            total_found = filtered.count()
+            total_found = songs.count()
 
-            try:
-                page = request.GET.get("page", 1)
-            except PageNotAnInteger:
-                page = 1
+            # try:
+            #     page = request.GET.get("page", 1)
+            # except PageNotAnInteger:
+            #     page = 1
 
-            p = Paginator(filtered, request=request, per_page=10)
-            songs = p.page(page)
+            # p = Paginator(songs, request=request, per_page=10)
+            # songs = p.page(page)
 
-            context = {'filtered' : songs, "total_found" : total_found, 'form' : form}
-            return render_to_response(template, context)
+            context = {'songs' : songs, "total_found" : total_found, 'form' : form}
+            return render(request, template, context)
     else:
         form = SongFilterForm()
-        template = "song/filter_result.html"
+        template = "song/index.html"
         return render(request, template, {'form' : form})
 
 def reader_view(request, pk, slug):
