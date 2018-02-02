@@ -135,9 +135,9 @@ class FilterSongs(generic.ListView):
         pass # finish later
 
 def filter_songs(request):
+    template = "song/index.html"
     if request.GET:
         form = SongFilterForm(request.GET)
-        template = "song/index.html"
         if form.is_valid():
             form = form.cleaned_data
             season = form['season']
@@ -187,7 +187,6 @@ def filter_songs(request):
             return render(request, template, context)
     else:
         form = SongFilterForm()
-        template = "song/index.html"
         return render(request, template, {'form' : form})
 
 def reader_view(request, pk, slug):
