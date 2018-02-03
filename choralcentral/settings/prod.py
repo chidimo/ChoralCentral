@@ -1,4 +1,4 @@
-from base import *
+from .base import *
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 DEBUG = False
@@ -25,5 +25,3 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # heroku specific settings
 import django_heroku
 django_heroku.settings(locals())
-
-testYatestY
