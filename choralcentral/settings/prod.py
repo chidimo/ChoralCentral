@@ -24,3 +24,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # heroku specific settings
 import django_heroku
 django_heroku.settings(locals())
+
+testYatestY
