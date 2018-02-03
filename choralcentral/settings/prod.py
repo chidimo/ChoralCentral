@@ -16,8 +16,9 @@ DATABASES = {
         # 'NAME':'test.db',
         'ENGINE': 'django.db.backends.mysql',
         'NAME':'parousia$test_db'
+        }
     }
-}
+}   
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
