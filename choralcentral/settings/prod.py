@@ -15,7 +15,7 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.sqlite3', # for sqlite3
         # 'NAME':'test.db',
         'ENGINE': 'django.db.backends.mysql',
-        'NAME':'parousia$test_default'
+        'NAME':'parousia$test_db'
     }
 }
 
