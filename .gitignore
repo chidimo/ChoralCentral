@@ -4,4 +4,5 @@ staticfiles/
 **/__pycache__
 **__pycache__
 geckodriver.log
-
+choralcentral_dev.log
+choralcentral_prod.log
