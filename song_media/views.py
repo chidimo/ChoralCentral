@@ -47,13 +47,11 @@ class NewScore(LoginRequiredMixin, generic.CreateView):
 
 class DisplayScore(View):
     def get(self, request, *args, **kwargs):
-        score_doc = get_object_or_404(Score, pk=self.kwargs.get('pk', None))
-        fname = os.path.basename(score_doc.file.url)
-        # path = settings.
-        path = os.path.join(settings.MEDIA_ROOT, 'scores/' + fname)
+        doc = get_object_or_404(Score, pk=self.kwargs.get('pk', None))
+        fname = doc.file.url
+        path = os.path.abspath(settings.BASE_DIR + fname)
         response = FileResponse(open(path, 'rb'), content_type="application/pdf")
-        print("++++5555*************",  path)
-        response["Content-Disposition"] = "filename={}_{}".format(score_doc.part, fname)
+        response["Content-Disposition"] = "filename={}_{}".format(doc.part, fname)
         return response
 
 class DeleteScore(LoginRequiredMixin, generic.DeleteView):
