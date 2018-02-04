@@ -66,11 +66,11 @@ class NewMidi(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
     template_name = 'song_media/midi_new.html'
     form_class = NewMidiForm
 
-    # def form_valid(self, form): implement likes first
-    #     form.instance.uploader = SiteUser.objects.get(user=self.request.user)
-    #     self.object = form.save()
-    #     self.object.likes.add(SiteUser.objects.get(user=self.request.user))
-    #     return redirect(self.get_success_url())
+    def form_valid(self, form):
+        form.instance.uploader = SiteUser.objects.get(user=self.request.user)
+        self.object = form.save()
+        self.object.likes.add(SiteUser.objects.get(user=self.request.user))
+        return redirect(self.get_success_url())
 
     def form_valid(self, form):
         form.instance.uploader = SiteUser.objects.get(user=self.request.user)

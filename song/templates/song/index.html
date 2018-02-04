@@ -1,16 +1,8 @@
 {% extends "choralcentral_base.html" %}
 {% load static %}
 
-{% block content_content %}
-
-    {% if form.errors %}
-        <div class="row">
-            {{ form.errors }}
-        </div>
-    {% endif %}
-
-    <div class="container-fluid" style="background: #FF3B3F; padding: 10px;">
-        <div class="filter-block">
+    {% block left_sidebar %}
+        <div class="filter-block" style="background: #FF3B3F; padding: 10px;">
             <form action="{% url 'song:filter' %}" method="get" enctype="multipart/form-data">
                 <div class="row"><div class="col-sm-12">{{ form.season }}</div></div>
                 <div class="row"><div class="col-sm-12">{{ form.masspart }}</div></div>
@@ -21,9 +13,15 @@
                 </div>
             </form>
         </div>
-    </div>
+    {% endblock left_sidebar %}
 
-    {% if total_found %}{{ total_found }} results{% endif %}
+{% block content_content %}
+
+    {% if form.errors %}
+        <div class="row">
+            {{ form.errors }}
+        </div>
+    {% endif %}
 
     {% if songs %}
         <div class="list-group" id="hits-container">
@@ -31,26 +29,19 @@
 
                 <div class="row">
                    <div class="col-sm-12">
-                        <h5><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h5>
-                        <p class="" id="songFirstLine">{{ song.first_line }}</p>
+                        <h3><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h3>
+                        <h4 class="" id="songFirstLine">{{ song.first_line }}</h4>
 
                         <span class="h6 float-sm-left">
-                            <a href="{% url 'song:reader' song.pk song.slug %}">
-                                <i class="fa fa-minus-square" aria-hidden="true"></i>
-                            </a>
-                            <a href="{% url 'blog:new_song' song.pk %}" data-toggle="tooltip" data-placement="top" title="Blog this song">
-                                <i class="fa fa-rss-square" aria-hidden="true"></i>
-                            </a>
-                            <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="" title="Share on facebook" class="fa fa-facebook-official"></a>
-                            <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href=""title="Share by email" class="fa fa-envelope"></a>
-                            <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'cart:add_to_cart' song.pk %}"title="Add to cart" class="fa fa-cart-plus"></a>
-                            <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href=""title="Reader view" class="fa fa-book"></a>
+                            <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'blog:new_song' song.pk %}" title="Blog this song"><i class="fas fa-pen-square fa-2x"></i></a>
+                            <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="" title="Share on facebook"><i class="fab fa-facebook fa-2x"></i></a>
+                            <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href=""title="Share by email"><i class="fas fa-at fa-2x"></i></a>
                         </span>
 
                         <span class="h5 float-sm-right">
                             <span class="badge badge-light badge-pill">{{ song.song_likes }}</span>
                             <span class="badge badge-light badge-pill">
-                                <a href="#" class="fa fa-star" aria-hidden="true"></a>
+                                <a href="#"aria-hidden="true"><i class="fas fa-star fa-2x"></i></a>
                             </span>
                         </span>
                 </div>

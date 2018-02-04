@@ -58,10 +58,7 @@
 						<li class="nav-item"><a class="nav-link" href="{% url 'request:index' %}">Requests</a></li>
 						<li class="nav-item"><a class="nav-link" href="{% url 'blog:index' %}">Blog</a></li>
 						<li class="nav-item"><a class="nav-link" href="{% url 'song:instant_song' %}" target="blank">Search</a></li>
-
-						{% if user.is_admin %}
 						<li class="nav-item"><a class="nav-link" href="{% url 'siteuser:index' %}">Members</a></li>
-						{% endif %}
 
 						<li class="nav-item dropdown">
 							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" id="NewDrawer" aria-haspopup="true">New <b class="caret"></b></a>
@@ -108,28 +105,42 @@
 		</nav>
 		{% endblock navigation %}
 
+		{% block introduction %}
+			<div class="container-fluid">
+
+			</div>
+		{% endblock introduction %}
+
 		<div class="container-fluid">
-
-			<main>
-
-				{% block content_content %}
-					content block
-				{% endblock content_content %}
-	
-				{% block javascript %}{% endblock javascript %}
-	
-				{% if is_paginated %}
-				<div class="container">
-					<div class="row">
-						<div class="col-sm-12">{% include "pure_pagination.html" %}</div>
-					</div>
+			<div class="row">
+				<div class="col-sm-3">
+					{% block left_sidebar %}
+						left sidebar
+					{% endblock left_sidebar %}
 				</div>
-				{% endif %}
+				<div class="col-sm-7" role='main'>
 	
-				{% block footer %}
-					{% include "footer.html" %}
-				{% endblock footer %}
-			</main>
+					{% block content_content %}
+						content block
+					{% endblock content_content %}
+		
+					{% block javascript %}{% endblock javascript %}
+		
+					{% if is_paginated %}
+						<div>{% include "pure_pagination.html" %}</div>
+					{% endif %}
+				</div>
+				<div class="col-sm-2">
+					{% block right_sidebar %}
+					right sidebar
+					{% endblock right_sidebar %}
+				</div>
+			</div>
+		</div>
+	
+		{% block footer %}
+			{% include "footer.html" %}
+		{% endblock footer %}
 
 		{% endblock body %}
 

@@ -78,6 +78,7 @@ class Midi(mdl.TimeStampedModel):
     uploader = models.ForeignKey(SiteUser, null=True, on_delete=models.SET_NULL)
     song = models.ForeignKey(Song, null=True, on_delete=models.SET_NULL)
     part = models.ManyToManyField(VocalPart)
+    likes = models.ManyToManyField(SiteUser, related_name="midi_likes")
     file = models.FileField(upload_to=upload_midi)
 
     class Meta:
@@ -86,6 +87,10 @@ class Midi(mdl.TimeStampedModel):
     @property
     def midi_parts(self):
         return ", ".join([each.name for each in self.part.all()])
+    
+    @property
+    def midi_likes(self):
+        return self.likes.count()
 
     def __str__(self):
         return "{}_{}_{} midi".format(self.song.title, self.pk, self.midi_parts)
