@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block content_content %}
-<div class="container">
 
     {% if form.errors %}
         <div class="row">
@@ -61,6 +60,5 @@
     {% else %}
         <p>No songs to display</p>
     {% endif %}
-</div>
 {% endblock content_content %}
-{% block wrap_forms %}{% endblock wrap_forms %}
+

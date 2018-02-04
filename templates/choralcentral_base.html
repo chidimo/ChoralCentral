@@ -6,18 +6,19 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<title>ChoralCentral &raquo; {% block title %}Where sheet music lives{% endblock title %}</title>
 
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+		
 		<!-- Algolia search javascript -->
 		<script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
 
 		<script src="//cdn.jsdelivr.net/g/algoliasearch,algoliasearch.helper"></script>
 
 		<!-- font awesome for icons -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 
 		<script src="//cdn.jsdelivr.net/hogan.js/3.0.2/hogan.min.js"></script>
 
@@ -34,13 +35,15 @@
 		{{ form.media }}
 
 	</head>
+
+	{% block body %}
 	<body>
 		{% block navigation %}
 		<nav class="navbar navbar-light fixed-top navbar-expand-md" role="navigation">
 			<div class="container">
 
-				<a class="navbar-brand navbar-left" href="{% url 'song:index' %}">
-					<img src="{% static 'img/logo-choralcentral.png' %}">
+				<a class="navbar-brand" href="{% url 'song:index' %}">
+					ChoralCentral
 				</a>
 
 				<button type="button" class="navbar-toggler my-toggler" data-toggle="collapse" data-target=".navcontent">
@@ -48,14 +51,14 @@
 					<span class="navbar-toggler-icon"></span>
 				</button>
 
-
-
 				<div class="collapse navbar-collapse navcontent">
 					<ul class="nav navbar-nav">
 
 						<li class="nav-item"><a class="nav-link" href="{% url 'author:index' %}">Authors</a></li>
 						<li class="nav-item"><a class="nav-link" href="{% url 'request:index' %}">Requests</a></li>
 						<li class="nav-item"><a class="nav-link" href="{% url 'blog:index' %}">Blog</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'song:instant_song' %}" target="blank">Search</a></li>
+
 						{% if user.is_admin %}
 						<li class="nav-item"><a class="nav-link" href="{% url 'siteuser:index' %}">Members</a></li>
 						{% endif %}
@@ -99,60 +102,36 @@
 								<a class="nav-link" href="{% url 'siteuser:new' %}">Join</a>
 							</li>
 						{% endif %}
-						<li class="nav-item">
-							<a class="nav-link" href="{% url 'cart:detail' %}"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
-						</li>
 					</ul>
 				</div>
 			</div>
 		</nav>
 		{% endblock navigation %}
 
-		{% block search %}
-		<div class="instant-search text-center">
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-12">
-						<h3>Search
-							<a href="{% url 'song:instant_song' %}">songs</a>
-								or try <a href="{% url 'song:auto_song' %}">autocomplete</a>
-						</h3>
+		<div class="container-fluid">
+
+			<main>
+
+				{% block content_content %}
+					content block
+				{% endblock content_content %}
+	
+				{% block javascript %}{% endblock javascript %}
+	
+				{% if is_paginated %}
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-12">{% include "pure_pagination.html" %}</div>
 					</div>
 				</div>
-			</div>
-		</div>
-		{% endblock search %}
+				{% endif %}
+	
+				{% block footer %}
+					{% include "footer.html" %}
+				{% endblock footer %}
+			</main>
 
-		{% block wrap_content %}
-		<div class="content-block">
-				{% block content_content %}
-				block content_content
-				{% endblock content_content %}
-		</div>
-		{% endblock wrap_content %}
-
-		{% block wrap_forms %}
-		<div class="form-group">
-			{% block content_forms %}
-				block content_forms
-			{% endblock content_forms %}
-		</div>
-		{% endblock wrap_forms %}
-
-		{% block javascript %}{% endblock javascript %}
-
-		{% if is_paginated %}
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-12">{% include "pure_pagination.html" %}</div>
-			</div>
-		</div>
-		{% endif %}
-
-
-		{% block footer %}
-			{% include "footer.html" %}
-		{% endblock footer %}
+		{% endblock body %}
 
 		<script type="text/javascript" >
 			// add attributes to form input elements
