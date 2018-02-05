@@ -1,41 +1,20 @@
 {% extends "choralcentral_base.html" %}
 
 {% block title %}New Comment{% endblock %}
-{% block introBlock %}{% endblock introBlock %}
 
-
-{% block search %}
-<div class="instant-search text-center">
-    <div class="container">
-        <div class="row">
-           <div class="col-sm-12">
-                <h4>Search 
-                    <a href="{% url 'blog:instant_blog' %}">posts</a>
-                     or try <a href="{% url 'blog:auto_blog' %}">autocomplete</a>
-                </h4>
-           </div>
-        </div>
-    </div>
-</div>
-{% endblock search %}
-
-
-{% block content %}
+{% block content_content %}
     <h4>Edit Comment</h4>
   
     {% if form.errors %}
-        <p><strong>{{ form.errors }}</strong></p>
+        <p>{{ form.errors }}</p>
     {% endif %}
 
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
-        <table>
-        {{ form }}
-        </table>
-        <input type="submit" value="Save">
-            </div>
-        </div>
+        {{ form.as_p }}
+
+        <button class="btn btn-primary btn-md float-right" type="submit" value="Save">Save</button>
     </form>
 {% endblock %}
 

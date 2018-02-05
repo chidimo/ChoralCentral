@@ -67,12 +67,14 @@
             {% for request in siteuser.request_set.all %}
             <div class="row">
                 <div class="col-sm-12">
-                    <a href="{% url 'request:detail' request.pk request.slug %}">{{ request }}</a>
-
-                    {% if siteuser.user == user %}
-                    <a href="{% url 'request:edit' request.pk request.slug %}"><i class="fas fa-edit"></i></a>
-                    <a href=""><i class="fa fa-check"></i></a>
-                    {% endif %}
+                    <h4>
+                        <a href="{% url 'request:detail' request.pk request.slug %}">{{ request }}</a>
+    
+                        {% if siteuser.user == user %}
+                        <a href="{% url 'request:edit' request.pk %}"><i class="fas fa-edit"></i></a>
+                        <a href=""><i class="fa fa-check"></i></a>
+                        {% endif %}
+                    </h4>
                 </div>
             </div>
             {% endfor %}
@@ -83,17 +85,19 @@
 
 
     <div class="list-group-item list-group-item-action list-group-item-primary">
-        <div class="row">
-            <div class="col-sm-12">
-                <h2>Blog Posts <a href="{% url 'blog:new' %}"><i class="fa fa-plus"></i></a></h2>
-            </div>
-        </div>
+        <h2>Blog Posts
+            <span class="float-right"><a class="btn btn-primary" href="{% url 'blog:new' %}">New post</a></span>
+        </h2>
 
         {% if siteuser.post_set.all %}
             {% for post in siteuser.post_set.all %}
             <div class="row">
                 <div class="col-sm-12">
-                    <a href="{% url 'blog:detail' post.pk post.slug %}">{{ post.title }}</a>
+                    <h4><a href="{% url 'blog:detail' post.pk post.slug %}">{{ post.title }}</a>
+                        {% if siteuser.user == user %}
+                        <a href="{% url 'blog:edit' post.pk %}"><i class="fas fa-edit"></i></a>
+                        {% endif %}
+                    </h4>
                 </div>
             </div>
             {% endfor %}
@@ -107,26 +111,26 @@
     </div><!-- END BLOG -->
 
     <div class="list-group-item list-group-item-action list-group-item-primary">
-        <div class="row">
-            <div class="col-sm-12">
-                <h2>Authors</h2>
-                {% if siteuser.author_set.all %}
-                    {% for author in siteuser.author_set.all %}
-                    <div class="row">
-                        <div class="col-sm-12">
+        
+        <h2>Authors</h2>
+
+            {% if siteuser.author_set.all %}
+                {% for author in siteuser.author_set.all %}
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h4>
                             <a href="{% url 'author:detail' author.pk author.slug %}">{{ author }} - {{ author.author_type|title }}</a>
                             {% if siteuser.user == user %}
-                            <a href="{% url 'author:edit' author.pk author.slug %}"><i class="fa fa-pencil"></i></a>
+                            <a href="{% url 'author:edit' author.pk author.slug %}"><i class="fas fa-edit"></i></a>
                             {% endif %}
-                        </div>
+                        </h4>
                     </div>
-                    {% endfor %}
-                {% else %}
-                    <p>You have not added any authors</p>
-                {% endif %}
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>You have not added any authors</p>
+            {% endif %}
             </div>
-        </div>
-    </div><!-- END AUTHOR -->
 
     <div class="list-group-item list-group-item-action list-group-item-primary">
         <div class="row">

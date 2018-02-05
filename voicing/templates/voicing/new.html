@@ -1,39 +1,21 @@
 {% extends "choralcentral_base.html" %}
 {% block title %}New Voicing{% endblock %}
 
-{% block wrap_content  %}{% endblock wrap_content  %}
-{% block search %}{% endblock search %}
-
-
 {% block content_content %}
 
 <div class="container upload-forms">
-    <div class="row">
-        <div class="col-sm-12">
-            <h2>New Voicing</h2>
-        </div>
-    </div>
-    
+    <h2>New Voicing</h2>
+
     {% if form.errors %}
-    <div class="row">
-        <div class="col-sm-12">
-            <p>{{ form.errors }}</p>
-        </div>
-    </div>
+        <p>{{ form.errors }}</p>
     {% endif %}
                 
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="row">
-            <div class="col-sm-12">{{ form.voicing }}</div>
-        </div>
-    
-        <div class="row">
-            <div class="col-sm-12">
-                <button  class="btn btn-primary btn-md btn-block" type="submit" value="Save">Save</button>
-            </div>
-        </div>
+
+        {{ form.as_p }}
+
+        <button  class="btn btn-primary btn-md float-right" type="submit" value="Save">Save</button>
     </form>
 </div>
 {% endblock content_content %}
-

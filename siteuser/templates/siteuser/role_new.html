@@ -1,39 +1,21 @@
 {% extends "choralcentral_base.html" %}
-
 {% block title %}Add Role{% endblock %}
 
-
-{% block wrap_content  %}{% endblock wrap_content %}
-{% block search %}{% endblock search %}
-
 {% block content_content %}
-<div class="row">
-    <div class="col-sm-12">
-        <h2>Add role</h2>
-    </div>
+
+<div class="container upload-forms">
+    <h2>Add role</h2>
+
+    {% if form.errors %}
+        <p>{{ form.errors }}</p>
+    {% endif %}
+
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button  class="btn btn-primary btn-md float-right" type="submit" value="Save">Save</button>
+    </form>
 </div>
-
-{% if form.errors %}
-<div class="row">
-    <p>{{ form.errors }}</p>
-</div>
-{% endif %}
-
-<form action="" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="row">
-        <div class="col-sm-12">{{ form.role }}</div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-12">{{ form.role.errors }}</div>
-    </div>
-
-    <div class="row">
-    <div class="col-sm-12">
-        <button  class="btn btn-primary btn-md btn-block" type="submit" value="Save">Save</button>
-    </div>
-</div>
-</form>
 {% endblock content_content %}
-

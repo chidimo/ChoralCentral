@@ -5,14 +5,8 @@
 
 {% block content_content %}
 
-<div class="container">
+<h2><a href="{% url 'siteuser:detail' siteuser.pk %}">{{ siteuser.screen_name }}</a>'s comments</h2>
 
-    <div class="row">
-        <div class="col-sm-12">
-            <h2><a href="{% url 'siteuser:detail' siteuser.pk %}">{{ siteuser.screen_name }}</a>'s comments</h2>
-        </div>
-    </div>
-    
     {% if siteuser_comments %}
         <div class="list-group">
             {% for comment in siteuser.comment_set.all %}
@@ -23,15 +17,6 @@
             {% endfor %}
         </div>
     {% else %}
-    {% if siteuser.user == user %}
-        <p>You haven't made any comments.</p>
-    {% else %}
-        <p>{{ siteuser.screen_name }} hasn't made any comments.</p>
+        <p>No comments to display</p>
     {% endif %}
-        
-    {% endif %}
-</div>
-
 {% endblock content_content %}
-
-

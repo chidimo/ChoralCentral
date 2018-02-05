@@ -15,18 +15,6 @@ from masspart.models import MassPart
 from voicing.models import Voicing
 from language.models import Language
 
-TITLE = "Song title"
-FIRST_LINE = "First line (optional)"
-SCRIPTURE = "Scripture reference (optional)"
-TEMPO = "Tempo (optional)"
-BPM = "Beats per minute (optional)"
-LYRICS = "Lyrics (optional)"
-COMP_DATE = "Composition date YYYY-MM-DD (optional)"
-DIVS = "Divisions (optional)"
-
-LYRICS_HELP = """Markdown supported.
-See basic markdown syntax [here](https://daringfireball.net/projects/markdown/basics)"""
-
 # pylint: disable=C0326, C0301, C0103, C0111
 
 class SongFilterForm(forms.Form):
@@ -62,27 +50,23 @@ class NewSongForm(forms.ModelForm):
                   "tempo", "bpm", "divisions", "voicing",
                   "authors", "seasons", "mass_parts",]
 
-        help_texts = {
-            "lyrics" : LYRICS_HELP
-        }
-
         widgets = {
             "status" : forms.Select(attrs={'class' : 'form-control'}),
             "title" : forms.TextInput(
-                attrs={'class' : 'form-control', 'placeholder' : TITLE}),
+                attrs={'class' : 'form-control', 'placeholder' : "Song title"}),
             "compose_date" : forms.DateInput(
-                attrs={'class' : 'form-control', 'placeholder' : COMP_DATE}),
+                attrs={'class' : 'form-control', 'placeholder' : "Composition date YYYY-MM-DD (optional)"}),
             "lyrics" : forms.Textarea(
-                attrs={'rows' : 5, 'columns' : 10, 'class' : 'form-control', 'placeholder' : LYRICS}),
+                attrs={'rows' : 5, 'columns' : 10, 'class' : 'form-control', 'placeholder' : "Lyrics (optional). Markdown supported"}),
             "first_line" : forms.TextInput(
-                attrs={'class' : 'form-control', 'placeholder' : FIRST_LINE}),
+                attrs={'class' : 'form-control', 'placeholder' : "First line (optional)"}),
             "scripture_ref" : forms.TextInput(
-                attrs={'class' : 'form-control', 'placeholder' : SCRIPTURE}),
+                attrs={'class' : 'form-control', 'placeholder' : "Scripture reference (optional)"}),
             "seasons" : forms.SelectMultiple(attrs={'class' : 'form-control'}),
             "mass_parts" : forms.SelectMultiple(attrs={'class' : 'form-control'}),
-            "tempo" : forms.NumberInput(attrs={'class' : 'form-control', 'placeholder' : TEMPO}),
-            "bpm" : forms.NumberInput(attrs={'class' : 'form-control', 'placeholder' : BPM}),
-            "divisions" : forms.NumberInput(attrs={'class' : 'form-control', 'placeholder' : DIVS}),
+            "tempo" : forms.NumberInput(attrs={'class' : 'form-control', 'placeholder' : "Tempo (optional)"}),
+            "bpm" : forms.NumberInput(attrs={'class' : 'form-control', 'placeholder' : "Beats per minute (optional)"}),
+            "divisions" : forms.NumberInput(attrs={'class' : 'form-control', 'placeholder' : "Divisions (optional)"}),
 
             "authors" : AddAnotherWidgetWrapper(
                 forms.SelectMultiple(attrs={'class' : 'form-control'}),
@@ -104,24 +88,23 @@ class SongEditForm(forms.ModelForm):
                   "tempo", "bpm", "divisions", "voicing",
                   "authors", "seasons", "mass_parts",]
 
-
         widgets = {
             "status" : forms.Select(attrs={'class' : 'form-control'}),
             "title" : forms.TextInput(
-                attrs={'class' : 'form-control', 'placeholder' : TITLE}),
+                attrs={'class' : 'form-control', 'placeholder' : "Song title"}),
             "compose_date" : forms.DateInput(
-                attrs={'class' : 'form-control', 'placeholder' : COMP_DATE}),
+                attrs={'class' : 'form-control', 'placeholder' : "Composition date YYYY-MM-DD (optional)"}),
             "lyrics" : forms.Textarea(
-                attrs={'rows' : 5, 'columns' : 10, 'class' : 'form-control', 'placeholder' : LYRICS}),
+                attrs={'rows' : 5, 'columns' : 10, 'class' : 'form-control', 'placeholder' : "Lyrics (optional). Markdown supported"}),
             "first_line" : forms.TextInput(
-                attrs={'class' : 'form-control', 'placeholder' : FIRST_LINE}),
+                attrs={'class' : 'form-control', 'placeholder' : "First line (optional)"}),
             "scripture_ref" : forms.TextInput(
-                attrs={'class' : 'form-control', 'placeholder' : SCRIPTURE}),
+                attrs={'class' : 'form-control', 'placeholder' : "Scripture reference (optional)"}),
             "seasons" : forms.SelectMultiple(attrs={'class' : 'form-control'}),
             "mass_parts" : forms.SelectMultiple(attrs={'class' : 'form-control'}),
-            "tempo" : forms.NumberInput(attrs={'class' : 'form-control', 'placeholder' : TEMPO}),
-            "bpm" : forms.NumberInput(attrs={'class' : 'form-control', 'placeholder' : BPM}),
-            "divisions" : forms.NumberInput(attrs={'class' : 'form-control', 'placeholder' : DIVS}),
+            "tempo" : forms.NumberInput(attrs={'class' : 'form-control', 'placeholder' : "Tempo (optional)"}),
+            "bpm" : forms.NumberInput(attrs={'class' : 'form-control', 'placeholder' : "Beats per minute (optional)"}),
+            "divisions" : forms.NumberInput(attrs={'class' : 'form-control', 'placeholder' : "Divisions (optional)"}),
 
             "authors" : AddAnotherWidgetWrapper(
                 forms.SelectMultiple(attrs={'class' : 'form-control'}),

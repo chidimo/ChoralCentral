@@ -1,27 +1,21 @@
 {% extends "choralcentral_base.html" %}
-{# https://docs.djangoproject.com/en/1.11/topics/forms/#rendering-fields-manually #}
-
 {% block title %}Edit Language{% endblock %}
 
 
-{% block content %}
-    <h4>new {{ form.name.label_tag|title }}</h4>
-  
+{% block content_content %}
+<div class="container upload-forms">
+    <h2>Edit language</h2>
+    
     {% if form.errors %}
-        <p><strong>{{ form.errors }}</strong></p>
+        <p>{{ form.errors }}</p>
     {% endif %}
 
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
+        {{ form.as_p }}
 
-        <table>
-
-        {{ form.as_table }}
-
-        </table>
-        <input type="submit" value="Update">
-            </div>
-        </div>
+        <button class="btn btn-primary btn-md float-right" type="submit" value="Save">Save</button>
     </form>
+</div>
 {% endblock %}
 

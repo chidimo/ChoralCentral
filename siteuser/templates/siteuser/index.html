@@ -4,12 +4,8 @@
 
 
 {% block content_content %}
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12">
-            <h2>Members</h2>
-        </div>
-    </div>
+
+<h2>Meet the gang</h2>
 
     {% if siteuser_list %}
     <div class="list-group">
@@ -18,7 +14,7 @@
         <div class="list-group-item list-group-item-action list-group-item-primary">
                 <a href="{% url 'siteuser:detail' siteuser.pk siteuser.slug %}">{{ siteuser.screen_name }}</a>
                 {% if siteuser.user == user %}
-                    <a href="{% url 'siteuser:edit' siteuser.pk siteuser.slug %}"><i class="fa fa-pencil" aria-hidden="true"></i></a>    
+                    <a href="{% url 'siteuser:edit' siteuser.pk siteuser.slug %}"><i class="fas fa-edit"></i></a>    
                 {% endif %}
                 <p>{{ siteuser.published.count }} uploads</p>
         </div>
@@ -28,7 +24,4 @@
     {% else %}
         <p>No profiles added yet.</p>
     {% endif %}
-</div>
 {% endblock content_content %}
-
-

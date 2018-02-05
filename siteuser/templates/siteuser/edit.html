@@ -2,50 +2,25 @@
 
 {% block title %}Profile edit{% endblock %}
 
-{% block wrap_content %}{% endblock wrap_content %}
-{% block search %}{% endblock search %}
-
 {% block content_content %}
 
 <div class="container upload-forms">
-    <div class="row">
-        <div class="col-sm-12">
-            <h2>Edit your profile</h2>
-        </div>
-    </div>
+    <h2>Edit your profile</h2>
 
     {% if form.errors %}
-    <div class="row">
-        <div class="col-sm-12">
-            <p>{{ form.errors }}</p>
-        </div>
-    </div>
+        <p>{{ form.errors }}</p>
     {% endif %}
 
     <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-        <div class="row">
-            <div class="col-sm-12">{{ form.first_name }}</div>
-        </div>
-        
-        <div class="row">
-            <div class="col-sm-12">{{ form.last_name }}</div>
-        </div>
+        <p>{{ form.first_name }}</p>
+    
+        <p>{{ form.last_name }}</p>
 
-        <div class="row">
-            <div class="col-sm-12">{{ form.location }}</div>
-        </div>
+        <p>{{ form.location }}</p>
 
-        <div class="row">
-            <div class="col-sm-12">{{ form.roles }}</div>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-12">
-                <button class="btn btn-primary btn-md btn-block" type="submit" value="Save">Save</button>
-            </div>
-        </div>
+        <p>{{ form.roles }}</p>
+        <button class="btn btn-primary btn-md float-right" type="submit" value="Save">Save</button>
     </form>
 </div>
 {% endblock %}
-

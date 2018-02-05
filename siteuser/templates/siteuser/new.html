@@ -1,55 +1,25 @@
 {% extends "choralcentral_base.html" %}
 
 {% block title %}New profile{% endblock %}
-
-
-{% block search %}{% endblock search %}
-{% block wrap_content %}{% endblock wrap_content %}
-
 {% block content_content %}
 
 <div class="container upload-forms">
-    <div class="row">
-        <div class="col-sm-12">
-            <h2>Create your profile</h2>
-        </div>
-    </div>
+    <h2>Create your profile</h2>
 
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
-        <div class="row">
-            <div class="col-sm-12">
-                {{ form.email }}
-            </div>
-        </div>
+            <p>{{ form.email }}</p>
 
-        <div class="row">
-            <div class="col-sm-12">
-                {{ form.screen_name }}
-            </div>
-        </div>
+            <p>{{ form.screen_name }}</p>
 
-        <div class="row">
-            <div class="col-sm-12">
-                {{ form.password1 }}
-            </div>
-        </div>
+            <p>{{ form.password1 }}</p>
+    
+            <p>{{ form.password2 }}</p>
 
-        <div class="row">
-            <div class="col-sm-12">
-                {{ form.password2 }}
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-12">
-                <button class="btn btn-primary btn-md btn-block" type="submit" value="Register">Register</button>
-            </div>
-        </div>
+        <button class="btn btn-primary btn-md float-right" type="submit" value="Join">Join</button>
     </form>
 </div>
 {% endblock content_content %}
-
-{% block content_content %}{% endblock content_content %}
+{% block footer %}{% endblock footer %}
 

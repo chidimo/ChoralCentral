@@ -3,8 +3,10 @@
 
 {% block content_content %}
 
-<h2>Edit Author</h2>
 
+<div class="container upload-forms">
+    <h2>Edit Author</h2>
+    
     {% if form.errors %}
         <p>{{ form.errors }}</p>
     {% endif %}
@@ -18,5 +20,6 @@
 
         <button  class="btn btn-primary btn-md float-right" type="submit" value="Save">Save</button>
     </form>
+</div>
 {% endblock content_content %}
 
