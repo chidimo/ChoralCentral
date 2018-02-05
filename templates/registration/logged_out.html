@@ -3,12 +3,14 @@
 
 
 {% block body %}
-    <div class="container">
-        <h2>Logged out!</h2>
 
-        <h4>
-            You're logged out. <a href="{% url 'siteuser:login' %}">Click here to login again.</a>
-        </h4>
+    <div class="container">
+        <p><a href="/">Home</a></p>
+    
+        <h2>Logged out!</h2>
+    
+        <h4>You're logged out. <a href="{% url 'siteuser:login' %}">Click here to login again.</a></h4>
+    </div>
 
 {% endblock body %}
 

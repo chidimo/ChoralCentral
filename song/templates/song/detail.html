@@ -1,8 +1,5 @@
 {% extends "choralcentral_base.html" %}
-
 {% if song %}{% block title %}{{ song }}{% endblock title %} {% endif %}
-
-
 {% load song_ttags %}
 
 {% block content_content %}
@@ -12,8 +9,7 @@
     {% if user.is_authenticated %}
 
     <!-- like script -->
-    <button class="fa fa-star btn btn-primary" type="submit" id="like" title="{{ song.pk }}" value="Like"></button>
-
+    <button class="btn btn-primary" type="submit" id="like" title="{{ song.pk }}" value="Like"><i class="fas fa-star"></i></button>
     <script>
     $('#like').click(function(){
         $.ajax({
@@ -32,21 +28,15 @@
     </script>
 
     {% else %}
-        <p class="h4"><a href="{% url 'login' %}?next={{ request.path }}">login</a> to give a star</p>
+        <p><a href="{% url 'login' %}?next={{ request.path }}">login</a> to give a star</p>
     {% endif %}
     <!-- end like script -->
-    {% if song.originator.user == user %}
-    <span class="mx-right">
-        <a class="fa fa-pencil" aria-hidden="true" href="{% url 'song:edit' song.pk song.slug %}"></a> |
-        <a class="fa fa-trash" aria-hidden="true" href="{% url 'song:delete' song.pk %}"></a>
-    </span>
-{% endif %}
 </h2>
 
 <div class="table-responsive">
     <table class="table table-striped">
         <thead class="thead-light">
-            <caption>Performance metadata</caption>
+            <caption>Metadata</caption>
             <tr>
                 <th>OP</th>
                 <th>For</th>
@@ -89,8 +79,6 @@
     </table>
 </div><!-- END SHEET -->
 
-    <!-- scores -->
-
 <div class="row">
     <div class="col-sm-7">
         <div class="table-responsive">
@@ -98,10 +86,9 @@
                 <thead class="thead-light">
                     <caption>Scores</caption>
                     <tr>
-                        <th>#</th>
-                        <th>Parts</th>
-                        <th>Notations</th>
                         <th>Uploader</th>
+                        <th>Part</th>
+                        <th>Notation</th>
                         <th><i class="fa fa-star" aria-hidden="true"></th>
                         <th>Action</th>
                     </tr>
@@ -110,10 +97,9 @@
                 <tbody>
                     {% for score in song.score_set.all %}
                         <tr>
-                            <th>{{ forloop.counter }}</th>
+                            <td><a href="{% url 'siteuser:detail' score.uploader.pk score.uploader.slug %}">{{ score.uploader.screen_name }}</a></td>
                             <td><a href="{% url 'song-media:score_view' score.pk %}" target="blank">{{ score.score_parts }}</a></td>
                             <td>{{ score.score_notations }}</td>
-                            <td><a href="{% url 'siteuser:detail' score.uploader.pk score.uploader.slug %}">{{ score.uploader.screen_name }}</a></td>
                             <td><a href="">{{ score.score_likes }}</a></td>
                             <td><a href="{% url 'song-media:score_add_song' song.pk %}"><i class="fas fa-plus"></i></a> | 
                                 <a href=""><i  class="fas fa-edit"></i></a> | 
@@ -127,15 +113,14 @@
             </table>
         </div>
     </div>
-<div class="col-sm-5">
-    <div class="table-responsive">
+    <div class="col-sm-5">
+        <div class="table-responsive">
             <table class="table table-striped">
                 <thead class="thead-light">
                     <caption>Midis</caption>
                     <tr>
-                        <th>#</th>
-                        <th>Parts</th>
                         <th>Uploader</th>
+                        <th>Part</th>
                         <th><i class="fas fa-star" aria-hidden="true"></th>
                         <th>Action</th>
                     </tr>
@@ -144,9 +129,8 @@
                     <tbody>
                         {% for midi in song.midi_set.all %}
                             <tr>
-                                <th>{{ forloop.counter }}</th>
-                                <td><a href="{% url 'song-media:play_midiview' midi.pk %}" target="blank">{{ midi.midi_parts }}</a></td>
                                 <td><a href="{% url 'siteuser:detail' midi.uploader.pk midi.uploader.slug %}">{{ midi.uploader.screen_name }}</a></td>
+                                <td><a href="{% url 'song-media:play_midiview' midi.pk %}" target="blank">{{ midi.midi_parts }}</a></td>
                                 <td><a href="">{{ midi.midi_likes }}</a></td>
                                 <td><a href="{% url 'song-media:midi_add_song' song.pk %}"><i class="fas fa-plus"></i></a> | 
                                     <a href=""><i class="fas fa-edit"></i></a> | 
