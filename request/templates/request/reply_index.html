@@ -1,16 +1,9 @@
 {% extends "choralcentral_base.html" %}
 
 {% block title %}Fulfilled Requests{% endblock %}
-
-
 {% block content_content %}
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12">
-            <h2>Fulfilled Requests</h2>
-        </div>
-    </div>
+<h2>Fulfilled Requests</h2>
 
     {% if replys %}
     <div class="list-group">
@@ -20,18 +13,13 @@
                 <a href="{% url 'siteuser:siteuser_detail' reply.originator.pk %}">{{ reply.originator.screen_name }}</a>
             </h5>
             <h5>
-                <a href="{% url 'song:song_detailview' reply.song.pk reply.song.slug %}">{{ reply.song }}</a>
+                <a href="{% url 'song:song_detail' reply.song.pk reply.song.slug %}">{{ reply.song }}</a>
             </h5>
         </div>
         {% endfor %}
     </div>
     {% else %}
-        <div class="row">
-            <div class="col-sm-12">
-                <p>No requests met</p>
-            </div>
-        </div>
+        <p>No requests met</p>
     {% endif %}
-</div>
 {% endblock content_content %}
 

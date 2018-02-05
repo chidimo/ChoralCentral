@@ -37,7 +37,7 @@ def auto_blog(request):
 class PostCreate(LoginRequiredMixin, generic.CreateView):
     context_object_name = 'post'
     template_name = 'blog/new.html'
-    form_class = fm.PostCreateForm
+    form_class = fm.NewPostForm
 
     def get_form_kwargs(self):
         """include 'user' and 'pk' in the kwargs to be sent to form"""
@@ -102,7 +102,7 @@ class CommentCreate(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         form.instance.creator = SiteUser.objects.get(user=self.request.user)
-        form.instance.post = Post.objects.get(pk=self.kwargs.get("post_pk", None))
+        form.instance.post = Post.objects.get(pk=self.kwargs.get("pk", None))
         return super(CommentCreate, self).form_valid(form)
 
 class CommentEdit(LoginRequiredMixin, generic.CreateView):

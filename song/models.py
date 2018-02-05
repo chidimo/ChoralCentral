@@ -49,14 +49,14 @@ class Song(mdl.TimeStampedModel):
     divisions       = models.IntegerField(null=True, blank=True)
 
     authors         = models.ManyToManyField(Author)
-    seasons         = models.ManyToManyField(Season)
-    mass_parts      = models.ManyToManyField(MassPart)
+    seasons         = models.ManyToManyField(Season, null=True, blank=True)
+    mass_parts      = models.ManyToManyField(MassPart, null=True, blank=True)
 
     objects         = models.Manager()
     published_set   = PublishedManager()
 
     class Meta:
-        ordering = ["title"]
+        ordering = ["-created", "status"]
 
     @property
     def object_id(self):

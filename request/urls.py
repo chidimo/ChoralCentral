@@ -10,7 +10,7 @@ urlpatterns = [
     path('', views.RequestIndex.as_view(), name="index"),
     path("new/", views.RequestCreate.as_view(), name="new"),
     path("edit/<int:pk>/", views.RequestEdit.as_view(), name="edit"),
-    path("<int:pk>/<slug:slug>/", views.RequestDetail.as_view(), name="detail"),
+    path("detail/<int:pk>/<slug:slug>/", views.RequestDetail.as_view(), name="detail"),
     path("filter/", views.FilterRequests.as_view(), name="filter"),
 ]
 

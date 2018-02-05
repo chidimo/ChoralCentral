@@ -1,18 +1,13 @@
 {% extends "choralcentral_base.html" %}
-
 {% block title %}Requests{% endblock %}
 
-
-
 {% block content_content %}
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12">
-            <h2>Requests <a href="{% url 'request:new' %}"><i class="fa fa-plus" aria-hidden="true"></i></a></h2>
-        </div>
-    </div>
+<h2>Requests
+    <span class="float-right"><a class="btn btn-primary" href="{% url 'request:new' %}">New Request</a></span>
+</h2>
 
-    <table class="table table-responsive-md">
+<div class="table-responsive">
+    <table class="table table-striped">
         <thead class="thead-light">
             <caption>requests</caption>
         </thead>

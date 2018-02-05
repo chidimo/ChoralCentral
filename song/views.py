@@ -96,7 +96,7 @@ class SongReader(generic.DetailView):
     context_object_name = 'song'
     template_name = 'song/reader.html'
 
-class NewSong(LoginRequiredMixin, generic.CreateView):
+class NewSong(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
     template_name = 'song/new.html'
     form_class = NewSongForm
 

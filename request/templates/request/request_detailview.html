@@ -1,24 +1,15 @@
 {% extends "choralcentral_base.html" %}
 
 {% block title %}{{ request }}{% endblock title %}
-
-
 {% block content_content %}
 
-<div class="container">
-
-    <div class="row">
-        <div class="col-sm-12">
-            <h2>Replies to {{ request }}</h2>
-        </div>
-    </div>
-
+    <h2>Replies to {{ request }}</h2>
 
     {% if request.reply_set.all %}
     <div class="list-group">
         {% for reply in request.reply_set.all %}
             <div class="list-group-item list-group-item-action list-group-item-primary">
-                <a href="{% url 'song:song_detailview' reply.song.pk reply.song.slug %}">{{ reply.song }}</a>
+                <h3><a href="{% url 'song:song_detailview' reply.song.pk reply.song.slug %}">{{ reply.song }}</a></h3>
             </div>
         {% endfor %}
     </div>

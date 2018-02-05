@@ -39,11 +39,11 @@
 	{% block body %}
 	<body>
 		{% block navigation %}
-		<nav class="navbar navbar-light fixed-top navbar-expand-md" role="navigation">
-			<div class="container">
+		<nav class="navbar fixed-top navbar-expand-lg">
 
+			
 				<a class="navbar-brand" href="{% url 'song:index' %}">
-					ChoralCentral
+					<h3 style="color:blanchedalmond">ChoralCentral</h3>
 				</a>
 
 				<button type="button" class="navbar-toggler my-toggler" data-toggle="collapse" data-target=".navcontent">
@@ -67,8 +67,6 @@
 								<a class="dropdown-item" href="{% url 'song-media:new_score' %}">Score</a>
 								<a class="dropdown-item" href="{% url 'song-media:midi_add' %}">Midi file</a>
 								<a class="dropdown-item" href="{% url 'song-media:videolink_new' %}">Video Link</a>
-								<a class="dropdown-item" href="{% url 'blog:new' %}">Blog post</a>
-								<a class="dropdown-item" href="{% url 'request:new' %}">Request</a>
 
 								{% if user.is_admin %}
 								<a class="dropdown-item" href="{% url 'author:new' %}">Author</a>
@@ -80,13 +78,16 @@
 						</li>
 					</ul>
 
-					<ul class="nav navbar-nav ml-auto" id="rightNavLinks">
+					<form class="form-inline my-2 my-md-0">
+						<input class="form-control" type="text" placeholder="Search">
+					</form>
+					<ul class="nav navbar-nav ml-auto">
 						{% if user.is_authenticated %}
 							<li class="nav-item">
 								<a class="nav-link" href="{% url 'siteuser:dashboard' %}">Dash</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="{% url 'siteuser:detail' request.user.siteuser.pk request.user.siteuser.slug %}">{{ user.siteuser.screen_name }}</a>
+								<a class="nav-link" href="{% url 'siteuser:detail' user.siteuser.pk user.siteuser.slug %}">{{ user.siteuser.screen_name }}</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="{% url 'siteuser:logout' %}">Logout</a>
@@ -99,9 +100,9 @@
 								<a class="nav-link" href="{% url 'siteuser:new' %}">Join</a>
 							</li>
 						{% endif %}
+
 					</ul>
 				</div>
-			</div>
 		</nav>
 		{% endblock navigation %}
 

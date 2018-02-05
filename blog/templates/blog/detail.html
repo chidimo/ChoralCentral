@@ -1,96 +1,38 @@
 {% extends "choralcentral_base.html" %}
 
 {% block title %}{{ post }}{% endblock title %}
-
-
 {% load blog_ttags %}
 
-{% block search %}
-<div class="instant-search text-center">
-    <div class="container">
-        <div class="row">
-           <div class="col-sm-12">
-                <h4>Search 
-                    <a href="{% url 'blog:instant_blog' %}">posts</a>
-                     or try <a href="{% url 'blog:auto_blog' %}">autocomplete</a>
-                </h4>
-           </div>
-        </div>
-    </div>
-</div>
-{% endblock search %}
-
-
 {% block content_content %}
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12">
-            <h2>{{ post.title }}
-                {% if post.creator.user == user %}<a href="{% url 'blog:edit' post.pk %}"><i class="fa fa-pencil" aria-hidden="true"></i></a>{% endif %}
-            </h2>
-        </div>
-    </div>
 
+<h2>{{ post.title }}</h2>
 
-    {% if post.subtitle %}
-    <div class="row">
-        <div class="col-sm-12">
-            <h5>{{ post.subtitle|markdown_format }}</h5>
-        </div>
-    </div>
-    {% endif %}
+{% if post.subtitle %}
+    <h4>{{ post.subtitle|markdown_format }}</h5>
+{% endif %}
 
-    <div class="row">
-        <div class="col-sm-12">
-            <h5><em>Published {{ post.created }} by 
-                <a href="{% url 'siteuser:detail' post.creator.pk %}">{{ post.creator.screen_name }}</a> </em></h5>
-        </div>
-    </div>
+<h5><em>Published {{ post.created }} by 
+    <a href="{% url 'siteuser:detail' post.creator.pk post.creator.slug %}">{{ post.creator.screen_name }}</a>
+</em></h5>
 
-    {% if post.song %}
-    <div class="row">
-        <div class="col-sm-12">
-            <a href="{% url 'song:detail' post.song.pk post.song.slug %}">{{ post.song }}</a>
-        </div>
-    </div>
-    {% endif %}
+{% if post.song %}
+    <h5><a href="{% url 'song:detail' post.song.pk post.song.slug %}">{{ post.song }}</a></h5>
+{% endif %}
 
-    <hr>
-    <div class="row">
-        <div class="col-sm-12">
-            <span>{{ post.body|markdown_format }}</span>
-        </div>
-    </div>
+<hr>
 
-    <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="row">
-            <div class="col-sm-12">
-                {{ comment_number.number }}
-            </div>
-        </div>
+<span>{{ post.body|markdown_format }}</span>
 
-        <div class="row">
-            <div class="col-sm-12">
-                <button class="btn btn-primary btn-md btn-block" type="submit" value="Apply">Apply</button>
-            </div>
-        </div>
-    </form>
-
-    <div class="row">
-        <div class="col-sm-12">
-            <p>{{ post.comment_set.count }} comments</p>
-        </div>
-    </div>
+<h4>{{ post.comment_set.count }} comments</h4>
 
     {% if comments %}
     <div class="list-group">
         {% for comment in comments %}
         <div class="list-group-item list-group-item-action list-group-item-primary">
-            <h5><a href="{% url 'siteuser:detail' comment.creator.pk %}">{{ comment.creator.screen_name }}</a></h5>
+            <h5><a href="{% url 'siteuser:detail' comment.creator.pk comment.creator.slug %}">{{ comment.creator.screen_name }}</a></h5>
             {{ comment.comment|markdown_format }}
-            <a href="#"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-            <a href="#"><i class="fa fa-reply" aria-hidden="true"></i></a>
+            <a href="#"><i class="fas fa-edit"></i></a>
+            <a href="#"><i class="fas fa-reply"></i></a>
         </div>
         {% endfor %}
     </div>
@@ -98,18 +40,9 @@
 
     <form action="{% url 'blog:comment_add' post.pk %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="row">
-            <div class="col-sm-12">
-                {{ comment_form.comment }}
-            </div>
-        </div>
+        {{ comment_form.comment }}
 
-        <div class="row">
-            <div class="col-sm-12">
-                <button class="btn btn-primary btn-md btn-block" type="submit" value="Post Comment">Post Comment</button>
-            </div>
-        </div>
+        <button class="btn btn-primary btn-md float-right" type="submit" value="Post Comment">Post Comment</button>
     </form>
-</div>
 {% endblock content_content %}
 

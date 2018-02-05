@@ -1,86 +1,67 @@
 {% extends "choralcentral_base.html" %}
-
-{% block title %}{{ siteuser.screen_name }}'s activity{% endblock title %}
-
+{% block title %}{{ siteuser.screen_name }}'s library{% endblock title %}
 
 {% block content_content %}
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12">
-            <h2>{% if request.user == siteuser.user %}My{% else %}{{ siteuser.screen_name }}'s {% endif %} activity
-                <a href="#" title="follow"><i class="fa fa-handshake-o" aria-hidden="true"></i></a>
-            </h2>
-        </div>
-    </div>
+<h2>My library</h2>
 
-    <div class="list-group-item list-group-item-action list-group-item-primary">
-        <div class="row">
-            <div class="col-sm-12">
-                <h2>Song threads <a href="{% url 'song:new' %}"><i class="fa fa-plus"></i></a></h2>
-            </div>
-        </div>
+<div class="list-group-item list-group-item-action list-group-item-primary">
+    <h2>Songs
+        <span class="float-right"><a class="btn btn-primary" href="{% url 'song:new' %}">New Song</a></span>
+    </h2>
 
         {% if siteuser.song_set.all %}
         <div class="row">
             <div class="col-sm-6">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h3>Published</h3>
-                    </div>
-                </div>
+                <h4>Published</h4>
 
                 {% for song in siteuser.song_set.all %}
                     {% if song.status == "PUBLISHED" %}
                     <div class="row">
                         <div class="col-sm-12">
-                            <a href="{% url 'song:detail' song.pk song.slug %}">{{ song }}</a>
+                            <h4><a href="{% url 'song:detail' song.pk song.slug %}">{{ song }}</a>
                             {% if siteuser.user == user %}
-                            <a href="{% url 'song:edit' song.pk song.slug %}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                <a href="{% url 'song:edit' song.pk song.slug %}"><i class="fas fa-edit"></i></a>
                             {% endif %}
+                            </h4>
                         </div>
                     </div>
                     {% endif %}
                 {% endfor %}
             </div>
 
-
-            <div class="col-sm-6">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h3>Unpublished</h3>
-                    </div>
-                </div>
-
-                {% for song in siteuser.song_set.all %}
-                    {% if siteuser.user == user %}
+            {% if siteuser.user == user %}
+            <div class="col-sm-6">                
+                <h3>Unpublished</h3>
+                    {% for song in siteuser.song_set.all %}
                         {% if song.status == "DRAFT" %}
                         <div class="row">
                             <div class="col-sm-12">
-                                <a href="{% url 'song:detail' song.pk song.slug %}">{{ song }}</a>
-                                {% if siteuser.user == user %}
-                                <a href="{% url 'song:edit' song.pk song.slug %}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                {% endif %}
+                                <h4>
+                                    <a href="{% url 'song:detail' song.pk song.slug %}">{{ song }}</a>
+                                    {% if siteuser.user == user %}
+                                    <a href="{% url 'song:edit' song.pk song.slug %}"><i class="fas fa-edit"></i></a>
+                                    {% endif %}
+                                </h4>
                             </div>
                         </div>
                         {% endif %}
-                    {% endif %}
                 {% endfor %}
             </div>
-        </div>
+            {% endif %}
 
         {% else %}
-            <p>There are no songs in {% if siteuser.user == user %}your{% else %}{{ siteuser.screen_name }}'s{% endif %} library</p>
+            <p>There are no songs in your library</p>
         {% endif %}
+        </div>
     </div><!-- END SONG -->
 
 
     <div class="list-group-item list-group-item-action list-group-item-primary">
-        <div class="row">
-            <div class="col-sm-12">
-                <h2>Requests <a href="{% url 'request:new' %}"><i class="fa fa-plus"></i></a></h2>
-            </div>
-        </div>
+        <h2>Requests
+            <span class="float-right"><a class="btn btn-primary" href="{% url 'request:new' %}">New Request</i></a></span>
+        </h2>
+
 
         {% if siteuser.request_set.all %}
             {% for request in siteuser.request_set.all %}
@@ -89,18 +70,14 @@
                     <a href="{% url 'request:detail' request.pk request.slug %}">{{ request }}</a>
 
                     {% if siteuser.user == user %}
-                    <a href="{% url 'request:edit' request.pk request.slug %}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                    <a href=""><i class="fa fa-check" aria-hidden="true"></i></a>
+                    <a href="{% url 'request:edit' request.pk request.slug %}"><i class="fas fa-edit"></i></a>
+                    <a href=""><i class="fa fa-check"></i></a>
                     {% endif %}
                 </div>
             </div>
             {% endfor %}
         {% else %}
-            <div class="row">
-                <div class="col-sm-12">
-                    <p>No pending request</p>
-                </div>
-            </div>
+            <p>You have no pending request</p>
         {% endif %}
     </div> <!-- END REQUESTS -->
 
@@ -139,7 +116,7 @@
                         <div class="col-sm-12">
                             <a href="{% url 'author:detail' author.pk author.slug %}">{{ author }} - {{ author.author_type|title }}</a>
                             {% if siteuser.user == user %}
-                            <a href="{% url 'author:edit' author.pk author.slug %}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            <a href="{% url 'author:edit' author.pk author.slug %}"><i class="fa fa-pencil"></i></a>
                             {% endif %}
                         </div>
                     </div>

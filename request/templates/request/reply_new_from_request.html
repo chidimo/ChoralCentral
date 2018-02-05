@@ -5,38 +5,19 @@
 
 {% block content_content %}
 <div  class="container upload-forms">
-    <div class="row">
-        <div class="col-sm-12">
-            <h2>Reply request</h2>
-        </div>
-    </div>
+    <h2>Reply request</h2>
         
     {% if form.errors %}
-    <div class="row">
-        <div class="col-sm-12">
-            <p>{{ form.errors }}</p>
-        </div>
-    </div>
+        <p>{{ form.errors }}</p>
     {% endif %}
 
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
-        <div class="row">
-            <div class="col-sm-12">{{ form.request }}</div>
-        </div>
+        {{ form.as_p }}
 
-        <div class="row">
-            <div class="col-sm-12">{{ form.song }}</div>
-            {{ form.song.errors }}
-        </div>
+        <button class="btn btn-primary btn-md float-right" type="submit" value="Save">Save</button>
 
-        <div class="row">
-            <div class="col-sm-12">
-                <button  class="btn btn-primary btn-md btn-block" type="submit" value="Save">Save</button>
-            </div>
-        </div>
     </form>
-</div>
 {% endblock content_content %}
 

@@ -3,6 +3,8 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from .models import Request, Reply
+from django.urls import reverse_lazy
+from django_addanother.widgets import AddAnotherWidgetWrapper
 
 from siteuser.models import SiteUser
 from song.models import Song
@@ -40,14 +42,16 @@ class ReplyCreateFromRequestForm(forms.ModelForm):
 
         widgets = {
             "request" : forms.Select(attrs={"class" : "form-control"}),
-            "song" : forms.Select(attrs={"class" : "form-control"})
+            "song" : AddAnotherWidgetWrapper(
+                forms.Select(attrs={'class' : 'form-control'}),
+                reverse_lazy('song:new'))
         }
 
-    # def clean_song(self):
-    #     song = self.cleaned_data["song"]
-    #     if song in Request.objects.filter(song__song):
-    #         raise forms.ValidationError("Song already added to this request")
-    #     return song
+    def clean_song(self):
+        song = self.cleaned_data["song"]
+        if song in Request.objects.filter(song__song).exists():
+            raise forms.ValidationError("This song is already added to this request")
+        return song
 
     def __init__(self, *args, **kwargs):
         pk = kwargs.pop("pk")

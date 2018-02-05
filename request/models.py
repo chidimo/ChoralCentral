@@ -34,7 +34,7 @@ class Request(mdl.TimeStampedModel):
 class Reply(mdl.TimeStampedModel):
     originator = models.ForeignKey(SiteUser, on_delete=models.CASCADE)
     request = models.ForeignKey(Request, on_delete=models.CASCADE)
-    song = models.OneToOneField(Song, on_delete=models.CASCADE, null=True)
+    song = models.OneToOneField(Song, on_delete=models.SET_NULL, null=True)
 
     class Meta:
         ordering = ["request"] # change to date

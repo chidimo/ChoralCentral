@@ -5,7 +5,7 @@ from siteuser.models import SiteUser
 from song.models import Song
 from .models import Post, Comment
 
-class PostCreateForm(forms.ModelForm):
+class NewPostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ("status", "song", "title", "subtitle", "body")
@@ -26,7 +26,7 @@ class PostCreateForm(forms.ModelForm):
         """How to do query in forms"""
         user = kwargs.pop("user")
 
-        super(PostCreateForm, self).__init__(*args, **kwargs)
+        super(NewPostForm, self).__init__(*args, **kwargs)
         originator = SiteUser.objects.get(user=user)
         self.fields['song'].queryset = Song.objects.filter(originator=originator)
 
