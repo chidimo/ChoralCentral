@@ -1,50 +1,49 @@
 {% extends "choralcentral_base.html" %}
 {% load static %}
 
-    {% block left_sidebar %}
-        <div class="filter-block" style="background: #FF3B3F; padding: 10px;">
-            <form action="{% url 'song:filter' %}" method="get" enctype="multipart/form-data">
-                <div class="row"><div class="col-sm-12">{{ form.season }}</div></div>
-                <div class="row"><div class="col-sm-12">{{ form.masspart }}</div></div>
-                <div class="row"><div class="col-sm-12">{{ form.voicing }}</div></div>
-                <div class="row"><div class="col-sm-12">{{ form.language }}</div></div>
-                <div class="row"><div class="col-sm-12">
-                    <button  class="btn btn-primary btn-md btn-block" type="submit" value="Filter">Filter</button></div>
-                </div>
-            </form>
+{% block left_sidebar %}
+
+{% if form.errors %}
+    <p>{{ form.errors }}</p>
+{% endif %}
+<div class="d-none d-md-block filter-block" style="background: #FF3B3F; padding: 10px;">
+    <form action="{% url 'song:filter' %}" method="get" enctype="multipart/form-data">
+        <div class="row"><div class="col-sm-12">{{ form.season }}</div></div>
+        <div class="row"><div class="col-sm-12">{{ form.masspart }}</div></div>
+        <div class="row"><div class="col-sm-12">{{ form.voicing }}</div></div>
+        <div class="row"><div class="col-sm-12">{{ form.language }}</div></div>
+        <div class="row"><div class="col-sm-12">
+            <button  class="btn btn-primary btn-md btn-block" type="submit" value="Filter">Filter</button></div>
         </div>
-    {% endblock left_sidebar %}
+    </form>
+</div>
+{% endblock left_sidebar %}
 
 {% block content_content %}
-
-    {% if form.errors %}
-        <div class="row">
-            {{ form.errors }}
-        </div>
-    {% endif %}
 
     {% if songs %}
         <div class="list-group" id="hits-container">
             {% for song in songs %}
 
-                <div class="row">
-                   <div class="col-sm-12">
-                        <h3><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h3>
-                        <h4 class="" id="songFirstLine">{{ song.first_line }}</h4>
+            <div  class="list-group-item list-group-item-action list-group-item-primary">
 
-                        <span class="h6 float-sm-left">
-                            <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'blog:new_song' song.pk %}" title="Blog this song"><i class="fas fa-pen-square fa-2x"></i></a>
-                            <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="" title="Share on facebook"><i class="fab fa-facebook fa-2x"></i></a>
-                            <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href=""title="Share by email"><i class="fas fa-at fa-2x"></i></a>
-                        </span>
+                    <h3><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h3>
+                    <h5 class="" id="songFirstLine">{{ song.first_line }}</h5>
 
-                        <span class="h5 float-sm-right">
-                            <span class="badge badge-light badge-pill">{{ song.song_likes }}</span>
-                            <span class="badge badge-light badge-pill">
-                                <a href="#"aria-hidden="true"><i class="fas fa-star fa-2x"></i></a>
-                            </span>
-                        </span>
-                </div>
+                    <span class="float-sm-left">
+                        <h4>
+                            <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'blog:new_song' song.pk %}" title="Blog this song"><i class="fas fa-pen-square"></i></a>
+                            <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="" title="Share on facebook"><i class="fab fa-facebook"></i></a>
+                            <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href=""title="Share by email"><i class="fas fa-at"></i></a>
+                        </h4>
+                    </span>
+
+                    <span class="float-sm-right">
+                        <h4>
+                            <a class="btn btn-sm btn-success" href=""><i class="fas fa-star"></i> Star</a>
+                            <a class="btn btn-sm btn-info" href="">{{ song.song_likes }}</a>
+                        </h4>
+                    </span>
             </div>
             {% endfor %}
         </div>
@@ -52,4 +51,3 @@
         <p>No songs to display</p>
     {% endif %}
 {% endblock content_content %}
-

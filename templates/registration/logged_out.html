@@ -2,15 +2,13 @@
 {% block title %}Logged out{% endblock title %}
 {% block wrap_filter %}{% endblock wrap_filter %}
 
-{% block content_content %}
+{% block body %}
     <div class="container">
-        <div class="row">
-            <div class="col-sm-12"><h2>Logged out!</h2>  </div>
-        </div>
+        <h2>Logged out!</h2>
 
-        <div class="row">
-            <div  class="col-sm-12"><a href="{% url 'siteuser:login' %}">Click here to login again.</a></div  class="col-sm-12">
-        </div>
-    </div>
-{% endblock content_content %}
+        <h4>
+            You're logged out. <a href="{% url 'siteuser:login' %}">Click here to login again.</a>
+        </h4>
+
+{% endblock body %}
 

@@ -40,7 +40,7 @@ urlpatterns = [
     path("cart/", include('cart.urls')),
     path("language/", include('language.urls')),
     path("request/", include('request.urls')),
-    path("siteuser/", include('siteuser.urls')),
+    path("users/", include('siteuser.urls')),
     # path("song/", include('song.urls')),
     path("song-media/", include('song_media.urls')),
     path("todaymass/", include('todaymass.urls')),

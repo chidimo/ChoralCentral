@@ -1,96 +1,22 @@
 {% extends "choralcentral_base.html" %}
 {% block title %}New Song{% endblock %}
-{% block wrap_filter %}{% endblock wrap_filter %}
-
-{% block wrap_content  %}{% endblock wrap_content  %}
-{% block search %}{% endblock search %}
 
 {% load song_ttags %}
 
-{% block content_forms %}
+{% block content_content %}
 
 <div class="container upload-forms">
-    <div class="row">
-        <div class="col-sm-12">
-            <h2>New Song</h2>
-        </div>
-    </div>
-    
+    <h2>New Song</h2>
+
     {% if form.errors %}
-        <div class="row">            
-            <p>{{ form.errors }}</p>
-            errros should appear here
-        </div>
+        <p>{{ form.errors }}</p>
     {% endif %}
-    
+
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="row">
-            <div class="col-sm-12">{{ form.status }}</div>
-        </div>
-        
-        <div class="row">
-            <div class="col-sm-12">{{ form.title }}</div>
-        </div>
-    
-        <div class="row">
-            <div class="col-sm-12">{{ form.compose_date }}</div>
-        </div>
-    
-        <div class="row">
-            <div class="col-sm-12">{{ form.lyrics }}</div>
-            <div>{{ form.lyrics.help_text|markdown_format }}</div>
-        </div>
-    
-        <div class="row">
-            <div class="col-sm-12">{{ form.first_line }}</div>
-        </div>
-    
-        <div class="row">
-            <div class="col-sm-12">{{ form.scripture_ref }}</div>
-        </div>
-    
-        <div class="row">
-            <div class="col-sm-12">{{ form.language }}</div>
-        </div>
-    
-        <div class="row">
-            <div class="col-sm-12">{{ form.tempo }}</div>
-        </div>
-    
-        <div class="row">
-            <div class="col-sm-12">{{ form.bpm }}</div>
-        </div>
-    
-        <div class="row">
-            <div class="col-sm-12">{{ form.divisions}}</div>
-        </div>
-    
-        <div class="row">
-            <div class="col-sm-12">{{ form.voicing }}</div>
-        </div>
-    
-        <div class="row">
-            <div class="col-sm-12">{{ form.authors }}</div>
-        </div>
-    
-        <div class="row">
-            <div class="col-sm-12">{{ form.seasons }}</div>
-        </div>
-    
-        <div class="row">
-            <div class="col-sm-12">{{ form.mass_parts }}</div>
-        </div>
-    
-        <div class="row">
-            <div class="col-sm-12">{{ form.notations }}</div>
-        </div>
-    
-        <div class="row">
-            <div class="col-sm-12">
-                <button  class="btn btn-primary btn-md btn-block" type="submit" value="Save">Save</button>
-            </div>
-        </div>
+        {{ form.as_p }}
+
+        <button  class="btn btn-success btn-md float-right" type="submit" value="Save">Save</button>
     </form>
 </div>
-{% endblock content_forms %}
+{% endblock content_content %}

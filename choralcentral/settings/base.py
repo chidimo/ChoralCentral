@@ -41,7 +41,6 @@ LOGIN_REDIRECT_URL = reverse_lazy('siteuser:dashboard')
 LOGIN_URL = reverse_lazy('siteuser:login')
 LOGOUT_URL = reverse_lazy('siteuser:logout')
 
-
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
