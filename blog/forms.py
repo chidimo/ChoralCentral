@@ -8,7 +8,7 @@ from .models import Post, Comment
 class NewPostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ("status", "song", "title", "subtitle", "body")
+        fields = ("status", "title", "song", "subtitle", "body")
 
         widgets = {"status" : forms.Select(attrs={'class' : 'form-control'}),
                    "song" : forms.Select(attrs={'class' : 'form-control'}),
@@ -25,7 +25,6 @@ class NewPostForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         """How to do query in forms"""
         user = kwargs.pop("user")
-
         super(NewPostForm, self).__init__(*args, **kwargs)
         originator = SiteUser.objects.get(user=user)
         self.fields['song'].queryset = Song.objects.filter(originator=originator)
@@ -33,7 +32,7 @@ class NewPostForm(forms.ModelForm):
 class PostEditForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ("status", "song", "body", "title")
+        fields = ("status", "title", "song", "body", )
 
         widgets = {"status" : forms.Select(attrs={'class' : 'form-control'}),
                    "song" : forms.Select(attrs={'class' : 'form-control'}),
