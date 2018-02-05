@@ -43,7 +43,6 @@ class PostCreate(LoginRequiredMixin, generic.CreateView):
         """include 'user' and 'pk' in the kwargs to be sent to form"""
         kwargs = super(PostCreate, self).get_form_kwargs()
         kwargs['user'] = self.request.user
-        print("********", self.request.user)
         return kwargs
 
     def form_valid(self, form):

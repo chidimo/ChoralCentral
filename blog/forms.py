@@ -46,7 +46,7 @@ class PostEditForm(forms.ModelForm):
 class PostCreateFromSongForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ("body", "title")
+        fields = ("title", "body")
 
         widgets = {"song" : forms.Select(attrs={'class' : 'form-control'}),
                    "title" : forms.TextInput(
