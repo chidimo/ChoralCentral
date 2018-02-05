@@ -81,6 +81,7 @@
 
 <div class="row">
     <div class="col-sm-7">
+        <p><a class="btn btn-primary btn-sm" href="{% url 'song-media:score_add_song' song.pk %}">Add score</a></p>
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead class="thead-light">
@@ -101,8 +102,7 @@
                             <td><a href="{% url 'song-media:score_view' score.pk %}" target="blank">{{ score.score_parts }}</a></td>
                             <td>{{ score.score_notations }}</td>
                             <td><a href="">{{ score.score_likes }}</a></td>
-                            <td><a href="{% url 'song-media:score_add_song' song.pk %}"><i class="fas fa-plus"></i></a> | 
-                                <a href=""><i  class="fas fa-edit"></i></a> | 
+                            <td><a href=""><i  class="fas fa-edit"></i></a> | 
                                 <a href="{% url 'song-media:delete_score' score.pk song.pk song.slug %}"><i class="fas fa-trash"></i></a></td>
                         </tr>
                     {% endfor %}
@@ -114,6 +114,7 @@
         </div>
     </div>
     <div class="col-sm-5">
+        <p><a class="btn btn-primary btn-sm" href="{% url 'song-media:midi_add_song' song.pk %}">Add midi</a></p>
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead class="thead-light">
@@ -132,8 +133,7 @@
                                 <td><a href="{% url 'siteuser:detail' midi.uploader.pk midi.uploader.slug %}">{{ midi.uploader.screen_name }}</a></td>
                                 <td><a href="{% url 'song-media:play_midiview' midi.pk %}" target="blank">{{ midi.midi_parts }}</a></td>
                                 <td><a href="">{{ midi.midi_likes }}</a></td>
-                                <td><a href="{% url 'song-media:midi_add_song' song.pk %}"><i class="fas fa-plus"></i></a> | 
-                                    <a href=""><i class="fas fa-edit"></i></a> | 
+                                <td><a href=""><i class="fas fa-edit"></i></a> | 
                                     <a href="{% url 'song-media:delete_midi' midi.pk song.pk song.slug %}"><i  class="fas fa-trash"></i></a></td>
                             </tr>
                         {% endfor %}
@@ -147,24 +147,45 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-6">
-        <h4>Videos <a href="{% url 'song-media:videolink_new_song' song.pk %}"><i class="fa fa-plus"></i></a></h4>
-        {% if song.videolink_set.all %}
-            {% for link in  song.videolink_set.all %}
-                <a href="{{ link.video_link }}" target="_blank">{{ link.video_link }}</a>{% if not forloop.last %} | {% endif %}
-            {% endfor %}
-        {% else %}
-            <p>No video links added for this song</p>
-        {% endif %}
+    <div class="col-sm-7">
+        <p><a class="btn btn-primary btn-sm" href="{% url 'song-media:videolink_new_song' song.pk %}">Add video link</a></p>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="thead-light">
+                    <caption>Video links</caption>
+                    <tr>
+                        <th>Uploader</th>
+                        <th>Link</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                {% if song.videolink_set.all %}
+                    <tbody>
+                        {% for link in song.videolink_set.all %}
+                            <tr>
+                                <td><a href="{% url 'siteuser:detail' link.uploader.pk link.uploader.slug %}">{{ link.uploader.screen_name }}</a></td>
+                                <td><a href="{{ link.video_link }}" target="_blank">{{ link.video_link }}</a></td>
+                                <td>action</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                {% else %}
+                    <p>No midis uploaded for this song</p>
+                {% endif %}
+            </table>
+        </div>
     </div>
-</div><!-- END VIDEO -->
+</div>
 
+{% endblock content_content %}
+
+{%  block right_sidebar %}
 <div class="row">
     <div class="col-sm-12">
         <h4>Lyrics</h4>
         {{ song.lyrics|markdown_format }}
     </div>
 </div>
-{% endblock content_content %}
+{% endblock %}
 
 
