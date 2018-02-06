@@ -49,8 +49,8 @@ class Song(mdl.TimeStampedModel):
     divisions       = models.IntegerField(null=True, blank=True)
 
     authors         = models.ManyToManyField(Author)
-    seasons         = models.ManyToManyField(Season, null=True, blank=True)
-    mass_parts      = models.ManyToManyField(MassPart, null=True, blank=True)
+    seasons         = models.ManyToManyField(Season)
+    mass_parts      = models.ManyToManyField(MassPart)
 
     objects         = models.Manager()
     published_set   = PublishedManager()

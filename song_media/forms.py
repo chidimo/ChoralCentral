@@ -51,11 +51,11 @@ class NewScoreForm(forms.ModelForm):
         widgets = {'song' : forms.Select(attrs={'class' : 'form-control'}),
 
                    'part' : AddAnotherWidgetWrapper(
-                       forms.SelectMultiple(attrs={'class' : 'form-control'}),
+                       forms.Select(attrs={'class' : 'form-control'}),
                        reverse_lazy('song-media:new_part')),
 
                    'notation' : AddAnotherWidgetWrapper(
-                       forms.SelectMultiple(attrs={'class' : 'form-control'}),
+                       forms.Select(attrs={'class' : 'form-control'}),
                        reverse_lazy('song-media:new_notation')),
                   }
 
@@ -81,7 +81,7 @@ class NewMidiForm(forms.ModelForm):
         widgets = {'song' : forms.Select(attrs={'class' : 'form-control'}),
 
                    'part' : AddAnotherWidgetWrapper(
-                       forms.SelectMultiple(attrs={'class' : 'form-control'}),
+                       forms.Select(attrs={'class' : 'form-control'}),
                        reverse_lazy('song-media:new_part')),
                   }
 

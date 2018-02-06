@@ -62,7 +62,6 @@ class DeleteScore(LoginRequiredMixin, generic.DeleteView):
         return reverse("song:detail", kwargs={'pk' : self.kwargs['song_pk'], 'slug' : self.kwargs['slug']})   
 
 class NewMidi(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
-    model = Midi
     template_name = 'song_media/midi_new.html'
     form_class = NewMidiForm
 

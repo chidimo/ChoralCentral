@@ -45,8 +45,8 @@ class ScoreNotation(mdl.TimeStampedModel):
 class Score(mdl.TimeStampedModel):
     uploader = models.ForeignKey(SiteUser, null=True, on_delete=models.SET_NULL)
     song = models.ForeignKey(Song, on_delete=models.CASCADE)
-    part = models.ManyToManyField(VocalPart)
-    notation = models.ManyToManyField(ScoreNotation)
+    part = models.ForeignKey(VocalPart, on_delete=models.CASCADE)
+    notation = models.ForeignKey(ScoreNotation, on_delete=models.CASCADE)
     likes = models.ManyToManyField(SiteUser, related_name="score_likes")
     file = models.FileField(upload_to=upload_pdf)
 
@@ -72,12 +72,12 @@ class Score(mdl.TimeStampedModel):
         return "{}_score_{}".format(self.song.title, self.score_parts.lower())
 
     def get_absolute_url(self):
-        return reverse('song:detail', args=[str(self.song.id), str(self.song.slug)])
+        return reverse('song:detail', kwargs={'pk' : (self.song.id), 'slug' : self.song.slug})
 
 class Midi(mdl.TimeStampedModel):
     uploader = models.ForeignKey(SiteUser, null=True, on_delete=models.SET_NULL)
     song = models.ForeignKey(Song, null=True, on_delete=models.SET_NULL)
-    part = models.ManyToManyField(VocalPart)
+    part = models.ForeignKey(VocalPart, on_delete=models.CASCADE)
     likes = models.ManyToManyField(SiteUser, related_name="midi_likes")
     file = models.FileField(upload_to=upload_midi)
 
@@ -100,7 +100,7 @@ class Midi(mdl.TimeStampedModel):
         return "{}_{}".format(os.path.basename(self.file.name), self.midi_parts.lower())
 
     def get_absolute_url(self):
-        return reverse('song:detail', args=[str(self.song.id), str(self.song.slug)])
+        return reverse('song:detail', kwargs={'pk' : (self.song.id), 'slug' : self.song.slug})
 
 class VideoLink(mdl.TimeStampedModel):
     uploader = models.ForeignKey(SiteUser, null=True, on_delete=models.SET_NULL)
