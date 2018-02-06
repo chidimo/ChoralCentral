@@ -99,10 +99,11 @@
                     {% for score in song.score_set.all %}
                         <tr>
                             <td><a href="{% url 'siteuser:detail' score.uploader.pk score.uploader.slug %}">{{ score.uploader.screen_name }}</a></td>
-                            <td><a href="{% url 'song-media:score_view' score.pk %}" target="blank">{{ score.score_parts }}</a></td>
+                            <td>{{ score.score_parts }}</td>
                             <td>{{ score.score_notations }}</td>
                             <td><a href="">{{ score.score_likes }}</a></td>
-                            <td><a href=""><i  class="fas fa-edit"></i></a> | 
+                            <td><a href="{% url 'song-media:score_view' score.pk %}" target="blank"><i class="fas fa-download"></i></a> |
+                                <a href=""><i  class="fas fa-edit"></i></a> |
                                 <a href="{% url 'song-media:delete_score' score.pk song.pk song.slug %}"><i class="fas fa-trash"></i></a></td>
                         </tr>
                     {% endfor %}
@@ -131,9 +132,10 @@
                         {% for midi in song.midi_set.all %}
                             <tr>
                                 <td><a href="{% url 'siteuser:detail' midi.uploader.pk midi.uploader.slug %}">{{ midi.uploader.screen_name }}</a></td>
-                                <td><a href="{% url 'song-media:play_midiview' midi.pk %}" target="blank">{{ midi.midi_parts }}</a></td>
+                                <td>{{ midi.midi_parts }}</td>
                                 <td><a href="">{{ midi.midi_likes }}</a></td>
-                                <td><a href=""><i class="fas fa-edit"></i></a> | 
+                                <td><a href="{% url 'song-media:play_midiview' midi.pk %}" target="blank"><i class="fas fa-download"></i></a>
+                                    <a href=""><i class="fas fa-edit"></i></a> |
                                     <a href="{% url 'song-media:delete_midi' midi.pk song.pk song.slug %}"><i  class="fas fa-trash"></i></a></td>
                             </tr>
                         {% endfor %}
