@@ -99,8 +99,8 @@
                     {% for score in song.score_set.all %}
                         <tr>
                             <td><a href="{% url 'siteuser:detail' score.uploader.pk score.uploader.slug %}">{{ score.uploader.screen_name }}</a></td>
-                            <td>{{ score.score_parts }}</td>
-                            <td>{{ score.score_notations }}</td>
+                            <td>{{ score.part }}</td>
+                            <td>{{ score.notation }}</td>
                             <td><a href="">{{ score.score_likes }}</a></td>
                             <td><a href="{% url 'song-media:score_view' score.pk %}" target="blank"><i class="fas fa-download"></i></a> |
                                 <a href=""><i  class="fas fa-edit"></i></a> |
@@ -109,7 +109,7 @@
                     {% endfor %}
                 </tbody>
                 {% else %}
-                    <p>No music score uploaded for this song</p>
+                    <p>No music score for this song</p>
                 {% endif %}
             </table>
         </div>
@@ -132,16 +132,16 @@
                         {% for midi in song.midi_set.all %}
                             <tr>
                                 <td><a href="{% url 'siteuser:detail' midi.uploader.pk midi.uploader.slug %}">{{ midi.uploader.screen_name }}</a></td>
-                                <td>{{ midi.midi_parts }}</td>
+                                <td>{{ midi.part }}</td>
                                 <td><a href="">{{ midi.midi_likes }}</a></td>
-                                <td><a href="{% url 'song-media:play_midiview' midi.pk %}" target="blank"><i class="fas fa-download"></i></a>
+                                <td><a href="{% url 'song-media:play_midiview' midi.pk %}" target="blank"><i class="fas fa-download"></i></a> | 
                                     <a href=""><i class="fas fa-edit"></i></a> |
                                     <a href="{% url 'song-media:delete_midi' midi.pk song.pk song.slug %}"><i  class="fas fa-trash"></i></a></td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 {% else %}
-                    <p>No midis uploaded for this song</p>
+                    <p>No midis for this song</p>
                 {% endif %}
             </table>
         </div>
@@ -172,7 +172,7 @@
                         {% endfor %}
                     </tbody>
                 {% else %}
-                    <p>No midis uploaded for this song</p>
+                    <p>No video link for this song</p>
                 {% endif %}
             </table>
         </div>

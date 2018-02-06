@@ -48,18 +48,10 @@ class Score(mdl.TimeStampedModel):
     part = models.ForeignKey(VocalPart, on_delete=models.CASCADE)
     notation = models.ForeignKey(ScoreNotation, on_delete=models.CASCADE)
     likes = models.ManyToManyField(SiteUser, related_name="score_likes")
-    file = models.FileField(upload_to=upload_pdf)
+    media_file = models.FileField(upload_to=upload_pdf)
 
     class Meta:
         ordering = ('-created', )
-
-    @property
-    def score_parts(self):
-        return ", ".join([each.name for each in self.part.all()])
-
-    @property
-    def score_notations(self):
-        return ", ".join([each.name for each in self.notation.all()])
 
     @property
     def score_likes(self):
@@ -79,14 +71,10 @@ class Midi(mdl.TimeStampedModel):
     song = models.ForeignKey(Song, null=True, on_delete=models.SET_NULL)
     part = models.ForeignKey(VocalPart, on_delete=models.CASCADE)
     likes = models.ManyToManyField(SiteUser, related_name="midi_likes")
-    file = models.FileField(upload_to=upload_midi)
+    media_file = models.FileField(upload_to=upload_midi)
 
     class Meta:
         ordering = ('-created', )
-
-    @property
-    def midi_parts(self):
-        return ", ".join([each.name for each in self.part.all()])
     
     @property
     def midi_likes(self):
@@ -97,7 +85,7 @@ class Midi(mdl.TimeStampedModel):
 
     @property
     def template_name(self):
-        return "{}_{}".format(os.path.basename(self.file.name), self.midi_parts.lower())
+        return "{}_{}".format(os.path.basename(self.media_file.name), self.midi_parts.lower())
 
     def get_absolute_url(self):
         return reverse('song:detail', kwargs={'pk' : (self.song.id), 'slug' : self.song.slug})

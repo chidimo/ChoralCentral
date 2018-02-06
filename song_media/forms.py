@@ -46,7 +46,7 @@ class NewScoreNotationForm(forms.ModelForm):
 class NewScoreForm(forms.ModelForm):
     class Meta:
         model = Score
-        fields = ('song', 'notation', 'file', 'part')
+        fields = ('song', 'notation', 'media_file', 'part')
 
         widgets = {'song' : forms.Select(attrs={'class' : 'form-control'}),
 
@@ -76,7 +76,7 @@ class NewScoreForm(forms.ModelForm):
 class NewMidiForm(forms.ModelForm):
     class Meta:
         model = Midi
-        fields = ('song', 'file', 'part')
+        fields = ('song', 'media_file', 'part')
 
         widgets = {'song' : forms.Select(attrs={'class' : 'form-control'}),
 

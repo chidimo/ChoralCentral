@@ -7,49 +7,23 @@
 {% block content_content %}
 
 <div class="container upload-forms">
-    <div class="row">
-        <div class="col-sm-12">
-            <h2>New music sheet</h2>                
-        </div>
-    </div>
+    <h2>New music sheet</h2>                
     
     {% if form.errors %}
-    <div class="row">
-        <div class="col-sm-12">
-            <p class="text-danger">{{ form.errors }}</p>
-        </div>
-    </div>
+        <p>{{ form.errors }}</p>
     {% endif %}
     
     
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
+
+        <p>{{ form.song }}</p>
+        <p>{{ form.part }}</p>
+        <p>{{ form.notation }}</p>
+        <p>{{ form.likes }}</p>
+        <p>{{ form.media_file }}</p>
     
-        <div class="row">
-            <div class="col-sm-12">{{ form.song }}</div>
-        </div>
-    
-        <div class="row">
-            <div class="col-sm-12">{{ form.part }}</div>
-        </div>
-    
-        <div class="row">
-            <div class="col-sm-12">{{ form.notation }}</div>
-        </div>
-    
-        <div class="row">
-            <div class="col-sm-12">{{ form.likes }}</div>
-        </div>
-    
-        <div class="row">
-            <div class="col-sm-12">{{ form.file }}</div>
-        </div>
-    
-        <div class="row">
-            <div class="col-sm-12">
-                <button  class="btn btn-primary btn-md btn-block" type="submit" value="Save">Save</button>
-            </div>
-        </div>
+        <button class="btn btn-primary btn-md float-right" type="submit" value="Save">Save</button>
     </form>
 </div>
 {% endblock %}

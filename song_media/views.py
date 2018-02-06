@@ -48,7 +48,7 @@ class NewScore(LoginRequiredMixin, generic.CreateView):
 class DisplayScore(View):
     def get(self, request, *args, **kwargs):
         doc = get_object_or_404(Score, pk=self.kwargs.get('pk', None))
-        fname = doc.file.url
+        fname = doc.media_file.url
         path = os.path.abspath(settings.BASE_DIR + fname)
         response = FileResponse(open(path, 'rb'), content_type="application/pdf")
         response["Content-Disposition"] = "filename={}_{}".format(doc.part, fname)
@@ -84,7 +84,7 @@ class NewMidi(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
 class PlayMidi(View):
     def get(self, request, *args, **kwargs):
         midi = get_object_or_404(Midi, pk=self.kwargs.get('pk', None))
-        fname = os.path.basename(midi.file.url)
+        fname = os.path.basename(midi.media_file.url)
         path = os.path.join(settings.MEDIA_ROOT, 'midi/' + fname)
         response = FileResponse(open(path, 'rb'), content_type="audio/midi")
         response["Content-Disposition"] = "filename={}_{}".format(midi.part, fname)

@@ -7,39 +7,20 @@
 {% block content_content %}
 
 <div class="container upload-forms">
-    <div class="row">
-        <div class="col-sm-12">
-            <h2>New midi file</h2>                
-        </div>
-    </div>
-    
-    <div class="row">
-        <div class="col-sm-12">
-            {% if form.errors %}
-                <p class="text-danger">{{ form.errors }}</p>
-            {% endif %}
-        </div>
-    </div>
+    <h2>New midi file</h2>                
+
+    {% if form.errors %}
+        <p>{{ form.errors }}</p>
+    {% endif %}
     
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
+            
+        <p>{{ form.song }}</p>
+        <p>{{ form.part }}</p>
+        <p>{{ form.file }}</p>
     
-        <div class="row">
-            <div class="col-sm-12">{{ form.song }}</div>
-        </div>
-    
-        <div class="row">
-            <div class="col-sm-12">{{ form.part }}</div>
-        </div>
-    
-        <div class="row">
-            <div class="col-sm-12">{{ form.file }}</div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <button  class="btn btn-primary btn-md btn-block" type="submit" value="Save">Save</button>
-            </div>
-        </div>
+        <button  class="btn btn-primary btn-md float-right" type="submit" value="Save">Save</button>
     </form>
 </div>
 {% endblock %}

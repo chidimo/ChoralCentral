@@ -4,10 +4,10 @@ from django.contrib import admin
 from .models import VocalPart, ScoreNotation, Score, Midi, VideoLink
 
 class ScoreAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'score_notations', 'score_parts')
+    list_display = ('__str__', 'part')
 
 class MidiAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'midi_parts')
+    list_display = ('__str__', 'part')
     raw_id_fields = ("song",)
 
 admin.site.register(VocalPart)
