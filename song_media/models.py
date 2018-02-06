@@ -21,9 +21,8 @@ class VocalPart(mdl.TimeStampedModel):
     # def get_absolute_url(self):
     #     return reverse()
 
-
     def save(self, *args, **kwargs):
-        self.name = self.name.upper()
+        self.name = self.name.title()
         super(VocalPart, self).save(*args, **kwargs)
 
 class ScoreNotation(mdl.TimeStampedModel):
@@ -39,7 +38,7 @@ class ScoreNotation(mdl.TimeStampedModel):
     #     return reverse()
 
     def save(self, *args, **kwargs):
-        self.name = self.name.upper()
+        self.name = self.name.title()
         super(ScoreNotation, self).save(*args, **kwargs)
 
 class Score(mdl.TimeStampedModel):
@@ -61,7 +60,7 @@ class Score(mdl.TimeStampedModel):
         return self.filename().split('.')[0]
 
     def __str__(self):
-        return "{}_score_{}".format(self.song.title, self.score_parts.lower())
+        return "{}_score_{}".format(self.song.title, self.part)
 
     def get_absolute_url(self):
         return reverse('song:detail', kwargs={'pk' : (self.song.id), 'slug' : self.song.slug})
@@ -81,11 +80,11 @@ class Midi(mdl.TimeStampedModel):
         return self.likes.count()
 
     def __str__(self):
-        return "{}_{}_{} midi".format(self.song.title, self.pk, self.midi_parts)
+        return "{}_{}_{} midi".format(self.song.title, self.pk, self.part)
 
     @property
     def template_name(self):
-        return "{}_{}".format(os.path.basename(self.media_file.name), self.midi_parts.lower())
+        return "{}_{}".format(os.path.basename(self.media_file.name), self.part)
 
     def get_absolute_url(self):
         return reverse('song:detail', kwargs={'pk' : (self.song.id), 'slug' : self.song.slug})

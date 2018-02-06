@@ -71,10 +71,6 @@ class NewMidi(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
         self.object.likes.add(SiteUser.objects.get(user=self.request.user))
         return redirect(self.get_success_url())
 
-    def form_valid(self, form):
-        form.instance.uploader = SiteUser.objects.get(user=self.request.user)
-        return super(NewMidi, self).form_valid(form)
-
     def get_form_kwargs(self):
         kwargs = super(NewMidi, self).get_form_kwargs()
         kwargs['user'] = self.request.user
