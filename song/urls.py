@@ -14,8 +14,9 @@ urlpatterns = [
     path("new/", views.NewSong.as_view(), name="new"),
     path("edit/<int:pk>/<slug:slug>/", views.SongEdit.as_view(), name="edit"),
     path("filter/", views.filter_songs, name="filter"),
+    path("season/<str:season>", views.season_filter, name="season_filter"),
+    path("masspart/<str:masspart>", views.masspart_filter, name="masspart_filter"),
     path("<int:pk>/<slug:slug>/", views.SongDetail.as_view(), name="detail"),
-    # path("<int:pk>/<slug:slug>/reader/", views.SongReader.as_view(), name="reader"),
     path("<int:pk>/<slug:slug>/reader/", views.reader_view, name="reader"),
     path("delete/<int:pk>/", views.SongDelete.as_view(), name='delete'),
 ]

@@ -1,0 +1,19 @@
+{% extends "choralcentral_base.html" %}
+{% block title %}Songs for season{% endblock title %}
+{% load static %}
+
+{% block content_content %}
+
+    {% if songs %}
+        <div class="list-group">
+            {% for song in songs %}
+
+            <div class="list-group-item list-group-item-primary">
+                <h3><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h3>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No songs to display</p>
+    {% endif %}
+{% endblock content_content %}

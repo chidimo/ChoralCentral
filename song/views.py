@@ -18,8 +18,9 @@ from django.shortcuts import render, render_to_response, reverse, redirect
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
+from django.core.paginator import Paginator, PageNotAnInteger, Page, EmptyPage
 
-from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
+# from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
 from django_addanother.views import CreatePopupMixin
 from pure_pagination.mixins import PaginationMixin
@@ -71,7 +72,7 @@ class SongIndex(PaginationMixin, generic.ListView):
     model = Song
     context_object_name = 'songs'
     template_name = 'song/index.html'
-    paginate_by = 30
+    paginate_by = 3
 
     def get_context_data(self, **kwargs):
         print("IP Address for debug-toolbar: " + self.request.META['REMOTE_ADDR'])
@@ -202,3 +203,29 @@ def reader_view(request, pk, slug):
     # canv.showPage()
     # canv.save()
     # return response
+
+def season_filter(request, season):
+    template = "song/season_filter.html"
+    songs = Song.published_set.filter(seasons__season=season)
+    paginator = Paginator(songs, 3)
+
+    page = request.GET.get('page')
+    songs = paginator.get_page(page)
+
+    return render(request, template, {'songs' : songs, 'is_paginated' : True})
+
+def masspart_filter(request, masspart):
+    template = "song/masspart_filter.html"
+    songs = Song.published_set.filter(mass_parts__part=masspart)
+    paginator = Paginator(songs, 3)
+
+    page = request.GET.get('page')
+    songs = paginator.get_page(page)
+
+    return render(request, template, {'songs' : songs, 'is_paginated' : True})
+
+class SeasonFilter(PaginationMixin, generic.ListView):
+    model = Song
+    context_object_name = "songs"
+    template_name = "song/season_filter.html"
+    
