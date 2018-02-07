@@ -10,145 +10,116 @@
         <span class="float-right"><a class="btn btn-primary" href="{% url 'song:new' %}">New Song</a></span>
     </h2>
 
-        {% if siteuser.song_set.all %}
-        <div class="row">
-            <div class="col-sm-6">
-                <h4>Published</h4>
-
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead class="thead-light">
+                <caption>My songs</caption>
+                <tr>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            {% if siteuser.song_set.all %}
+                <tbody>
                 {% for song in siteuser.song_set.all %}
-                    {% if song.status == "PUBLISHED" %}
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <h4><a href="{% url 'song:detail' song.pk song.slug %}">{{ song }}</a>
-                            {% if siteuser.user == user %}
-                                <a href="{% url 'song:edit' song.pk song.slug %}"><i class="fas fa-edit"></i></a>
-                            {% endif %}
-                            </h4>
-                        </div>
-                    </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-
-            {% if siteuser.user == user %}
-            <div class="col-sm-6">                
-                <h3>Unpublished</h3>
-                    {% for song in siteuser.song_set.all %}
-                        {% if song.status == "DRAFT" %}
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <h4>
-                                    <a href="{% url 'song:detail' song.pk song.slug %}">{{ song }}</a>
-                                    {% if siteuser.user == user %}
-                                    <a href="{% url 'song:edit' song.pk song.slug %}"><i class="fas fa-edit"></i></a>
-                                    {% endif %}
-                                </h4>
-                            </div>
-                        </div>
+                    <tr>
+                        {% if song.status == "PUBLISHED" %}
+                            <td><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></td>
+                        {% else %}
+                            <td class="text-warning">{{ song.title }}</td>
                         {% endif %}
+
+                        {% if song.status == "PUBLISHED" %}
+                            <td>{{ song.status }}</td>
+                        {% else %}
+                            <td class="text-warning">{{ song.status }}</td>
+                        {% endif %}
+                        <td><a href="{% url 'song:edit' song.pk song.slug %}"><i class="fas fa-edit"></i></a></td>
+                    </tr>
                 {% endfor %}
-            </div>
+                </tbody>
+            {% else %}
+                <p>There are no songs in your library</p>
             {% endif %}
+        </table>
+    </div>
+</div>
 
-        {% else %}
-            <p>There are no songs in your library</p>
-        {% endif %}
+
+<div class="list-group-item list-group-item-action list-group-item-primary">
+    <h2>Requests
+        <span class="float-right"><a class="btn btn-primary" href="{% url 'request:new' %}">New Request</i></a></span>
+    </h2>
+
+
+    {% if siteuser.request_set.all %}
+        {% for request in siteuser.request_set.all %}
+        <div class="row">
+            <div class="col-sm-12">
+                <h4>
+                    <a href="{% url 'request:detail' request.pk request.slug %}">{{ request }}</a>
+
+                    {% if siteuser.user == user %}
+                    <a href="{% url 'request:edit' request.pk %}"><i class="fas fa-edit"></i></a>
+                    <a href=""><i class="fa fa-check"></i></a>
+                    {% endif %}
+                </h4>
+            </div>
         </div>
-    </div><!-- END SONG -->
+        {% endfor %}
+    {% else %}
+        <p>You have no pending request</p>
+    {% endif %}
+</div> <!-- END REQUESTS -->
 
 
-    <div class="list-group-item list-group-item-action list-group-item-primary">
-        <h2>Requests
-            <span class="float-right"><a class="btn btn-primary" href="{% url 'request:new' %}">New Request</i></a></span>
-        </h2>
+<div class="list-group-item list-group-item-action list-group-item-primary">
+    <h2>Blog Posts
+        <span class="float-right"><a class="btn btn-primary" href="{% url 'blog:new' %}">New post</a></span>
+    </h2>
 
+    {% if siteuser.post_set.all %}
+        {% for post in siteuser.post_set.all %}
+        <div class="row">
+            <div class="col-sm-12">
+                <h4><a href="{% url 'blog:detail' post.pk post.slug %}">{{ post.title }}</a>
+                    {% if siteuser.user == user %}
+                    <a href="{% url 'blog:edit' post.pk %}"><i class="fas fa-edit"></i></a>
+                    {% endif %}
+                </h4>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="row">
+            <div class="col-sm-12">
+                <p>You haven't made any post</p>
+            </div>
+        </div>
+    {% endif %}
+</div><!-- END BLOG -->
 
-        {% if siteuser.request_set.all %}
-            {% for request in siteuser.request_set.all %}
+<div class="list-group-item list-group-item-action list-group-item-primary">
+
+    <h2>Authors</h2>
+
+        {% if siteuser.author_set.all %}
+            {% for author in siteuser.author_set.all %}
             <div class="row">
                 <div class="col-sm-12">
                     <h4>
-                        <a href="{% url 'request:detail' request.pk request.slug %}">{{ request }}</a>
-    
+                        <a href="{% url 'author:detail' author.pk author.slug %}">{{ author }} - {{ author.author_type|title }}</a>
                         {% if siteuser.user == user %}
-                        <a href="{% url 'request:edit' request.pk %}"><i class="fas fa-edit"></i></a>
-                        <a href=""><i class="fa fa-check"></i></a>
+                        <a href="{% url 'author:edit' author.pk author.slug %}"><i class="fas fa-edit"></i></a>
                         {% endif %}
                     </h4>
                 </div>
             </div>
             {% endfor %}
         {% else %}
-            <p>You have no pending request</p>
+            <p>You have not added any authors</p>
         {% endif %}
-    </div> <!-- END REQUESTS -->
-
-
-    <div class="list-group-item list-group-item-action list-group-item-primary">
-        <h2>Blog Posts
-            <span class="float-right"><a class="btn btn-primary" href="{% url 'blog:new' %}">New post</a></span>
-        </h2>
-
-        {% if siteuser.post_set.all %}
-            {% for post in siteuser.post_set.all %}
-            <div class="row">
-                <div class="col-sm-12">
-                    <h4><a href="{% url 'blog:detail' post.pk post.slug %}">{{ post.title }}</a>
-                        {% if siteuser.user == user %}
-                        <a href="{% url 'blog:edit' post.pk %}"><i class="fas fa-edit"></i></a>
-                        {% endif %}
-                    </h4>
-                </div>
-            </div>
-            {% endfor %}
-        {% else %}
-            <div class="row">
-                <div class="col-sm-12">
-                    <p>You haven't made any post</p>
-                </div>
-            </div>
-        {% endif %}
-    </div><!-- END BLOG -->
-
-    <div class="list-group-item list-group-item-action list-group-item-primary">
-        
-        <h2>Authors</h2>
-
-            {% if siteuser.author_set.all %}
-                {% for author in siteuser.author_set.all %}
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h4>
-                            <a href="{% url 'author:detail' author.pk author.slug %}">{{ author }} - {{ author.author_type|title }}</a>
-                            {% if siteuser.user == user %}
-                            <a href="{% url 'author:edit' author.pk author.slug %}"><i class="fas fa-edit"></i></a>
-                            {% endif %}
-                        </h4>
-                    </div>
-                </div>
-                {% endfor %}
-            {% else %}
-                <p>You have not added any authors</p>
-            {% endif %}
-            </div>
-
-    <div class="list-group-item list-group-item-action list-group-item-primary">
-        <div class="row">
-            <div class="col-sm-12">
-                <h2>Languages</h2>
-                {% if siteuser.language_set.all %}
-                    {% for language in siteuser.language_set.all %}
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <a href="#">{{ language }}</a>
-                        </div>
-                    </div>
-                    {% endfor %}
-                {% else %}
-                <p>You haven't added any language yet.</p>
-                {% endif %}
-            </div>
-        </div>
     </div>
 </div>
 {% endblock content_content %}
