@@ -207,22 +207,30 @@ def reader_view(request, pk, slug):
 def season_filter(request, season):
     template = "song/season_filter.html"
     songs = Song.published_set.filter(seasons__season=season)
-    paginator = Paginator(songs, 3)
+    paginator = Paginator(songs, 1)
 
     page = request.GET.get('page')
     songs = paginator.get_page(page)
 
-    return render(request, template, {'songs' : songs, 'is_paginated' : True})
+    context = {}
+    context['songs'] = songs
+    # context['is_paginated'] = True
+
+    return render(request, template, context)
 
 def masspart_filter(request, masspart):
     template = "song/masspart_filter.html"
     songs = Song.published_set.filter(mass_parts__part=masspart)
-    paginator = Paginator(songs, 3)
+    paginator = Paginator(songs, 1)
 
     page = request.GET.get('page')
     songs = paginator.get_page(page)
 
-    return render(request, template, {'songs' : songs, 'is_paginated' : True})
+    context = {}
+    context['songs'] = songs
+    # context['is_paginated'] = True
+
+    return render(request, template, context)
 
 class SeasonFilter(PaginationMixin, generic.ListView):
     model = Song
