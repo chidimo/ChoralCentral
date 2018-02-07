@@ -22,28 +22,27 @@
 {% block content_content %}
 
     {% if songs %}
-        <div class="list-group" id="hits-container">
+        <div class="list-group">
             {% for song in songs %}
 
-            <div  class="list-group-item list-group-item-action list-group-item-primary">
+            <div class="list-group-item list-group-item-action list-group-item-primary">
+                <h3><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h3>
+                <h5 class="" id="songFirstLine">{{ song.first_line }}</h5>
 
-                    <h3><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h3>
-                    <h5 class="" id="songFirstLine">{{ song.first_line }}</h5>
+                <span class="float-sm-left">
+                    <h4>
+                        <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'blog:new_song' song.pk %}" title="Blog this song"><i class="fas fa-pen-square"></i></a>
+                        <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="" title="Share on facebook"><i class="fab fa-facebook"></i></a>
+                        <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href=""title="Share by email"><i class="fas fa-at"></i></a>
+                    </h4>
+                </span>
 
-                    <span class="float-sm-left">
-                        <h4>
-                            <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'blog:new_song' song.pk %}" title="Blog this song"><i class="fas fa-pen-square"></i></a>
-                            <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="" title="Share on facebook"><i class="fab fa-facebook"></i></a>
-                            <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href=""title="Share by email"><i class="fas fa-at"></i></a>
-                        </h4>
-                    </span>
-
-                    <span class="float-sm-right">
-                        <h4>
-                            <a class="btn btn-sm btn-success" href=""><i class="fas fa-star"></i> Star</a>
-                            <a class="btn btn-sm btn-info" href="">{{ song.song_likes }}</a>
-                        </h4>
-                    </span>
+                <span class="float-sm-right">
+                    <h4>
+                        <a class="btn btn-sm btn-success" href=""><i class="fas fa-star"></i> Star</a>
+                        <a class="btn btn-sm btn-info" href="">{{ song.song_likes }}</a>
+                    </h4>
+                </span>
             </div>
             {% endfor %}
         </div>
