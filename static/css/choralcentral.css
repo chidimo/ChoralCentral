@@ -12,7 +12,7 @@ nav {
 h1, h2, h3, h4, h5, h6 {
 	color: darkblue;
   }
-  
+
 p {
   color: midnightblue;
   margin-bottom: .25rem;
@@ -46,11 +46,6 @@ a:hover {
    color: #BCC6CC;
    font-size: 16px;
    font-weight: bold;
-}
-
-.dropdown-menu {
-   background: #F5D2D5;
-   font-size: 16px;
 }
 
 .instant-search {
@@ -120,7 +115,7 @@ input#id_password {
   box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
 }
 
-.fa-user { 
+.fa-user {
   position: absolute;
   top: 5px;
   left: 10px;
@@ -130,7 +125,7 @@ input#id_password {
   padding-right: 5px;
 }
 
-.fa-unlock-alt { 
+.fa-unlock-alt {
   position: absolute;
   top: 5px;
   left: 10px;
@@ -156,7 +151,7 @@ input#id_password {
 .large-print-item {
   padding: 20px 10px;
   text-align: left;
-  
+
 }
 
 .feeds  {

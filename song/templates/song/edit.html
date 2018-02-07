@@ -4,11 +4,12 @@
 {% block content_content %}
 
 <div class="container upload-forms"
-<h2>Edit Song</h2>
+    <h2>Edit Song</h2>
+    <div class="divider"></div>
 
-{% if form.errors %}
-    <p>{{ form.errors }}</p>
-{% endif %}
+    {% if form.errors %}
+        <p>{{ form.errors }}</p>
+    {% endif %}
 
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
