@@ -3,28 +3,83 @@
 
 {% block content_content %}
 
-<h2>My library
-    <span class="float-right">
-        <div class="btn-group">
+<h2>Dashboard</h2>
+
+{% if user == siteuser.user %}
+<div class="admin-actions">
+    <div class="btn-group">
           <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Add new
+            Administer
           </button>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="{% url 'song:new' %}">Song</a>
+            <a class="dropdown-item" href="{% url 'siteuser:edit' siteuser.pk siteuser.slug %}">Edit profile</a>
                 <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{% url 'blog:new' %}">Blog post</a>
+            <a class="dropdown-item" href="{% url 'siteuser:change_password' %}">Change password</a>
                 <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{% url 'request:new' %}">Request</a>
+            <a class="dropdown-item" href="{% url 'siteuser:reset_password' %}">Reset password</a>
           </div>
         </div>
-    </span>
-</h2>
+    <div class="btn-group">
+      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Add new
+      </button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="{% url 'song:new' %}">Song</a>
+            <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="{% url 'blog:new' %}">Blog post</a>
+            <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="{% url 'request:new' %}">Request</a>
+      </div>
+    </div>
+</div>
+{% endif %}
 
-<!--songs-->
-<div class="list-group-item list-group-item-primary">
-    <h2>Songs</h2>
+<div id="accordion">
+    <h3>
+        <a href="#" data-toggle="collapse" data-target="#About" aria-expanded="false" aria-controls="#About">
+            About
+        </a>
+    </h3>
+    <div id="About" class="collapse" data-parent="accordion">
 
-    <div class="table-responsive">
+        <div>
+            <span class="h5">First name:</span>
+            <span class="h6">{{ siteuser.first_name }}</span>
+        </div>
+
+        <div>
+            <span class="h5">Last name:</span>
+            <span class="h6">{{ siteuser.last_name }}</span>
+        </div>
+
+        <div>
+            <span class="h5">Email:</span>
+            <span class="h6"><a href="mailto:{{ siteuser.user.email }}">{{ siteuser.user.email }}</a></span>
+        </div>
+
+        <div>
+            <span class="h5">Location:</span>
+            <span class="h6">{{ siteuser.location }}</span>
+        </div>
+        <div>
+            <span class="h5">Last seen:</span>
+            <span class="h6">{{ siteuser.user.last_login }}</span>
+        </div>
+        <div>
+            <span class="h5">Member since:</span>
+            <span class="h6">{{ siteuser.user.date_joined }}</span>
+        </div>
+    </div>
+</div>
+
+<div id="accordion">
+    <h3>
+        <a href="#" data-toggle="collapse" data-target="#Songs" aria-expanded="false" aria-controls="#Songs">
+            Songs
+        </a>
+    </h3>
+    <div id="Songs" class="collapse" data-parent="accordion">
+        <div class="table-responsive">
         <table class="table table-striped">
             <thead class="thead-light">
                 <caption>My songs</caption>
@@ -57,14 +112,18 @@
             {% endif %}
         </table>
     </div>
+    </div>
 </div>
-<!--end song-->
 
 
-<div class="list-group-item list-group-item-primary">
-    <h2>My blog posts</h2>
-
-    <div class="table-responsive">
+<div id="accordion">
+    <h3>
+        <a href="#" data-toggle="collapse" data-target="#blogPosts" aria-expanded="false" aria-controls="#blogPosts">
+            Blog posts
+        </a>
+    </h3>
+    <div id="blogPosts" class="collapse" data-parent="accordion">
+        <div class="table-responsive">
         <table class="table table-striped">
             <thead class="thead-light">
                 <caption>My blog posts</caption>
@@ -97,12 +156,18 @@
             {% endif %}
         </table>
     </div>
+    </div>
 </div>
 
-<div class="list-group-item list-group-item-primary">
-    <h2>My requests</h2>
 
-    <div class="table-responsive">
+<div id="accordion">
+    <h3>
+        <a href="#" data-toggle="collapse" data-target="#Requests" aria-expanded="false" aria-controls="#Requests">
+            Requests
+        </a>
+    </h3>
+    <div id="Requests" class="collapse" data-parent="accordion">
+        <div class="table-responsive">
         <table class="table table-striped">
             <thead class="thead-light">
                 <caption>My blog posts</caption>
@@ -135,13 +200,18 @@
             {% endif %}
         </table>
     </div>
+    </div>
 </div>
 
-<div class="list-group-item list-group-item-primary">
 
-    <h2>Authors</h2>
-
-    <div class="table-responsive">
+<div id="accordion">
+    <h3>
+        <a href="#" data-toggle="collapse" data-target="#Authors" aria-expanded="false" aria-controls="#Authors">
+            Authors
+        </a>
+    </h3>
+    <div id="Authors" class="collapse" data-parent="accordion">
+        <div class="table-responsive">
         <table class="table table-striped">
             <thead class="thead-light">
                 <caption>My authors</caption>
@@ -167,6 +237,8 @@
             {% endif %}
         </table>
     </div>
+    </div>
 </div>
+
 {% endblock content_content %}
 

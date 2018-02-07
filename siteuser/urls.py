@@ -22,7 +22,6 @@ urlpatterns += [
 
 
 urlpatterns += [
-    path("dashboard/", views.siteuser_dashboard, name='dashboard'),
     path("login/", account_views.login, name="login"),
     path("logout/", account_views.logout, name="logout"),
     path("logout-then-login/", account_views.logout_then_login, name="logout_then_login"),

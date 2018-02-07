@@ -41,7 +41,7 @@
 		{% block navigation %}
 		<nav class="navbar fixed-top navbar-expand-lg">
 
-			
+
 				<a class="navbar-brand" href="{% url 'song:index' %}">
 					<h3 style="color:blanchedalmond">ChoralCentral</h3>
 				</a>
@@ -65,9 +65,6 @@
 					</form>
 					<ul class="nav navbar-nav ml-auto">
 						{% if user.is_authenticated %}
-							<li class="nav-item">
-								<a class="nav-link" href="{% url 'siteuser:dashboard' %}">Dash</a>
-							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="{% url 'siteuser:detail' user.siteuser.pk user.siteuser.slug %}">{{ user.siteuser.screen_name }}</a>
 							</li>

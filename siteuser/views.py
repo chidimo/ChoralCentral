@@ -25,11 +25,6 @@ from .forms import (
 
 CustomUser = get_user_model()
 
-@login_required
-def siteuser_dashboard(request):
-    context = {"section" : "dashboard"}
-    template = "siteuser/dashboard.html"
-    return render(request, template, context)
 
 class SiteUserIndex(PaginationMixin, generic.ListView):
     model = SiteUser
@@ -41,11 +36,6 @@ class SiteUserDetail(LoginRequiredMixin, generic.DetailView):
     model = SiteUser
     context_object_name = 'siteuser'
     template_name = "siteuser/detail.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(SiteUserDetail, self).get_context_data(**kwargs)
-        context["last_seen"] = timezone.now()
-        return context
 
 class SiteUserComments(PaginationMixin, generic.ListView):
     model = Comment

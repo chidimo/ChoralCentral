@@ -37,7 +37,7 @@ FIXTURE_DIRS = [os.path.join(BASE_DIR, "fixtures")]
 SITE_ID = 1
 CART_SESSION_ID = "cart"
 
-LOGIN_REDIRECT_URL = reverse_lazy('siteuser:dashboard')
+LOGIN_REDIRECT_URL = reverse_lazy('song:index')
 LOGIN_URL = reverse_lazy('siteuser:login')
 LOGOUT_URL = reverse_lazy('siteuser:logout')
 
