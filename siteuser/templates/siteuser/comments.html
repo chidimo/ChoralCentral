@@ -8,7 +8,7 @@
     {% if siteuser_comments %}
         <div class="list-group">
             {% for comment in siteuser.comment_set.all %}
-                <div class="list-group-item list-group-item-action list-group-item-primary">
+                <div class="list-group-item list-group-item-primary">
                     <h5><a href="{% url 'blog:detail' comment.post.pk %}">{{ comment.post }}</a></h5>
                         <span>{{ comment.comment|linebreaks }}</span>
                 </div>

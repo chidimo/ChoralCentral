@@ -32,7 +32,6 @@ DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.redirects.RedirectsPanel',
 ]
 
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

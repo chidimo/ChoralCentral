@@ -9,7 +9,7 @@
     {% if request.reply_set.all %}
     <div class="list-group">
         {% for reply in request.reply_set.all %}
-            <div class="list-group-item list-group-item-action list-group-item-primary">
+            <div class="list-group-item list-group-item-primary">
                 <h3><a href="{% url 'song:detail' reply.song.pk reply.song.slug %}">{{ reply.song }}</a></h3>
             </div>
         {% endfor %}

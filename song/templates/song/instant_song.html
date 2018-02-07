@@ -2,10 +2,7 @@
 {% load static %}
 {% load blog_ttags %}
 
-
-
 {% block content_content %}
-<div class="container">
 
     <!-- search box -->
     <div class="row">
@@ -26,42 +23,31 @@
     {% if songs %}
     <div class="list-group" id="hits-container">
         {% for song in songs %}
+            <div class="list-group-item list-group-item-primary">
+                <h3><a href="{% url 'song:detail' song.pk song.slug %}" id="songTitle">{{ song.title }}</a></h3>
+                <h5 class="list-group-item-text" id="songFirstLine">{{ song.first_line }}</h5>
 
-        <div class="row">
-            <div class="col-sm-12">
-                <a href="{% url 'song:detail' song.pk song.slug %}">
-                <h5 class="list-group-item-heading" id="songTitle">{{ song.title }}</h5></a>
-                <p class="list-group-item-text" id="songFirstLine">{{ song.first_line }}</p>
-
-                <span class="h6 float-sm-left">
-                    <a href="{% url 'song:reader' song.pk song.slug %}">
-                        <i class="fa fa-minus-square" aria-hidden="true"></i>
-                    </a>
-                    <a href="{% url 'blog:new_song' song.pk %}" data-toggle="tooltip" data-placement="top" title="Blog this song">
-                        <i class="fa fa-rss-square" aria-hidden="true"></i>
-                    </a>
-                    <a href="" data-toggle="tooltip" data-placement="top" aria-hidden="true" title="Share on facebook" class="fa fa-facebook-official"></a>
-                    <a href="" data-toggle="tooltip" data-placement="top" aria-hidden="true" title="Share by email" class="fa fa-envelope"></a>
-                    <a href="" data-toggle="tooltip" data-placement="top" aria-hidden="true" title="Add to cart" class="fa fa-cart-plus"></a>
-                    <a href="" data-toggle="tooltip" data-placement="top" aria-hidden="true" title="Reader view" class="fa fa-book"></a>
+                <span class="float-sm-left">
+                    <h4>
+                        <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'blog:new_song' song.pk %}" title="Blog this song"><i class="fas fa-pen-square"></i></a>
+                        <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="" title="Share on facebook"><i class="fab fa-facebook"></i></a>
+                        <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href=""title="Share by email"><i class="fas fa-at"></i></a>
+                    </h4>
                 </span>
 
-                <span class="h5 float-sm-right">
-                    <span class="badge badge-light badge-pill">{{ song.song_likes }}</span>
-                    <span class="badge badge-light badge-pill">
-                        <a href="#"><i class="fa fa-star" aria-hidden="true"></i></a>
-                    </span>
+                <span class="float-sm-right">
+                    <h4>
+                        <a class="btn btn-sm btn-success" href=""><i class="fas fa-star"></i> Star</a>
+                        <a class="btn btn-sm btn-info" href="">{{ song.song_likes }}</a>
+                    </h4>
                 </span>
             </div>
-        </div>
         {% endfor %}
     </div>
     {% else %}
         <p>No songs to display</p>
     {% endif %}
-</div>
 {% endblock content_content %}
-
 
 
 {% block javascript %}
@@ -70,10 +56,10 @@
 {% verbatim %}
 <script type="text/template" id="hit-template">
 
-    <div class="list-group-item list-group-item-action list-group-item-primary">
+    <div class="list-group-item list-group-item-primary">
 
         <a href="{{ get_absolute_url }}">
-            <h5 class="list-group-item-heading">{{{ _highlightResult.title.value }}}</h5>
+            <h3 class="list-group-item-heading">{{{ _highlightResult.title.value }}}</h3>
         </a>
 
         <p class="list-group-item-text">{{{ _highlightResult.all_authors.value }}}</p>
@@ -81,6 +67,23 @@
         <p class="list-group-item-text">{{{ _highlightResult.all_masspart.value }}}</p>
 
         <p class="list-group-item-text">{{{ _highlightResult.lyrics.value }}}</p>
+
+        <!--
+        <span class="float-sm-left">
+            <h4>
+                <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'blog:new_song' song.pk %}" title="Blog this song"><i class="fas fa-pen-square"></i></a>
+                <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="" title="Share on facebook"><i class="fab fa-facebook"></i></a>
+                <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href=""title="Share by email"><i class="fas fa-at"></i></a>
+            </h4>
+        </span>
+
+        <span class="float-sm-right">
+            <h4>
+                <a class="btn btn-sm btn-success" href=""><i class="fas fa-star"></i> Star</a>
+                <a class="btn btn-sm btn-info" href="">{{ song.song_likes }}</a>
+            </h4>
+        </span>
+        -->
     </div>
 </script>
 {% endverbatim %}
@@ -131,8 +134,8 @@ $(document).ready(function() {
     }
 
     $hitsStat.html('<p class="text-right">Found <b>' +
-        content.nbHits + '</b> results in <b>' + content.processingTimeMS + '</b>ms - ' +
-        'by <a href="http://www.algolia.com"><img src="{% static "img/logo-algolia.png" %}" /></a></p>'
+        content.nbHits + '</b> results in <b>' + content.processingTimeMS + '</b>ms ' +
+        '<br>Search powered by <a href="http://www.algolia.com" target="_blank"><img src="{% static "img/logo-algolia.png" %}" /></a></p>'
     );
     }
 });

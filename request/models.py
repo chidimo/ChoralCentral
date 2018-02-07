@@ -11,16 +11,10 @@ from universal import models as mdl
 from universal import fields as fdl
 
 class Request(mdl.TimeStampedModel):
-    MT = "MET"
-    UM = "UNMET"
-    FULFIL_CHOICES = (
-        (MT, "Met"),
-        (UM, "Unmet")
-    )
     originator = models.ForeignKey(SiteUser, null=True, on_delete=models.SET_NULL)
     request = models.CharField(max_length=200)
     slug = fdl.AutoSlugField(set_using="request")
-    status = models.CharField(max_length=15, choices=FULFIL_CHOICES, default="UNMET")
+    status = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["-created", "status"]

@@ -19,7 +19,7 @@
 {% if author.song_set.all %}
     <div class="list-group">
         {% for song in author.song_set.all|published_author_songs %}
-            <li class="list-group-item"><a href="{% url 'song:detail' song.pk song.slug %}">{{ song }}</a></li>
+            <li class="list-group-item"><h4><a href="{% url 'song:detail' song.pk song.slug %}">{{ song }}</a></h4></li>
         {% endfor %}
     </div>
     {% else %}

@@ -10,7 +10,7 @@
 
     <div class="list-group">
         {% for author in authors %}
-        <div class="list-group-item list-group-item-action list-group-item-primary">
+        <div class="list-group-item list-group-item-primary">
             <a href="{% url 'author:detail' author.pk author.slug %}">
                 <h3>{{ author }}</h3>
             </a>

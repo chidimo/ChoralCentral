@@ -35,7 +35,7 @@
 
 <div class="table-responsive">
     <table class="table table-striped">
-        <thead class="thead-light">
+        <thead class="thead-dark">
             <caption>Metadata</caption>
             <tr>
                 <th>OP</th>
@@ -57,12 +57,12 @@
                 <td>{{ song.tempo_text }}</td>
                 <td>
                     {% for season in song.seasons.all %}
-                    <a href="#">{{ season }}</a>{% if not forloop.last %},{% endif %}
+                    <a href="{% url 'song:season_filter' season %}">{{ season }}</a>{% if not forloop.last %},{% endif %}
                     {% endfor %}
                 </td>
                 <td>
                     {% for masspart in song.mass_parts.all %}
-                    <a href="#">{{ masspart }}</a>{% if not forloop.last %},{% endif %}
+                    <a href="{% url 'song:masspart_filter' masspart %}">{{ masspart }}</a>{% if not forloop.last %},{% endif %}
                     {% endfor %}
                 </td>
                 <td>
@@ -84,7 +84,7 @@
         <p><a class="btn btn-primary btn-sm" href="{% url 'song-media:score_add_song' song.pk %}">Add score</a></p>
         <div class="table-responsive">
             <table class="table table-striped">
-                <thead class="thead-light">
+                <thead class="thead-dark">
                     <caption>Scores</caption>
                     <tr>
                         <th>Uploader</th>
@@ -118,7 +118,7 @@
         <p><a class="btn btn-primary btn-sm" href="{% url 'song-media:midi_add_song' song.pk %}">Add midi</a></p>
         <div class="table-responsive">
             <table class="table table-striped">
-                <thead class="thead-light">
+                <thead class="thead-dark">
                     <caption>Midis</caption>
                     <tr>
                         <th>Uploader</th>
@@ -153,7 +153,7 @@
         <p><a class="btn btn-primary btn-sm" href="{% url 'song-media:videolink_new_song' song.pk %}">Add video link</a></p>
         <div class="table-responsive">
             <table class="table table-striped">
-                <thead class="thead-light">
+                <thead class="thead-dark">
                     <caption>Video links</caption>
                     <tr>
                         <th>Uploader</th>

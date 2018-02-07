@@ -22,7 +22,7 @@
     {% if posts %}
     <div class="list-group" id="hits-container">
         {% for post in posts %}
-            <div class="list-group-item list-group-item-action  list-group-item-primary">
+            <div class="list-group-item  list-group-item-primary">
                 <h5><a href="{% url 'blog:detail' post.pk %}">
                     {{ post }}</a>
                 </h5>
@@ -57,7 +57,7 @@
 
 {% verbatim %}
 <script type="text/template" id="hit-template">
-    <div class="list-group-item list-group-item-action  list-group-item-primary">
+    <div class="list-group-item  list-group-item-primary">
 
         <a href="{{ get_absolute_url }}">
             <h5 class="list-group-item-heading">{{{ _highlightResult.title.value }}}</h5>
