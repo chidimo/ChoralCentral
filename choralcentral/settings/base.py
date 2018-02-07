@@ -67,11 +67,9 @@ PROJECT_APPS = [
     'season',
     'language',
     'request',
-    'social',
     'siteuser',
     'song',
     'song_media',
-    'todaymass',
     'voicing',
 ]
 
