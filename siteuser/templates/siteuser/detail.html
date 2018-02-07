@@ -69,6 +69,10 @@
             <span class="h5">Member since:</span>
             <span class="h6">{{ siteuser.user.date_joined }}</span>
         </div>
+        <div>
+            <span class="h5">Comments:</span>
+            <span class="h6"><a href="{% url 'siteuser:comments' siteuser.pk %}">{{ siteuser.comment_set.count }}</a></span>
+        </div>
     </div>
 </div>
 
@@ -108,13 +112,12 @@
                 {% endfor %}
                 </tbody>
             {% else %}
-                <p>There are no songs in your library</p>
+                <p>No song to display</p>
             {% endif %}
         </table>
     </div>
     </div>
 </div>
-
 
 <div id="accordion">
     <h3>
@@ -152,13 +155,12 @@
                 {% endfor %}
                 </tbody>
             {% else %}
-                <p>You haven't made any post</p>
+                <p>No posts to display</p>
             {% endif %}
         </table>
     </div>
     </div>
 </div>
-
 
 <div id="accordion">
     <h3>
@@ -196,13 +198,12 @@
                 {% endfor %}
                 </tbody>
             {% else %}
-                <p>You have not made any request</p>
+                <p>No request to display</p>
             {% endif %}
         </table>
     </div>
     </div>
 </div>
-
 
 <div id="accordion">
     <h3>
@@ -233,7 +234,7 @@
                 {% endfor %}
                 </tbody>
             {% else %}
-                <p>You have not added any authors</p>
+                <p>No author to display</p>
             {% endif %}
         </table>
     </div>

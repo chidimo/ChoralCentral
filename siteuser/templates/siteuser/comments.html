@@ -1,11 +1,9 @@
 {% extends "choralcentral_base.html" %}
-
-{% block title %} {{ siteuser.screen_name }}'s siteuser{% endblock title %}
-
+{% block title %}{{ siteuser.screen_name }}'s comments{% endblock title %}
 
 {% block content_content %}
 
-<h2><a href="{% url 'siteuser:detail' siteuser.pk %}">{{ siteuser.screen_name }}</a>'s comments</h2>
+<h2><a href="{% url 'siteuser:detail' siteuser.pk siteuser.slug %}">{{ siteuser.screen_name }}</a>'s comments</h2>
 
     {% if siteuser_comments %}
         <div class="list-group">
