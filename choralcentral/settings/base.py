@@ -63,7 +63,6 @@ PREREQ_APPS = [
 PROJECT_APPS = [
     'author',
     'blog',
-    'cart',
     'masspart',
     'season',
     'language',
