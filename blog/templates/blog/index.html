@@ -10,17 +10,20 @@
 {% if posts %}
     <div class="list-group">
         {% for post in posts %}
-            <div class="list-group-item list-group-item-action  list-group-item-primary">
+            <div class="list-group-item  list-group-item-primary">
                 <h3><a href="{% url 'blog:detail' post.pk post.slug %}">{{ post }}</a></h3>
 
-                <h4> by
-                    <a href="{% url 'siteuser:detail' post.creator.pk post.creator.slug %}">{{ post.creator.screen_name }}</a> 
-                    on {{ post.created }}
+                <h4>
+                    {% if post.song %}
+                        <h4> on <a href="{% url 'song:detail' post.song.pk post.song.slug %}">{{ post.song }}</a></h4>
+                    {% endif %}
+                    
                 </h4>
                 <span class="float-left">
-                    {% if post.song %}
-                        <h5> on <a href="{% url 'song:detail' post.song.pk post.song.slug %}">{{ post.song }}</a></h5>
-                    {% endif %}
+                    <h4>
+                        <a href="{% url 'siteuser:detail' post.creator.pk post.creator.slug %}">{{ post.creator.screen_name }}</a> 
+                        on {{ post.created }}  
+                    </h4>                  
                 </span>
 
                 <span class="float-right">

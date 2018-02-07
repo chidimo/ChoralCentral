@@ -36,7 +36,7 @@ class Migration(migrations.Migration):
                 ('modified', universal.fields.AutoLastModifiedField(default=django.utils.timezone.now, editable=False, verbose_name='modified')),
                 ('request', models.CharField(max_length=200)),
                 ('slug', universal.fields.AutoSlugField(blank=True, editable=False, set_once=True, set_using='request')),
-                ('status', models.CharField(choices=[('MET', 'Met'), ('UNMET', 'Unmet')], default='UNMET', max_length=15)),
+                ('status', models.BooleanField(default=False)),
                 ('originator', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='siteuser.SiteUser')),
             ],
             options={

@@ -28,7 +28,7 @@
     {% if comments %}
     <div class="list-group">
         {% for comment in comments %}
-        <div class="list-group-item list-group-item-action list-group-item-primary">
+        <div class="list-group-item list-group-item-primary">
             <h5><a href="{% url 'siteuser:detail' comment.creator.pk comment.creator.slug %}">{{ comment.creator.screen_name }}</a></h5>
             {{ comment.comment|markdown_format }}
             <a href="#"><i class="fas fa-edit"></i></a>

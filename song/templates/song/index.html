@@ -25,7 +25,7 @@
         <div class="list-group">
             {% for song in songs %}
 
-            <div class="list-group-item list-group-item-action list-group-item-primary">
+            <div class="list-group-item list-group-item-primary">
                 <h3><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h3>
                 <h5 class="" id="songFirstLine">{{ song.first_line }}</h5>
 
