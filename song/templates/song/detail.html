@@ -9,7 +9,7 @@
         {% if user.is_authenticated %}
 
         <!-- like script -->
-        <button class="btn btn-primary btn-md" type="submit" id="like" title="{{ song.pk }}" value="Like"><i class="fas fa-star"></i></button>
+        <button class="btn btn-primary btn-lg" type="submit" id="like" title="{{ song.pk }}" value="Like"><i class="fas fa-star"></i></button>
         <script>
         $('#like').click(function(){
             $.ajax({
@@ -88,7 +88,7 @@
         <div class="col-sm-7">
             <h3>Scores
                 <span class="float-right">
-                    <a class="btn btn-primary btn-sm" href="{% url 'song-media:score_add_song' song.pk %}">Add score</a>
+                    <a class="btn btn-primary btn-lg" href="{% url 'song-media:score_add_song' song.pk %}">Add score</a>
                 </span>
             </h3>
         </div>
@@ -133,7 +133,7 @@
         <div class="col-sm-6">
             <h3>Midis
                 <span class="float-right">
-                    <a class="btn btn-primary btn-sm" href="{% url 'song-media:midi_add_song' song.pk %}">Add midi</a>
+                    <a class="btn btn-primary btn-lg" href="{% url 'song-media:midi_add_song' song.pk %}">Add midi</a>
                 </span>
             </h3>
         </div>
@@ -177,7 +177,7 @@
         <div class="col-sm-7">
             <h3>Video links
                 <span class="float-right">
-                    <a class="btn btn-primary btn-sm" href="{% url 'song-media:videolink_new_song' song.pk %}">Add video link</a>
+                    <a class="btn btn-primary btn-lg" href="{% url 'song-media:videolink_new_song' song.pk %}">Add video link</a>
                 </span>
             </h3>
         </div>

@@ -25,26 +25,25 @@ from .forms import (
 
 CustomUser = get_user_model()
 
-
 class SiteUserIndex(PaginationMixin, generic.ListView):
     model = SiteUser
     context_object_name = 'siteuser_list'
     template_name = "siteuser/index.html"
     paginate_by = 20
 
-class SiteUserDetail(LoginRequiredMixin, generic.DetailView):
+class UserDetail(LoginRequiredMixin, generic.DetailView):
     model = SiteUser
     context_object_name = 'siteuser'
     template_name = "siteuser/detail.html"
 
-class SiteUserComments(PaginationMixin, generic.ListView):
+class UserComments(PaginationMixin, generic.ListView):
     model = Comment
-    context_object_name = 'siteuser_comments'
+    context_object_name = 'user_comments'
     template_name = "siteuser/comments.html"
     paginate_by = 20
 
     def get_context_data(self, **kwargs):
-        context = super(SiteUserComments, self).get_context_data(**kwargs)
+        context = super(UserComments, self).get_context_data(**kwargs)
         context["siteuser"] = SiteUser.objects.get(pk=self.kwargs.get("pk", None))
         return context
 

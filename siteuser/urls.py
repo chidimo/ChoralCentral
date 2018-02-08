@@ -11,15 +11,14 @@ urlpatterns = [
     path("edit/<int:pk>/<slug:slug>/", views.SiteUserEdit.as_view(), name="edit"),
     path("welcome/<str:screen_name>/", views.welcome_siteuser, name="new_success"),
     path("activate/<int:pk>/<str:screen_name>/", views.activate_siteuser, name="new_activation"),
-    path("<int:pk>/<slug:slug>/", views.SiteUserDetail.as_view(), name="detail"),
-    path("<int:pk>/comments/", views.SiteUserComments.as_view(), name="comments"),
+    path("<int:pk>/<slug:slug>/", views.UserDetail.as_view(), name="detail"),
+    path("comments/<int:pk>/", views.UserComments.as_view(), name="comments"),
 ]
 
 urlpatterns += [
     path("new-role/", views.NewRole.as_view(), name="role_create"),
     path("view/roles/", views.RoleIndex.as_view(), name="role_index"),
 ]
-
 
 urlpatterns += [
     path("login/", account_views.login, name="login"),
