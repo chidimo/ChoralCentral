@@ -73,11 +73,12 @@ a:hover {
 }
 
 .upload-forms {
-  max-width:500px;
-  margin: 3.5rem auto;
+  /* max-width:500px; */
+  margin-top: 3.5rem;
+  /* margin: 3.5rem auto; */
   padding: 0 1rem 1rem 1rem;
-  background: #cdd0d7;
-  border-radius: 5px;
+  background: #a3baf0;
+  border-radius: 2.5px;
 }
 
 .login-form {
