@@ -6,8 +6,6 @@
 
     <h2>Lyricists and Composers</h2>
 
-    {% if authors %}
-
     <div class="list-group">
         {% for author in authors %}
         <div class="list-group-item list-group-item-primary">
@@ -20,10 +18,8 @@
                 {% endwith %} published songs on <a href="/">ChoralCentral</a>
             </h5>
         </div>
+        {% empty %}
+            <p>No authors added yet</p>
         {% endfor %}
     </div>
-
-    {% else %}
-    <p>No authors added yet</p>
-    {% endif %}
 {% endblock content_content %}

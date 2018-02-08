@@ -108,7 +108,6 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    {% if song.score_set.all %}
                     <tbody>
                         {% for score in song.score_set.all %}
                             <tr>
@@ -120,11 +119,10 @@
                                     <a href=""><i  class="fas fa-edit"></i></a> |
                                     <a href="{% url 'song-media:delete_score' score.pk song.pk song.slug %}"><i class="fas fa-trash"></i></a></td>
                             </tr>
+                        {% empty %}
+                            <p>No music score for this song</p>
                         {% endfor %}
                     </tbody>
-                    {% else %}
-                        <p>No music score for this song</p>
-                    {% endif %}
                 </table>
             </div>
         </div>
@@ -154,7 +152,6 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    {% if song.midi_set.all %}
                         <tbody>
                             {% for midi in song.midi_set.all %}
                                 <tr>
@@ -165,11 +162,10 @@
                                         <a href=""><i class="fas fa-edit"></i></a> |
                                         <a href="{% url 'song-media:delete_midi' midi.pk song.pk song.slug %}"><i  class="fas fa-trash"></i></a></td>
                                 </tr>
+                            {% empty %}
+                                <p>No midis for this song</p>
                             {% endfor %}
                         </tbody>
-                    {% else %}
-                        <p>No midis for this song</p>
-                    {% endif %}
                 </table>
             </div>
         </div>
@@ -199,7 +195,6 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    {% if song.videolink_set.all %}
                         <tbody>
                             {% for link in song.videolink_set.all %}
                                 <tr>
@@ -207,11 +202,10 @@
                                     <td><a href="{{ link.video_link }}" target="_blank">{{ link.video_link }}</a></td>
                                     <td>action</td>
                                 </tr>
+                            {% empty %}
+                                <p>No video link for this song</p>
                             {% endfor %}
                         </tbody>
-                    {% else %}
-                        <p>No video link for this song</p>
-                    {% endif %}
                 </table>
             </div>
         </div>

@@ -93,7 +93,6 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            {% if siteuser.song_set.all %}
                 <tbody>
                 {% for song in siteuser.song_set.all %}
                     <tr>
@@ -109,11 +108,10 @@
                             <a href="{% url 'song:delete' song.pk %}"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
+                {% empty %}
+                    <p>No song to display</p>
                 {% endfor %}
                 </tbody>
-            {% else %}
-                <p>No song to display</p>
-            {% endif %}
         </table>
     </div>
     </div>
@@ -136,7 +134,6 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            {% if siteuser.post_set.all %}
                 <tbody>
                 {% for post in siteuser.post_set.all %}
                     <tr>
@@ -152,11 +149,10 @@
                             <a href="#"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
+                {% empty %}
+                    <p>No posts to display</p>
                 {% endfor %}
                 </tbody>
-            {% else %}
-                <p>No posts to display</p>
-            {% endif %}
         </table>
     </div>
     </div>
@@ -179,11 +175,10 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            {% if siteuser.request_set.all %}
                 <tbody>
                 {% for request in siteuser.request_set.all %}
                     <tr>
-                        {% if request.status == "MET" %}
+                        {% if request.status == True %}
                             <td><a href="{% url 'request:detail' request.pk request.slug %}">{{ request }}</a></td>
                             <td>{{ request.status }}</td>
                         {% else %}
@@ -195,11 +190,10 @@
                             <a href="#"><i class="fas fa-check"></i></a>
                         </td>
                     </tr>
+                {% empty %}
+                    <p>No request to display</p>
                 {% endfor %}
                 </tbody>
-            {% else %}
-                <p>No request to display</p>
-            {% endif %}
         </table>
     </div>
     </div>
@@ -222,7 +216,6 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            {% if siteuser.author_set.all %}
                 <tbody>
                 {% for author in siteuser.author_set.all %}
                     <tr>
@@ -231,11 +224,10 @@
                         <td><a href="#"><i class="fas fa-edit"></i></a> |
                         <a href="#"><i class="fas fa-trash"></i></a></td>
                     </tr>
+                {% empty %}
+                    <p>No author to display</p>
                 {% endfor %}
                 </tbody>
-            {% else %}
-                <p>No author to display</p>
-            {% endif %}
         </table>
     </div>
     </div>

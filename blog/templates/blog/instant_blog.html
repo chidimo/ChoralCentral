@@ -19,7 +19,6 @@
         <div class="col-sm-12 d-none" id="no-hits"></div>
     </div>
 
-    {% if posts %}
     <div class="list-group" id="hits-container">
         {% for post in posts %}
             <div class="list-group-item  list-group-item-primary">
@@ -34,6 +33,7 @@
                 {% if post.song %}
                     <h6> on <a href="{% url 'song:detail' post.song.pk post.song.slug %}">{{ post.song }}</a></h6>
                 {% endif %}
+                
                 <span class="h5 float-sm-right">
                     {% with post.comment_set.count as total_comments %}
                         <span class="badge badge-light badge-pill">{{ total_comments }}</span> comment{{ total_comments|pluralize }}
@@ -42,11 +42,11 @@
                     <a href=""><i class="fa fa-envelope" aria-hidden="true"></i></a>
                 </span>
             </div>
+        {% empty %}
+            <p>No posts added yet</p>
         {% endfor %}
     </div>
-{% else %}
-    <p>No posts added yet</p>
-{% endif %}
+
 {% endblock content_content %}
 
 

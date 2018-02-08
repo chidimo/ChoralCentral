@@ -20,8 +20,6 @@
 {% endblock left_sidebar %}
 
 {% block content_content %}
-
-    {% if songs %}
         <div class="list-group">
             {% for song in songs %}
 
@@ -44,9 +42,8 @@
                     </h4>
                 </span>
             </div>
+            {% empty %}
+                <p>No songs to display</p>
             {% endfor %}
         </div>
-    {% else %}
-        <p>No songs to display</p>
-    {% endif %}
 {% endblock content_content %}
