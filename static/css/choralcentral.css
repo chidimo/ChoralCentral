@@ -27,10 +27,6 @@ a:hover {
   text-decoration: underline;
 }
 
-.form-inline .form-control {
-  width: 25rem;
-}
-
 .logo-container {
   height: 100%;
   float: left;

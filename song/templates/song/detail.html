@@ -229,7 +229,11 @@
 {% endblock right_sidebar %}
 
 {% block left_sidebar %}
+left sidebar
     <div id="subPages">
-        load paginated subpages here
+        <div>
+            <input type="hidden" id="pagination-id" value="1">
+            <button id="load-id" type="submit">Show</button>
+        </div>
     </div>
 {% endblock left_sidebar %}
