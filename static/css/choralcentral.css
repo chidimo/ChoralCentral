@@ -48,11 +48,6 @@ a:hover {
   padding: 20px 0;
 }
 
-.filter-form {
-  max-width: 400px;
-  margin: auto;
-}
-
 .content-block {
   background-color: #cdd0d7;
   max-width: 1000px;
@@ -66,29 +61,36 @@ a:hover {
   max-width:400px;
   margin: auto;
   background: midnightblue;
-  /*padding: 0px 10px 25px 10px;*/
-  padding: 10px;
-  display: block;
-  border-radius: 5px;
+  margin-top: 0.5rem;
+  padding: 2rem 1rem 4.75rem 1rem;
+  border-radius: 2.5px;
 }
 
+.filter-block .btn-lg {
+  margin-top: 0.75rem;
+} 
+
 .upload-forms {
-  /* max-width:500px; */
+  max-width:600px;
   margin-top: 3.5rem;
   /* margin: 3.5rem auto; */
-  padding: 0 1rem 1rem 1rem;
+  padding: 0 1rem 4.75rem 1rem;
   background: #a3baf0;
   border-radius: 2.5px;
 }
+
+.upload-forms .btn-lg {
+  margin-top: 0.75rem;
+} 
 
 .login-form {
   max-width:350px;
   margin:auto;
   border: 1px solid blue;
   border-radius: 5px;
+  padding-bottom: 4rem;
+  margin-top: 10rem;
 }
-
-
 
 /* Add icons to registration form fields */
 .form-group {
