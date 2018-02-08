@@ -39,7 +39,7 @@ class RequestIndex(PaginationMixin, generic.ListView):
     template_name = "request/index.html"
     paginate_by = 20
 
-class RequestDetail(LoginRequiredMixin, generic.DetailView):
+class RequestDetail(generic.DetailView):
     model = Request
     context_object_name = "request"
     template_name = "request/detail.html"
@@ -58,9 +58,6 @@ class ReplyAddFromRequest(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         form.instance.originator = SiteUser.objects.get(user=self.request.user)
         return super(ReplyAddFromRequest, self).form_valid(form)
-
-    def get_success_url(self):
-        return reverse("request:detail", kwargs={'pk' : self.kwargs['pk'], 'slug' : self.kwargs['slug']})
 
 class ReplyIndex(PaginationMixin, generic.ListView):
     model = Reply

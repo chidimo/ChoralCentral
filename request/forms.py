@@ -49,8 +49,8 @@ class ReplyCreateFromRequestForm(forms.ModelForm):
 
     def clean_song(self):
         song = self.cleaned_data["song"]
-        if song in Request.objects.filter(song__song).exists():
-            raise forms.ValidationError("This song is already added to this request")
+        if Reply.objects.filter(song=song).exists():
+            raise forms.ValidationError("This song has already been added to this request")
         return song
 
     def __init__(self, *args, **kwargs):

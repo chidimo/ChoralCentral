@@ -5,44 +5,48 @@
 
 {% block content_content %}
 
-<h2>{{ post.title }}</h2>
+    <h2>{{ post.title }}</h2>
 
-{% if post.subtitle %}
-    <h4>{{ post.subtitle|markdown_format }}</h5>
-{% endif %}
-
-<h5><em>Published {{ post.created }} by 
-    <a href="{% url 'siteuser:detail' post.creator.pk post.creator.slug %}">{{ post.creator.screen_name }}</a>
-</em></h5>
-
-{% if post.song %}
-    <h5><a href="{% url 'song:detail' post.song.pk post.song.slug %}">{{ post.song }}</a></h5>
-{% endif %}
-
-<hr>
-
-<span>{{ post.body|markdown_format }}</span>
-
-<h4>{{ post.comment_set.count }} comments</h4>
-
-    {% if comments %}
-    <div class="list-group">
-        {% for comment in comments %}
-        <div class="list-group-item list-group-item-primary">
-            <h5><a href="{% url 'siteuser:detail' comment.creator.pk comment.creator.slug %}">{{ comment.creator.screen_name }}</a></h5>
-            {{ comment.comment|markdown_format }}
-            <a href="#"><i class="fas fa-edit"></i></a>
-            <a href="#"><i class="fas fa-reply"></i></a>
-        </div>
-        {% endfor %}
-    </div>
+    {% if post.subtitle %}
+        <h5>{{ post.subtitle|markdown_format }}</h5>
     {% endif %}
 
-    <form action="{% url 'blog:comment_add' post.pk %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ comment_form.comment }}
+    {% if post.song %}
+        <h6>on <a href="{% url 'song:detail' post.song.pk post.song.slug %}">{{ post.song }}</a></h65>
+    {% endif %}
 
-        <button class="btn btn-primary btn-md float-right" type="submit" value="Post Comment">Post Comment</button>
-    </form>
+    <h5>
+        <em>Published {{ post.created }} by
+        <a href="{% url 'siteuser:detail' post.creator.pk post.creator.slug %}">{{ post.creator.screen_name }}</a>
+        </em>
+        <span class="float-right">{{ post.comment_set.count }} comments</span>
+    </h5>
+
+    <hr>
+
+    <span>{{ post.body|markdown_format }}</span>
+
+    <hr>
+
+        <div class="list-group">
+            {% for comment in comments %}
+            <div class="list-group-item list-group-item-primary">
+                <h5><a href="{% url 'siteuser:detail' comment.creator.pk comment.creator.slug %}">{{ comment.creator.screen_name }}</a></h5>
+                {{ comment.comment|markdown_format }}
+                <a href="#"><i class="fas fa-edit"></i></a>
+                <a href="#"><i class="fas fa-reply"></i></a>
+            </div>
+            {% empty %}
+                <p>No comments on this post at this time.</p>
+            {% endfor %}
+        </div>
+
+        <hr>
+
+        <form action="{% url 'blog:comment_add' post.pk %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ comment_form.comment }}
+            <button class="btn btn-primary btn-md float-right" type="submit" value="Post Comment">Post Comment</button>
+        </form>
 {% endblock content_content %}
 

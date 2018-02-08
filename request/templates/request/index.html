@@ -20,7 +20,6 @@
             <th>Rescue</th>
         </tr>
 
-        {% if requests %}
         <tbody>
             {% for request in requests %}
                 <tr>
@@ -31,11 +30,10 @@
                     <td>{{ request.reply_set.count }}</td>
                     <td><a href="{% url 'request:reply_new_from_request' request.pk %}"><i class="fa fa-medkit" aria-hidden="true"></i></a></td>
                 </tr>
+            {% empty %}
+                <p>No request at the moment.</p>
             {% endfor %}
         </tbody>
-        {% else %}
-            <p>No requests found</p>
-        {% endif %}
     </table>
 </div>
 {% endblock content_content %}

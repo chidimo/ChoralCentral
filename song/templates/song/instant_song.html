@@ -1,4 +1,5 @@
 {% extends "choralcentral_base.html" %}
+{% block title %}Search songs{% endblock title %}
 {% load static %}
 {% load blog_ttags %}
 
@@ -20,73 +21,29 @@
         <div class="col-sm-12 d-none" id="no-hits"></div>
     </div>
 
-    {% if songs %}
-    <div class="list-group" id="hits-container">
-        {% for song in songs %}
-            <div class="list-group-item list-group-item-primary">
-                <h3><a href="{% url 'song:detail' song.pk song.slug %}" id="songTitle">{{ song.title }}</a></h3>
-                <h5 class="list-group-item-text" id="songFirstLine">{{ song.first_line }}</h5>
+    <div class="list-group" id="hits-container"></div>
 
-                <span class="float-sm-left">
-                    <h4>
-                        <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'blog:new_song' song.pk %}" title="Blog this song"><i class="fas fa-pen-square"></i></a>
-                        <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="" title="Share on facebook"><i class="fab fa-facebook"></i></a>
-                        <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href=""title="Share by email"><i class="fas fa-at"></i></a>
-                    </h4>
-                </span>
-
-                <span class="float-sm-right">
-                    <h4>
-                        <a class="btn btn-sm btn-success" href=""><i class="fas fa-star"></i> Star</a>
-                        <a class="btn btn-sm btn-info" href="">{{ song.song_likes }}</a>
-                    </h4>
-                </span>
-            </div>
-        {% endfor %}
-    </div>
-    {% else %}
-        <p>No songs to display</p>
-    {% endif %}
 {% endblock content_content %}
 
 
 {% block javascript %}
 <script src="//cdn.jsdelivr.net/hogan.js/3.0.2/hogan.min.js"></script>
 
-{% verbatim %}
-<script type="text/template" id="hit-template">
+    {% verbatim %}
+        <script type="text/template" id="hit-template">
+            <div class="list-group-item list-group-item-primary">
 
-    <div class="list-group-item list-group-item-primary">
+                <a href="{{ get_absolute_url }}">
+                    <h3 class="list-group-item-heading">{{{ _highlightResult.title.value }}}</h3>
+                </a>
 
-        <a href="{{ get_absolute_url }}">
-            <h3 class="list-group-item-heading">{{{ _highlightResult.title.value }}}</h3>
-        </a>
-
-        <p class="list-group-item-text">{{{ _highlightResult.all_authors.value }}}</p>
-        <p class="list-group-item-text">{{{ _highlightResult.all_seasons.value }}}</p>
-        <p class="list-group-item-text">{{{ _highlightResult.all_masspart.value }}}</p>
-
-        <p class="list-group-item-text">{{{ _highlightResult.lyrics.value }}}</p>
-
-        <!--
-        <span class="float-sm-left">
-            <h4>
-                <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'blog:new_song' song.pk %}" title="Blog this song"><i class="fas fa-pen-square"></i></a>
-                <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="" title="Share on facebook"><i class="fab fa-facebook"></i></a>
-                <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href=""title="Share by email"><i class="fas fa-at"></i></a>
-            </h4>
-        </span>
-
-        <span class="float-sm-right">
-            <h4>
-                <a class="btn btn-sm btn-success" href=""><i class="fas fa-star"></i> Star</a>
-                <a class="btn btn-sm btn-info" href="">{{ song.song_likes }}</a>
-            </h4>
-        </span>
-        -->
-    </div>
-</script>
-{% endverbatim %}
+                <p class="list-group-item-text">{{{ _highlightResult.all_authors.value }}}</p>
+                <p class="list-group-item-text">{{{ _highlightResult.all_seasons.value }}}</p>
+                <p class="list-group-item-text">{{{ _highlightResult.all_masspart.value }}}</p>
+                <p class="list-group-item-text">{{{ _highlightResult.lyrics.value }}}</p>
+            </div>
+        </script>
+    {% endverbatim %}
 
 <script>
 $(document).ready(function() {
@@ -141,4 +98,3 @@ $(document).ready(function() {
 });
 </script>
 {% endblock %}
-

@@ -4,15 +4,15 @@
     "pk": 1,
     "fields": {
         "created": "2018-01-16T20:07:36.574Z",
-        "modified": "2018-01-16T20:07:36.574Z",
+        "modified": "2018-02-07T06:53:30.411Z",
         "originator": 1,
         "voicing": 1,
         "language": 1,
-        "status": "PUBLISHED",
+        "status": "DRAFT",
         "title": "Be Thou My Vision",
         "compose_date": null,
         "slug": "be-thou-my-vision",
-        "lyrics": "1 Be Thou my Vision, O Lord of my heart;\nbe all else but naught to me, save that Thou art;\nbe Thou my best thought in the day and the night,\nboth waking and sleeping, Thy presence my light.\n2 Be Thou my Wisdom, and Thou my true Word;\nbe Thou ever with me, and I with Thee, Lord;\nbe Thou my great Father, and I Thy true son;\nbe Thou in me dwelling, and I with Thee one.\n3 Be Thou my Breastplate, my Sword for the fight;\nbe Thou my whole Armor, be Thou my true Might;\nbe Thou my soul\u2019s Shelter, be Thou my strong Tow\u2019r,\nO raise Thou me heav\u2019nward, great Pow\u2019r of my pow\u2019r.\n4 Riches I heed not, nor man's empty praise;\nbe Thou mine inheritance, now and always;\nbe Thou and Thou only the first in my heart,\nO high King of heaven, my Treasure Thou art.\n5 High King of heaven, Thou heaven's bright Sun,\nO grant me its joys, after vict'ry is won;\nGreat Heart of my own heart, whatever befall,\nstill be Thou my vision, O Ruler of all.\nSource: Hymns to the Living God #246",
+        "lyrics": "1 Be Thou my Vision, O Lord of my heart;\r\nbe all else but naught to me, save that Thou art;\r\nbe Thou my best thought in the day and the night,\r\nboth waking and sleeping, Thy presence my light.\r\n2 Be Thou my Wisdom, and Thou my true Word;\r\nbe Thou ever with me, and I with Thee, Lord;\r\nbe Thou my great Father, and I Thy true son;\r\nbe Thou in me dwelling, and I with Thee one.\r\n3 Be Thou my Breastplate, my Sword for the fight;\r\nbe Thou my whole Armor, be Thou my true Might;\r\nbe Thou my soul\u2019s Shelter, be Thou my strong Tow\u2019r,\r\nO raise Thou me heav\u2019nward, great Pow\u2019r of my pow\u2019r.\r\n4 Riches I heed not, nor man's empty praise;\r\nbe Thou mine inheritance, now and always;\r\nbe Thou and Thou only the first in my heart,\r\nO high King of heaven, my Treasure Thou art.\r\n5 High King of heaven, Thou heaven's bright Sun,\r\nO grant me its joys, after vict'ry is won;\r\nGreat Heart of my own heart, whatever befall,\r\nstill be Thou my vision, O Ruler of all.\r\nSource: Hymns to the Living God #246",
         "first_line": "",
         "scripture_ref": "Proverbs 23",
         "tempo": 93,
@@ -23,8 +23,12 @@
             2,
             1
         ],
-        "seasons": [],
-        "mass_parts": []
+        "seasons": [
+            4
+        ],
+        "mass_parts": [
+            6
+        ]
     }
 },
 {
@@ -47,10 +51,7 @@
         "bpm": 4,
         "divisions": 7,
         "likes": [],
-        "authors": [
-            4,
-            3
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -75,9 +76,7 @@
         "bpm": 5,
         "divisions": 5,
         "likes": [],
-        "authors": [
-            5
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -102,9 +101,7 @@
         "bpm": 8,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            6
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -129,9 +126,7 @@
         "bpm": 8,
         "divisions": 5,
         "likes": [],
-        "authors": [
-            7
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -156,9 +151,7 @@
         "bpm": 5,
         "divisions": 8,
         "likes": [],
-        "authors": [
-            8
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -183,9 +176,7 @@
         "bpm": 8,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            9
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -210,9 +201,7 @@
         "bpm": 8,
         "divisions": 7,
         "likes": [],
-        "authors": [
-            10
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -237,9 +226,7 @@
         "bpm": 7,
         "divisions": 5,
         "likes": [],
-        "authors": [
-            11
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -264,9 +251,7 @@
         "bpm": 7,
         "divisions": 5,
         "likes": [],
-        "authors": [
-            12
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -291,9 +276,7 @@
         "bpm": 7,
         "divisions": 8,
         "likes": [],
-        "authors": [
-            13
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -318,9 +301,7 @@
         "bpm": 6,
         "divisions": 8,
         "likes": [],
-        "authors": [
-            14
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -345,9 +326,7 @@
         "bpm": 7,
         "divisions": 4,
         "likes": [],
-        "authors": [
-            15
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -372,9 +351,7 @@
         "bpm": 6,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            16
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -399,9 +376,7 @@
         "bpm": 5,
         "divisions": 5,
         "likes": [],
-        "authors": [
-            17
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -426,9 +401,7 @@
         "bpm": 4,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            5
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -453,10 +426,7 @@
         "bpm": 4,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            19,
-            18
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -466,26 +436,37 @@
     "pk": 18,
     "fields": {
         "created": "2018-01-16T20:07:41.430Z",
-        "modified": "2018-01-16T20:07:41.430Z",
+        "modified": "2018-01-24T07:21:59.032Z",
         "originator": 1,
         "voicing": 1,
         "language": 1,
         "status": "PUBLISHED",
         "title": "O Come, O Come, Emmanuel",
-        "compose_date": null,
+        "compose_date": "1700-08-12",
         "slug": "o-come-o-come-emmanuel",
-        "lyrics": "1 O come, O come, Immanuel,\nand ransom captive Israel\nthat mourns in lonely exile here\nuntil the Son of God appear.\nRefrain:\nRejoice! Rejoice! Immanuel\nshall come to you, O Israel.\n2 O come, O Wisdom from on high,\nwho ordered all things mightily;\nto us the path of knowledge show\nand teach us in its ways to go. Refrain\n3 O come, O come, great Lord of might,\nwho to your tribes on Sinai's height\nin ancient times did give the law\nin cloud and majesty and awe. Refrain\n4 O come, O Branch of Jesse's stem,\nunto your own and rescue them!\nFrom depths of hell your people save,\nand give them victory o'er the grave. Refrain\n5 O come, O Key of David, come\nand open wide our heavenly home.\nMake safe for us the heavenward road\nand bar the way to death's abode. Refrain\n6 O come, O Bright and Morning Star,\nand bring us comfort from afar!\nDispel the shadows of the night\nand turn our darkness into light. Refrain\n7 O come, O King of nations, bind\nin one the hearts of all mankind.\nBid all our sad divisions cease\nand be yourself our King of Peace. Refrain\n\nPsalter Hymnal (Gray)",
-        "first_line": "",
-        "scripture_ref": "Psalm 91",
+        "lyrics": "1 O come, O come, Immanuel,\r\nand ransom captive Israel\r\nthat mourns in lonely exile here\r\nuntil the Son of God appear.\r\nRefrain:\r\nRejoice! Rejoice! Immanuel\r\nshall come to you, O Israel.\r\n2 O come, O Wisdom from on high,\r\nwho ordered all things mightily;\r\nto us the path of knowledge show\r\nand teach us in its ways to go. Refrain\r\n3 O come, O come, great Lord of might,\r\nwho to your tribes on Sinai's height\r\nin ancient times did give the law\r\nin cloud and majesty and awe. Refrain\r\n4 O come, O Branch of Jesse's stem,\r\nunto your own and rescue them!\r\nFrom depths of hell your people save,\r\nand give them victory o'er the grave. Refrain\r\n5 O come, O Key of David, come\r\nand open wide our heavenly home.\r\nMake safe for us the heavenward road\r\nand bar the way to death's abode. Refrain\r\n6 O come, O Bright and Morning Star,\r\nand bring us comfort from afar!\r\nDispel the shadows of the night\r\nand turn our darkness into light. Refrain\r\n7 O come, O King of nations, bind\r\nin one the hearts of all mankind.\r\nBid all our sad divisions cease\r\nand be yourself our King of Peace. Refrain\r\n\r\nPsalter Hymnal (Gray)",
+        "first_line": "O come, O come, Immanuel",
+        "scripture_ref": "Psalm 91, exodus 22.6,",
         "tempo": 152,
         "bpm": 4,
         "divisions": 8,
-        "likes": [],
-        "authors": [
-            20
+        "likes": [
+            1
         ],
-        "seasons": [],
-        "mass_parts": []
+        "authors": [
+            2,
+            1
+        ],
+        "seasons": [
+            1,
+            2,
+            5
+        ],
+        "mass_parts": [
+            1,
+            10,
+            11
+        ]
     }
 },
 {
@@ -508,9 +489,7 @@
         "bpm": 6,
         "divisions": 8,
         "likes": [],
-        "authors": [
-            21
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -535,10 +514,7 @@
         "bpm": 7,
         "divisions": 4,
         "likes": [],
-        "authors": [
-            23,
-            22
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -563,10 +539,7 @@
         "bpm": 8,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            25,
-            24
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -591,9 +564,7 @@
         "bpm": 7,
         "divisions": 8,
         "likes": [],
-        "authors": [
-            26
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -618,9 +589,7 @@
         "bpm": 4,
         "divisions": 4,
         "likes": [],
-        "authors": [
-            27
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -645,9 +614,7 @@
         "bpm": 7,
         "divisions": 8,
         "likes": [],
-        "authors": [
-            28
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -672,9 +639,7 @@
         "bpm": 5,
         "divisions": 5,
         "likes": [],
-        "authors": [
-            29
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -699,9 +664,7 @@
         "bpm": 4,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            30
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -726,9 +689,7 @@
         "bpm": 8,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            31
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -753,10 +714,7 @@
         "bpm": 8,
         "divisions": 7,
         "likes": [],
-        "authors": [
-            32,
-            33
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -780,10 +738,10 @@
         "tempo": 150,
         "bpm": 6,
         "divisions": 5,
-        "likes": [],
-        "authors": [
-            34
+        "likes": [
+            1
         ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -808,9 +766,7 @@
         "bpm": 8,
         "divisions": 5,
         "likes": [],
-        "authors": [
-            35
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -820,7 +776,7 @@
     "pk": 31,
     "fields": {
         "created": "2018-01-16T20:07:43.711Z",
-        "modified": "2018-01-16T20:07:43.712Z",
+        "modified": "2018-01-25T12:19:09.930Z",
         "originator": 2,
         "voicing": 1,
         "language": 1,
@@ -828,19 +784,32 @@
         "title": "A Mighty Fortress",
         "compose_date": null,
         "slug": "a-mighty-fortress",
-        "lyrics": "1 A mighty fortress is our God,\na bulwark never failing;\nour helper he, amid the flood\nof mortal ills prevailing.\nFor still our ancient foe\ndoes seek to work us woe;\nhis craft and power are great,\nand armed with cruel hate,\non earth is not his equal.\n2 Did we in our own strength confide,\nour striving would be losing,\nwere not the right Man on our side,\nthe Man of God's own choosing.\nYou ask who that may be?\nChrist Jesus, it is he;\nLord Sabaoth his name,\nfrom age to age the same;\nand he must win the battle.\n3 And though this world, with devils filled,\nshould threaten to undo us,\nwe will not fear, for God has willed\nhis truth to triumph through us.\nThe prince of darkness grim,\nwe tremble not for him;\nhis rage we can endure,\nfor lo! his doom is sure;\none little word shall fell him.\n4 That Word above all earthly powers\nno thanks to them abideth;\nthe Spirit and the gifts are ours\nthrough him who with us sideth.\nLet goods and kindred go,\nthis mortal life also;\nthe body they may kill:\nGod's truth abideth still;\nhis kingdom is forever!\n\nPsalter Hymnal, (Gray), 1987\n",
+        "lyrics": "1 A mighty fortress is our God,\r\na bulwark never failing;\r\nour helper he, amid the flood\r\nof mortal ills prevailing.\r\nFor still our ancient foe\r\ndoes seek to work us woe;\r\nhis craft and power are great,\r\nand armed with cruel hate,\r\non earth is not his equal.\r\n2 Did we in our own strength confide,\r\nour striving would be losing,\r\nwere not the right Man on our side,\r\nthe Man of God's own choosing.\r\nYou ask who that may be?\r\nChrist Jesus, it is he;\r\nLord Sabaoth his name,\r\nfrom age to age the same;\r\nand he must win the battle.\r\n3 And though this world, with devils filled,\r\nshould threaten to undo us,\r\nwe will not fear, for God has willed\r\nhis truth to triumph through us.\r\nThe prince of darkness grim,\r\nwe tremble not for him;\r\nhis rage we can endure,\r\nfor lo! his doom is sure;\r\none little word shall fell him.\r\n4 That Word above all earthly powers\r\nno thanks to them abideth;\r\nthe Spirit and the gifts are ours\r\nthrough him who with us sideth.\r\nLet goods and kindred go,\r\nthis mortal life also;\r\nthe body they may kill:\r\nGod's truth abideth still;\r\nhis kingdom is forever!\r\n\r\nPsalter Hymnal, (Gray), 1987",
         "first_line": "",
         "scripture_ref": "Matthew 11",
         "tempo": 58,
         "bpm": 6,
         "divisions": 5,
-        "likes": [],
-        "authors": [
-            37,
-            36
+        "likes": [
+            4,
+            10,
+            8,
+            14,
+            1
         ],
-        "seasons": [],
-        "mass_parts": []
+        "authors": [
+            1
+        ],
+        "seasons": [
+            2,
+            3,
+            4
+        ],
+        "mass_parts": [
+            2,
+            4,
+            6
+        ]
     }
 },
 {
@@ -848,7 +817,7 @@
     "pk": 32,
     "fields": {
         "created": "2018-01-16T20:07:43.878Z",
-        "modified": "2018-01-16T20:07:43.878Z",
+        "modified": "2018-01-25T12:19:53.274Z",
         "originator": 6,
         "voicing": 1,
         "language": 1,
@@ -856,18 +825,39 @@
         "title": "Abide with me: fast falls the eventide",
         "compose_date": null,
         "slug": "abide-with-me-fast-falls-the-eventide",
-        "lyrics": "1 Abide with me: fast falls the eventide;\n\nthe darkness deepens; Lord, with me abide.\n\nWhen other helpers fail and comforts flee,\n\nHelp of the helpless, O abide with me.\n\n2 Swift to its close ebbs out life's little day;\n\nearth's joys grow dim, its glories pass away.\n\nChange and decay in all around I see.\n\nO Lord who changes not, abide with me.\n\n3 I need your presence every passing hour.\n\nWhat but your grace can foil the tempter's power?\n\nWho like yourself my guide and strength can be?\n\nThrough cloud and sunshine, O abide with me.\n\n4 I fear no foe with you at hand to bless,\n\nthough ills have weight, and tears their bitterness.\n\nWhere is death's sting? Where, grave, your victory?\n\nI triumph still, if you abide with me.\n\n5 Hold now your Word before my closing eyes.\n\nShine through the gloom and point me to the skies.\n\nHeaven's morning breaks and earth's vain shadows flee;\n\nin life, in death, O Lord, abide with me.\n\nPsalter Hymnal",
+        "lyrics": "1 Abide with me: fast falls the eventide;\r\n\r\nthe darkness deepens; Lord, with me abide.\r\n\r\nWhen other helpers fail and comforts flee,\r\n\r\nHelp of the helpless, O abide with me.\r\n\r\n2 Swift to its close ebbs out life's little day;\r\n\r\nearth's joys grow dim, its glories pass away.\r\n\r\nChange and decay in all around I see.\r\n\r\nO Lord who changes not, abide with me.\r\n\r\n3 I need your presence every passing hour.\r\n\r\nWhat but your grace can foil the tempter's power?\r\n\r\nWho like yourself my guide and strength can be?\r\n\r\nThrough cloud and sunshine, O abide with me.\r\n\r\n4 I fear no foe with you at hand to bless,\r\n\r\nthough ills have weight, and tears their bitterness.\r\n\r\nWhere is death's sting? Where, grave, your victory?\r\n\r\nI triumph still, if you abide with me.\r\n\r\n5 Hold now your Word before my closing eyes.\r\n\r\nShine through the gloom and point me to the skies.\r\n\r\nHeaven's morning breaks and earth's vain shadows flee;\r\n\r\nin life, in death, O Lord, abide with me.\r\n\r\nPsalter Hymnal",
         "first_line": "",
         "scripture_ref": "Proverbs 23",
         "tempo": 71,
         "bpm": 8,
         "divisions": 7,
-        "likes": [],
-        "authors": [
-            38
+        "likes": [
+            4,
+            10,
+            8,
+            7,
+            14,
+            9
         ],
-        "seasons": [],
-        "mass_parts": []
+        "authors": [
+            1
+        ],
+        "seasons": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+        ],
+        "mass_parts": [
+            1,
+            2,
+            3,
+            4
+        ]
     }
 },
 {
@@ -890,10 +880,7 @@
         "bpm": 4,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            39,
-            40
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -903,15 +890,15 @@
     "pk": 34,
     "fields": {
         "created": "2018-01-16T20:07:44.234Z",
-        "modified": "2018-01-16T20:07:44.234Z",
+        "modified": "2018-01-21T12:12:42.087Z",
         "originator": 1,
         "voicing": 1,
         "language": 1,
-        "status": "PUBLISHED",
+        "status": "DRAFT",
         "title": "Alas, and Did My Savior Bleed",
         "compose_date": null,
         "slug": "alas-and-did-my-savior-bleed",
-        "lyrics": "1 Alas! and did my Savior bleed,\n\nand did my Sovereign die!\nWould he devote that sacred head\n\nfor sinners such as I?\n\n2 Was it for crimes that I have done,\n\nhe groaned upon the tree?\n\nAmazing pity! Grace unknown!\n\nAnd love beyond degree!\n\n3 Well might the sun in darkness hide,\n\nand shut its glories in,\n\nwhen God, the mighty maker, died\n\nfor his own creature's sin.\n\n4 Thus might I hide my blushing face\n\nwhile his dear cross appears;\n\ndissolve my heart in thankfulness,\n\nand melt mine eyes to tears.\n\n5 But drops of tears can ne'er repay\n\nthe debt of love I owe.\n\nHere, Lord, I give myself away;\n\n'tis all that I can do.\n\nUnited Methodist Hymnal, 1989",
+        "lyrics": "1 Alas! and did my Savior bleed,\r\n\r\nand did my Sovereign die!\r\nWould he devote that sacred head\r\n\r\nfor sinners such as I?\r\n\r\n2 Was it for crimes that I have done,\r\n\r\nhe groaned upon the tree?\r\n\r\nAmazing pity! Grace unknown!\r\n\r\nAnd love beyond degree!\r\n\r\n3 Well might the sun in darkness hide,\r\n\r\nand shut its glories in,\r\n\r\nwhen God, the mighty maker, died\r\n\r\nfor his own creature's sin.\r\n\r\n4 Thus might I hide my blushing face\r\n\r\nwhile his dear cross appears;\r\n\r\ndissolve my heart in thankfulness,\r\n\r\nand melt mine eyes to tears.\r\n\r\n5 But drops of tears can ne'er repay\r\n\r\nthe debt of love I owe.\r\n\r\nHere, Lord, I give myself away;\r\n\r\n'tis all that I can do.\r\n\r\nUnited Methodist Hymnal, 1989",
         "first_line": "",
         "scripture_ref": "Psalm 91",
         "tempo": 81,
@@ -919,10 +906,14 @@
         "divisions": 7,
         "likes": [],
         "authors": [
-            12
+            1
         ],
-        "seasons": [],
-        "mass_parts": []
+        "seasons": [
+            5
+        ],
+        "mass_parts": [
+            7
+        ]
     }
 },
 {
@@ -945,10 +936,7 @@
         "bpm": 6,
         "divisions": 4,
         "likes": [],
-        "authors": [
-            42,
-            41
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -973,10 +961,7 @@
         "bpm": 8,
         "divisions": 4,
         "likes": [],
-        "authors": [
-            43,
-            44
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1001,9 +986,7 @@
         "bpm": 6,
         "divisions": 5,
         "likes": [],
-        "authors": [
-            45
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1028,9 +1011,7 @@
         "bpm": 8,
         "divisions": 7,
         "likes": [],
-        "authors": [
-            46
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1055,9 +1036,7 @@
         "bpm": 5,
         "divisions": 5,
         "likes": [],
-        "authors": [
-            47
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1082,9 +1061,7 @@
         "bpm": 4,
         "divisions": 4,
         "likes": [],
-        "authors": [
-            48
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1109,9 +1086,7 @@
         "bpm": 4,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            49
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1136,9 +1111,7 @@
         "bpm": 6,
         "divisions": 5,
         "likes": [],
-        "authors": [
-            29
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1163,9 +1136,7 @@
         "bpm": 8,
         "divisions": 4,
         "likes": [],
-        "authors": [
-            50
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1190,9 +1161,7 @@
         "bpm": 5,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            51
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1217,9 +1186,7 @@
         "bpm": 8,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            10
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1244,9 +1211,7 @@
         "bpm": 5,
         "divisions": 4,
         "likes": [],
-        "authors": [
-            52
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1296,9 +1261,7 @@
         "bpm": 8,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            53
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1323,9 +1286,7 @@
         "bpm": 8,
         "divisions": 4,
         "likes": [],
-        "authors": [
-            54
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1350,9 +1311,7 @@
         "bpm": 7,
         "divisions": 4,
         "likes": [],
-        "authors": [
-            55
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1377,11 +1336,7 @@
         "bpm": 6,
         "divisions": 4,
         "likes": [],
-        "authors": [
-            58,
-            56,
-            57
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1406,9 +1361,7 @@
         "bpm": 6,
         "divisions": 5,
         "likes": [],
-        "authors": [
-            59
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1433,9 +1386,7 @@
         "bpm": 7,
         "divisions": 5,
         "likes": [],
-        "authors": [
-            60
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1485,10 +1436,7 @@
         "bpm": 8,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            62,
-            61
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1513,10 +1461,7 @@
         "bpm": 8,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            25,
-            63
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1541,10 +1486,7 @@
         "bpm": 5,
         "divisions": 8,
         "likes": [],
-        "authors": [
-            65,
-            64
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1569,9 +1511,7 @@
         "bpm": 4,
         "divisions": 8,
         "likes": [],
-        "authors": [
-            66
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1596,9 +1536,7 @@
         "bpm": 7,
         "divisions": 8,
         "likes": [],
-        "authors": [
-            9
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1623,9 +1561,7 @@
         "bpm": 6,
         "divisions": 7,
         "likes": [],
-        "authors": [
-            67
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1650,9 +1586,7 @@
         "bpm": 4,
         "divisions": 7,
         "likes": [],
-        "authors": [
-            68
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1677,9 +1611,7 @@
         "bpm": 8,
         "divisions": 8,
         "likes": [],
-        "authors": [
-            69
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1704,9 +1636,7 @@
         "bpm": 7,
         "divisions": 7,
         "likes": [],
-        "authors": [
-            70
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1731,9 +1661,7 @@
         "bpm": 8,
         "divisions": 8,
         "likes": [],
-        "authors": [
-            71
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1758,10 +1686,7 @@
         "bpm": 6,
         "divisions": 5,
         "likes": [],
-        "authors": [
-            73,
-            72
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1786,9 +1711,7 @@
         "bpm": 8,
         "divisions": 5,
         "likes": [],
-        "authors": [
-            74
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1813,9 +1736,7 @@
         "bpm": 6,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            75
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1840,9 +1761,7 @@
         "bpm": 8,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            76
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1867,9 +1786,7 @@
         "bpm": 6,
         "divisions": 4,
         "likes": [],
-        "authors": [
-            10
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1894,9 +1811,7 @@
         "bpm": 8,
         "divisions": 8,
         "likes": [],
-        "authors": [
-            10
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1921,10 +1836,7 @@
         "bpm": 4,
         "divisions": 7,
         "likes": [],
-        "authors": [
-            77,
-            78
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1949,9 +1861,7 @@
         "bpm": 4,
         "divisions": 7,
         "likes": [],
-        "authors": [
-            79
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -1976,9 +1886,7 @@
         "bpm": 5,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            80
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2003,10 +1911,7 @@
         "bpm": 7,
         "divisions": 5,
         "likes": [],
-        "authors": [
-            82,
-            81
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2031,9 +1936,7 @@
         "bpm": 7,
         "divisions": 7,
         "likes": [],
-        "authors": [
-            83
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2058,10 +1961,7 @@
         "bpm": 7,
         "divisions": 7,
         "likes": [],
-        "authors": [
-            43,
-            84
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2086,9 +1986,7 @@
         "bpm": 6,
         "divisions": 5,
         "likes": [],
-        "authors": [
-            85
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2113,9 +2011,7 @@
         "bpm": 5,
         "divisions": 4,
         "likes": [],
-        "authors": [
-            86
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2140,10 +2036,7 @@
         "bpm": 8,
         "divisions": 8,
         "likes": [],
-        "authors": [
-            87,
-            88
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2168,10 +2061,7 @@
         "bpm": 6,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            89,
-            90
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2196,9 +2086,7 @@
         "bpm": 6,
         "divisions": 4,
         "likes": [],
-        "authors": [
-            91
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2223,9 +2111,7 @@
         "bpm": 7,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            92
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2250,9 +2136,7 @@
         "bpm": 7,
         "divisions": 7,
         "likes": [],
-        "authors": [
-            93
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2277,9 +2161,7 @@
         "bpm": 5,
         "divisions": 5,
         "likes": [],
-        "authors": [
-            94
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2304,9 +2186,7 @@
         "bpm": 5,
         "divisions": 4,
         "likes": [],
-        "authors": [
-            95
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2331,9 +2211,7 @@
         "bpm": 6,
         "divisions": 7,
         "likes": [],
-        "authors": [
-            96
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2358,9 +2236,7 @@
         "bpm": 8,
         "divisions": 4,
         "likes": [],
-        "authors": [
-            97
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2385,9 +2261,7 @@
         "bpm": 4,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            98
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2412,9 +2286,7 @@
         "bpm": 6,
         "divisions": 8,
         "likes": [],
-        "authors": [
-            99
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2439,9 +2311,7 @@
         "bpm": 6,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            100
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2466,9 +2336,7 @@
         "bpm": 8,
         "divisions": 8,
         "likes": [],
-        "authors": [
-            101
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2493,9 +2361,7 @@
         "bpm": 8,
         "divisions": 7,
         "likes": [],
-        "authors": [
-            102
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2520,9 +2386,7 @@
         "bpm": 5,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            103
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2547,9 +2411,7 @@
         "bpm": 4,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            104
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2574,9 +2436,7 @@
         "bpm": 6,
         "divisions": 5,
         "likes": [],
-        "authors": [
-            105
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2601,9 +2461,7 @@
         "bpm": 5,
         "divisions": 7,
         "likes": [],
-        "authors": [
-            106
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2628,9 +2486,7 @@
         "bpm": 4,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            80
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2655,9 +2511,7 @@
         "bpm": 5,
         "divisions": 5,
         "likes": [],
-        "authors": [
-            107
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2682,9 +2536,7 @@
         "bpm": 7,
         "divisions": 7,
         "likes": [],
-        "authors": [
-            108
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2734,9 +2586,7 @@
         "bpm": 5,
         "divisions": 8,
         "likes": [],
-        "authors": [
-            109
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2761,9 +2611,7 @@
         "bpm": 6,
         "divisions": 7,
         "likes": [],
-        "authors": [
-            110
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2788,9 +2636,7 @@
         "bpm": 8,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            111
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2815,9 +2661,7 @@
         "bpm": 4,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            112
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2842,9 +2686,7 @@
         "bpm": 6,
         "divisions": 4,
         "likes": [],
-        "authors": [
-            113
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2869,9 +2711,7 @@
         "bpm": 5,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            114
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2896,9 +2736,7 @@
         "bpm": 4,
         "divisions": 5,
         "likes": [],
-        "authors": [
-            115
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2923,10 +2761,7 @@
         "bpm": 6,
         "divisions": 7,
         "likes": [],
-        "authors": [
-            117,
-            116
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2951,9 +2786,7 @@
         "bpm": 4,
         "divisions": 4,
         "likes": [],
-        "authors": [
-            20
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -2978,9 +2811,7 @@
         "bpm": 6,
         "divisions": 7,
         "likes": [],
-        "authors": [
-            118
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -3005,9 +2836,7 @@
         "bpm": 5,
         "divisions": 8,
         "likes": [],
-        "authors": [
-            119
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -3032,10 +2861,7 @@
         "bpm": 5,
         "divisions": 5,
         "likes": [],
-        "authors": [
-            121,
-            120
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -3060,9 +2886,7 @@
         "bpm": 4,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            83
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -3087,9 +2911,7 @@
         "bpm": 4,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            109
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -3099,7 +2921,7 @@
     "pk": 115,
     "fields": {
         "created": "2018-01-16T20:07:58.418Z",
-        "modified": "2018-01-16T20:07:58.418Z",
+        "modified": "2018-01-25T12:20:27.301Z",
         "originator": 3,
         "voicing": 1,
         "language": 1,
@@ -3107,18 +2929,29 @@
         "title": "Hark! The Herald Angels Sing",
         "compose_date": null,
         "slug": "hark-the-herald-angels-sing",
-        "lyrics": "1 Hark! the herald angels sing,\n\n\u201cGlory to the newborn King.\nPeace on earth and mercy mild,\nGod and sinners reconciled!\u201d\nJoyful, all ye nations, rise;\njoin the triumph of the skies;\nwith th'angelic hosts proclaim,\n\u201cChrist is born in Bethlehem!\u201d\nRefrain:\nHark, the herald angels sing,\n\n\u201cGlory to the newborn King!\u201d\n2 Christ by highest heav'n adored,\nChrist, the everlasting Lord,\nlate in time behold Him come,\noffspring of the virgin's womb.\nVeiled in flesh the Godhead see;\nhail the incarnate Deity,\npleased as man with men to dwell,\nJesus, our Immanuel. [Refrain]\n3 Hail the heav'n-born Prince of Peace!\nHail the Sun of Righteousness!\nLight and life to all He brings,\nris'n with healing in His wings.\nMild He lays His glory by,\nborn that we no more may die,\nborn to raise the sons of earth,\nborn to give them second birth. [Refrain]\n4 Come, Desire of nations, come,\nfix in us Thy humble home;\nrise, the woman's conqu'ring Seed,\nbruise in us the serpent's head.\nAdam's likeness now efface,\nstamp Thine image in its place;\nSecond Aam from above,\nReinstate us in Thy love. [Refrain]Source: Hymns to the Living God #127",
+        "lyrics": "1 Hark! the herald angels sing,\r\n\r\n\u201cGlory to the newborn King.\r\nPeace on earth and mercy mild,\r\nGod and sinners reconciled!\u201d\r\nJoyful, all ye nations, rise;\r\njoin the triumph of the skies;\r\nwith th'angelic hosts proclaim,\r\n\u201cChrist is born in Bethlehem!\u201d\r\nRefrain:\r\nHark, the herald angels sing,\r\n\r\n\u201cGlory to the newborn King!\u201d\r\n2 Christ by highest heav'n adored,\r\nChrist, the everlasting Lord,\r\nlate in time behold Him come,\r\noffspring of the virgin's womb.\r\nVeiled in flesh the Godhead see;\r\nhail the incarnate Deity,\r\npleased as man with men to dwell,\r\nJesus, our Immanuel. [Refrain]\r\n3 Hail the heav'n-born Prince of Peace!\r\nHail the Sun of Righteousness!\r\nLight and life to all He brings,\r\nris'n with healing in His wings.\r\nMild He lays His glory by,\r\nborn that we no more may die,\r\nborn to raise the sons of earth,\r\nborn to give them second birth. [Refrain]\r\n4 Come, Desire of nations, come,\r\nfix in us Thy humble home;\r\nrise, the woman's conqu'ring Seed,\r\nbruise in us the serpent's head.\r\nAdam's likeness now efface,\r\nstamp Thine image in its place;\r\nSecond Aam from above,\r\nReinstate us in Thy love. [Refrain]Source: Hymns to the Living God #127",
         "first_line": "",
         "scripture_ref": "Matthew 11",
         "tempo": 46,
         "bpm": 6,
         "divisions": 4,
-        "likes": [],
-        "authors": [
-            122
+        "likes": [
+            7,
+            9
         ],
-        "seasons": [],
-        "mass_parts": []
+        "authors": [
+            2
+        ],
+        "seasons": [
+            3,
+            6
+        ],
+        "mass_parts": [
+            4,
+            6,
+            7,
+            9
+        ]
     }
 },
 {
@@ -3141,9 +2974,7 @@
         "bpm": 7,
         "divisions": 7,
         "likes": [],
-        "authors": [
-            123
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -3168,9 +2999,7 @@
         "bpm": 8,
         "divisions": 5,
         "likes": [],
-        "authors": [
-            124
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -3220,9 +3049,7 @@
         "bpm": 4,
         "divisions": 7,
         "likes": [],
-        "authors": [
-            125
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -3247,9 +3074,7 @@
         "bpm": 7,
         "divisions": 8,
         "likes": [],
-        "authors": [
-            126
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -3274,9 +3099,7 @@
         "bpm": 5,
         "divisions": 5,
         "likes": [],
-        "authors": [
-            127
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -3301,10 +3124,7 @@
         "bpm": 5,
         "divisions": 5,
         "likes": [],
-        "authors": [
-            128,
-            129
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -3329,9 +3149,7 @@
         "bpm": 7,
         "divisions": 8,
         "likes": [],
-        "authors": [
-            130
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -3341,11 +3159,11 @@
     "pk": 124,
     "fields": {
         "created": "2018-01-16T20:07:59.962Z",
-        "modified": "2018-01-16T20:07:59.962Z",
+        "modified": "2018-02-05T20:27:21.852Z",
         "originator": 1,
         "voicing": 1,
         "language": 1,
-        "status": "PUBLISHED",
+        "status": "DRAFT",
         "title": "How Great Thou Art",
         "compose_date": null,
         "slug": "how-great-thou-art",
@@ -3357,10 +3175,11 @@
         "divisions": 5,
         "likes": [],
         "authors": [
-            131,
-            132
+            1
         ],
-        "seasons": [],
+        "seasons": [
+            6
+        ],
         "mass_parts": []
     }
 },
@@ -3384,9 +3203,7 @@
         "bpm": 5,
         "divisions": 8,
         "likes": [],
-        "authors": [
-            133
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -3411,11 +3228,7 @@
         "bpm": 4,
         "divisions": 7,
         "likes": [],
-        "authors": [
-            135,
-            136,
-            134
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -3440,9 +3253,7 @@
         "bpm": 6,
         "divisions": 8,
         "likes": [],
-        "authors": [
-            76
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -3467,9 +3278,7 @@
         "bpm": 8,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            137
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -3494,10 +3303,7 @@
         "bpm": 4,
         "divisions": 7,
         "likes": [],
-        "authors": [
-            138,
-            139
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -3522,10 +3328,7 @@
         "bpm": 8,
         "divisions": 7,
         "likes": [],
-        "authors": [
-            140,
-            141
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -3550,9 +3353,7 @@
         "bpm": 7,
         "divisions": 5,
         "likes": [],
-        "authors": [
-            142
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -3577,9 +3378,7 @@
         "bpm": 5,
         "divisions": 5,
         "likes": [],
-        "authors": [
-            104
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -3604,10 +3403,7 @@
         "bpm": 4,
         "divisions": 5,
         "likes": [],
-        "authors": [
-            144,
-            143
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -3632,9 +3428,7 @@
         "bpm": 8,
         "divisions": 6,
         "likes": [],
-        "authors": [
-            145
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
     }
@@ -3659,11 +3453,78 @@
         "bpm": 4,
         "divisions": 4,
         "likes": [],
-        "authors": [
-            146
-        ],
+        "authors": [],
         "seasons": [],
         "mass_parts": []
+    }
+},
+{
+    "model": "song.song",
+    "pk": 136,
+    "fields": {
+        "created": "2018-01-21T09:18:11.156Z",
+        "modified": "2018-01-25T12:12:48.394Z",
+        "originator": 1,
+        "voicing": 1,
+        "language": 2,
+        "status": "PUBLISHED",
+        "title": "Ora kene ike Jesu",
+        "compose_date": null,
+        "slug": "ora-kene-ike-jesu",
+        "lyrics": "",
+        "first_line": "",
+        "scripture_ref": "",
+        "tempo": null,
+        "bpm": null,
+        "divisions": null,
+        "likes": [
+            1
+        ],
+        "authors": [
+            1
+        ],
+        "seasons": [
+            2
+        ],
+        "mass_parts": [
+            1
+        ]
+    }
+},
+{
+    "model": "song.song",
+    "pk": 137,
+    "fields": {
+        "created": "2018-01-21T12:43:23.506Z",
+        "modified": "2018-02-07T07:49:01.438Z",
+        "originator": 1,
+        "voicing": 2,
+        "language": 2,
+        "status": "DRAFT",
+        "title": "Example song",
+        "compose_date": null,
+        "slug": "example-song",
+        "lyrics": "Some optional lyrics here",
+        "first_line": "This is a first line",
+        "scripture_ref": "John 11.35",
+        "tempo": null,
+        "bpm": null,
+        "divisions": null,
+        "likes": [
+            1
+        ],
+        "authors": [
+            1
+        ],
+        "seasons": [
+            5,
+            6
+        ],
+        "mass_parts": [
+            3,
+            4,
+            7
+        ]
     }
 }
 ]

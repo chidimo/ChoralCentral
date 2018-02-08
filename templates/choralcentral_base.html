@@ -29,7 +29,6 @@
 		{% load static %}
 		<link rel="shortcut icon" type="image/png" href="{% static 'favicons/favicon.ico' %}"/>
 		<link rel="stylesheet" href="{% static 'css/choralcentral.css' %}">
-		<link rel="stylesheet" href="{% static 'css/boostrap_override.css' %}">
 		<script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
 		<script type="text/javascript" src="{% static 'js/choralcentral.js' %}"></script>
 		{{ form.media }}
@@ -40,7 +39,6 @@
 	<body>
 		{% block navigation %}
 		<nav class="navbar fixed-top navbar-expand-lg">
-
 
 				<a class="navbar-brand" href="{% url 'song:index' %}">
 					<h3 style="color:blanchedalmond">ChoralCentral</h3>
@@ -97,8 +95,8 @@
 					{% block left_sidebar %}
 					{% endblock left_sidebar %}
 				</div>
-				<div class="col-sm-7" role='main'>
 
+				<div class="col-sm-6" role='main'>
 					{% block content_content %}
 						content block
 					{% endblock content_content %}
@@ -109,7 +107,8 @@
 						<div>{% include "pure_pagination.html" %}</div>
 					{% endif %}
 				</div>
-				<div class="col-sm-2">
+
+				<div class="col-sm-3">
 					{% block right_sidebar %}
 					{% endblock right_sidebar %}
 				</div>

@@ -37,4 +37,4 @@ class Reply(mdl.TimeStampedModel):
         return self.request.request
 
     def get_absolute_url(self):
-        return reverse("request:index")
+        return reverse("request:detail", kwargs={'pk' : self.request.pk, 'slug' : self.request.slug})

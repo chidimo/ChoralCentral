@@ -42,7 +42,14 @@ def instant_song(request):
     context['appID'] = settings.ALGOLIA['APPLICATION_ID']
     context['searchKey'] = settings.ALGOLIA['SEARCH_API_KEY']
     context['indexName'] = get_adapter(Song).index_name
-    context['songs'] = Song.published_set.all()
+
+    # songs = Song.published_set.all()
+    # context['songs'] = songs
+    # paginator = Paginator(songs, 1)
+    # page = request.GET.get('page')
+    # songs = paginator.get_page(page)
+
+    context['is_paginated'] = True
     return render(request, 'song/instant_song.html', context)
 
 def auto_song(request):
@@ -204,8 +211,8 @@ def reader_view(request, pk, slug):
     # canv.save()
     # return response
 
-def season_filter(request, season):
-    template = "song/season_filter.html"
+def filter_season(request, season):
+    template = "song/filter_season.html"
     songs = Song.published_set.filter(seasons__season=season)
     paginator = Paginator(songs, 1)
 
@@ -218,8 +225,8 @@ def season_filter(request, season):
 
     return render(request, template, context)
 
-def masspart_filter(request, masspart):
-    template = "song/masspart_filter.html"
+def filter_masspart(request, masspart):
+    template = "song/filter_masspart.html"
     songs = Song.published_set.filter(mass_parts__part=masspart)
     paginator = Paginator(songs, 1)
 
@@ -232,8 +239,4 @@ def masspart_filter(request, masspart):
 
     return render(request, template, context)
 
-class SeasonFilter(PaginationMixin, generic.ListView):
-    model = Song
-    context_object_name = "songs"
-    template_name = "song/season_filter.html"
-    
+
