@@ -63,7 +63,7 @@ a:hover {
   background: midnightblue;
   margin-top: 0.5rem;
   padding: 2rem 1rem 4.75rem 1rem;
-  border-radius: 2.5px;
+  border-radius: 7.5px;
 }
 
 .filter-block .btn-lg {
@@ -76,11 +76,16 @@ a:hover {
   /* margin: 3.5rem auto; */
   padding: 0 1rem 4.75rem 1rem;
   background: #a3baf0;
-  border-radius: 2.5px;
+  border-radius: 7.5px;
+}
+
+.upload-forms h2 {
+  padding-top: 0.5rem;
 }
 
 .upload-forms .btn-lg {
   margin-top: 0.75rem;
+  font-size: 24px;
 } 
 
 .login-form {
@@ -90,6 +95,10 @@ a:hover {
   border-radius: 5px;
   padding-bottom: 4rem;
   margin-top: 10rem;
+}
+
+.related-widget-wrapper-link {
+  background: blanchedalmond;
 }
 
 /* Add icons to registration form fields */

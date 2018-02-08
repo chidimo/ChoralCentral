@@ -57,7 +57,7 @@ class NewSongForm(forms.ModelForm):
             "compose_date" : forms.DateInput(
                 attrs={'class' : 'form-control', 'placeholder' : "Composition date YYYY-MM-DD (optional)"}),
             "lyrics" : forms.Textarea(
-                attrs={'rows' : 5, 'columns' : 10, 'class' : 'form-control', 'placeholder' : "Lyrics (optional). Markdown supported"}),
+                attrs={'rows' : 5, 'columns' : 10, 'class' : 'form-control', 'placeholder' : "Lyrics (optional). Supports markdown syntax"}),
             "first_line" : forms.TextInput(
                 attrs={'class' : 'form-control', 'placeholder' : "First line (optional)"}),
             "scripture_ref" : forms.TextInput(
@@ -95,7 +95,7 @@ class SongEditForm(forms.ModelForm):
             "compose_date" : forms.DateInput(
                 attrs={'class' : 'form-control', 'placeholder' : "Composition date YYYY-MM-DD (optional)"}),
             "lyrics" : forms.Textarea(
-                attrs={'rows' : 5, 'columns' : 10, 'class' : 'form-control', 'placeholder' : "Lyrics (optional). Markdown supported"}),
+                attrs={'rows' : 5, 'columns' : 10, 'class' : 'form-control', 'placeholder' : "Lyrics (optional). Supports markdown syntax"}),
             "first_line" : forms.TextInput(
                 attrs={'class' : 'form-control', 'placeholder' : "First line (optional)"}),
             "scripture_ref" : forms.TextInput(
