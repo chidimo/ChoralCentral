@@ -23,10 +23,10 @@ class Author(mdl.TimeStampedModel):
     originator = models.ForeignKey(SiteUser, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=75)
     last_name = models.CharField(max_length=75)
-    bio = models.TextField(blank=True)
+    bio = models.TextField(blank=True, null=True)
     slug = fdl.AutoMultipleSlugField(set_using=["last_name", "first_name"])
     likes = models.ManyToManyField(SiteUser, related_name="author_likes")
-    author_type = models.CharField(choices=CHOICES, max_length=15)
+    author_type = models.CharField(choices=CHOICES, max_length=15, default="COMPOSER")
     objects = models.Manager()
     auth_similar = AuthorManager()
 
