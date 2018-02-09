@@ -9,7 +9,7 @@ from django.db import IntegrityError
 
 from .setupshell import setupshell
 
-from .lorem_pysum import LoremPysum
+from py_webber import LoremPysum
 from siteuser.models import SiteUser, Role
 from .seed import ROLES
 
