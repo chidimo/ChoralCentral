@@ -3,7 +3,7 @@
 import json
 from random import choice, randint
 
-from lorem_pysum import LoremPysum
+from py_webber import LoremPysum
 from setupshell import setupshell
 
 from author.models import Author

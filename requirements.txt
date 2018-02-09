@@ -1,7 +1,7 @@
--f /usr/share/pip-wheels
 algoliasearch==1.13.0
 algoliasearch-django==1.5.0
 asn1crypto==0.23.0
+beautifulsoup4==4.6.0
 certifi==2017.7.27.1
 cffi==1.11.2
 chardet==3.0.4
@@ -26,6 +26,7 @@ olefile==0.44
 pefile==2017.9.3
 Pillow==4.3.0
 psycopg2==2.7.3.2
+py-webber==3.1
 pycparser==2.18
 pyOpenSSL==17.3.0
 pysolr==3.6.0

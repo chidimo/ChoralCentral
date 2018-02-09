@@ -7,11 +7,11 @@ from random import randint, choice
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
 
-from setupshell import setupshell
+from .setupshell import setupshell
 
-from lorem_pysum import LoremPysum
+from .lorem_pysum import LoremPysum
 from siteuser.models import SiteUser, Role
-from seed import ROLES
+from .seed import ROLES
 
 CustomUser = get_user_model()
 

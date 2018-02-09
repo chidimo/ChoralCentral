@@ -16,7 +16,7 @@ from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from lorem_pysum import LoremPysum
+from py_webber import LoremPysum
 from siteuser.models import Role
 from utils import fast_multiselect
 

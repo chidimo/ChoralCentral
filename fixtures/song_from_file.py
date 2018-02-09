@@ -38,7 +38,6 @@ def create_songs(file_name):
                     first_name=first_name,
                     last_name=last_name,
                     bio=about,
-                    author_type="LYRICIST"
                     )
                 )
 

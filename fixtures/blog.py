@@ -7,7 +7,7 @@ import django
 from random import randint, choice
 from django.conf import settings
 from django.db import IntegrityError
-from lorem_pysum import LoremPysum
+from py_webber import LoremPysum
 
 from siteuser.models import SiteUser
 from song.models import Song

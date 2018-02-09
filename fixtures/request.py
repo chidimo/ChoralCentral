@@ -4,7 +4,7 @@ from random import choice
 import django
 from django.db import IntegrityError
 
-from lorem_pysum import LoremPysum
+from py_webber import LoremPysum
 from siteuser.models import SiteUser
 from song.models import Song
 from request.models import Request, Reply
