@@ -31,7 +31,7 @@ class SiteUserIndex(PaginationMixin, generic.ListView):
     template_name = "siteuser/index.html"
     paginate_by = 20
 
-class UserDetail(LoginRequiredMixin, generic.DetailView):
+class UserDetail(generic.DetailView):
     model = SiteUser
     context_object_name = 'siteuser'
     template_name = "siteuser/detail.html"

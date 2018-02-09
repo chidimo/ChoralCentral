@@ -110,8 +110,10 @@
                             <td class="text-warning">{{ song.status }}</td>
                         {% endif %}
                         <td>
-                            <a href="{% url 'song:edit' song.pk song.slug %}"><i class="fas fa-edit"></i></a> |
-                            <a href="{% url 'song:delete' song.pk %}"><i class="fas fa-trash"></i></a>
+                            {% if request.user == siteuser.user %}
+                                <a href="{% url 'song:edit' song.pk song.slug %}"><i class="fas fa-edit"></i></a> |
+                                <a href="{% url 'song:delete' song.pk %}"><i class="fas fa-trash"></i></a>
+                            {% endif %}
                         </td>
                     </tr>
                 {% empty %}
