@@ -2,8 +2,8 @@
 
 from masspart.models import MassPart
 from season.models import Season
-from setupshell import setupshell
-from seed import PARTS, SEASONS
+from .setupshell import setupshell
+from .seed import PARTS, SEASONS
 
 def create_seasons():
     for each in SEASONS:

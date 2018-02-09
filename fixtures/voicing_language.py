@@ -7,8 +7,8 @@ from siteuser.models import SiteUser
 from language.models import Language
 from voicing.models import Voicing
 
-from setupshell import setupshell
-from seed import VOICING, LANGUAGE
+from .setupshell import setupshell
+from .seed import VOICING, LANGUAGE
 
 USERS = SiteUser.objects.all()
 

@@ -79,7 +79,7 @@ class SongIndex(PaginationMixin, generic.ListView):
     model = Song
     context_object_name = 'songs'
     template_name = 'song/index.html'
-    paginate_by = 3
+    paginate_by = 30
 
     def get_context_data(self, **kwargs):
         print("IP Address for debug-toolbar: " + self.request.META['REMOTE_ADDR'])
@@ -214,7 +214,7 @@ def reader_view(request, pk, slug):
 def filter_season(request, season):
     template = "song/filter_season.html"
     songs = Song.published_set.filter(seasons__season=season)
-    paginator = Paginator(songs, 1)
+    paginator = Paginator(songs, 10)
 
     page = request.GET.get('page')
     songs = paginator.get_page(page)
@@ -228,7 +228,7 @@ def filter_season(request, season):
 def filter_masspart(request, masspart):
     template = "song/filter_masspart.html"
     songs = Song.published_set.filter(mass_parts__part=masspart)
-    paginator = Paginator(songs, 1)
+    paginator = Paginator(songs, 10)
 
     page = request.GET.get('page')
     songs = paginator.get_page(page)

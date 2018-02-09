@@ -7,8 +7,8 @@ from siteuser.models import SiteUser
 
 from py_webber import LoremPysum
 
-from seed import AUTHORS
-from setupshell import setupshell
+from .seed import AUTHORS
+from .setupshell import setupshell
 
 USERS = SiteUser.objects.all()
 

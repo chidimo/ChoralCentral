@@ -3,7 +3,7 @@
 import json
 from random import choice, randint
 
-from setupshell import setupshell
+from .setupshell import setupshell
 
 from author.models import Author
 from siteuser.models import SiteUser
@@ -11,7 +11,7 @@ from song.models import Song
 from language.models import Language
 from voicing.models import Voicing
 
-from seed import SCRIPTURE
+from .seed import SCRIPTURE
 
 USERS = SiteUser.objects.all()
 
@@ -40,11 +40,11 @@ def create_songs(file_name):
                     bio=about,
                     )
                 )
+        originator = choice(USERS)
+        voicing = Voicing.objects.get_or_create(voicing="SATB")[0]
+        language = Language.objects.get_or_create(language='ENGLISH')[0]
 
-        voicing = Voicing.objects.get(voicing="SATB")
-        language = Language.objects.get(language='ENGLISH')
-
-        song, _ = Song.objects.get_or_create(originator=choice(USERS),
+        song, _ = Song.objects.get_or_create(originator=originator,
                                           title=song.get("title", "None"),
                                           status="PUBLISHED",
                                           lyrics=song.get("lyrics", "None"),
@@ -54,8 +54,10 @@ def create_songs(file_name):
                                           divisions=randint(4, 8),
                                           voicing=voicing,
                                           language=language)
-        for author, _ in authors:
-            song.authors.add(author)
+        for each in authors:
+            for author, _ in authors:
+                song.authors.add(author)
+        song.likes.add(originator.pk)
 
 def add_manyfields():
     for each in Song.objects.all():

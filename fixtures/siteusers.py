@@ -28,7 +28,7 @@ def createsuperuser():
         su.save()
         pro = SiteUser(user=su,first_name="Chidi",
                      last_name="Orji", location="somewhere",
-                     screen_name="ChoralCentral")
+                     screen_name="ChoralC")
         pro.save()
 
     except IntegrityError:

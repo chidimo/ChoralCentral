@@ -4,7 +4,7 @@ import json
 from random import choice, randint
 
 from py_webber import LoremPysum
-from setupshell import setupshell
+from .setupshell import setupshell
 
 from author.models import Author
 from siteuser.models import SiteUser
@@ -12,7 +12,7 @@ from song.models import Song
 from language.models import Language
 from voicing.models import Voicing
 
-from seed import SCRIPTURE, NOTES, VOICING, LANGUAGE
+from .seed import SCRIPTURE, NOTES, VOICING, LANGUAGE
 
 USERS = SiteUser.objects.all()
 
