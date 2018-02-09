@@ -5,7 +5,7 @@ DEBUG = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'choralcentral',
+        'NAME': 'choral',
         'USER': 'postgres',
         'PASSWORD': get_env_variable('CENTRAL_PASS'),
         'HOST': 'localhost',
