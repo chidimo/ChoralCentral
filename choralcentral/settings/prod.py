@@ -7,18 +7,35 @@ DATABASES = {
 'default': {
     'ENGINE': 'django.db.backends.mysql',
     'OPTIONS': {'sql_mode' : 'traditional'},
-    'NAME': 'choralcentral$choral',
-    'USER': 'choralcentral',
+    'NAME': 'parousia$choral',
+    'USER': 'parousia',
     'PASSWORD': get_env_variable('CENTRAL_PASS'),
-    'HOST': 'choralcentral.mysql.pythonanywhere-services.com',
+    'HOST': 'parousia.mysql.pythonanywhere-services.com',
     'TEST':{
         # 'ENGINE': 'django.db.backends.sqlite3', # for sqlite3
         # 'NAME':'test.db',
         'ENGINE': 'django.db.backends.mysql',
-        'NAME':'choralcentral$test_db'
+        'NAME':'parousia$test_db'
         }
     }
 }
+
+# DATABASES = {
+# 'default': {
+#     'ENGINE': 'django.db.backends.mysql',
+#     'OPTIONS': {'sql_mode' : 'traditional'},
+#     'NAME': 'choralcentral$choral',
+#     'USER': 'choralcentral',
+#     'PASSWORD': get_env_variable('CENTRAL_PASS'),
+#     'HOST': 'choralcentral.mysql.pythonanywhere-services.com',
+#     'TEST':{
+#         # 'ENGINE': 'django.db.backends.sqlite3', # for sqlite3
+#         # 'NAME':'test.db',
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME':'choralcentral$test_db'
+#         }
+#     }
+# }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
