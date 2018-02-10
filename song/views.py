@@ -136,6 +136,8 @@ def filter_songs(request):
             voicing = form["voicing"]
             language = form["language"]
 
+            songs = Song.published_set.all()
+
             if season:
                 songs = Song.published_set.filter(seasons__season=season)
             if masspart:
@@ -151,7 +153,7 @@ def filter_songs(request):
 
             form = SongFilterForm()
             context = {}
-            context['found'] = songs.count()
+            # context['found'] = songs.count()
             context['songs'] = songs
             context['is_paginated'] = True
             context['form'] = form
