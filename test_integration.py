@@ -1,5 +1,5 @@
 """User story
-python manage.py test test_inte
+python manage.py test test_integration
 
 https://docs.djangoproject.com/en/1.11/topics/testing/overview/#the-test-database
 """
@@ -25,7 +25,7 @@ class UsageTest(LiveServerTestCase):
     No need to have local server running while
     running this test."""
 
-    fixtures = ['fixtures/users.json', 'fixtures/roles.json', 'fixtures/profiles.json']
+    fixtures = ['fixtures/data.json']
 
     # @classmethod
     # def setUpClass(cls):

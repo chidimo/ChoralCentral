@@ -74,6 +74,7 @@ PROJECT_APPS = [
 
 THIRD_PARTY_APPS = [
     'guardian',
+    'social_django',
     'pure_pagination',
     'django_addanother',
     'algoliasearch_django',
@@ -83,11 +84,22 @@ INSTALLED_APPS = PREREQ_APPS +  PROJECT_APPS + THIRD_PARTY_APPS
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
+    # guardian backend
     'guardian.backends.ObjectPermissionBackend',
+    # social backends
+    'social_core.backends.open_id.OpenIdAuth',
+    'social_core.backends.google.GoogleOpenId',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.google.GoogleOAuth',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.yahoo.YahooOpenId',
     )
 
 GUARDIAN_RENDER_403 = True
 # GUARDIAN_TEMPLATE_403 = "403.html"
+
+# social-auth namespace setting. Override setting in project.urls
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
