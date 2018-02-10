@@ -83,8 +83,6 @@ THIRD_PARTY_APPS = [
 INSTALLED_APPS = PREREQ_APPS +  PROJECT_APPS + THIRD_PARTY_APPS
 
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    # guardian backend
     'guardian.backends.ObjectPermissionBackend',
     # social backends
     'social_core.backends.open_id.OpenIdAuth',
@@ -93,6 +91,10 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth',
     'social_core.backends.twitter.TwitterOAuth',
     'social_core.backends.yahoo.YahooOpenId',
+    'social.backends.facebook.FacebookOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+    # guardian backend
     )
 
 GUARDIAN_RENDER_403 = True
@@ -100,6 +102,9 @@ GUARDIAN_RENDER_403 = True
 
 # social-auth namespace setting. Override setting in project.urls
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
+# SOCIAL_AUTH_FACEBOOK_KEY =   # App ID
+# SOCIAL_AUTH_FACEBOOK_SECRET =   # App Secret
+
 
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
@@ -110,6 +115,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 
@@ -124,6 +130,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },

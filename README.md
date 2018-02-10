@@ -2,9 +2,14 @@
 
 A music sharing site
 
+# Social auth
 
-Output pdf
------------
+https://artandlogic.com/2014/04/tutorial-adding-facebooktwittergoogle-authentication-to-a-django-application/
+https://simpleisbetterthancomplex.com/tutorial/2016/10/24/how-to-add-social-login-to-django.html
+https://github.com/yudazilian/SocialAuthDjangoTutorial
+
+# Output pdf
+
 
 https://docs.djangoproject.com/en/1.11/howto/outputting-pdf/
 
@@ -18,7 +23,7 @@ For google chrome, download chromedriver from `here <https://chromedriver.storag
 Put it in the same directory as geckodriver, in Scripts directory
 
 
-## Including django addanother
+# Including django addanother
 
 Add `django_addanother` to INSTALLED_APPS in settings
 
@@ -39,7 +44,7 @@ Put this ::
 in the head section of base template
 
 
-## Correctly customizing User model
+# Correctly customizing User model
 
 Follow this `guide <https://docs.djangoproject.com/en/1.11/topics/auth/customizing/#extending-the-existing-user-model>_`
 
@@ -78,80 +83,35 @@ or running manage.py migrate for the first time
     User = get_user_model()
     Then crete user object
 
-### Order of operations when using custom user model ::
-
-    python manage.py makemigrations appname
-    python manage.py migrate appname
-    # the above two steps create the table for storing custom users
-    python manage.py migrate
-    python manage.py createsuperuser
-
-
 forms
 ---------
 https://github.com/etianen/django-reversion
 
 
-## play midi
+# play midi
 
 https://stackoverflow.com/questions/5662293/how-to-play-a-midi-file-in-html
 
 https://stackoverflow.com/questions/18172136/how-to-play-wav-file-in-all-browser-with-django#18172397
 
-## last seen
+# last seen
 
 https://stackoverflow.com/questions/2440603/django-last-login-attribute-in-auth-user-model#2441147
 
-## sessions
+# sessions
 
 https://docs.djangoproject.com/en/1.11/topics/http/sessions/
-
 
 "login if you wish to like this song" redirects to a non-existent page.
 
 
-## scaling
+# scaling
 
 https://djangobook.com/scaling-django/
 
 https://stackoverflow.com/questions/886221/does-django-scale?rq=1
 
 https://blog.disqus.com/scaling-django-to-8-billion-page-views
-
-
-## thumbnail
------------
-https://github.com/thumbor/thumbor
-
-https://github.com/jazzband/sorl-thumbnail
-
-form fields
-https://github.com/jazzband/django-widget-tweaks
-
-Search
-----------
-I'm going with Haystack and Solr
-django search and solango no longer under active dev
-
-<solr `https://archive.apache.org/dist/lucene/solr/4.10.4/`>_
-
-http://haystacksearch.org/
-
-https://stackoverflow.com/questions/2461322/how-to-implement-full-text-search-in-django#2461501
-
-http://django-haystack.readthedocs.io/en/v2.5.0/tutorial.html
-
-https://qbox.io/blog/how-to-elasticsearch-python-django-part1
-
-http://www.chrisumbel.com/article/django_solr
-
-http://www.opencrowd.com/blog/post/elasticsearch-django-tutorial/
-
-http://bookofstranger.com/elastic-search-wih-django-haystack-for-search-functionality/
-
-https://stackoverflow.com/questions/17761974/implementing-universal-search-in-a-django-application
-
-http://www.nitinh.com/2009/10/implementing-search-in-django-site-using-haystack-and-xapian-whoosh/
 
 
 ## Dumping model data
@@ -165,25 +125,15 @@ During test run, place a list of fixture files at the begining of the class ::
 
     fixtures = ["list of fixture files"]
 
-
 git checkout -b branchname
 git push --set-upstream origin branchname
 
 
 ## Coloring
-
 https://designschool.canva.com/blog/website-color-schemes/
-
 https://www.dtelepathy.com/blog/inspiration/beautiful-color-palettes-for-your-next-web-project
-
 http://www.colorzilla.com/chrome/
-
 https://chrome.google.com/webstore/detail/colorpick-eyedropper/ohcpnigalekghcmgcdcenkpelffpdolg?hl=en-US&utm_source=chrome-ntp-launcher
 
-wrap in html for visualstudiocode
--------------------------------------
-https://marketplace.visualstudio.com/items?itemName=bradgashler.htmltagwrap
-
-Virtual environment in pythonanywhere
 
 mkvirtualenv myvirtualenv --python=/usr/bin/python3.6
