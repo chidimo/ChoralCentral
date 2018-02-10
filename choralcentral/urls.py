@@ -43,6 +43,7 @@ urlpatterns = [
     # path("song/", include('song.urls')),
     path("song-media/", include('song_media.urls')),
     path("voicing/", include('voicing.urls')),
+    path("permission-denied/", views.permission_denied, name='permission_denied'),
     # path("search/", include('haystack.urls')),
     path("accounts/", include('django.contrib.auth.urls')),
     path("sitemap\.xml/", sitemap, {'sitemaps' : sitemaps},

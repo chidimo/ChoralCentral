@@ -86,6 +86,9 @@ AUTHENTICATION_BACKENDS = (
     'guardian.backends.ObjectPermissionBackend',
     )
 
+GUARDIAN_RENDER_403 = True
+# GUARDIAN_TEMPLATE_403 = "403.html"
+
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
