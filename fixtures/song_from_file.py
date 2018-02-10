@@ -13,9 +13,10 @@ from voicing.models import Voicing
 
 from .seed import SCRIPTURE
 
-USERS = SiteUser.objects.all()
+
 
 def create_songs(file_name):
+    USERS = SiteUser.objects.all()
     with open(file_name, "r+") as rh:
         SONG_FILE = json.load(rh)
 

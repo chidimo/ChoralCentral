@@ -1,15 +1,17 @@
-"""run fixtures/siteusers.py"""
+"""run fixtures/siteusers.py
+from fixtures import siteusers
+siteusers.create_siteusers(
+"""
 
 # pylint: disable=E1101, W0611, C0411
 
-import django
-from random import randint, choice
+from random import choice
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
 
 from .setupshell import setupshell
 
-from py_webber import LoremPysum
+from .lorem import LoremPysum
 from siteuser.models import SiteUser, Role
 from .seed import ROLES
 
@@ -28,7 +30,7 @@ def createsuperuser():
         su.save()
         pro = SiteUser(user=su,first_name="Chidi",
                      last_name="Orji", location="somewhere",
-                     screen_name="ChoralC")
+                     screen_name="CCAdmin")
         pro.save()
 
     except IntegrityError:
@@ -36,11 +38,12 @@ def createsuperuser():
         print("Superuser {} already exists".format(su.email))
 
 def create_siteusers(n):
-    num_roles = len(Role.objects.all())
+    setupshell()
+    roles = Role.objects.all()
 
     for _ in range(n):
-        stx = LoremPysum("fixtures/eng_names.txt", "fixtures/igbo_names.txt", lorem=False)
-        email = "{}@{}.{}".format(stx.word(), stx.word(), choice(["com", "org", "info"]))
+        stx = LoremPysum("fixtures/eng_names.txt", "fixtures/igbo_names.txt")
+        email = stx.email()
         try:
             user = CustomUser.objects.create_user(email=email)
             user.set_password("dwarfstar")
@@ -64,11 +67,11 @@ def create_siteusers(n):
             _ = CustomUser.objects.get(email=email).delete()
             continue
 
-        for i in range(randint(1, num_roles-10)):
-            try:
-                pro.roles.add(i)
-            except IntegrityError:
-                continue
+        try:
+            role = choice(roles)
+            pro.roles.add(role.pk)
+        except IntegrityError:
+            continue
 
 if __name__ == "__main__":
     setupshell()

@@ -1,3 +1,4 @@
+-f /usr/share/pip-wheels
 algoliasearch==1.13.0
 algoliasearch-django==1.5.0
 asn1crypto==0.23.0
@@ -11,6 +12,7 @@ dj-database-url==0.4.2
 Django==2.0.1
 django-addanother==2.0.0
 django-debug-toolbar==1.9.1
+django-extensions==1.9.9
 django-haystack==2.7.dev0
 django-heroku==0.2.0
 django-pure-pagination==0.3.0
@@ -38,6 +40,7 @@ requests==2.18.4
 selenium==3.6.0
 six==1.11.0
 sqlparse==0.2.4
+typing==3.6.4
 Unidecode==0.4.21
 urllib3==1.22
 whitenoise==3.3.1

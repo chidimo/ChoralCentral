@@ -1,7 +1,6 @@
 
 """Views"""
 
-import os
 import json
 import pprint
 # from reportlab.pdfgen import canvas
@@ -20,18 +19,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator, PageNotAnInteger, Page, EmptyPage
 
-# from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
-
 from django_addanother.views import CreatePopupMixin
 from pure_pagination.mixins import PaginationMixin
 from algoliasearch_django import get_adapter
 
 from siteuser.models import SiteUser
 from .models import Song
-from masspart.models import MassPart
-from season.models import Season
-from language.models import Language
-from voicing.models import Voicing
 
 from .forms import NewSongForm, SongEditForm, SongFilterForm
 
@@ -132,16 +125,6 @@ class SongDelete(generic.DeleteView):
         context["which_model"] = "Song"
         return context
 
-class FilterSongs(generic.ListView):
-    context_object_name = "songs"
-    template_name = "song/filter_result.html"
-
-    def get_queryset(self):
-        form = SongFilterForm(self.request.GET)
-        if form.is_valid():
-            form = form.cleaned_data
-        pass # finish later
-
 def filter_songs(request):
     template = "song/index.html"
     if request.GET:
@@ -153,45 +136,26 @@ def filter_songs(request):
             voicing = form["voicing"]
             language = form["language"]
 
-            songs = Song.published_set.all()
-            songs = Song.published_set.filter(
-                seasons__season=season,
-                mass_parts__part=masspart,
-                voicing__voicing=voicing,
-                language__language=language)
+            if season:
+                songs = Song.published_set.filter(seasons__season=season)
+            if masspart:
+                songs = Song.published_set.filter(mass_parts__part=masspart)
+            if voicing:
+                songs = Song.published_set.filter(voicing__voicing=voicing)
+            if language:
+                songs = Song.published_set.filter(language__language=language)
 
-            # if season == "":
-            #     pass
-            # else:
-            #     songs = songs.filter(seasons__season=season)
-
-            # if masspart == "":
-            #     pass
-            # else:
-            #     songs = songs.filter(mass_parts__part=masspart)
-
-            # if voicing == "":
-            #     pass
-            # else:
-            #     songs = songs.filter(voicing__voicing=voicing)
-
-            # if language == "":
-            #     pass
-            # else:
-            #     songs = songs.filter(language__language=language)
+            paginator = Paginator(songs, 10)
+            page = request.GET.get('page')
+            songs = paginator.get_page(page)
 
             form = SongFilterForm()
-            total_found = songs.count()
+            context = {}
+            context['found'] = songs.count()
+            context['songs'] = songs
+            context['is_paginated'] = True
+            context['form'] = form
 
-            # try:
-            #     page = request.GET.get("page", 1)
-            # except PageNotAnInteger:
-            #     page = 1
-
-            # p = Paginator(songs, request=request, per_page=10)
-            # songs = p.page(page)
-
-            context = {'songs' : songs, "total_found" : total_found, 'form' : form}
             return render(request, template, context)
     else:
         form = SongFilterForm()
