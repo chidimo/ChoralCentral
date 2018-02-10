@@ -75,18 +75,18 @@ THIRD_PARTY_APPS = [
 INSTALLED_APPS = PREREQ_APPS +  PROJECT_APPS + THIRD_PARTY_APPS
 
 AUTHENTICATION_BACKENDS = (
-    'guardian.backends.ObjectPermissionBackend',
-    # social backends
-    'social_core.backends.open_id.OpenIdAuth',
-    'social_core.backends.google.GoogleOpenId',
-    'social_core.backends.google.GoogleOAuth2',
-    'social_core.backends.google.GoogleOAuth',
-    'social_core.backends.twitter.TwitterOAuth',
-    'social_core.backends.yahoo.YahooOpenId',
-    'social.backends.facebook.FacebookOAuth2',
-
     'django.contrib.auth.backends.ModelBackend',
     # guardian backend
+    'guardian.backends.ObjectPermissionBackend',
+    # social backends
+    # 'social_core.backends.open_id.OpenIdAuth',
+    # 'social_core.backends.google.GoogleOpenId',
+    # 'social_core.backends.google.GoogleOAuth2',
+    # 'social_core.backends.google.GoogleOAuth',
+    # 'social_core.backends.twitter.TwitterOAuth',
+    # 'social_core.backends.yahoo.YahooOpenId',
+    # 'social.backends.facebook.FacebookOAuth2',
+
     )
 
 GUARDIAN_RENDER_403 = True
