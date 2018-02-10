@@ -73,6 +73,7 @@ PROJECT_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    'guardian',
     'pure_pagination',
     'django_addanother',
     'algoliasearch_django',
@@ -80,6 +81,10 @@ THIRD_PARTY_APPS = [
 
 INSTALLED_APPS = PREREQ_APPS +  PROJECT_APPS + THIRD_PARTY_APPS
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'guardian.backends.ObjectPermissionBackend',
+    )
 
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
