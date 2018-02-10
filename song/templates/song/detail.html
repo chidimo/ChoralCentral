@@ -60,17 +60,17 @@
                     <td>{{ song.tempo_text }}</td>
                     <td>
                         {% for season in song.seasons.all %}
-                        <a href="{% url 'song:filter_season' season %}">{{ season }}</a>{% if not forloop.last %},{% endif %}
+                            <a href="{% url 'song:filter_season' season %}">{{ season }}</a>{% if not forloop.last %},{% endif %}
                         {% endfor %}
                     </td>
                     <td>
                         {% for masspart in song.mass_parts.all %}
-                        <a href="{% url 'song:filter_masspart' masspart %}">{{ masspart }}</a>{% if not forloop.last %},{% endif %}
+                            <a href="{% url 'song:filter_masspart' masspart %}">{{ masspart }}</a>{% if not forloop.last %},{% endif %}
                         {% endfor %}
                     </td>
                     <td>
                         {% for author in song.authors.all %}
-                        <a href="{% url 'author:detail' author.pk author.slug %}">{{ author }}</a>{% if not forloop.last %},{% endif %}
+                            <a href="{% url 'song:filter_author' author.pk author.slug %}">{{ author }}</a>{% if not forloop.last %},{% endif %}
                         {% endfor %}
                     </td>
                     <td>{{ song.tempo }}</td>

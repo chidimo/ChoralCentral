@@ -203,4 +203,18 @@ def filter_masspart(request, masspart):
 
     return render(request, template, context)
 
+def filter_author(request, pk, slug):
+    template = "song/filter_author.html"
+    songs = Song.published_set.filter(authors__pk=pk, authors__slug=slug)
+    paginator = Paginator(songs, 10)
+
+    page = request.GET.get('page')
+    songs = paginator.get_page(page)
+
+    context = {}
+    context['songs'] = songs
+    # context['is_paginated'] = True
+
+    return render(request, template, context)
+
 
