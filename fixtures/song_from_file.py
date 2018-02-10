@@ -1,9 +1,10 @@
-"""run fixtures/song_from_file.py"""
+"""run fixtures/song_from_file.py
+
+create_songs("fixtures/data_hymnal.json")
+"""
 
 import json
 from random import choice, randint
-
-from .setupshell import setupshell
 
 from author.models import Author
 from siteuser.models import SiteUser
@@ -13,9 +14,7 @@ from voicing.models import Voicing
 
 from .seed import SCRIPTURE
 
-
-
-def create_songs(file_name):
+def create_songs_from_file(file_name):
     USERS = SiteUser.objects.all()
     with open(file_name, "r+") as rh:
         SONG_FILE = json.load(rh)
@@ -61,13 +60,11 @@ def create_songs(file_name):
         song.likes.add(originator.pk)
 
 def add_manyfields():
+    USERS = SiteUser.objects.all()
     for each in Song.objects.all():
         each.seasons.add(randint(1, 3), randint(4, 7))
         each.mass_parts.add(randint(1, 5), randint(6, 10))
         each.likes.add(choice(USERS), choice(USERS), choice(USERS), choice(USERS))
 
 if __name__ == "__main__":
-    setupshell()
-    create_songs("fixtures/data_hymnal.json")
-    add_manyfields()
-    print("Songs created")
+    pass

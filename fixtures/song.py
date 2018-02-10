@@ -4,7 +4,6 @@ import json
 from random import choice, randint
 
 from py_webber import LoremPysum
-from .setupshell import setupshell
 
 from author.models import Author
 from siteuser.models import SiteUser
@@ -14,9 +13,9 @@ from voicing.models import Voicing
 
 from .seed import SCRIPTURE, NOTES, VOICING, LANGUAGE
 
-USERS = SiteUser.objects.all()
-
-def create_songs(numb):
+def create_songs():
+    USERS = SiteUser.objects.all()
+    int(input("Enter number of songs to create: "))
     for _ in range(numb):
         stx = LoremPysum()
 
@@ -36,6 +35,7 @@ def create_songs(numb):
                                           language=language)
 
 def add_manyfields():
+    USERS = SiteUser.objects.all()
     for each in Song.objects.all():
         each.seasons.add(randint(1, 3), randint(4, 7))
         each.mass_parts.add(randint(1, 5), randint(6, 10))
@@ -44,8 +44,4 @@ def add_manyfields():
         each.authors.add(randint(1, aut-1), randint(1, aut-1))
 
 if __name__ == "__main__":
-    setupshell()
-    create_songs(int(input("Enter number of songs to create: ")))
-    add_manyfields()
-    print("Songs created")
-    
+    pass

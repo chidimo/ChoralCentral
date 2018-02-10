@@ -9,8 +9,6 @@ from random import choice
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
 
-from .setupshell import setupshell
-
 from .lorem import LoremPysum
 from siteuser.models import SiteUser, Role
 from .seed import ROLES
@@ -29,7 +27,7 @@ def createsuperuser():
         su.is_active = True
         su.save()
         pro = SiteUser(user=su,first_name="Chidi",
-                     last_name="Orji", location="somewhere",
+                     last_name="Orji", location="Abu Dhabi",
                      screen_name="CCAdmin")
         pro.save()
 
@@ -37,9 +35,9 @@ def createsuperuser():
         su = CustomUser.objects.get(email='admin@choralcentral.net')
         print("Superuser {} already exists".format(su.email))
 
-def create_siteusers(n):
-    setupshell()
+def create_siteusers():
     roles = Role.objects.all()
+    n = int(input("Enter number of users to create: "))
 
     for _ in range(n):
         stx = LoremPysum("fixtures/eng_names.txt", "fixtures/igbo_names.txt")
@@ -74,8 +72,4 @@ def create_siteusers(n):
             continue
 
 if __name__ == "__main__":
-    setupshell()
-    createsuperuser()
-    create_roles()
-    create_siteusers(int(input("Enter number of users to create: ")))
-    print("SiteUsers created successfully")
+    pass

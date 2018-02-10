@@ -8,11 +8,11 @@ from siteuser.models import SiteUser
 from py_webber import LoremPysum
 
 from .seed import AUTHORS
-from .setupshell import setupshell
 
-USERS = SiteUser.objects.all()
+
 
 def create_authors(numb):
+    USERS = SiteUser.objects.all()
     for _ in range(numb):
         stx = LoremPysum()
         _, _ = Author.objects.get_or_create(originator=choice(USERS),
@@ -23,7 +23,4 @@ def create_authors(numb):
 
 
 if __name__ == "__main__":
-    setupshell()
-    create_authors(int(input("Enter number of authors to create: ")))
-    print("Authors created")
-    
+    pass

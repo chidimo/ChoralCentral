@@ -2,11 +2,7 @@
 
 # pylint: disable=C0301, E1101, W0611, C0411, C0111
 
-import datetime
-import django
 from random import randint, choice
-from django.conf import settings
-from django.db import IntegrityError
 
 from py_webber import LoremPysum
 
@@ -14,13 +10,12 @@ from siteuser.models import SiteUser
 from song.models import Song
 from blog.models import Post, Comment
 
-django.setup()
+def create_posts():
+    USERS = SiteUser.objects.all()
+    SONGS = Song.objects.all()
+    TEX = LoremPysum()
 
-USERS = SiteUser.objects.all()
-SONGS = Song.objects.all()
-TEX = LoremPysum()
-
-def create_posts(numb):
+    numb = int(input("Enter number of posts to create "))
     for _ in range(numb):
 
         title = TEX.title()
@@ -47,6 +42,4 @@ def comment_on_posts():
             _ = Comment.objects.create(creator=choice(USERS), post=post, comment=TEX.sentence())
 
 if __name__ == "__main__":
-    create_posts(int(input("Enter number of posts to create ")))
-    comment_on_posts()
-    print("Posts created")
+    pass
