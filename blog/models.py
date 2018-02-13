@@ -16,22 +16,16 @@ from song.models import Song
 class PublishedManager(models.Manager):
     """Return songs with 'published'"""
     def get_queryset(self):
-        return super(PublishedManager, self).get_queryset().filter(status="PUBLISHED")
+        return super(PublishedManager, self).get_queryset().filter(publish=True)
 
 class Post(mdl.TimeStampedModel):
-    DR = "DRAFT"
-    PB = "PUBLISHED"
-    STATUS_CHOICES = (
-        (DR, "Draft"),
-        (PB, "Published")
-    )
     creator = models.ForeignKey(SiteUser, on_delete=models.CASCADE)
-    status = models.CharField(max_length=12, choices=STATUS_CHOICES, default="DRAFT")
     title = models.CharField(max_length=100)
     subtitle = models.CharField(max_length=100)
     body = models.TextField()
     slug = fdl.AutoSlugField(set_using="title")
     song = models.ForeignKey(Song, on_delete=models.CASCADE, blank=True, null=True)
+    publish = models.BooleanField(default=False)
 
     published_set = PublishedManager()
     objects = models.Manager()

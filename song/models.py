@@ -22,16 +22,9 @@ class PublishedManager(models.Manager):
         return super(PublishedManager, self).get_queryset().filter(publish=True)
 
 class Song(mdl.TimeStampedModel):
-    DR = "DRAFT"
-    PB = "PUBLISHED"
-    STATUS_CHOICES = (
-        (DR, "Draft"),
-        (PB, "Published")
-    )
     originator      = models.ForeignKey(SiteUser, on_delete=models.CASCADE)
     voicing         = models.ForeignKey(Voicing, on_delete=models.CASCADE)
     language        = models.ForeignKey(Language, on_delete=models.CASCADE)
-    # status          = models.CharField(max_length=12, choices=STATUS_CHOICES, default="DRAFT")
     publish         = models.BooleanField(default=False)
 
     title           = models.CharField(max_length=100)

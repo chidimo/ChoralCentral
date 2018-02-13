@@ -1,5 +1,4 @@
 """run fixtures/song_from_file.py
-
 create_songs("fixtures/data_hymnal.json")
 """
 
@@ -46,7 +45,7 @@ def create_songs_from_file(file_name):
 
         song, _ = Song.objects.get_or_create(originator=originator,
                                           title=song.get("title", "None"),
-                                          status="PUBLISHED",
+                                          publish=True,
                                           lyrics=song.get("lyrics", "None"),
                                           scripture_ref=choice(SCRIPTURE),
                                           tempo=randint(45, 250),

@@ -8,18 +8,18 @@ from .models import Post, Comment
 class NewPostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ("status", "title", "song", "subtitle", "body")
+        fields = ("publish", "title", "song", "subtitle", "body")
 
-        widgets = {"status" : forms.Select(attrs={'class' : 'form-control'}),
+        widgets = {
                    "song" : forms.Select(attrs={'class' : 'form-control'}),
                    "title" : forms.TextInput(
-                       attrs={'class' : 'form-control', "placeholder" : "Post title"}),
+                       attrs={'class' : 'form-control', "placeholder" : "Title"}),
 
                     "subtitle" : forms.TextInput(
                        attrs={'class' : 'form-control', "placeholder" : "Subtitle (optional)"}),
 
                     "body" : forms.Textarea(
-                       attrs={'class' : 'form-control', "placeholder" : "Post body"}),
+                       attrs={'class' : 'form-control', "placeholder" : "Body"}),
                   }
 
     def __init__(self, *args, **kwargs):
@@ -32,16 +32,16 @@ class NewPostForm(forms.ModelForm):
 class PostEditForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ("status", "title", "subtitle", "song", "body", )
+        fields = ("publish", "title", "subtitle", "song", "body", )
 
-        widgets = {"status" : forms.Select(attrs={'class' : 'form-control'}),
+        widgets = {
                    "song" : forms.Select(attrs={'class' : 'form-control'}),
                    "title" : forms.TextInput(
-                       attrs={'class' : 'form-control', "placeholder" : "Post title"}),
+                       attrs={'class' : 'form-control', "placeholder" : "Title"}),
                     "subtitle" : forms.TextInput(
                        attrs={'class' : 'form-control', "placeholder" : "Subtitle (optional)"}),
                    "body" : forms.Textarea(
-                       attrs={'class' : 'form-control', "placeholder" : "Post body"}),
+                       attrs={'class' : 'form-control', "placeholder" : "Body"}),
                   }
 
 class PostCreateFromSongForm(forms.ModelForm):
@@ -55,7 +55,7 @@ class PostCreateFromSongForm(forms.ModelForm):
                     "subtitle" : forms.TextInput(
                        attrs={'class' : 'form-control', "placeholder" : "Subtitle (optional)"}),
                    "body" : forms.Textarea(
-                       attrs={'class' : 'form-control', "placeholder" : "Post body"}),
+                       attrs={'class' : 'form-control', "placeholder" : "Body"}),
                   }
 
 class CommentCreateForm(forms.ModelForm):
@@ -65,7 +65,7 @@ class CommentCreateForm(forms.ModelForm):
 
         widgets = {
             "comment" : forms.Textarea(
-                attrs={'rows' : 5, 'columns' : 20, 'class' : 'form-control', "placeholder" : "Add your thoughts here."})
+                attrs={'class' : 'form-control', "placeholder" : "Comment."})
         }
 
 class CommentNumberForm(forms.Form):

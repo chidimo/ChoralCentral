@@ -28,13 +28,13 @@ def create_posts():
                     title=title,
                     body=body,
                     song=choice(SONGS),
-                    status=choice(["DRAFT", "PUBLISHED"]))
+                    publish=choice([True, False]))
         else:
             _ = Post.objects.get_or_create(
                     creator=choice(USERS),
                     title=title,
                     body=body,
-                    status=choice(["DRAFT", "PUBLISHED"]))
+                    publish=choice([True, False]))
 
 def comment_on_posts():
     for post in Post.objects.all():
