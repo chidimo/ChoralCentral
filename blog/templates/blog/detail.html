@@ -16,10 +16,10 @@
     {% endif %}
 
     <h5>
-        <em>Published {{ post.created }} by
-        <a href="{% url 'siteuser:detail' post.creator.pk post.creator.slug %}">{{ post.creator.screen_name }}</a>
+        <em>
+            by <a href="{% url 'siteuser:detail' post.creator.pk post.creator.slug %}">{{ post.creator.screen_name }}</a> | {{ post.created }}
         </em>
-        <span class="float-right">{{ post.comment_set.count }} comments</span>
+        <span class="float-right">{{ post.comment_set.count }} <i class="fas fa-comments"></i></span>
     </h5>
 
     <hr>
@@ -27,7 +27,6 @@
     <span>{{ post.body|markdown_format }}</span>
 
     <hr>
-
         <div class="list-group">
             {% for comment in comments %}
             <div class="list-group-item list-group-item-primary">
@@ -45,8 +44,10 @@
 
         <form action="{% url 'blog:comment_add' post.pk %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
+
             {{ comment_form.comment }}
-            <button class="btn btn-primary btn-lg float-right" type="submit" value="Post Comment">Post Comment</button>
+
+            <button class="btn btn-primary btn-md float-right" type="submit" value="Post Comment">Post Comment</button>
         </form>
 {% endblock content_content %}
 

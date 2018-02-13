@@ -147,12 +147,12 @@
                 <tbody>
                 {% for post in siteuser.post_set.all %}
                     <tr>
-                        {% if post.status == "PUBLISHED" %}
+                        {% if post.publish %}
                             <td><a href="{% url 'blog:detail' post.pk post.slug %}">{{ post.title }}</a></td>
-                            <td>{{ post.status }}</td>
+                            <td>{{ post.publish }}</td>
                         {% else %}
                             <td class="text-warning">{{ post.title }}</td>
-                            <td class="text-warning">{{ post.status }}</td>
+                            <td class="text-warning">{{ post.publish }}</td>
                         {% endif %}
                         <td>
                             <a href="{% url 'blog:edit' post.pk %}"><i class="fas fa-edit"></i></a> |

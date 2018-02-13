@@ -10,30 +10,30 @@
 <div class="list-group">
     {% for post in posts %}
         <div class="list-group-item  list-group-item-primary">
-            <h3><a href="{% url 'blog:detail' post.pk post.slug %}">{{ post }}</a></h3>
+            <h4><a href="{% url 'blog:detail' post.pk post.slug %}">{{ post }}</a></h4>
 
-            <h4>
-                {% if post.song %}
-                    <h4> on <a href="{% url 'song:detail' post.song.pk post.song.slug %}">{{ post.song }}</a></h4>
-                {% endif %}
-                
-            </h4>
-            <span class="float-left">
-                <h4>
-                    <a href="{% url 'siteuser:detail' post.creator.pk post.creator.slug %}">{{ post.creator.screen_name }}</a> 
-                    on {{ post.created }}  
-                </h4>                  
-            </span>
+            {% if post.song %}
+                <h6> on <a href="{% url 'song:detail' post.song.pk post.song.slug %}">{{ post.song }}</a></h6>
+            {% endif %}
 
-            <span class="float-right">
-                <h4>
-                    {% with post.comment_set.count as total_comments %}
-                        <span class="badge badge-light badge-pill">{{ total_comments }}</span> comment{{ total_comments|pluralize }}
-                    {% endwith %}
+            <h6><em>
+                by <a href="{% url 'siteuser:detail' post.creator.pk post.creator.slug %}">{{ post.creator.screen_name }}</a>
+                | {{ post.created }}
+                </em>
+            </h6>
+            <div>
+                <span class="h5 float-left">
                     <a href=""><i class="fab fa-facebook"></i></a>
                     <a href=""><i class="fas fa-envelope"></i></a>
-                </h4>
-            </span>
+                </span>
+
+                <span class="h5 float-right">
+                    {% with post.comment_set.count as total_comments %}
+                        <a class="btn btn-sm btn-primary" href="">{{ forloop.counter }} <i class="fas fa-star"></i></a>
+                        <span class="btn btn-sm btn-primary">{{ total_comments }} <i class="fas fa-comments"></i></span>
+                    {% endwith %}
+                </span>
+            </div>
         </div>
     {% empty %}
         <p>No posts added yet</p>

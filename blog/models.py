@@ -21,7 +21,7 @@ class PublishedManager(models.Manager):
 class Post(mdl.TimeStampedModel):
     creator = models.ForeignKey(SiteUser, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
-    subtitle = models.CharField(max_length=100)
+    subtitle = models.CharField(max_length=100, blank=True, null=True)
     body = models.TextField()
     slug = fdl.AutoSlugField(set_using="title")
     song = models.ForeignKey(Song, on_delete=models.CASCADE, blank=True, null=True)
