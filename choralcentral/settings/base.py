@@ -70,6 +70,7 @@ THIRD_PARTY_APPS = [
     'social_django',
     'pure_pagination',
     'django_addanother',
+    'django_extensions',
     'algoliasearch_django',
 ]
 
