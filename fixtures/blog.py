@@ -37,6 +37,8 @@ def create_posts():
                     publish=choice([True, False]))
 
 def comment_on_posts():
+    USERS = SiteUser.objects.all()
+    TEX = LoremPysum()
     for post in Post.objects.all():
         for _ in range(randint(5, 50)):
             _ = Comment.objects.create(creator=choice(USERS), post=post, comment=TEX.sentence())

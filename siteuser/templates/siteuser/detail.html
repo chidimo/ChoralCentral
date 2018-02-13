@@ -62,6 +62,14 @@
         </div>
 
         <div>
+            <span class="h5">Roles:</span>
+            <span class="h6">
+                {% for role in siteuser.roles.all %}
+                    {{ role.role }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}</span>
+        </div>
+
+        <div>
             <span class="h5">Location:</span>
             <span class="h6">{{ siteuser.location }}</span>
         </div>

@@ -32,7 +32,9 @@
             <div class="list-group-item list-group-item-primary">
                 <h5><a href="{% url 'siteuser:detail' comment.creator.pk comment.creator.slug %}">{{ comment.creator.screen_name }}</a></h5>
                 {{ comment.comment|markdown_format }}
-                <a href="#"><i class="fas fa-edit"></i></a>
+                {% if request.user == comment.creator.user %}
+                    <a href="#"><i class="fas fa-edit"></i></a>
+                {% endif %}
                 <a href="#"><i class="fas fa-reply"></i></a>
             </div>
             {% empty %}
