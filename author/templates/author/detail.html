@@ -25,5 +25,5 @@
     </div>
 <hr>
 
-<p class="profile">First added by <a href="{% url 'siteuser:detail' author.originator.pk author.originator.slug %}">{{ author.originator.screen_name }}</a></p>
+<p>First added by <a href="{% url 'siteuser:detail' author.originator.pk author.originator.slug %}">{{ author.originator.screen_name }}</a></p>
 {% endblock content_content %}

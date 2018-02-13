@@ -14,4 +14,4 @@ def markdown_format(text):
 @register.filter()
 def published_author_songs(author_songs_queryset):
 	"""Return all songs by author with status 'PUBLISHED'"""
-	return author_songs_queryset.filter(status="PUBLISHED")
+	return author_songs_queryset.filter(publish=True)
