@@ -88,7 +88,7 @@ th, td {
   padding-top: 0.5rem;
 }
 
-.upload-forms .btn-lg {
+.upload-forms .btn-md {
   margin-top: 0.75rem;
   font-size: 24px;
 }
@@ -96,10 +96,12 @@ th, td {
 .login-form {
   max-width:350px;
   margin:auto;
-  border: 1px solid blue;
+  border: 1px solid #aaccf0;
   border-radius: 5px;
-  padding-bottom: 4rem;
-  margin-top: 10rem;
+  padding-bottom: 1rem;
+  background: #a7d2ff;
+  margin: auto;
+  /* margin-top: 10rem; */
 }
 
 .related-widget-wrapper-link {
@@ -149,7 +151,7 @@ input#id_password {
   padding-right: 5px;
 }
 
-.btn-lg-span {
+.btn-md-span {
   vertical-align: middle;
   font-size: 22px;
 }

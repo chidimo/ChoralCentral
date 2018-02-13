@@ -1,10 +1,11 @@
 {% extends "choralcentral_base.html" %}
 
 {% block title %}New profile{% endblock %}
+{% block navigation %}{% endblock navigation %}
+
 {% block content_content %}
 
 <div class="container upload-forms">
-    <h1><a href="/">Home</a></h1>
 
     <h2>Create your profile</h2>
 
@@ -19,7 +20,7 @@
 
             <p>{{ form.password2 }}</p>
 
-        <button class="btn btn-primary btn-lg float-right" type="submit" value="Join">Join</button>
+        <button class="btn btn-primary btn-md float-right" type="submit" value="Join">Join</button>
     </form>
 
     <!-- <div class="social-auth fa-3x">

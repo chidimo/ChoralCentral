@@ -14,6 +14,7 @@ from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group, Permission
 
 from django_addanother.views import CreatePopupMixin
 from pure_pagination.mixins import PaginationMixin
