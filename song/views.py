@@ -12,6 +12,7 @@ from django.views import generic
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 # from django.contrib.auth import get_user_model
+from django.core.paginator import Paginator
 
 from django_addanother.views import CreatePopupMixin
 from pure_pagination.mixins import PaginationMixin
