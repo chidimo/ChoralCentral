@@ -60,17 +60,17 @@
                     <td>{{ song.tempo_text }}</td>
                     <td>
                         {% for season in song.seasons.all %}
-                            <a href="{% url 'song:filter_season' season %}">{{ season }}</a>{% if not forloop.last %},{% endif %}
+                            <a href="{% url 'song:filter_season' season %}">{{ season }}</a>{% if not forloop.last %},<br>{% endif %}
                         {% endfor %}
                     </td>
                     <td>
                         {% for masspart in song.mass_parts.all %}
-                            <a href="{% url 'song:filter_masspart' masspart %}">{{ masspart }}</a>{% if not forloop.last %},{% endif %}
+                            <a href="{% url 'song:filter_masspart' masspart %}">{{ masspart }}</a>{% if not forloop.last %},<br>{% endif %}
                         {% endfor %}
                     </td>
                     <td>
                         {% for author in song.authors.all %}
-                            <a href="{% url 'song:filter_author' author.pk author.slug %}">{{ author }}</a>{% if not forloop.last %},{% endif %}
+                            <a href="{% url 'song:filter_author' author.pk author.slug %}">{{ author }}</a>{% if not forloop.last %},<br>{% endif %}
                         {% endfor %}
                     </td>
                     <td>{{ song.tempo }}</td>
@@ -85,7 +85,7 @@
 <hr>
 
 <div class="row">
-    <div class="col-sm-8">
+    <div class="col-md-8 col-lg-7">
         <h3>Scores
             <span class="float-right">
                 <a class="btn btn-primary btn-sm" href="{% url 'song-media:score_add_song' song.pk %}">Add score</a>
@@ -114,7 +114,8 @@
                             <td></td>
                             <td><a href="{% url 'song-media:score_view' score.pk %}" target="blank"><i class="fas fa-file-pdf"></i></a> |
                                 <a href=""><i  class="fas fa-edit"></i></a> |
-                                <a href="{% url 'song-media:delete_score' score.pk song.pk song.slug %}"><i class="fas fa-trash"></i></a></td>
+                                <a href="{% url 'song-media:delete_score' score.pk song.pk song.slug %}"><i class="fas fa-trash"></i></a>
+                            </td>
                         </tr>
                     {% empty %}
                         <p>No music score for this song</p>
@@ -122,9 +123,7 @@
                 </tbody>
             </table>
         </div>
-
 <hr>
-
         <h3>Midis
             <span class="float-right">
                 <a class="btn btn-primary btn-sm" href="{% url 'song-media:midi_add_song' song.pk %}">Add midi</a>
@@ -159,12 +158,10 @@
                     </tbody>
             </table>
         </div>
-
 <hr>
-
         <h3>Video links
             <span class="float-right">
-                <a class="btn btn-primary btn-sm" href="{% url 'song-media:videolink_new_song' song.pk %}">Add video link</a>
+                <a class="btn btn-primary btn-sm" href="{% url 'song-media:videolink_new_song' song.pk %}">Add a link</a>
             </span>
         </h3>
         <div class="table-responsive">
@@ -190,8 +187,8 @@
                     </tbody>
             </table>
         </div>
-</div>
-    <div class="col-sm-4">
+    </div>
+    <div class="col-md-4 col-lg-5">
         <h4>Lyrics</h4>
         {{ song.lyrics|markdown_format }}
     </div>
@@ -199,12 +196,7 @@
 {% endblock content_content %}
 
 {%  block right_sidebar %}
-    <div class="row">
-        <div class="col-sm-12">
-            <h4>Lyrics</h4>
-            {{ song.lyrics|markdown_format }}
-        </div>
-    </div>
+right
 {% endblock right_sidebar %}
 
 {% block left_sidebar %}

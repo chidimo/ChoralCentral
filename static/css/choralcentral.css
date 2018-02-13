@@ -57,6 +57,10 @@ a:hover {
   padding-bottom: 10px;
 }
 
+th, td {
+    white-space: nowrap;
+}
+
 .filter-block {
   max-width:400px;
   margin: auto;
@@ -67,10 +71,8 @@ a:hover {
   border: 1px solid mintcream;
 }
 
-
-
-.filter-block .btn-lg {
-  margin-top: 0.75rem;
+.filter-block .btn-sm {
+  margin-top: 0.5rem;
 }
 
 .upload-forms {

@@ -2,9 +2,11 @@
 {% load static %}
 
 {% block left_sidebar %}
+<h5>Find songs that match your criteria</h5>
     {% if form.errors %}
         <p>{{ form.errors }}</p>
     {% endif %}
+
         <div class="d-none d-md-block filter-block">
             <form action="{% url 'song:filter' %}" method="get" enctype="multipart/form-data">
                 {{ form.as_p }}

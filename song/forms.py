@@ -20,38 +20,34 @@ from language.models import Language
 class SongFilterForm(forms.Form):
     season = forms.ModelChoiceField(
         queryset=Season.objects.all(),
-        # initial=0,
         required=False,
         widget=forms.Select(attrs={"class" : "form-control",}))
 
     masspart = forms.ModelChoiceField(
         queryset=MassPart.objects.all(),
-        # initial=0,
         required=False,
         widget=forms.Select(attrs={"class" : "form-control",}))
 
     voicing = forms.ModelChoiceField(
         queryset=Voicing.objects.all(),
-        # initial=0,
         required=False,
         widget=forms.Select(attrs={"class" : "form-control",}))
 
     language = forms.ModelChoiceField(
         queryset=Language.objects.all(),
-        # initial=0,
         required=False,
         widget=forms.Select(attrs={"class" : "form-control",}))
 
 class NewSongForm(forms.ModelForm):
     class Meta:
         model = Song
-        fields = ["status", "title", "compose_date",
+        fields = ["publish", "title", "compose_date",
                   "lyrics", "first_line", "scripture_ref", "language",
                   "tempo", "bpm", "divisions", "voicing",
                   "authors", "seasons", "mass_parts",]
 
         widgets = {
-            "status" : forms.Select(attrs={'class' : 'form-control'}),
+            "publish" : forms.BooleanField(),
             "title" : forms.TextInput(
                 attrs={'class' : 'form-control', 'placeholder' : "Song title"}),
             "compose_date" : forms.DateInput(
@@ -83,13 +79,13 @@ class NewSongForm(forms.ModelForm):
 class SongEditForm(forms.ModelForm):
     class Meta:
         model = Song
-        fields = ["status", "title", "compose_date",
+        fields = ["publish", "title", "compose_date",
                   "lyrics", "first_line", "scripture_ref", "language",
                   "tempo", "bpm", "divisions", "voicing",
                   "authors", "seasons", "mass_parts",]
 
         widgets = {
-            "status" : forms.Select(attrs={'class' : 'form-control'}),
+            "publish" : forms.BooleanField(),
             "title" : forms.TextInput(
                 attrs={'class' : 'form-control', 'placeholder' : "Song title"}),
             "compose_date" : forms.DateInput(

@@ -32,12 +32,14 @@ class NewPostForm(forms.ModelForm):
 class PostEditForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ("status", "title", "song", "body", )
+        fields = ("status", "title", "subtitle", "song", "body", )
 
         widgets = {"status" : forms.Select(attrs={'class' : 'form-control'}),
                    "song" : forms.Select(attrs={'class' : 'form-control'}),
                    "title" : forms.TextInput(
                        attrs={'class' : 'form-control', "placeholder" : "Post title"}),
+                    "subtitle" : forms.TextInput(
+                       attrs={'class' : 'form-control', "placeholder" : "Subtitle (optional)"}),
                    "body" : forms.Textarea(
                        attrs={'class' : 'form-control', "placeholder" : "Post body"}),
                   }
@@ -45,11 +47,13 @@ class PostEditForm(forms.ModelForm):
 class PostCreateFromSongForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ("title", "body")
+        fields = ("title", "subtitle", "body")
 
         widgets = {"song" : forms.Select(attrs={'class' : 'form-control'}),
                    "title" : forms.TextInput(
                        attrs={'class' : 'form-control', "placeholder" : "Post title"}),
+                    "subtitle" : forms.TextInput(
+                       attrs={'class' : 'form-control', "placeholder" : "Subtitle (optional)"}),
                    "body" : forms.Textarea(
                        attrs={'class' : 'form-control', "placeholder" : "Post body"}),
                   }

@@ -3,7 +3,6 @@
 import  datetime
 from django.db import models
 from django.urls import reverse
-from django.utils import timezone
 
 from taggit.managers import TaggableManager
 
@@ -20,7 +19,7 @@ from universal import fields as fdl
 class PublishedManager(models.Manager):
     """Return songs with 'published' marked 'True' """
     def get_queryset(self):
-        return super(PublishedManager, self).get_queryset().filter(status="PUBLISHED")
+        return super(PublishedManager, self).get_queryset().filter(publish=True)
 
 class Song(mdl.TimeStampedModel):
     DR = "DRAFT"
@@ -32,7 +31,8 @@ class Song(mdl.TimeStampedModel):
     originator      = models.ForeignKey(SiteUser, on_delete=models.CASCADE)
     voicing         = models.ForeignKey(Voicing, on_delete=models.CASCADE)
     language        = models.ForeignKey(Language, on_delete=models.CASCADE)
-    status          = models.CharField(max_length=12, choices=STATUS_CHOICES, default="DRAFT")
+    # status          = models.CharField(max_length=12, choices=STATUS_CHOICES, default="DRAFT")
+    publish         = models.BooleanField(default=False)
 
     title           = models.CharField(max_length=100)
     compose_date    = models.DateField(null=True, blank=True)
@@ -56,7 +56,7 @@ class Song(mdl.TimeStampedModel):
     published_set   = PublishedManager()
 
     class Meta:
-        ordering = ["-created", "status"]
+        ordering = ["-created", "publish"]
 
     @property
     def object_id(self):

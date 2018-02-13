@@ -2,22 +2,16 @@
 """Views"""
 
 import json
-import pprint
-# from reportlab.pdfgen import canvas
-from django.core.mail import send_mail
 from django.conf import settings
-from django.db.models import Count, Sum
-from django.http import HttpResponse, FileResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404
+from django.db.models import Count
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from django.views import View, generic
+from django.views import generic
 from django.urls import reverse_lazy
-from django.shortcuts import render, render_to_response, reverse, redirect
-from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth import get_user_model
-from django.core.paginator import Paginator, PageNotAnInteger, Page, EmptyPage
+# from django.contrib.auth import get_user_model
 
 from django_addanother.views import CreatePopupMixin
 from pure_pagination.mixins import PaginationMixin
@@ -147,15 +141,10 @@ def filter_songs(request):
             if language:
                 songs = Song.published_set.filter(language__language=language)
 
-            paginator = Paginator(songs, 10)
-            page = request.GET.get('page')
-            songs = paginator.get_page(page)
-
             form = SongFilterForm()
             context = {}
-            # context['found'] = songs.count()
+
             context['songs'] = songs
-            context['is_paginated'] = True
             context['form'] = form
 
             return render(request, template, context)
