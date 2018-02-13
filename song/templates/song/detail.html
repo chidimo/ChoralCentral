@@ -9,7 +9,7 @@
         {% if user.is_authenticated %}
 
         <!-- like script -->
-        <button class="btn btn-primary btn-lg" type="submit" id="like" title="{{ song.pk }}" value="Like"><i class="fas fa-star"></i></button>
+        <button class="btn btn-primary btn-sm" type="submit" id="like" title="{{ song.pk }}" value="Like"><i class="fas fa-star"></i></button>
         <script>
         $('#like').click(function(){
             $.ajax({
@@ -84,133 +84,118 @@
 
 <hr>
 
-    <div class="row">
-        <div class="col-sm-7">
-            <h3>Scores
-                <span class="float-right">
-                    <a class="btn btn-primary btn-lg" href="{% url 'song-media:score_add_song' song.pk %}">Add score</a>
-                </span>
-            </h3>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-7">
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead class="thead-dark">
-                        <caption>Scores</caption>
+<div class="row">
+    <div class="col-sm-8">
+        <h3>Scores
+            <span class="float-right">
+                <a class="btn btn-primary btn-sm" href="{% url 'song-media:score_add_song' song.pk %}">Add score</a>
+            </span>
+        </h3>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <caption>Scores</caption>
+                    <tr>
+                        <th>OP</th>
+                        <th>Part</th>
+                        <th>Notation</th>
+                        <th><i class="fas fa-star"></i></th>
+                        <th><i class="fas fa-download"></i></th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for score in song.score_set.all %}
                         <tr>
-                            <th>Uploader</th>
-                            <th>Part</th>
-                            <th>Notation</th>
-                            <th><i class="fas fa-star"></i></th>
-                            <th>Action</th>
+                            <td><a href="{% url 'siteuser:detail' score.uploader.pk score.uploader.slug %}">{{ score.uploader.screen_name }}</a></td>
+                            <td>{{ score.part }}</td>
+                            <td>{{ score.notation }}</td>
+                            <td><a href="">{{ score.score_likes }}</a></td>
+                            <td></td>
+                            <td><a href="{% url 'song-media:score_view' score.pk %}" target="blank"><i class="fas fa-file-pdf"></i></a> |
+                                <a href=""><i  class="fas fa-edit"></i></a> |
+                                <a href="{% url 'song-media:delete_score' score.pk song.pk song.slug %}"><i class="fas fa-trash"></i></a></td>
                         </tr>
-                    </thead>
+                    {% empty %}
+                        <p>No music score for this song</p>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+<hr>
+
+        <h3>Midis
+            <span class="float-right">
+                <a class="btn btn-primary btn-sm" href="{% url 'song-media:midi_add_song' song.pk %}">Add midi</a>
+            </span>
+        </h3>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <caption>Midis</caption>
+                    <tr>
+                        <th>OP</th>
+                        <th>Part</th>
+                        <th><i class="fas fa-star"></i></th>
+                        <th><i class="fas fa-download"></i></th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
                     <tbody>
-                        {% for score in song.score_set.all %}
+                        {% for midi in song.midi_set.all %}
                             <tr>
-                                <td><a href="{% url 'siteuser:detail' score.uploader.pk score.uploader.slug %}">{{ score.uploader.screen_name }}</a></td>
-                                <td>{{ score.part }}</td>
-                                <td>{{ score.notation }}</td>
-                                <td><a href="">{{ score.score_likes }}</a></td>
-                                <td><a href="{% url 'song-media:score_view' score.pk %}" target="blank"><i class="fas fa-download"></i></a> |
-                                    <a href=""><i  class="fas fa-edit"></i></a> |
-                                    <a href="{% url 'song-media:delete_score' score.pk song.pk song.slug %}"><i class="fas fa-trash"></i></a></td>
+                                <td><a href="{% url 'siteuser:detail' midi.uploader.pk midi.uploader.slug %}">{{ midi.uploader.screen_name }}</a></td>
+                                <td>{{ midi.part }}</td>
+                                <td><a href="">{{ midi.midi_likes }}</a></td>
+                                <td></td>
+                                <td><a href="{% url 'song-media:play_midiview' midi.pk %}" target="blank"><i class="fas fa-play"></i></a> |
+                                    <a href=""><i class="fas fa-edit"></i></a> |
+                                    <a href="{% url 'song-media:delete_midi' midi.pk song.pk song.slug %}"><i  class="fas fa-trash"></i></a></td>
                             </tr>
                         {% empty %}
-                            <p>No music score for this song</p>
+                            <p>No midis for this song</p>
                         {% endfor %}
                     </tbody>
-                </table>
-            </div>
+            </table>
         </div>
-    </div>
-
-<hr>
-    <div class="row">
-        <div class="col-sm-6">
-            <h3>Midis
-                <span class="float-right">
-                    <a class="btn btn-primary btn-lg" href="{% url 'song-media:midi_add_song' song.pk %}">Add midi</a>
-                </span>
-            </h3>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead class="thead-dark">
-                        <caption>Midis</caption>
-                        <tr>
-                            <th>Uploader</th>
-                            <th>Part</th>
-                            <th><i class="fas fa-star"></i></th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                        <tbody>
-                            {% for midi in song.midi_set.all %}
-                                <tr>
-                                    <td><a href="{% url 'siteuser:detail' midi.uploader.pk midi.uploader.slug %}">{{ midi.uploader.screen_name }}</a></td>
-                                    <td>{{ midi.part }}</td>
-                                    <td><a href="">{{ midi.midi_likes }}</a></td>
-                                    <td><a href="{% url 'song-media:play_midiview' midi.pk %}" target="blank"><i class="fas fa-download"></i></a> |
-                                        <a href=""><i class="fas fa-edit"></i></a> |
-                                        <a href="{% url 'song-media:delete_midi' midi.pk song.pk song.slug %}"><i  class="fas fa-trash"></i></a></td>
-                                </tr>
-                            {% empty %}
-                                <p>No midis for this song</p>
-                            {% endfor %}
-                        </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
 
 <hr>
 
-    <div class="row">
-        <div class="col-sm-7">
-            <h3>Video links
-                <span class="float-right">
-                    <a class="btn btn-primary btn-lg" href="{% url 'song-media:videolink_new_song' song.pk %}">Add video link</a>
-                </span>
-            </h3>
+        <h3>Video links
+            <span class="float-right">
+                <a class="btn btn-primary btn-sm" href="{% url 'song-media:videolink_new_song' song.pk %}">Add video link</a>
+            </span>
+        </h3>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <caption>Video links</caption>
+                    <tr>
+                        <th>OP</th>
+                        <th>Link</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                    <tbody>
+                        {% for link in song.videolink_set.all %}
+                            <tr>
+                                <td><a href="{% url 'siteuser:detail' link.uploader.pk link.uploader.slug %}">{{ link.uploader.screen_name }}</a></td>
+                                <td><a href="{{ link.video_link }}" target="_blank">{{ link.video_link }}</a></td>
+                                <td>action</td>
+                            </tr>
+                        {% empty %}
+                            <p>No video link for this song</p>
+                        {% endfor %}
+                    </tbody>
+            </table>
         </div>
+</div>
+    <div class="col-sm-4">
+        <h4>Lyrics</h4>
+        {{ song.lyrics|markdown_format }}
     </div>
-
-    <div class="row">
-        <div class="col-sm-7">
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead class="thead-dark">
-                        <caption>Video links</caption>
-                        <tr>
-                            <th>Uploader</th>
-                            <th>Link</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                        <tbody>
-                            {% for link in song.videolink_set.all %}
-                                <tr>
-                                    <td><a href="{% url 'siteuser:detail' link.uploader.pk link.uploader.slug %}">{{ link.uploader.screen_name }}</a></td>
-                                    <td><a href="{{ link.video_link }}" target="_blank">{{ link.video_link }}</a></td>
-                                    <td>action</td>
-                                </tr>
-                            {% empty %}
-                                <p>No video link for this song</p>
-                            {% endfor %}
-                        </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
+</div>
 {% endblock content_content %}
 
 {%  block right_sidebar %}

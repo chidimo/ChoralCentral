@@ -7,33 +7,29 @@
     {% endif %}
         <div class="d-none d-md-block filter-block">
             <form action="{% url 'song:filter' %}" method="get" enctype="multipart/form-data">
-                <p>{{ form.season }}</p>
-                <p>{{ form.masspart }}</p>
-                <p>{{ form.voicing }}</p>
-                <p>{{ form.language }}</p>
-                <button class="btn btn-primary btn-lg float-right" type="submit" value="Select">Select</button>
+                {{ form.as_p }}
+                <button class="btn btn-primary btn-sm float-right" type="submit" value="Search songs">Search songs</button>
             </form>
         </div>
 {% endblock left_sidebar %}
 
 {% block content_content %}
-
     <div class="list-group">
         {% for song in songs %}
         <div class="list-group-item list-group-item-primary">
-            <h3><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h3>
-            <h5 class="" id="songFirstLine">{{ song.first_line }}</h5>
+            <h4><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h4>
+            <p class="" id="songFirstLine">{{ song.first_line }}</p>
 
             <div>
-                <span class="h4 float-left">
+                <span class="h5 float-left">
                     <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'blog:new_song' song.pk %}" title="Blog this song"><i class="fas fa-pen-square"></i></a>
                     <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="" title="Share on facebook"><i class="fab fa-facebook"></i></a>
                     <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href=""title="Share by email"><i class="fas fa-at"></i></a>
                 </span>
 
-                <span class="h4 float-right">
-                    <a class="btn btn-lg btn-info" href="">{{ song.song_likes }}</a>
-                    <a class="btn btn-lg btn-primary" href=""><i class="fas fa-star"></i> Star</a>
+                <span class="h5 float-right">
+                    <a class="btn btn-sm btn-info" href=""><i class="fas fa-eye"></i></a>
+                    <a class="btn btn-sm btn-primary" href="">{{ song.song_likes }} <i class="fas fa-star"></i></a>
                 </span>
             </div>
         </div>

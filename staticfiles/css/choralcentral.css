@@ -48,11 +48,6 @@ a:hover {
   padding: 20px 0;
 }
 
-.filter-form {
-  max-width: 400px;
-  margin: auto;
-}
-
 .content-block {
   background-color: #cdd0d7;
   max-width: 1000px;
@@ -65,19 +60,35 @@ a:hover {
 .filter-block {
   max-width:400px;
   margin: auto;
-  background: midnightblue;
-  /*padding: 0px 10px 25px 10px;*/
-  padding: 10px;
-  display: block;
-  border-radius: 5px;
+  background: #e9ecef;
+  margin-top: 0.5rem;
+  padding: .5rem 1rem 3rem 1rem;
+  border-radius: 7.5px;
+  border: 1px solid mintcream;
+}
+
+
+
+.filter-block .btn-lg {
+  margin-top: 0.75rem;
 }
 
 .upload-forms {
-  max-width:500px;
-  margin: 3.5rem auto;
-  padding: 0 1rem 1rem 1rem;
-  background: #cdd0d7;
-  border-radius: 5px;
+  max-width:600px;
+  margin-top: 3.5rem;
+  /* margin: 3.5rem auto; */
+  padding: 0 1rem 4.75rem 1rem;
+  background: #a3baf0;
+  border-radius: 7.5px;
+}
+
+.upload-forms h2 {
+  padding-top: 0.5rem;
+}
+
+.upload-forms .btn-lg {
+  margin-top: 0.75rem;
+  font-size: 24px;
 }
 
 .login-form {
@@ -85,9 +96,13 @@ a:hover {
   margin:auto;
   border: 1px solid blue;
   border-radius: 5px;
+  padding-bottom: 4rem;
+  margin-top: 10rem;
 }
 
-
+.related-widget-wrapper-link {
+  background: blanchedalmond;
+}
 
 /* Add icons to registration form fields */
 .form-group {
