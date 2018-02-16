@@ -6,6 +6,7 @@ from os.path import splitext
 from random import randint, choices
 from itertools import filterfalse
 from django.conf import settings
+from django.template.defaultfilters import slugify
 from selenium.webdriver.support.select import Select
 
 def fast_multiselect(driver, element_id, labels=[]):
@@ -42,6 +43,7 @@ def upload_midi(instance, filename):
     """Take the midi instance and original filename and return appropriate name"""
     filename, ext = splitext(filename)
     normalized_song_name = "_".join([each.lower() for each in instance.song.title.split()])
+    normalized_song_name = slugify(instance.song.title)
     return "midis/{}_{}{}".format(normalized_song_name, instance.song.pk, ext)
 
 def upload_pdf(instance, filename):
@@ -50,7 +52,7 @@ def upload_pdf(instance, filename):
     in case of multiple instance of same song.
     """
     filename, ext = splitext(filename)
-    normalized_song_name = "_".join([each.lower() for each in instance.song.title.split()])
+    normalized_song_name = slugify(instance.song.title)
     return "scores/{}_{}.{}".format(normalized_song_name, instance.song.pk, ext)
 
 
