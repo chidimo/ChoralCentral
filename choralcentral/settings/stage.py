@@ -7,15 +7,15 @@ DATABASES = {
 'default': {
     'ENGINE': 'django.db.backends.mysql',
     'OPTIONS': {'sql_mode' : 'traditional'},
-    'NAME': 'parousia$choral',
-    'USER': 'parousia',
+    'NAME': 'choralcentral$choral',
+    'USER': 'choralcentral',
     'PASSWORD': get_env_variable('CENTRAL_PASS'),
-    'HOST': 'parousia.mysql.pythonanywhere-services.com',
+    'HOST': 'choralcentral.mysql.pythonanywhere-services.com',
     'TEST':{
         # 'ENGINE': 'django.db.backends.sqlite3', # for sqlite3
         # 'NAME':'test.db',
         'ENGINE': 'django.db.backends.mysql',
-        'NAME':'parousia$test_db'
+        'NAME':'choralcentral$test_db'
         }
     }
 }
@@ -38,7 +38,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'choralcentral_prod.log'),
+            'filename': os.path.join(BASE_DIR, 'choralcentral_stage.log'),
             'formatter': 'verbose'
         },
     },
