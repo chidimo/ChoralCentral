@@ -5,15 +5,15 @@
 
 {% block content_content %}
 
-<h2>Meet the gang</h2>
+<h2>Meet the choir</h2>
 
     {% if siteuser_list %}
     <div class="list-group">
         {% for siteuser in siteuser_list %}
 
         <div class="list-group-item list-group-item-primary">
-                <a href="{% url 'siteuser:detail' siteuser.pk siteuser.slug %}">{{ siteuser.screen_name }}</a>
-                <p>{{ siteuser.published.count }} uploads</p>
+            <a href="{% url 'siteuser:detail' siteuser.pk siteuser.slug %}">{{ siteuser.screen_name }}</a>
+            <p>{{ siteuser.song_set.count }} uploads</p>
         </div>
 
         {% endfor %}

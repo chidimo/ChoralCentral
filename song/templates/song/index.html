@@ -2,11 +2,6 @@
 {% load static %}
 
 {% block left_sidebar %}
-<h5>Find songs that match your criteria</h5>
-    {% if form.errors %}
-        <p>{{ form.errors }}</p>
-    {% endif %}
-
         <div class="d-none d-md-block filter-block">
             <form action="{% url 'song:filter' %}" method="get" enctype="multipart/form-data">
                 {{ form.as_p }}
@@ -26,7 +21,8 @@
                 <span class="h5 float-left">
                     <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'blog:new_song' song.pk %}" title="Blog this song"><i class="fas fa-pen-square"></i></a>
                     <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="" title="Share on facebook"><i class="fab fa-facebook"></i></a>
-                    <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href=""title="Share by email"><i class="fas fa-at"></i></a>
+                    <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="" title="Share by email"><i class="fas fa-at"></i></a>
+                    <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'song:reader_view' song.pk song.slug %}" title="Print view"><i class="fas fa-print"></i></a>
                 </span>
 
                 <span class="h5 float-right">

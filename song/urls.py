@@ -23,7 +23,8 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    path("like_song/", views.song_like_view, name='like_song')
+    path("like_song/", views.song_like_view, name='like_song'),
+    path("reader/<int:pk>/<slug:slug>/", views.reader_view, name='reader_view')
 ]
 
 urlpatterns += [

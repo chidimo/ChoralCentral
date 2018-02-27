@@ -3,6 +3,7 @@ Django settings for choralcentral project.
 """
 
 import os
+import pygments.formatters
 from django.urls import reverse_lazy
 from django.core.exceptions import ImproperlyConfigured
 
@@ -38,6 +39,15 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'choralcentral@gmail.com'
 DEFAULT_FROM_EMAIL = 'choralcentral@gmail.com'
 EMAIL_HOST_PASSWORD = get_env_variable('DEFAULT_EMAIL_PASS')
+
+SHELL_PLUS_PRINT_SQL = True
+SHELL_PLUS_PYGMENTS_FORMATTER = pygments.formatters.TerminalFormatter
+SHELL_PLUS_PYGMENTS_FORMATTER_KWARGS = {}
+IPYTHON_KERNEL_DISPLAY_NAME = "Django Shell-Plus"
+SHELL_PLUS_POST_IMPORTS = [
+    ('fixtures', '*'),
+    ('fixtures')
+    ]
 
 # Application definition
 PREREQ_APPS = [

@@ -18,24 +18,37 @@ from language.models import Language
 # pylint: disable=C0326, C0301, C0103, C0111
 
 class SongFilterForm(forms.Form):
+    combinator = forms.ChoiceField(
+        choices = (
+            ('OR', 'OR'),
+            ('AND', 'AND')
+        ),
+        required=True,
+        initial = 'OR',
+        widget=forms.Select(attrs={"class" : "form-control"}))
+
     season = forms.ModelChoiceField(
         queryset=Season.objects.all(),
         required=False,
+        initial=1,
         widget=forms.Select(attrs={"class" : "form-control",}))
 
     masspart = forms.ModelChoiceField(
         queryset=MassPart.objects.all(),
         required=False,
+        initial=1,
         widget=forms.Select(attrs={"class" : "form-control",}))
 
     voicing = forms.ModelChoiceField(
         queryset=Voicing.objects.all(),
         required=False,
+        initial=1,
         widget=forms.Select(attrs={"class" : "form-control",}))
 
     language = forms.ModelChoiceField(
         queryset=Language.objects.all(),
         required=False,
+        initial=1,
         widget=forms.Select(attrs={"class" : "form-control",}))
 
 class NewSongForm(forms.ModelForm):

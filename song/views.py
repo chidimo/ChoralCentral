@@ -1,9 +1,11 @@
 
 """Views"""
+import operator
+from functools import reduce
 
 import json
 from django.conf import settings
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
@@ -22,6 +24,8 @@ from siteuser.models import SiteUser
 from .models import Song
 
 from .forms import NewSongForm, SongEditForm, SongFilterForm
+
+from universal.utils import render_to_pdf
 
 # pylint: disable=R0901, C0111
 
@@ -87,10 +91,12 @@ class SongDetail(generic.DetailView):
     context_object_name = 'song'
     template_name = 'song/detail.html'
 
-class SongReader(generic.DetailView):
-    model = Song
-    context_object_name = 'song'
-    template_name = 'song/reader.html'
+def reader_view(request, pk, slug):
+    template = 'song/reader_view.html'
+    song = Song.objects.get(pk=pk, slug=slug)
+    context = {}
+    context['song'] = song
+    return render_to_pdf(request, template, context)
 
 class NewSong(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
     template_name = 'song/new.html'
@@ -126,27 +132,42 @@ def filter_songs(request):
         form = SongFilterForm(request.GET)
         if form.is_valid():
             form = form.cleaned_data
+
+            combinator = form['combinator']
             season = form['season']
             masspart = form['masspart']
             voicing = form["voicing"]
             language = form["language"]
 
-            songs = Song.published_set.all()
+            queries = []
+            msg = []
 
             if season:
-                songs = Song.published_set.filter(seasons__season=season)
+                queries.append(Q(seasons__season=season))
+                msg.append('Season={}'.format(season))
             if masspart:
-                songs = Song.published_set.filter(mass_parts__part=masspart)
+                queries.append(Q(mass_parts__part=masspart))
+                msg.append('Masspart={}'.format(masspart))
             if voicing:
-                songs = Song.published_set.filter(voicing__voicing=voicing)
+                queries.append(Q(voicing__voicing=voicing))
+                msg.append('Vvoicing={}'.format(voicing))
             if language:
-                songs = Song.published_set.filter(language__language=language)
+                queries.append(Q(language__language=language))
+                msg.append('Language={}'.format(language))
 
-            form = SongFilterForm()
+            if combinator == 'OR':
+                query = reduce(operator.or_, queries)
+                query_str = " OR ".join(msg)
+            else:
+                query = reduce(operator.and_, queries)
+                query_str = " AND ".join(msg)
+
+            songs = Song.published_set.filter(query)
+
             context = {}
-
+            context['query_str'] = query_str
             context['songs'] = songs
-            context['form'] = form
+            context['form'] = SongFilterForm()
 
             return render(request, template, context)
     else:
