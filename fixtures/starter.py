@@ -159,8 +159,9 @@ def songs_from_file():
                     )
                 )
 
-        song, _ = Song.objects.create(
-            originator=choice(users),
+        originator = choice(users)
+        song = Song.objects.create(
+            originator=originator,
             title=song.get("title", "Unknown"),
             publish=choice([True, False]),
             lyrics=song.get("lyrics", "No lyrics"),
@@ -188,7 +189,7 @@ def songs():
         voicing = Voicing.objects.get(voicing=choice(VOICING))
         language = Language.objects.get(language=choice(LANGUAGE).upper())
 
-        _, _ = Song.objects.create(
+        _ = Song.objects.create(
             originator=choice(users),
             title=stx.title(),
             publish=choice([True, False]),
