@@ -7,7 +7,7 @@ from .models import Song
 class SongAdmin(admin.ModelAdmin):
     list_display = (
         "title", "like_count", "all_authors", "all_seasons", "all_masspart",
-        "originator", "publish", "voicing", "scripture_ref", "language")
+        "originator", "publish", "voicing", "scripture_reference", "language")
     list_filter = ("title", "likes", "seasons", "mass_parts")
     list_editable = ("publish",)
     filter_horizontal = ("seasons", "mass_parts")

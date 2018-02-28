@@ -18,7 +18,7 @@ class PopularSongFeed(Feed):
         return item.title
 
     def item_description(self, item):
-        return "/n".join([item.first_line, item.scripture_ref, item.lyrics])
+        return "/n".join([item.first_line, item.scripture_reference, item.lyrics])
 
 class LatestSongFeed(Feed):
     title = "ChoralCentral"
@@ -32,4 +32,4 @@ class LatestSongFeed(Feed):
         return item.title
 
     def item_description(self, item):
-        return "/n".join([item.first_line, item.scripture_ref, item.lyrics])
+        return "/n".join([item.first_line, item.scripture_reference, item.lyrics])

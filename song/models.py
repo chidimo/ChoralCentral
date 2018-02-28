@@ -36,7 +36,7 @@ class Song(mdl.TimeStampedModel):
     lyrics          = models.TextField(blank=True)
     first_line      = models.CharField(max_length=100, blank=True)
 
-    scripture_ref   = models.CharField(max_length=25, blank=True)
+    scripture_reference   = models.CharField(max_length=25, blank=True)
 
     tempo           = models.IntegerField(null=True, blank=True)
     tempo_text      = models.CharField(max_length=30, blank=True)

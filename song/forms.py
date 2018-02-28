@@ -51,7 +51,7 @@ class NewSongForm(forms.ModelForm):
     class Meta:
         model = Song
         fields = ["publish", "title", "compose_date",
-                  "lyrics", "first_line", "scripture_ref", "language",
+                  "lyrics", "first_line", "scripture_reference", "language",
                   "tempo", "bpm", "divisions", "voicing",
                   "authors", "seasons", "mass_parts",]
 
@@ -64,7 +64,7 @@ class NewSongForm(forms.ModelForm):
                 attrs={'rows' : 5, 'columns' : 10, 'class' : 'form-control', 'placeholder' : "Lyrics (optional). Supports markdown syntax"}),
             "first_line" : forms.TextInput(
                 attrs={'class' : 'form-control', 'placeholder' : "First line (optional)"}),
-            "scripture_ref" : forms.TextInput(
+            "scripture_reference" : forms.TextInput(
                 attrs={'class' : 'form-control', 'placeholder' : "Scripture reference (optional)"}),
             "seasons" : forms.SelectMultiple(attrs={'class' : 'form-control'}),
             "mass_parts" : forms.SelectMultiple(attrs={'class' : 'form-control'}),
@@ -88,7 +88,7 @@ class SongEditForm(forms.ModelForm):
     class Meta:
         model = Song
         fields = ["publish", "title", "compose_date",
-                  "lyrics", "first_line", "scripture_ref", "language",
+                  "lyrics", "first_line", "scripture_reference", "language",
                   "tempo", "bpm", "divisions", "voicing",
                   "authors", "seasons", "mass_parts",]
 
@@ -101,7 +101,7 @@ class SongEditForm(forms.ModelForm):
                 attrs={'rows' : 5, 'columns' : 10, 'class' : 'form-control', 'placeholder' : "Lyrics (optional). Supports markdown syntax"}),
             "first_line" : forms.TextInput(
                 attrs={'class' : 'form-control', 'placeholder' : "First line (optional)"}),
-            "scripture_ref" : forms.TextInput(
+            "scripture_reference" : forms.TextInput(
                 attrs={'class' : 'form-control', 'placeholder' : "Scripture reference (optional)"}),
             "seasons" : forms.SelectMultiple(attrs={'class' : 'form-control'}),
             "mass_parts" : forms.SelectMultiple(attrs={'class' : 'form-control'}),
