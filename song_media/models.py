@@ -6,8 +6,7 @@ from song.models import Song
 from siteuser.models import SiteUser
 
 from universal import models as mdl
-
-from utils import upload_pdf, upload_midi
+from universal.media_handlers import upload_pdf, upload_midi
 
 class VocalPart(mdl.TimeStampedModel):
     name = models.CharField(max_length=30, default='Choir', unique=True)
@@ -74,7 +73,7 @@ class Midi(mdl.TimeStampedModel):
 
     class Meta:
         ordering = ('-created', )
-    
+
     @property
     def midi_likes(self):
         return self.likes.count()

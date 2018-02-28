@@ -22,6 +22,7 @@ from algoliasearch_django import get_adapter
 
 from siteuser.models import SiteUser
 from .models import Song
+from author.models import Author
 
 from .forms import NewSongForm, SongEditForm, SongFilterForm
 
@@ -34,12 +35,6 @@ def instant_song(request):
     context['appID'] = settings.ALGOLIA['APPLICATION_ID']
     context['searchKey'] = settings.ALGOLIA['SEARCH_API_KEY']
     context['indexName'] = get_adapter(Song).index_name
-
-    # songs = Song.published_set.all()
-    # context['songs'] = songs
-    # paginator = Paginator(songs, 1)
-    # page = request.GET.get('page')
-    # songs = paginator.get_page(page)
 
     context['is_paginated'] = True
     return render(request, 'song/instant_song.html', context)
@@ -71,15 +66,11 @@ class SongIndex(PaginationMixin, generic.ListView):
     model = Song
     context_object_name = 'songs'
     template_name = 'song/index.html'
-    paginate_by = 30
+    # paginate_by = 30
 
     def get_context_data(self, **kwargs):
-        print("IP Address for debug-toolbar: " + self.request.META['REMOTE_ADDR'])
+    #     print("IP Address for debug-toolbar: " + self.request.META['REMOTE_ADDR'])
         context = super(SongIndex, self).get_context_data(**kwargs)
-        context['appID'] = settings.ALGOLIA['APPLICATION_ID']
-        context['searchKey'] = settings.ALGOLIA['SEARCH_API_KEY']
-        context['indexName'] = get_adapter(Song).index_name
-        context["song_count"] = Song.published_set.count()
         context['form'] = SongFilterForm()
         return context
 
@@ -162,7 +153,29 @@ def filter_songs(request):
                 query = reduce(operator.and_, queries)
                 query_str = " AND ".join(msg)
 
-            songs = Song.published_set.filter(query)
+
+
+            # combine queries
+            if combinator == 'OR':
+                try:
+                    query = reduce(operator.or_, queries)
+                    query_str = " OR ".join(msg)
+                except TypeError:
+                    query = []
+                    query_str = ""
+            else:
+                try:
+                    query = reduce(operator.and_, queries)
+                    query_str = " AND ".join(msg)
+                except TypeError:
+                    query = []
+                    query_str = ""
+
+            # execute query
+            if not query:
+                songs = Song.published_set.all()
+            else:
+                songs = Song.objects.filter(query)
 
             context = {}
             context['query_str'] = query_str
@@ -191,43 +204,43 @@ def reader_view(request, pk, slug):
 def filter_season(request, season):
     template = "song/filter_season.html"
     songs = Song.published_set.filter(seasons__season=season)
-    paginator = Paginator(songs, 10)
+    paginator = Paginator(songs, 20)
 
     page = request.GET.get('page')
     songs = paginator.get_page(page)
 
     context = {}
     context['songs'] = songs
+    context['season'] = season
     # context['is_paginated'] = True
-
     return render(request, template, context)
 
 def filter_masspart(request, masspart):
     template = "song/filter_masspart.html"
     songs = Song.published_set.filter(mass_parts__part=masspart)
-    paginator = Paginator(songs, 10)
+    paginator = Paginator(songs, 20)
 
     page = request.GET.get('page')
     songs = paginator.get_page(page)
 
     context = {}
     context['songs'] = songs
+    context['masspart'] = masspart
     # context['is_paginated'] = True
-
     return render(request, template, context)
 
 def filter_author(request, pk, slug):
     template = "song/filter_author.html"
     songs = Song.published_set.filter(authors__pk=pk, authors__slug=slug)
-    paginator = Paginator(songs, 10)
+    paginator = Paginator(songs, 20)
 
     page = request.GET.get('page')
     songs = paginator.get_page(page)
 
     context = {}
     context['songs'] = songs
+    context['author'] = Author.objects.get(pk=pk, slug=slug)
     # context['is_paginated'] = True
-
     return render(request, template, context)
 
 

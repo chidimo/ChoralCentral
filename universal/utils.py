@@ -31,3 +31,27 @@ def render_to_pdf(request, template, context):
     response['Content-Transfer-Encoding'] = 'binary'
     response.write(pdf)
     return response
+
+def get_tempo_text(tempo):
+    if not tempo:
+        return
+    if tempo <= 25:
+        return "Larghissimo"
+    elif 40 <= tempo <= 45:
+        return "Grave"
+    elif 46 <= tempo <= 50:
+        return "Largo"
+    elif 51 <= tempo <= 60:
+        return "Lento"
+    elif 61 <= tempo <= 80:
+        return "Andante"
+    elif 81 <= tempo <= 100:
+        return "Moderato"
+    elif 101 <= tempo <= 125:
+        return "Allegretto"
+    elif 126 <= tempo <= 145:
+        return "Vivace"
+    elif 146 <= tempo <= 200:
+        return "Presto"
+    else:
+        return "Prestissimo"

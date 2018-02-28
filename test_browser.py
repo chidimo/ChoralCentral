@@ -1,12 +1,8 @@
-"""User story
-python manage.py test test_integration
-
-https://docs.djangoproject.com/en/1.11/topics/testing/overview/#the-test-database
-"""
+"""User story"""
 # pylint: disable=W0611
 
 import os
-from random import choices
+from random import choices, randint
 from django.test import TestCase, LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.support.select import Select
@@ -16,9 +12,20 @@ from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from py_webber import LoremPysum
+from pywebber import LoremPysum
 from siteuser.models import Role
-from utils import fast_multiselect
+
+def fast_multiselect(driver, element_id, labels=[]):
+    """https://sqa.stackexchange.com/questions/1355/what-is-
+    the-correct-way-to-select-an-option-using-seleniums-python-webdriver"""
+    select = Select(driver.find_element_by_id(element_id))
+
+    if labels == []:
+        texts = [opt.text for opt in select.options]
+        labels = choices(texts, k=randint(1, len(texts)//2))
+
+    for label in labels:
+        select.select_by_visible_text(label)
 
 class UsageTest(LiveServerTestCase):
     """This test spawns its own server.

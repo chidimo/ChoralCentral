@@ -30,25 +30,21 @@ class SongFilterForm(forms.Form):
     season = forms.ModelChoiceField(
         queryset=Season.objects.all(),
         required=False,
-        initial=1,
         widget=forms.Select(attrs={"class" : "form-control",}))
 
     masspart = forms.ModelChoiceField(
         queryset=MassPart.objects.all(),
         required=False,
-        initial=1,
         widget=forms.Select(attrs={"class" : "form-control",}))
 
     voicing = forms.ModelChoiceField(
         queryset=Voicing.objects.all(),
         required=False,
-        initial=1,
         widget=forms.Select(attrs={"class" : "form-control",}))
 
     language = forms.ModelChoiceField(
         queryset=Language.objects.all(),
         required=False,
-        initial=1,
         widget=forms.Select(attrs={"class" : "form-control",}))
 
 class NewSongForm(forms.ModelForm):

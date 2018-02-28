@@ -15,6 +15,7 @@ from masspart.models import MassPart
 
 from universal import models as mdl
 from universal import fields as fdl
+from universal.utils import get_tempo_text
 
 class PublishedManager(models.Manager):
     """Return songs with 'published' marked 'True' """
@@ -30,7 +31,7 @@ class Song(mdl.TimeStampedModel):
     title           = models.CharField(max_length=100)
     compose_date    = models.DateField(null=True, blank=True)
     likes           = models.ManyToManyField(SiteUser, related_name="song_likes")
-    slug            = fdl.AutoSlugField(set_using="title")
+    slug            = fdl.AutoSlugField(set_using="title", max_length=255)
 
     lyrics          = models.TextField(blank=True)
     first_line      = models.CharField(max_length=100, blank=True)
@@ -38,6 +39,7 @@ class Song(mdl.TimeStampedModel):
     scripture_ref   = models.CharField(max_length=25, blank=True)
 
     tempo           = models.IntegerField(null=True, blank=True)
+    tempo_text      = models.CharField(max_length=30, blank=True)
     bpm             = models.IntegerField(null=True, blank=True)
     divisions       = models.IntegerField(null=True, blank=True)
 
@@ -49,11 +51,7 @@ class Song(mdl.TimeStampedModel):
     published_set   = PublishedManager()
 
     class Meta:
-        ordering = ["-created", "publish"]
-
-    @property
-    def object_id(self):
-        return str(self.pk)
+        ordering = ["title", "-created", "publish", 'tempo_text']
 
     @property
     def song_likes(self):
@@ -65,40 +63,16 @@ class Song(mdl.TimeStampedModel):
     def __str__(self):
         return self.title
 
-    @property
     def all_authors(self):
         names = ["{} {}".format(author.first_name, author.last_name) for author in self.authors.all()]
         return ", ".join(names)
 
-    @property
     def all_seasons(self):
         return ", ".join(["{}".format(season.season) for season in self.seasons.all()])
 
-    @property
     def all_masspart(self):
         return ", ".join(["{}".format(part.part) for part in self.mass_parts.all()])
 
-    @property
-    def tempo_text(self):
-        if not self.tempo:
-            return
-        if self.tempo <= 25:
-            return "Larghissimo"
-        elif 40 <= self.tempo <= 45:
-            return "Grave"
-        elif 46 <= self.tempo <= 50:
-            return "Largo"
-        elif 51 <= self.tempo <= 60:
-            return "Lento"
-        elif 61 <= self.tempo <= 80:
-            return "Andante"
-        elif 81 <= self.tempo <= 100:
-            return "Moderato"
-        elif 101 <= self.tempo <= 125:
-            return "Allegretto"
-        elif 126 <= self.tempo <= 145:
-            return "Vivace"
-        elif 146 <= self.tempo <= 200:
-            return "Presto"
-        else:
-            return "Prestissimo"
+    def save(self, *args, **kwargs):
+        self.tempo_text = get_tempo_text(self.tempo)
+        return super(Song, self).save(*args, **kwargs)

@@ -44,6 +44,7 @@
                     <th>OP</th>
                     <th>For</th>
                     <th>Performed</th>
+                    <th>Language</th>
                     <th>Seasons</th>
                     <th>Masspart</th>
                     <th>Authors</th>
@@ -58,6 +59,7 @@
                     <td><a href="{% url 'siteuser:detail' song.originator.pk song.originator.slug %}">{{ song.originator.screen_name }}</a></td>
                     <td>{{ song.voicing }}</td>
                     <td>{{ song.tempo_text }}</td>
+                    <td><a href=''>{{ song.language }}</a></td>
                     <td>
                         {% for season in song.seasons.all %}
                             <a href="{% url 'song:filter_season' season %}">{{ season }}</a>{% if not forloop.last %},<br>{% endif %}

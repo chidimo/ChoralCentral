@@ -1,5 +1,6 @@
 """fixtures"""
 import os
+import sys
 import json
 from random import choice, randint
 
@@ -47,10 +48,22 @@ ROLES = ["COMPOSER", "CHOIR MASTER", "CHOIR CONDUCTOR",
 django.setup()
 CustomUser = get_user_model()
 
+def clear():
+    if sys.platform == 'linux':
+        os.system('clear')
+    else:
+        os.system('cls')
+
+def independents():
+    roles()
+    seasons()
+    massparts()
+    voice_notation()
+    voicing_language()
+
 def roles():
     for each in ROLES:
         _, _ = Role.objects.get_or_create(role=each)
-
 
 def voicing_language():
     users = SiteUser.objects.all()
@@ -101,8 +114,8 @@ def members():
     n = int(input("Enter number of users to create: "))
 
     for _ in range(n):
-        stx = LoremPysum("fixtures/eng_names.txt", "fixtures/igbo_names.txt")
-        email = stx.email()
+        lorem = LoremPysum("fixtures/eng_names.txt", "fixtures/igbo_names.txt")
+        email = lorem.email()
         try:
             user = CustomUser.objects.create_user(email=email)
             user.set_password("dwarfstar")
@@ -111,9 +124,9 @@ def members():
         except IntegrityError:
             continue
 
-        first_name = stx.word()
-        last_name = stx.word()
-        location = stx.word()
+        first_name = lorem.word()
+        last_name = lorem.word()
+        location = lorem.word()
         screen_name = LoremPysum().word()
 
         try:
@@ -184,17 +197,17 @@ def songs():
     int(input("Enter number of songs to create: "))
 
     for _ in range(numb):
-        stx = LoremPysum()
+        lorem = LoremPysum()
 
         voicing = Voicing.objects.get(voicing=choice(VOICING))
         language = Language.objects.get(language=choice(LANGUAGE).upper())
 
         _ = Song.objects.create(
             originator=choice(users),
-            title=stx.title(),
+            title=lorem.title(),
             publish=choice([True, False]),
-            lyrics=stx.paragraphs(count=randint(2, 4)),
-            first_line=stx.sentence()[:50],
+            lyrics=lorem.paragraphs(count=randint(2, 4)),
+            first_line=lorem.sentence()[:50],
             scripture_ref=choice(SCRIPTURE),
             tempo=randint(45, 250),
             bpm=randint(4, 8),
@@ -237,22 +250,24 @@ def replies():
         except (IntegrityError, IndexError):
             continue
 
-def authors(numb):
+def authors():
+    numb = int(input("Enter number of authors to create "))
     users = SiteUser.objects.all()
     for _ in range(numb):
-        stx = LoremPysum()
-        _, _ = Author.objects.get_or_create(originator=choice(users),
-                                            first_name=stx.word(),
-                                            last_name=stx.word(),
-                                            bio=stx.paragraphs(count=randint(1, 3)),
-                                            author_type=choice(AUTHORS))
+        lorem = LoremPysum()
+        _, _ = Author.objects.get_or_create(
+            originator=choice(users),
+            first_name=lorem.word(),
+            last_name=lorem.word(),
+            bio=lorem.paragraphs(count=randint(1, 3)),
+            author_type=choice(AUTHORS))
 
 def posts():
     users = SiteUser.objects.all()
     SONGS = Song.objects.all()
     lorem = LoremPysum()
-
     numb = int(input("Enter number of posts to create "))
+
     for _ in range(numb):
         title = lorem.title()
         body = lorem.sentences(count=randint(4, 8))
@@ -275,9 +290,13 @@ def posts():
 def comments():
     users = SiteUser.objects.all()
     lorem = LoremPysum()
+
     for post in Post.objects.all():
         for _ in range(randint(5, 50)):
-            _ = Comment.objects.create(creator=choice(users), post=post, comment=lorem.sentence())
+            _ = Comment.objects.create(
+                creator=choice(users),
+                post=post,
+                comment=lorem.sentence())
 
 if __name__ == "__main__":
     pass
