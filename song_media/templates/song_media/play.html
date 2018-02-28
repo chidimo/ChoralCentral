@@ -5,24 +5,24 @@
 <h2>Now playing ... {{ sound.song.title }}</h2>
 <hr>
 
-
 {% if '.mp3' in sound.media_file.url %}
-<div class='container'>
-    <div class='row'>
-        <sound controls>
-          <source src="{{ sound.media_file.url }}" type="sound/mpeg">
-          <source src="{{ sound.media_file.url }}" type="sound/ogg">
-          Your browser does not support the sound element.
-        </sound>
+    <div class='container'>
+        <div class='row'>
+            <audio controls>
+              <source src="{{ sound.media_file.url }}" type="audio/mpeg">
+              <source src="{{ sound.media_file.url }}" type="audio/ogg">
+              Your browser does not support the sound element.
+            </audio>
+        </div>
     </div>
-</div>
-
 {% else %}
-<div class='container'>
-    <div class='row'>
-        <a href='#'>Download midi</a>
+    <div class='container'>
+        <div class='row'>
+            <a href="#" onClick="MIDIjs.play('{{ sound.media_file.url }}');"><i class='fas fa-play'></i></a>&emsp;
+            <a href="#" onClick="MIDIjs.stop();"><i class='fas fa-stop'></i></a>&emsp;
+            <a href="{% url 'song-media:download_midi' sound.pk %}" ><i class='fas fa-download'></i></a>
+        </div>
     </div>
-</div>
 {% endif %}
 
 {% endblock %}

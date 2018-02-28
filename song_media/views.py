@@ -82,6 +82,8 @@ def play_mp3(request, pk):
     context = {}
     template = 'song_media/play.html'
     sound = get_object_or_404(Midi, pk=pk)
+
+    # check for repeat plays
     sound.downloads += 1
     sound.save()
     context['sound'] = sound

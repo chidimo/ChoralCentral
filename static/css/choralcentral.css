@@ -219,6 +219,15 @@ input#id_password {
   display: inline;
 }
 
+/*stripe table*/
+tbody tr:nth-child(even) {
+  background-color: #e3e3e3;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #efefef;
+}
+
 /*OVERRIDE BOOTSTRAP CLASSES*/
 
 .list-group-item {
@@ -241,6 +250,9 @@ input#id_password {
 .table th {
     padding: 0 .5rem 0 .5rem;
     border-bottom: 1px solid;
+    color: #fff;
+    background-color: #212529;
+    border-color: #32383e;
 }
 
 .table {

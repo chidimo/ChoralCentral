@@ -98,7 +98,7 @@
     </h3>
     <div id="Songs" class="collapse" data-parent="accordion">
         <div class="table-responsive">
-        <table class="table table-striped">
+        <table class="table">
             <thead class="thead-dark">
                 <caption>My songs</caption>
                 <tr>
@@ -109,14 +109,23 @@
             </thead>
                 <tbody>
                 {% for song in siteuser.song_set.all %}
+
+
+                {% if song.publish %}
                     <tr>
-                        {% if song.publish %}
-                            <td><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></td>
-                            <td>Published</td>
-                        {% else %}
-                            <td class="text-danger">{{ song.title }}</td>
-                            <td class="text-danger">Draft</td>
-                        {% endif %}
+                {% else %}
+                    {% if user == siteuser.user %}
+                        <tr class='text-danger'>
+                    {% else %}
+                        <tr class='d-none'>
+                    {% endif %}
+                {% endif %}
+                        <td>
+                            {% if song.publish %}
+                                <a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a>
+                            {% else %}{{ song.title }}{% endif %}
+                        </td>
+                        <td>{% if song.publish %}Published{% else %}Draft{% endif %}</td>
                         <td>
                             {% if request.user == siteuser.user %}
                                 <a href="{% url 'song:edit' song.pk song.slug %}"><i class="fas fa-edit"></i></a> |
@@ -143,7 +152,7 @@
     </h3>
     <div id="blogPosts" class="collapse" data-parent="accordion">
         <div class="table-responsive">
-        <table class="table table-striped">
+        <table class="table">
             <thead class="thead-dark">
                 <caption>My blog posts</caption>
                 <tr>
@@ -186,7 +195,7 @@
     </h3>
     <div id="Requests" class="collapse" data-parent="accordion">
         <div class="table-responsive">
-        <table class="table table-striped">
+        <table class="table">
             <thead class="thead-dark">
                 <caption>My blog posts</caption>
                 <tr>
@@ -229,7 +238,7 @@
     </h3>
     <div id="Authors" class="collapse" data-parent="accordion">
         <div class="table-responsive">
-        <table class="table table-striped">
+        <table class="table">
             <thead class="thead-dark">
                 <caption>My authors</caption>
                 <tr>

@@ -115,8 +115,10 @@
                             <td><a href="">{{ score.score_likes }}</a></td>
                             <td>{{ score.downloads }}</td>
                             <td><a href="{% url 'song-media:score_view' score.pk %}" target="_blank"><i class="fas fa-file-pdf"></i></a> |
-                                <a href=""><i  class="fas fa-edit"></i></a> |
-                                <a href="{% url 'song-media:delete_score' score.pk song.pk song.slug %}"><i class="fas fa-trash"></i></a>
+                                {% if request.user == song.originator.user %}
+                                    <a href=""><i  class="fas fa-edit"></i></a> |
+                                    <a href="{% url 'song-media:delete_score' score.pk song.pk song.slug %}"><i class="fas fa-trash"></i></a>
+                                {% endif %}
                             </td>
                         </tr>
                     {% empty %}
@@ -146,14 +148,23 @@
                 </thead>
                     <tbody>
                         {% for midi in song.midi_set.all %}
-                            <tr>
+
+                            {% if '.mp3' in midi.media_file.url %}
+                                <tr class='table-danger'>
+                            {% else %}
+                                <tr>
+                            {% endif %}
                                 <td><a href="{% url 'siteuser:detail' midi.uploader.pk midi.uploader.slug %}">{{ midi.uploader.screen_name }}</a></td>
                                 <td>{{ midi.part }}</td>
                                 <td><a href="">{{ midi.midi_likes }}</a></td>
                                 <td>{{ midi.downloads }}</td>
-                                <td><a href="{% url 'song-media:play_midiview' midi.pk %}" target="_blank"><i class="fas fa-play"></i></a> |
-                                    <a href=""><i class="fas fa-edit"></i></a> |
-                                    <a href="{% url 'song-media:delete_midi' midi.pk song.pk song.slug %}"><i  class="fas fa-trash"></i></a></td>
+                                <td><a href="#" onClick="MIDIjs.play('{{ midi.media_file.url }}');"><i class='fas fa-play'></i></a> |
+                                    <a href="#" onClick="MIDIjs.stop();"><i class='fas fa-stop'></i></a> |
+                                    {% if request.user == song.originator.user %}
+                                        <a href=""><i class="fas fa-edit"></i></a> |
+                                        <a href="{% url 'song-media:delete_midi' midi.pk song.pk song.slug %}"><i  class="fas fa-trash"></i></a>
+                                    {% endif %}
+                                </td>
                             </tr>
                         {% empty %}
                             <p>No midis for this song</p>

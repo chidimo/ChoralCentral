@@ -22,7 +22,7 @@ to my base template
 For google chrome, download chromedriver from `here <https://chromedriver.storage.googleapis.com/index.html?path=2.27/>`_
 Put it in the same directory as geckodriver, in Scripts directory
 
-
+[midijs](http://www.midijs.net)
 # Including django addanother
 
 Add `django_addanother` to INSTALLED_APPS in settings
