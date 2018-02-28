@@ -3,6 +3,7 @@
 from django import forms
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
+from django.forms.widgets import ClearableFileInput
 
 from django_addanother.widgets import AddAnotherWidgetWrapper
 
@@ -46,7 +47,7 @@ class NewScoreNotationForm(forms.ModelForm):
 class NewScoreForm(forms.ModelForm):
     class Meta:
         model = Score
-        fields = ('song', 'notation', 'media_file', 'part')
+        fields = ('song', 'notation', 'part', 'media_file')
 
         widgets = {'song' : forms.Select(attrs={'class' : 'form-control'}),
 
@@ -57,6 +58,8 @@ class NewScoreForm(forms.ModelForm):
                    'notation' : AddAnotherWidgetWrapper(
                        forms.Select(attrs={'class' : 'form-control'}),
                        reverse_lazy('song-media:new_notation')),
+                    
+                    'media_file' : ClearableFileInput(attrs={'class' : 'form-control'}),
                   }
 
     def __init__(self, *args, **kwargs):
@@ -76,13 +79,15 @@ class NewScoreForm(forms.ModelForm):
 class NewMidiForm(forms.ModelForm):
     class Meta:
         model = Midi
-        fields = ('song', 'media_file', 'part')
+        fields = ('song', 'part', 'media_file',)
 
         widgets = {'song' : forms.Select(attrs={'class' : 'form-control'}),
 
                    'part' : AddAnotherWidgetWrapper(
                        forms.Select(attrs={'class' : 'form-control'}),
                        reverse_lazy('song-media:new_part')),
+
+                    'media_file' : ClearableFileInput(attrs={'class' : 'form-control'}),
                   }
 
     def __init__(self, *args, **kwargs):

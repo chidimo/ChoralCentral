@@ -1,38 +1,16 @@
 {% extends "choralcentral_base.html" %}
 {% block title %}New part{% endblock %}
 
-{% block wrap_content  %}{% endblock wrap_content  %}
-{% block search %}{% endblock search %}
-
 {% block content_content %}
 
 <div class="container upload-forms">
-    <div class="row">
-        <div class="col-sm-12">
-            <h2>New part</h2>
-        </div>
-    </div>
-
-    {% if form.errors %}
-    <div class="row">
-        <div class="col-sm-12">
-            <p class="text-danger">{{ form.errors }}</p>
-        </div>
-    </div>
-    {% endif %}
+    <h2>New part</h2>
+    <hr>
 
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-
-        <div class="row">
-            <div class="col-sm-12">{{ form.name }}</div>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-12">
-                <button class="btn btn-primary btn-md float-right" type="submit" value="Save">Save</button>
-            </div>
-        </div>
+        {{ form.as_p }}
+        <button class="btn btn-primary btn-sm float-right" type="submit" value="Save">Save</button>
     </form>
 </div>
 {% endblock %}

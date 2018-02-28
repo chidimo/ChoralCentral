@@ -12,7 +12,7 @@ class PopularSongFeed(Feed):
     description = "Catch the most popular scores on http://choralcentral.net/"
 
     def items(self):
-        return Song.published_set.all().annotate(Count("likes")).order_by("-likes__count")[:10]
+        return Song.published_set.all()[:10]
 
     def item_title(self, item):
         return item.title

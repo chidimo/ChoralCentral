@@ -5,17 +5,12 @@
 
 <div class="container upload-forms">
     <h2>New Language</h2>
+    <hr>
 
-    {% if form.errors %}
-        <p>{{ form.errors }}</p>
-    {% endif %}
-                
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-
         {{ form.as_p }}
-        
-        <button class="btn btn-primary btn-md float-right" type="submit" value="Save">Save</button>
+        <button class="btn btn-primary btn-sm float-right" type="submit" value="Save">Save</button>
     </form>
 </div>
 {% endblock content_content %}

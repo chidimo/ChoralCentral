@@ -1,26 +1,16 @@
 {% extends "choralcentral_base.html" %}
-
-{% block title %}Profile edit{% endblock %}
+{% block title %}Edit profile{% endblock %}
 
 {% block content_content %}
 
 <div class="container upload-forms">
     <h2>Edit your profile</h2>
-
-    {% if form.errors %}
-        <p>{{ form.errors }}</p>
-    {% endif %}
-
-    <form action="" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-        <p>{{ form.first_name }}</p>
+    <hr>
     
-        <p>{{ form.last_name }}</p>
-
-        <p>{{ form.location }}</p>
-
-        <p>{{ form.roles }}</p>
-        <button class="btn btn-primary btn-md float-right" type="submit" value="Save">Save</button>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary btn-sm float-right" type="submit" value="Save">Save</button>
     </form>
 </div>
 {% endblock %}

@@ -1,26 +1,16 @@
 {% extends "choralcentral_base.html" %}
 {% block title %}New midi file{% endblock %}
 
-{% block wrap_content  %}{% endblock wrap_content  %}
-{% block search %}{% endblock search %}
-
 {% block content_content %}
 
 <div class="container upload-forms">
-    <h2>New midi file</h2>                
+    <h2>New midi file</h2>
+    <hr>
 
-    {% if form.errors %}
-        <p>{{ form.errors }}</p>
-    {% endif %}
-    
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-            
-        <p>{{ form.song }}</p>
-        <p>{{ form.part }}</p>
-        <p>{{ form.media_file }}</p>
-    
-        <button  class="btn btn-primary btn-md float-right" type="submit" value="Save">Save</button>
+        {{ form.as_p }}
+        <button  class="btn btn-primary btn-sm float-right" type="submit" value="Save">Save</button>
     </form>
 </div>
 {% endblock %}

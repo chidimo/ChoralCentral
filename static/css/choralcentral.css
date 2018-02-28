@@ -76,16 +76,17 @@ th, td {
 }
 
 .upload-forms {
-  max-width:600px;
+  max-width:450px;
   margin-top: 3.5rem;
   /* margin: 3.5rem auto; */
-  padding: 0 1rem 4.75rem 1rem;
-  background: #a3baf0;
+  padding: 0 1rem 2.75rem 1rem;
+  background: #b8daff;
   border-radius: 7.5px;
 }
 
 .upload-forms h2 {
   padding-top: 0.5rem;
+  color: #007bff;
 }
 
 .upload-forms .btn-md {
