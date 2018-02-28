@@ -55,27 +55,28 @@ def song_like_view(request):
 
         if song.likes.filter(id=user.id).exists():
             song.likes.remove(user)
+            song.like_count -= 1
+            song.save()
             message = "You unstarred this song"
         else:
             song.likes.add(user)
+            song.like_count += 1
+            song.save()
             message = "You starred this song"
-    context = {'likes_count' : song.song_likes, 'message' : message}
+    context = {'like_count' : song.like_count, 'message' : message}
     return HttpResponse(json.dumps(context), content_type='application/json')
 
 class SongIndex(PaginationMixin, generic.ListView):
     model = Song
     context_object_name = 'songs'
     template_name = 'song/index.html'
-    # paginate_by = 30
+    # paginate_by = 50
 
     def get_context_data(self, **kwargs):
-    #     print("IP Address for debug-toolbar: " + self.request.META['REMOTE_ADDR'])
+        # print("IP Address for debug-toolbar: " + self.request.META['REMOTE_ADDR'])
         context = super(SongIndex, self).get_context_data(**kwargs)
         context['form'] = SongFilterForm()
         return context
-
-    def get_queryset(self):
-        return Song.published_set.all().annotate(Count("likes")).order_by("-likes__count")
 
 class SongDetail(generic.DetailView):
     model = Song

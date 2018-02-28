@@ -43,6 +43,7 @@ class Song(mdl.TimeStampedModel):
     bpm             = models.IntegerField(null=True, blank=True)
     divisions       = models.IntegerField(null=True, blank=True)
     views           = models.IntegerField(default=1)
+    like_count      = models.IntegerField(default=1)
 
     authors         = models.ManyToManyField(Author)
     seasons         = models.ManyToManyField(Season)
@@ -52,11 +53,7 @@ class Song(mdl.TimeStampedModel):
     published_set   = PublishedManager()
 
     class Meta:
-        ordering = ["title", "-created", "publish", 'tempo_text']
-
-    @property
-    def song_likes(self):
-        return self.likes.count()
+        ordering = ("-like_count", "title", "-created", "publish", 'tempo_text')
 
     def get_absolute_url(self):
         return reverse('song:detail', args=[str(self.id), str(self.slug)])

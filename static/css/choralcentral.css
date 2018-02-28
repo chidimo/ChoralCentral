@@ -240,7 +240,7 @@ input#id_password {
 
 .table th {
     padding: 0 .5rem 0 .5rem;
-    border-top: none;
+    border-bottom: 1px solid;
 }
 
 .table {

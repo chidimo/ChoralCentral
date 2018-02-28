@@ -7,19 +7,19 @@ app_name = 'song-media'
 urlpatterns = [
     path('new/score/', views.NewScore.as_view(), name='new_score'),
     path('new/score/<int:pk>/', views.NewScore.as_view(), name='score_add_song'),
-    path('view/score/<int:pk>/', views.DisplayScore.as_view(), name='score_view'),
+    path('view/score/<int:pk>/', views.show_score, name='score_view'),
 ]
 
 urlpatterns += [
-    path('new/midi/', views.NewMidi.as_view(), name='midi_add'),
-    path('new/midi/<int:pk>/', views.NewMidi.as_view(), name='midi_add_song'),
-    path('play/midi/<int:pk>/', views.play_midi, name='play_midiview'),
-    # path('play/midi/<int:pk>/', views.PlayMidi.as_view(), name='play_midiview'),
+    path('new/sound/', views.NewMidi.as_view(), name='midi_add'),
+    path('new/sound/<int:pk>/', views.NewMidi.as_view(), name='midi_add_song'),
+    path('sound/play/<int:pk>/', views.play_mp3, name='play_midiview'),
+    path('midi/download/<int:pk>/', views.download_midi, name='download_midi'),
 ]
 
 urlpatterns += [
     path('score/delete/<int:pk>/<int:song_pk>/<slug:slug>/', views.DeleteScore.as_view(), name="delete_score"),
-    path('midi/delete/<int:pk>/<int:song_pk>/<slug:slug>/', views.DeleteMidi.as_view(), name="delete_midi"),
+    path('sound/delete/<int:pk>/<int:song_pk>/<slug:slug>/', views.DeleteMidi.as_view(), name="delete_midi"),
 ]
 
 urlpatterns += [

@@ -45,16 +45,15 @@ class NewScore(LoginRequiredMixin, generic.CreateView):
         kwargs['pk'] = self.kwargs.get('pk', None)
         return kwargs
 
-class DisplayScore(View):
-    def get(self, request, *args, **kwargs):
-        doc = get_object_or_404(Score, pk=self.kwargs.get('pk', None))
-        doc.downloads += 1
-        doc.save()
-        fname = doc.media_file.url
-        path = os.path.abspath(settings.BASE_DIR + fname)
-        response = FileResponse(open(path, 'rb'), content_type="application/pdf")
-        response["Content-Disposition"] = "filename={}_{}".format(doc.part, fname)
-        return response
+def show_score(self, request, *args, **kwargs):
+    doc = get_object_or_404(Score, pk=self.kwargs.get('pk', None))
+    doc.downloads += 1
+    doc.save()
+    fname = doc.media_file.url
+    path = os.path.abspath(settings.BASE_DIR + fname)
+    response = FileResponse(open(path, 'rb'), content_type="application/pdf")
+    response["Content-Disposition"] = "filename={}_{}".format(doc.part, fname)
+    return response
 
 class DeleteScore(LoginRequiredMixin, generic.DeleteView):
     model = Score
@@ -79,26 +78,24 @@ class NewMidi(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
         kwargs['pk'] = self.kwargs.get('pk', None)
         return kwargs
 
-def play_midi(request, pk):
+def play_mp3(request, pk):
     context = {}
-    template = 'song_media/midi_play.html'
-    midi = get_object_or_404(Midi, pk=pk)
-    midi.downloads += 1
-    midi.save()
-    context['midi'] = midi
+    template = 'song_media/play.html'
+    sound = get_object_or_404(Midi, pk=pk)
+    sound.downloads += 1
+    sound.save()
+    context['sound'] = sound
     return render(request, template, context)
 
-class PlayMidi(View):
-    # Later use
-    def get(self, request, *args, **kwargs):
-        midi = get_object_or_404(Midi, pk=self.kwargs.get('pk', None))
-        midi.downloads += 1
-        midi.save()
-        fname = midi.media_file.url
-        path = os.path.abspath(settings.BASE_DIR + fname)
-        response = FileResponse(open(path, 'rb'), content_type="audio/midi")
-        response["Content-Disposition"] = "filename={}_{}".format(midi.part, fname)
-        return response
+def download_midi(self, pk):
+    sound = get_object_or_404(Midi, pk=pk)
+    sound.downloads += 1
+    sound.save()
+    fname = sound.media_file.url
+    path = os.path.abspath(settings.BASE_DIR + fname)
+    response = FileResponse(open(path, 'rb'), content_type="sound/midi")
+    response["Content-Disposition"] = "filename={}_{}".format(sound.part, fname)
+    return response
 
 class DeleteMidi(LoginRequiredMixin, generic.DeleteView):
     model = Midi

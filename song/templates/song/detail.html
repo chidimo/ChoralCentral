@@ -128,7 +128,8 @@
 <hr>
         <h3>Midis
             <span class="float-right">
-                <a class="btn btn-primary btn-sm" href="{% url 'song-media:midi_add_song' song.pk %}">Add midi</a>
+                <a class="btn btn-primary btn-sm float-left" href="#">Preview all</a> &emsp;
+                <a class="btn btn-primary btn-sm float-right" href="{% url 'song-media:midi_add_song' song.pk %}">Add midi</a>
             </span>
         </h3>
         <div class="table-responsive">
@@ -180,7 +181,7 @@
                         {% for link in song.videolink_set.all %}
                             <tr>
                                 <td><a href="{% url 'siteuser:detail' link.uploader.pk link.uploader.slug %}">{{ link.uploader.screen_name }}</a></td>
-                                <td><a href="{{ link.video_link }}" target="_blank">{{ link.video_link }}</a></td>
+                                <td><a href="{{ link.video_link }}" target="_blank">{{ link.video_link|urlencode }}</a></td>
                                 <td>action</td>
                             </tr>
                         {% empty %}

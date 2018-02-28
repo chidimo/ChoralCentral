@@ -1,0 +1,31 @@
+{% extends "choralcentral_base.html" %}
+{% block title %}Now laying ... {{ sound.song.title }}{% endblock title %}
+{% block content_content %}
+
+<h2>Now playing ... {{ sound.song.title }}</h2>
+<hr>
+
+
+{% if '.mp3' in sound.media_file.url %}
+<div class='container'>
+    <div class='row'>
+        <sound controls>
+          <source src="{{ sound.media_file.url }}" type="sound/mpeg">
+          <source src="{{ sound.media_file.url }}" type="sound/ogg">
+          Your browser does not support the sound element.
+        </sound>
+    </div>
+</div>
+
+{% else %}
+<div class='container'>
+    <div class='row'>
+        <a href='#'>Download midi</a>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
+{% block footer %}{% endblock %}
+
+

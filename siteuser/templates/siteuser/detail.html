@@ -4,7 +4,6 @@
 {% block content_content %}
 
 <h2>Dashboard</h2>
-
 <hr>
 
 {% if user == siteuser.user %}
@@ -65,13 +64,14 @@
             <span class="h5">Roles:</span>
             <span class="h6">
                 {% for role in siteuser.roles.all %}
-                    {{ role.role }}{% if not forloop.last %}, {% endif %}
+                    <a href='#' title='See other {{ role.role|title }}'>{{ role.role|title }}</a>
+                    {% if not forloop.last %}, {% endif %}
                 {% endfor %}</span>
         </div>
 
         <div>
             <span class="h5">Location:</span>
-            <span class="h6">{{ siteuser.location }}</span>
+            <span class="h6"><a href='#' title='See others from {{ siteuser.location }}'>{{ siteuser.location }}</a></span>
         </div>
         <div>
             <span class="h5">Last seen:</span>
@@ -112,10 +112,10 @@
                     <tr>
                         {% if song.publish %}
                             <td><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></td>
-                            <td>{{ song.publish }}</td>
+                            <td>Published</td>
                         {% else %}
                             <td class="text-danger">{{ song.title }}</td>
-                            <td class="text-danger">{{ song.publish }}</td>
+                            <td class="text-danger">Draft</td>
                         {% endif %}
                         <td>
                             {% if request.user == siteuser.user %}
@@ -157,10 +157,10 @@
                     <tr>
                         {% if post.publish %}
                             <td><a href="{% url 'blog:detail' post.pk post.slug %}">{{ post.title }}</a></td>
-                            <td>{{ post.publish }}</td>
+                            <td>Published</td>
                         {% else %}
-                            <td class="text-warning">{{ post.title }}</td>
-                            <td class="text-warning">{{ post.publish }}</td>
+                            <td class="text-danger">{{ post.title }}</td>
+                            <td class="text-danger">Draft</td>
                         {% endif %}
                         <td>
                             <a href="{% url 'blog:edit' post.pk %}"><i class="fas fa-edit"></i></a> |
@@ -202,8 +202,8 @@
                             <td><a href="{% url 'request:detail' request.pk request.slug %}">{{ request }}</a></td>
                             <td>{{ request.status }}</td>
                         {% else %}
-                            <td><a "text-warning" href="{% url 'request:detail' request.pk request.slug %}">{{ request }}</a></td>
-                            <td class="text-warning">{{ request.status }}</td>
+                            <td><a "text-danger" href="{% url 'request:detail' request.pk request.slug %}">{{ request }}</a></td>
+                            <td class="text-danger">{{ request.status }}</td>
                         {% endif %}
                         <td>
                             <a href="{% url 'request:edit' request.pk %}"><i class="fas fa-edit"></i></a> |

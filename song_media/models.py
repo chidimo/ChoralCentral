@@ -56,9 +56,6 @@ class Score(mdl.TimeStampedModel):
     def score_likes(self):
         return self.likes.count()
 
-    def template_name(self):
-        return self.filename().split('.')[0]
-
     def __str__(self):
         return "{}_score_{}".format(self.song.title, self.part)
 
@@ -82,10 +79,6 @@ class Midi(mdl.TimeStampedModel):
 
     def __str__(self):
         return "{}_{}_{} midi".format(self.song.title, self.pk, self.part)
-
-    @property
-    def template_name(self):
-        return "{}_{}".format(os.path.basename(self.media_file.name), self.part)
 
     def get_absolute_url(self):
         return reverse('song:detail', kwargs={'pk' : (self.song.id), 'slug' : self.song.slug})
