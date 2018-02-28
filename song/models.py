@@ -42,6 +42,7 @@ class Song(mdl.TimeStampedModel):
     tempo_text      = models.CharField(max_length=30, blank=True)
     bpm             = models.IntegerField(null=True, blank=True)
     divisions       = models.IntegerField(null=True, blank=True)
+    views           = models.IntegerField(default=1)
 
     authors         = models.ManyToManyField(Author)
     seasons         = models.ManyToManyField(Season)

@@ -4,7 +4,7 @@ import os
 from django.http import FileResponse
 from django.conf import settings
 from django.views import generic, View
-from django.shortcuts import reverse
+from django.shortcuts import reverse, render
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -79,7 +79,17 @@ class NewMidi(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
         kwargs['pk'] = self.kwargs.get('pk', None)
         return kwargs
 
+def play_midi(request, pk):
+    context = {}
+    template = 'song_media/midi_play.html'
+    midi = get_object_or_404(Midi, pk=pk)
+    midi.downloads += 1
+    midi.save()
+    context['midi'] = midi
+    return render(request, template, context)
+
 class PlayMidi(View):
+    # Later use
     def get(self, request, *args, **kwargs):
         midi = get_object_or_404(Midi, pk=self.kwargs.get('pk', None))
         midi.downloads += 1

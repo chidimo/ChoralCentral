@@ -50,7 +50,7 @@ class Score(mdl.TimeStampedModel):
     media_file = models.FileField(upload_to=upload_pdf)
 
     class Meta:
-        ordering = ('-created', )
+        ordering = ('-downloads', 'created', )
 
     @property
     def score_likes(self):
@@ -74,7 +74,7 @@ class Midi(mdl.TimeStampedModel):
     media_file = models.FileField(upload_to=upload_midi)
 
     class Meta:
-        ordering = ('-created', )
+        ordering = ('-downloads', 'created', )
 
     @property
     def midi_likes(self):

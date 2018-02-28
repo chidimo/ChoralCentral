@@ -1,0 +1,14 @@
+{% extends "choralcentral_base.html" %}
+{% block title %}{{ midi.song.title }}{% endblock title %}
+{% block content_content %}
+
+<h2>{{ midi.song.title }}</h2>
+<hr>
+
+<audio controls>
+  <source src="{{ midi.media_file.url }}" type="audio/mpeg">
+  <source src="{{ midi.media_file.url }}" type="audio/ogg">
+  Your browser does not support the audio element.
+</audio>
+
+{% endblock %}

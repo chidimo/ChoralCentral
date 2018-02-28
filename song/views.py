@@ -82,6 +82,8 @@ class SongDetail(generic.DetailView):
     context_object_name = 'song'
     template_name = 'song/detail.html'
 
+    # add download incrementer here
+
 def reader_view(request, pk, slug):
     template = 'song/reader_view.html'
     song = Song.objects.get(pk=pk, slug=slug)
