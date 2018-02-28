@@ -4,7 +4,7 @@ from django.db import migrations, models
 import django.db.models.deletion
 import django.utils.timezone
 import universal.fields
-import utils
+import universal.media_handlers
 
 
 class Migration(migrations.Migration):
@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created', universal.fields.AutoCreatedField(default=django.utils.timezone.now, editable=False, verbose_name='created')),
                 ('modified', universal.fields.AutoLastModifiedField(default=django.utils.timezone.now, editable=False, verbose_name='modified')),
-                ('media_file', models.FileField(upload_to=utils.upload_midi)),
+                ('media_file', models.FileField(upload_to=universal.media_handlers.upload_midi)),
                 ('likes', models.ManyToManyField(related_name='midi_likes', to='siteuser.SiteUser')),
             ],
             options={
@@ -36,7 +36,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created', universal.fields.AutoCreatedField(default=django.utils.timezone.now, editable=False, verbose_name='created')),
                 ('modified', universal.fields.AutoLastModifiedField(default=django.utils.timezone.now, editable=False, verbose_name='modified')),
-                ('media_file', models.FileField(upload_to=utils.upload_pdf)),
+                ('media_file', models.FileField(upload_to=universal.media_handlers.upload_pdf)),
                 ('likes', models.ManyToManyField(related_name='score_likes', to='siteuser.SiteUser')),
             ],
             options={

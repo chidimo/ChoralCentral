@@ -46,6 +46,7 @@ class Score(mdl.TimeStampedModel):
     part = models.ForeignKey(VocalPart, on_delete=models.CASCADE)
     notation = models.ForeignKey(ScoreNotation, on_delete=models.CASCADE)
     likes = models.ManyToManyField(SiteUser, related_name="score_likes")
+    downloads = models.IntegerField(default=0)
     media_file = models.FileField(upload_to=upload_pdf)
 
     class Meta:
@@ -69,6 +70,7 @@ class Midi(mdl.TimeStampedModel):
     song = models.ForeignKey(Song, null=True, on_delete=models.SET_NULL)
     part = models.ForeignKey(VocalPart, on_delete=models.CASCADE)
     likes = models.ManyToManyField(SiteUser, related_name="midi_likes")
+    downloads = models.IntegerField(default=0)
     media_file = models.FileField(upload_to=upload_midi)
 
     class Meta:

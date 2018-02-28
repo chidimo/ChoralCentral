@@ -48,6 +48,8 @@ class NewScore(LoginRequiredMixin, generic.CreateView):
 class DisplayScore(View):
     def get(self, request, *args, **kwargs):
         doc = get_object_or_404(Score, pk=self.kwargs.get('pk', None))
+        doc.downloads += 1
+        doc.save()
         fname = doc.media_file.url
         path = os.path.abspath(settings.BASE_DIR + fname)
         response = FileResponse(open(path, 'rb'), content_type="application/pdf")
@@ -59,7 +61,7 @@ class DeleteScore(LoginRequiredMixin, generic.DeleteView):
     template_name = "song_media/score_delete.html"
 
     def get_success_url(self):
-        return reverse("song:detail", kwargs={'pk' : self.kwargs['song_pk'], 'slug' : self.kwargs['slug']})   
+        return reverse("song:detail", kwargs={'pk' : self.kwargs['song_pk'], 'slug' : self.kwargs['slug']})
 
 class NewMidi(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
     template_name = 'song_media/midi_new.html'
@@ -80,8 +82,10 @@ class NewMidi(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
 class PlayMidi(View):
     def get(self, request, *args, **kwargs):
         midi = get_object_or_404(Midi, pk=self.kwargs.get('pk', None))
-        fname = os.path.basename(midi.media_file.url)
-        path = os.path.join(settings.MEDIA_ROOT, 'midi/' + fname)
+        midi.downloads += 1
+        midi.save()
+        fname = midi.media_file.url
+        path = os.path.abspath(settings.BASE_DIR + fname)
         response = FileResponse(open(path, 'rb'), content_type="audio/midi")
         response["Content-Disposition"] = "filename={}_{}".format(midi.part, fname)
         return response
@@ -91,7 +95,7 @@ class DeleteMidi(LoginRequiredMixin, generic.DeleteView):
     template_name = "song_media/midi_delete.html"
 
     def get_success_url(self):
-        return reverse("song:detail", kwargs={'pk' : self.kwargs['song_pk'], 'slug' : self.kwargs['slug']})  
+        return reverse("song:detail", kwargs={'pk' : self.kwargs['song_pk'], 'slug' : self.kwargs['slug']})
 
 class NewVideoLink(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
     model = VideoLink

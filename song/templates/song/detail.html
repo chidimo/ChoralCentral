@@ -113,8 +113,8 @@
                             <td>{{ score.part }}</td>
                             <td>{{ score.notation }}</td>
                             <td><a href="">{{ score.score_likes }}</a></td>
-                            <td></td>
-                            <td><a href="{% url 'song-media:score_view' score.pk %}" target="blank"><i class="fas fa-file-pdf"></i></a> |
+                            <td>{{ score.downloads }}</td>
+                            <td><a href="{% url 'song-media:score_view' score.pk %}" target="_blank"><i class="fas fa-file-pdf"></i></a> |
                                 <a href=""><i  class="fas fa-edit"></i></a> |
                                 <a href="{% url 'song-media:delete_score' score.pk song.pk song.slug %}"><i class="fas fa-trash"></i></a>
                             </td>
@@ -149,8 +149,8 @@
                                 <td><a href="{% url 'siteuser:detail' midi.uploader.pk midi.uploader.slug %}">{{ midi.uploader.screen_name }}</a></td>
                                 <td>{{ midi.part }}</td>
                                 <td><a href="">{{ midi.midi_likes }}</a></td>
-                                <td></td>
-                                <td><a href="{% url 'song-media:play_midiview' midi.pk %}" target="blank"><i class="fas fa-play"></i></a> |
+                                <td>{{ midi.downloads }}</td>
+                                <td><a href="{% url 'song-media:play_midiview' midi.pk %}" target="_blank"><i class="fas fa-play"></i></a> |
                                     <a href=""><i class="fas fa-edit"></i></a> |
                                     <a href="{% url 'song-media:delete_midi' midi.pk song.pk song.slug %}"><i  class="fas fa-trash"></i></a></td>
                             </tr>

@@ -1,7 +1,7 @@
 from .base import *
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
-DEBUG = False
+DEBUG = True
 
 DATABASES = {
 'default': {
