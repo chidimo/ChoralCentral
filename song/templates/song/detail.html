@@ -158,8 +158,14 @@
                                 <td>{{ midi.part }}</td>
                                 <td><a href="">{{ midi.midi_likes }}</a></td>
                                 <td>{{ midi.downloads }}</td>
-                                <td><a href="#" onClick="MIDIjs.play('{{ midi.media_file.url }}');"><i class='fas fa-play'></i></a> |
-                                    <a href="#" onClick="MIDIjs.stop();"><i class='fas fa-stop'></i></a> |
+                                <td>
+                                    {% if '.mp3' in midi.media_file.url %}
+                                    <a href="{% url 'song-media:play_midiview' midi.pk %}" target="_blank"><i class="fas fa-play"></i></a> |
+                                    <a href="">&emsp;</a>|
+                                    {% else %}
+                                        <a href="#" onClick="MIDIjs.play('{{ midi.media_file.url }}');"><i class='fas fa-play'></i></a> |
+                                        <a href="#" onClick="MIDIjs.stop();"><i class='fas fa-stop'></i></a> |
+                                    {% endif %}
                                     {% if user == midi.uploader.user %}
                                         <a href=""><i class="fas fa-edit"></i></a> |
                                         <a href="{% url 'song-media:delete_midi' midi.pk song.pk song.slug %}"><i  class="fas fa-trash"></i></a>
