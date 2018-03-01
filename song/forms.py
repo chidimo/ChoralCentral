@@ -1,14 +1,11 @@
 """Forms"""
 
 from django import forms
-from django.utils import timezone
 from django.forms.fields import DateField
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth import get_user_model
 from django_addanother.widgets import AddAnotherWidgetWrapper
 
-from siteuser.models import SiteUser
 from .models import Song
 from season.models import Season
 from masspart.models import MassPart
@@ -16,6 +13,11 @@ from voicing.models import Voicing
 from language.models import Language
 
 # pylint: disable=C0326, C0301, C0103, C0111
+
+class GetEmailAddressForm(forms.Form):
+    email = forms.EmailField(
+        widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Enter email"})
+    )
 
 class SongFilterForm(forms.Form):
     combinator = forms.ChoiceField(

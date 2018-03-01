@@ -128,7 +128,7 @@
                                 <a href="{% url 'song:edit' song.pk song.slug %}" title='Edit'><i class="fas fa-edit"></i></a> |
                                 <a href="{% url 'song:delete' song.pk %}" title='Delete'><i class="fas fa-trash"></i></a> |
                             {% endif %}
-                                <a href="" title="Share by email"><i class="fas fa-at"></i></a>
+                                <a href="{% url 'song:share_by_mail' song.pk song.slug %}" title="Share by email"><i class="fas fa-at"></i></a>
                         </td>
                     </tr>
                 {% empty %}

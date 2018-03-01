@@ -239,14 +239,14 @@ tbody tr:nth-child(odd) {
   background-color: #efefef;
 }
 
-/*OVERRIDE BOOTSTRAP CLASSES*/
-
-.list-group-item {
-    padding: .1rem 1.00rem;
+.list-items {
+    padding: .1rem 1rem 2rem 1rem;
     margin-top: 10px;
     background-color: azure;
     border-radius: 5px;
-  }
+}
+
+/*OVERRIDE BOOTSTRAP CLASSES*/
 
  .badge-light {
    background-color: coral;

@@ -11,29 +11,30 @@
 {% endblock left_sidebar %}
 
 {% block content_content %}
-    <div class="list-group">
-        {% for song in songs %}
-        <div class="list-group-item list-group-item-primary">
-            <h4><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h4>
-            <p class="" id="songFirstLine">{{ song.first_line }}</p>
 
-            <div>
-                <span class="h5 float-left">
-                    <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'blog:new_song' song.pk %}" title="Blog this song"><i class="fas fa-pen-square"></i></a>
-                    <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="" title="Share on facebook"><i class="fab fa-facebook"></i></a>
-                    <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="" title="Share by email"><i class="fas fa-at"></i></a>
-                    <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'song:reader_view' song.pk song.slug %}" title="Print view"><i class="fas fa-print"></i></a>
-                </span>
+    {% for song in songs %}
+    <div class="list-items">
+        <h4><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h4>
+        <p class="" id="songFirstLine">{{ song.first_line }}</p>
 
-                <span class="h5 float-right">
-                    <span>{{ song.views }} <i class="fas fa-eye"></i></span>
-                    <span>{{ song.like_count }} <i class="fas fa-star"></i></span>
-                </span>
-            </div>
-        </div>
-        {% empty %}
-            <p>No songs to display</p>
-        {% endfor %}
+        <span class="h5 float-left">
+            <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'blog:new_song' song.pk %}" title="Blog this song"><i class="fas fa-pen-square"></i></a>
+            <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'song:share_on_facebook' song.pk song.slug %}" title="Share on facebook"><i class="fab fa-facebook"></i></a>
+            <a data-toggle="modal" data-target="top" aria-hidden="true" href="{% url 'song:reader_view' song.pk song.slug %}" title="Print view"><i class="fas fa-print"></i></a>
+
+            <!-- Modal -->
+            <a href='' title="Share by email" data-toggle="modal" data-target="#emailModal"><i class="fas fa-at"></i></a>
+            {% include 'song/get_email_modal.html' %}
+
+        </span>
+
+        <span class="h5 float-right">
+            <span>{{ song.views }} <i class="fas fa-eye"></i></span>
+            <span>{{ song.like_count }} <i class="fas fa-star"></i></span>
+        </span>
     </div>
+    {% empty %}
+        <p>No songs to display</p>
+    {% endfor %}
 
 {% endblock content_content %}

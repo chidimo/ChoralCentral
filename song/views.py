@@ -7,6 +7,8 @@ import json
 from django.conf import settings
 from django.db.models import Count, Q
 from django.http import HttpResponse
+from django.template.loader import render_to_string
+from django.core.mail import EmailMultiAlternatives
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
@@ -24,7 +26,7 @@ from siteuser.models import SiteUser
 from .models import Song
 from author.models import Author
 
-from .forms import NewSongForm, SongEditForm, SongFilterForm
+from .forms import GetEmailAddressForm, NewSongForm, SongEditForm, SongFilterForm
 
 from universal.utils import render_to_pdf
 
@@ -76,6 +78,7 @@ class SongIndex(PaginationMixin, generic.ListView):
         # print("IP Address for debug-toolbar: " + self.request.META['REMOTE_ADDR'])
         context = super(SongIndex, self).get_context_data(**kwargs)
         context['form'] = SongFilterForm()
+        context['share_form'] = GetEmailAddressForm()
         return context
 
 class SongDetail(generic.DetailView):
@@ -155,8 +158,6 @@ def filter_songs(request):
             else:
                 query = reduce(operator.and_, queries)
                 query_str = " AND ".join(msg)
-
-
 
             # combine queries
             if combinator == 'OR':
@@ -245,5 +246,32 @@ def filter_author(request, pk, slug):
     context['author'] = Author.objects.get(pk=pk, slug=slug)
     # context['is_paginated'] = True
     return render(request, template, context)
+
+def share_by_mail(request, pk, slug):
+    context = {}
+    song = Song.objects.get(pk=pk, slug=slug)
+    sharer = request.user.siteuser.screen_name
+    from_email = settings.EMAIL_HOST_USER
+
+    subject = '{} from {}'.format(song.title, sharer)
+
+    context['song'] = song
+    context['sharer'] = sharer
+    context['song_link'] = request.build_absolute_uri(song.get_absolute_url())
+
+    text_email = render_to_string("song/share_by_mail.txt", context)
+    html_email = render_to_string("song/share_by_mail.html", context)
+
+    msg = EmailMultiAlternatives(subject, text_email, from_email, [email])
+    msg.attach_alternative(html_email, "text/html")
+    msg.send()
+
+    return redirect(reverse('siteuser:new_success', args=[screen_name]))
+
+
+def share_on_facebook(request, pk, slug):
+    pass
+
+
 
 

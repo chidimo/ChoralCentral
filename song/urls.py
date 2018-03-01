@@ -24,7 +24,9 @@ urlpatterns = [
 
 urlpatterns += [
     path("like_song/", views.song_like_view, name='like_song'),
-    path("reader/<int:pk>/<slug:slug>/", views.reader_view, name='reader_view')
+    path("reader/<int:pk>/<slug:slug>/", views.reader_view, name='reader_view'),
+    path("share-email/<int:pk>/<slug:slug>/", views.share_by_mail, name='share_by_mail'),
+    path("share-facebook/<int:pk>/<slug:slug>/", views.share_on_facebook, name='share_on_facebook'),
 ]
 
 urlpatterns += [
