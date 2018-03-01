@@ -1,10 +1,24 @@
-{% extends "choralcentral_base.html" %}
-{% block title %}New Song{% endblock %}
-{% load song_ttags %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ChoralCentral | Where sheet music lives</title>
 
-{% block content_content %}
+        <style>
+            body {background: white}
+            h1, h2, h3 {
+                color: #007bff;}
+            a:hover {text-decoration: underline; color: #007bff;}
+        </style>
+    </head>
 
-    <h2>{{ song.title }}</h2>
-    <hr>
+    <body>
+        <h2>Song share from ChoralCentral</h2>
+        <hr>
 
-{% endblock content_content %}
+        <p>Hello, <br>
+        {{ sharer }} would like you to see <a href="{{ song_link }}">{{ song.title }}</a> over on
+        <a href="http://www.choralcentral.net">ChoralCentral</a></p>
+
+        <p>{{ song.lyrics }}</p>
+    </body>
+</html>

@@ -7,38 +7,34 @@
     <span class="float-right"><a class="btn btn-primary" href="{% url 'blog:new' %}">New post</a></span>
 </h2>
 
-<div class="list-group">
-    {% for post in posts %}
-        <div class="list-group-item  list-group-item-primary">
-            <h4><a href="{% url 'blog:detail' post.pk post.slug %}">{{ post }}</a></h4>
+{% for post in posts %}
+    <div class="list-items">
+        <h4><a href="{% url 'blog:detail' post.pk post.slug %}">{{ post }}</a></h4>
 
-            {% if post.song %}
-                <h6> on <a href="{% url 'song:detail' post.song.pk post.song.slug %}">{{ post.song }}</a></h6>
-            {% endif %}
+        {% if post.song %}
+            <h6> on <a href="{% url 'song:detail' post.song.pk post.song.slug %}">{{ post.song }}</a></h6>
+        {% endif %}
 
-            <h6><em>
-                by <a href="{% url 'siteuser:detail' post.creator.pk post.creator.slug %}">{{ post.creator.screen_name }}</a>
-                | {{ post.created }}
-                </em>
-            </h6>
-            <div>
-                <span class="h5 float-left">
-                    <a href=""><i class="fab fa-facebook"></i></a>
-                    <a href=""><i class="fas fa-envelope"></i></a>
-                </span>
+        <h6><em>
+            by <a href="{% url 'siteuser:detail' post.creator.pk post.creator.slug %}">{{ post.creator.screen_name }}</a>
+            | {{ post.created }}
+            </em>
+        </h6>
+        <div>
+            <span class="h5 float-left">
+                <a href=""><i class="fab fa-facebook"></i></a>
+                <a href=""><i class="fas fa-envelope"></i></a>
+            </span>
 
-                <span class="h5 float-right">
-                    {% with post.comment_set.count as total_comments %}
-                        <a class="btn btn-sm btn-primary" href="">{{ forloop.counter }} <i class="fas fa-star"></i></a>
-                        <span class="btn btn-sm btn-primary">{{ total_comments }} <i class="fas fa-comments"></i></span>
-                    {% endwith %}
-                </span>
-            </div>
+            <span class="h5 float-right">
+                <span>{{ post.like_count }} <i class="fas fa-star"></i></a>
+                <span>{{ post.comment_set.count }} <i class="fas fa-comments"></i></span>
+            </span>
         </div>
-    {% empty %}
-        <p>No posts added yet</p>
-    {% endfor %}
-</div>
+    </div>
+{% empty %}
+    <p>No posts added yet</p>
+{% endfor %}
 {% endblock content_content %}
 
 

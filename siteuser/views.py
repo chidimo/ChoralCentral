@@ -17,6 +17,8 @@ from django_addanother.views import CreatePopupMixin
 from pure_pagination.mixins import PaginationMixin
 from .models import SiteUser, Role
 from blog.models import Comment
+from song.forms import GetEmailAddressForm
+
 from .forms import (
     SiteUserRegistrationForm, SiteUserEditForm, NewRoleForm, RoleEditForm
     )
@@ -33,6 +35,10 @@ class UserDetail(generic.DetailView):
     model = SiteUser
     context_object_name = 'siteuser'
     template_name = "siteuser/detail.html"
+    def get_context_data(self, **kwargs):
+        context = super(UserDetail, self).get_context_data(**kwargs)
+        context["share_form"] = GetEmailAddressForm()
+        return context
 
 class UserComments(PaginationMixin, generic.ListView):
     model = Comment

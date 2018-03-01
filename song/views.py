@@ -252,12 +252,16 @@ def share_by_mail(request, pk, slug):
     song = Song.objects.get(pk=pk, slug=slug)
     sharer = request.user.siteuser.screen_name
     from_email = settings.EMAIL_HOST_USER
-
     subject = '{} from {}'.format(song.title, sharer)
-
     context['song'] = song
     context['sharer'] = sharer
     context['song_link'] = request.build_absolute_uri(song.get_absolute_url())
+
+    if request.GET:
+        form = GetEmailAddressForm(request.GET)
+        if form.is_valid():
+            form = form.cleaned_data
+            email = form['email']
 
     text_email = render_to_string("song/share_by_mail.txt", context)
     html_email = render_to_string("song/share_by_mail.html", context)
@@ -265,8 +269,7 @@ def share_by_mail(request, pk, slug):
     msg = EmailMultiAlternatives(subject, text_email, from_email, [email])
     msg.attach_alternative(html_email, "text/html")
     msg.send()
-
-    return redirect(reverse('siteuser:new_success', args=[screen_name]))
+    return redirect('song:index')
 
 
 def share_on_facebook(request, pk, slug):

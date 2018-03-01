@@ -4,7 +4,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
-        <form method="post" action="{% url 'song:share_by_mail' song.pk song.slug %}">
+        <form action="{% url 'song:share_by_mail' song.pk song.slug %}" method="get" enctype="multipart/form-data">
             <div class="modal-header">
                 <h5 class="modal-title" id="emailModalLabel">Share by mail</h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
