@@ -27,28 +27,24 @@
     <span>{{ post.body|markdown_format }}</span>
 
     <hr>
-        <div class="list-group">
-            {% for comment in comments %}
-            <div class="list-group-item list-group-item-primary">
-                <h5><a href="{% url 'siteuser:detail' comment.creator.pk comment.creator.slug %}">{{ comment.creator.screen_name }}</a></h5>
-                {{ comment.comment|markdown_format }}
-                {% if request.user == comment.creator.user %}
-                    <a href="#"><i class="fas fa-edit"></i></a>
-                {% endif %}
-                <a href="#"><i class="fas fa-reply"></i></a>
-            </div>
-            {% empty %}
-                <p>No comments on this post at this time.</p>
-            {% endfor %}
-        </div>
+    {% for comment in comments %}
+    <div class="list-items">
+        <h5><a href="{% url 'siteuser:detail' comment.creator.pk comment.creator.slug %}">{{ comment.creator.screen_name }}</a></h5>
+        {{ comment.comment|markdown_format }}
+        {% if request.user == comment.creator.user %}
+            <a href="#"><i class="fas fa-edit"></i></a>
+        {% endif %}
+        <a href="#"><i class="fas fa-reply"></i></a>
+    </div>
+    {% empty %}
+        <p>No comments on this post at this time.</p>
+    {% endfor %}
 
         <hr>
 
         <form action="{% url 'blog:comment_add' post.pk %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-
-            {{ comment_form.comment }}
-
+            {{ comment_form.as_p }}
             <button class="btn btn-primary btn-sm float-right" type="submit" value="Post Comment">Post Comment</button>
         </form>
 {% endblock content_content %}

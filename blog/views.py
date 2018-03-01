@@ -1,19 +1,20 @@
 """Docstring"""
 
-import json
-from django import forms
-from django.http import HttpResponseRedirect
 from django.views import generic
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, reverse
+from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
+from django.core.mail import EmailMultiAlternatives
 
-from django_addanother.views import CreatePopupMixin
+# from django_addanother.views import CreatePopupMixin
 from pure_pagination.mixins import PaginationMixin
 from algoliasearch_django import get_adapter
 
 from siteuser.models import SiteUser
 from song.models import Song
+from song.forms import GetEmailAddressForm
+
 from .models import Post, Comment
 from . import forms as fm
 
@@ -63,14 +64,14 @@ class PostIndex(PaginationMixin, generic.ListView):
     model = Post
     context_object_name = 'posts'
     template_name = "blog/index.html"
-    paginate_by = 25
+    paginate_by = 30
 
     def get_queryset(self):
         return Post.published_set.all()
 
     def get_context_data(self):
         context = super(PostIndex, self).get_context_data()
-        context["search"] = fm.SearchForm
+        context['share_form'] = GetEmailAddressForm()
         return context
 
 class PostDetail(PaginationMixin, generic.ListView):
@@ -108,3 +109,27 @@ class CommentEdit(LoginRequiredMixin, generic.CreateView):
     model = Comment
     context_object_name = 'comment'
     form_class = fm.CommentCreateForm
+
+def share_by_mail(request, pk, slug):
+    context = {}
+    post = Post.objects.get(pk=pk, slug=slug)
+    sharer = request.user.siteuser.screen_name
+    from_email = settings.EMAIL_HOST_USER
+    subject = '{} from {}'.format(post.title, sharer)
+    context['post'] = post
+    context['sharer'] = sharer
+    context['post_link'] = request.build_absolute_uri(post.get_absolute_url())
+
+    if request.method == 'GET':
+        form = GetEmailAddressForm(request.GET)
+        if form.is_valid():
+            form = form.cleaned_data
+            email = form['email']
+
+    text_email = render_to_string("blog/share_by_mail.txt", context)
+    html_email = render_to_string("blog/share_by_mail.html", context)
+
+    msg = EmailMultiAlternatives(subject, text_email, from_email, [email])
+    msg.attach_alternative(html_email, "text/html")
+    msg.send()
+    return redirect('blog:index')

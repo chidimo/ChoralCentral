@@ -19,13 +19,7 @@
 
         <span class="h5 float-left">
             <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'blog:new_song' song.pk %}" title="Blog this song"><i class="fas fa-pen-square"></i></a>
-            <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'song:share_on_facebook' song.pk song.slug %}" title="Share on facebook"><i class="fab fa-facebook"></i></a>
             <a data-toggle="modal" data-target="top" aria-hidden="true" href="{% url 'song:reader_view' song.pk song.slug %}" title="Print view"><i class="fas fa-print"></i></a>
-
-            <!-- Modal -->
-            <a href='' title="Share by email" data-toggle="modal" data-target="#emailModal"><i class="fas fa-at"></i></a>
-            {% include 'song/get_email_modal.html' %}
-
         </span>
 
         <span class="h5 float-right">

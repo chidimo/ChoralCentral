@@ -7,6 +7,7 @@ A music sharing site
 https://artandlogic.com/2014/04/tutorial-adding-facebooktwittergoogle-authentication-to-a-django-application/
 https://simpleisbetterthancomplex.com/tutorial/2016/10/24/how-to-add-social-login-to-django.html
 https://github.com/yudazilian/SocialAuthDjangoTutorial
+https://stackoverflow.com/questions/11276100/how-do-i-insert-a-django-form-in-twitter-bootstrap-modal-window#11276286
 
 # Output pdf
 

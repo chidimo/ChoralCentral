@@ -13,6 +13,7 @@ urlpatterns = [
     path("<int:pk>/<slug:slug>/", views.PostDetail.as_view(), name="detail"),
     path("new/from/<int:pk>/", views.PostCreateFromSong.as_view(), name="new_song"),
     path("edit/<int:pk>/", views.PostEdit.as_view(), name="edit"),
+    path("share-email/<int:pk>/<slug:slug>/", views.share_by_mail, name='share_by_mail'),
 ]
 
 urlpatterns += [

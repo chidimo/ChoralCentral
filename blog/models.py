@@ -26,17 +26,25 @@ class Post(mdl.TimeStampedModel):
     slug = fdl.AutoSlugField(set_using="title")
     song = models.ForeignKey(Song, on_delete=models.CASCADE, blank=True, null=True)
     publish = models.BooleanField(default=False)
+    views = models.IntegerField(default=1)
     likes = models.ManyToManyField(SiteUser, related_name="post_likes", blank=True)
     like_count = models.IntegerField(default=1)
 
     published_set = PublishedManager()
     objects = models.Manager()
 
+    class Meta:
+        ordering = ('-like_count', '-created', 'title')
+
     def get_absolute_url(self):
         return reverse('blog:detail', args=[str(self.id), str(self.slug)])
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        self.like_count = self.likes.count()
+        return super(Post, self).save(*args, **kwargs)
 
 class Comment(mdl.TimeStampedModel):
     creator = models.ForeignKey(SiteUser, on_delete=models.CASCADE)
@@ -45,8 +53,15 @@ class Comment(mdl.TimeStampedModel):
     like_count = models.IntegerField(default=1)
     comment = models.TextField()
 
+    class Meta:
+        ordering = ('-like_count', '-created',)
+
     def get_absolute_url(self):
         return reverse('blog:detail', args=[str(self.post.id), str(self.post.slug)])
 
     def __str__(self):
         return self.comment
+
+    def save(self, *args, **kwargs):
+        self.like_count = self.likes.count()
+        return super(Comment, self).save(*args, **kwargs)

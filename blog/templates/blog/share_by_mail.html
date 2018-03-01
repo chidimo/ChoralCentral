@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ChoralCentral | Where sheet music lives</title>
+        {% load blog_ttags %}
+
+        <style>
+            body {background: white}
+            h1, h2, h3 {
+                color: #007bff;}
+            a:hover {text-decoration: underline; color: #007bff;}
+        </style>
+    </head>
+
+    <body>
+        <h2>Post share from ChoralCentral</h2>
+        <hr>
+
+        <p>Hello, <br>
+        {{ sharer }} would like you to see <a href="{{ post_link }}">{{ post.title }}</a> over on
+        <a href="http://www.choralcentral.net">ChoralCentral</a></p>
+
+        <p>{{ post.body|markdown_format }}</p>
+    </body>
+</html>

@@ -57,13 +57,9 @@ def song_like_view(request):
 
         if song.likes.filter(id=user.id).exists():
             song.likes.remove(user)
-            song.like_count -= 1
-            song.save()
             message = "You unstarred this song"
         else:
             song.likes.add(user)
-            song.like_count += 1
-            song.save()
             message = "You starred this song"
     context = {'like_count' : song.like_count, 'message' : message}
     return HttpResponse(json.dumps(context), content_type='application/json')
@@ -78,7 +74,7 @@ class SongIndex(PaginationMixin, generic.ListView):
         # print("IP Address for debug-toolbar: " + self.request.META['REMOTE_ADDR'])
         context = super(SongIndex, self).get_context_data(**kwargs)
         context['form'] = SongFilterForm()
-        context['share_form'] = GetEmailAddressForm()
+        # context['share_form'] = GetEmailAddressForm()
         return context
 
 class SongDetail(generic.DetailView):
@@ -86,6 +82,10 @@ class SongDetail(generic.DetailView):
     context_object_name = 'song'
     template_name = 'song/detail.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(SongDetail, self).get_context_data(**kwargs)
+        context['share_form'] = GetEmailAddressForm()
+        return context
     # add download incrementer here
 
 def reader_view(request, pk, slug):
@@ -125,7 +125,7 @@ class SongDelete(generic.DeleteView):
 
 def filter_songs(request):
     template = "song/index.html"
-    if request.GET:
+    if request.method == GET:
         form = SongFilterForm(request.GET)
         if form.is_valid():
             form = form.cleaned_data
@@ -246,18 +246,30 @@ def filter_author(request, pk, slug):
     context['author'] = Author.objects.get(pk=pk, slug=slug)
     # context['is_paginated'] = True
     return render(request, template, context)
-
+# https://www.webforefront.com/django/
 def share_by_mail(request, pk, slug):
     context = {}
-    song = Song.objects.get(pk=pk, slug=slug)
+
     sharer = request.user.siteuser.screen_name
     from_email = settings.EMAIL_HOST_USER
-    subject = '{} from {}'.format(song.title, sharer)
-    context['song'] = song
-    context['sharer'] = sharer
-    context['song_link'] = request.build_absolute_uri(song.get_absolute_url())
 
-    if request.GET:
+    if request.method == 'GET':
+
+        with open('kkk.txt', 'a+') as fh:
+            fh.write(str(pk))
+            fh.write('\n')
+            fh.write(slug)
+            fh.write('\n')
+            fh.write('\n')
+        song = Song.objects.get(pk=pk, slug=slug)
+
+        subject = '{} from {}'.format(song.title, sharer)
+        context['song'] = song
+        context['sharer'] = sharer
+        context['song_link'] = request.build_absolute_uri(song.get_absolute_url())
+
+
+
         form = GetEmailAddressForm(request.GET)
         if form.is_valid():
             form = form.cleaned_data
