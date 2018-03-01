@@ -2,12 +2,12 @@
 {% load static %}
 
 {% block left_sidebar %}
-        <div class="d-none d-md-block filter-block">
-            <form action="{% url 'song:filter' %}" method="get" enctype="multipart/form-data">
-                {{ form.as_p }}
-                <button class="btn btn-primary btn-sm float-right" type="submit" value="Search songs">Search songs</button>
-            </form>
-        </div>
+    <div class="d-none d-md-block filter-block">
+        <form action="{% url 'song:filter' %}" method="get" enctype="multipart/form-data">
+            {{ form.as_p }}
+            <button class="btn btn-primary btn-sm float-right" type="submit" value="Search songs">Search songs</button>
+        </form>
+    </div>
 {% endblock left_sidebar %}
 
 {% block content_content %}

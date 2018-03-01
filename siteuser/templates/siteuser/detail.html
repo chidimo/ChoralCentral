@@ -120,17 +120,15 @@
                         <tr class='d-none'>
                     {% endif %}
                 {% endif %}
-                        <td>
-                            {% if song.publish %}
-                                <a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a>
-                            {% else %}{{ song.title }}{% endif %}
+                        <td><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a>
                         </td>
-                        <td>{% if song.publish %}Published{% else %}Draft{% endif %}</td>
+                        <td>{% if song.publish %}Public{% else %}Private{% endif %}</td>
                         <td>
                             {% if request.user == siteuser.user %}
-                                <a href="{% url 'song:edit' song.pk song.slug %}"><i class="fas fa-edit"></i></a> |
-                                <a href="{% url 'song:delete' song.pk %}"><i class="fas fa-trash"></i></a>
+                                <a href="{% url 'song:edit' song.pk song.slug %}" title='Edit'><i class="fas fa-edit"></i></a> |
+                                <a href="{% url 'song:delete' song.pk %}" title='Delete'><i class="fas fa-trash"></i></a> |
                             {% endif %}
+                                <a href="" title="Share by email"><i class="fas fa-at"></i></a>
                         </td>
                     </tr>
                 {% empty %}

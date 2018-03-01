@@ -102,12 +102,12 @@
 
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-sm-3">
+				<div class="col-sm-3 leftsidebar">
 					{% block left_sidebar %}
 					{% endblock left_sidebar %}
 				</div>
 
-				<div class="col-sm-6" role='main'>
+				<div class="col-sm-6 centerspread" role='main'>
 					{% block content_content %}
 						content block
 					{% endblock content_content %}
@@ -119,7 +119,7 @@
 					{% endif %}
 				</div>
 
-				<div class="col-sm-3">
+				<div class="col-sm-3 rightsidebar">
 					{% block right_sidebar %}
 					{% endblock right_sidebar %}
 				</div>
