@@ -5,16 +5,12 @@
 
 <h2><a href="{% url 'siteuser:detail' siteuser.pk siteuser.slug %}">{{ siteuser.screen_name }}</a>'s comments</h2>
 
-    {% if user_comments %}
-        <div class="list-group">
-            {% for comment in siteuser.comment_set.all %}
-                <div class="list-group-item list-group-item-primary">
-                    <h5><a href="{% url 'blog:detail' comment.post.pk comment.post.slug %}">{{ comment.post }}</a></h5>
-                        <span>{{ comment.comment|linebreaks }}</span>
-                </div>
-            {% endfor %}
+    {% for comment in siteuser.comment_set.all %}
+        <div class="list-items">
+            <h5><a href="{% url 'blog:detail' comment.post.pk comment.post.slug %}">{{ comment.post }}</a></h5>
+                <span>{{ comment.comment|linebreaks }}</span>
         </div>
-    {% else %}
+    {% empty %}
         <p>No comments to display</p>
-    {% endif %}
+    {% endfor %}
 {% endblock content_content %}

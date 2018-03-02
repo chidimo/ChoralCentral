@@ -242,7 +242,8 @@ tbody tr:nth-child(odd) {
 .list-items {
     padding: .1rem 1rem 2rem 1rem;
     margin-top: 10px;
-    background-color: azure;
+    background-color: #b8daff;
+    /* background-color: azure; */
     border-radius: 5px;
 }
 
