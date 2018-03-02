@@ -118,14 +118,9 @@ class SongDelete(generic.DeleteView):
     success_url = reverse_lazy('song:index')
     template_name = "song/song_delete.html"
 
-    def get_context_data(self, **kwargs):
-        context = super(SongDelete, self).get_context_data(**kwargs)
-        context["which_model"] = "Song"
-        return context
-
 def filter_songs(request):
     template = "song/index.html"
-    if request.method == GET:
+    if request.method == 'GET':
         form = SongFilterForm(request.GET)
         if form.is_valid():
             form = form.cleaned_data
