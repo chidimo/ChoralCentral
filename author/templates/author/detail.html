@@ -5,13 +5,13 @@
 {% block content_content %}
 
 <h2>{{ author }} - {{ author.author_type|title}}</h2>
-<hr>
+<hr class='broad'>
 
 <h3>Biography</h3>
 
 <p class="body-text">{{ author.bio|markdown_format }}</p>
 
-<hr>
+<hr class='broad'>
 
 <h3>Songs</h3>
     {% for song in author.song_set.all|published_author_songs %}
@@ -22,7 +22,7 @@
             <p>No song from this author yet</p>
         {% endfor %}
     </div>
-<hr>
+<hr class='broad'>
 
 <p>First added by <a href="{% url 'siteuser:detail' author.originator.pk author.originator.slug %}">{{ author.originator.screen_name }}</a></p>
 {% endblock content_content %}

@@ -18,7 +18,7 @@
         <p class="" id="songFirstLine">{{ song.first_line }}</p>
 
         <span class="h5 float-left">
-            <a href="{% url 'blog:new_song' song.pk %}" title="Blog this song"><i class="fas fa-pen-square"></i></a>
+            <a href="{% url 'blog:new_song' song.pk %}" title="Blog this song"><i class="fas fa-pencil-alt"></i></a>
             <a href="{% url 'song:reader_view' song.pk song.slug %}" title="Print view"><i class="fas fa-print"></i></a>
         </span>
 

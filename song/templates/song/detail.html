@@ -6,7 +6,7 @@
 
 <h2>{{ song.title }}</h2>
 
-<hr>
+<hr class='narrow'>
 
 <div class='container'>
     <div class='row'>
@@ -39,7 +39,7 @@
     </div>
 </div>
 
-<hr>
+<hr class='narrow'>
 
     <h3>Metadata</h3>
     <div class="table-responsive">
@@ -90,7 +90,7 @@
         </table>
     </div><!-- END SHEET -->
 
-<hr>
+<hr class='broad'>
 
 <div class="row">
     <div class="col-md-8 col-lg-7">
@@ -133,7 +133,7 @@
                 </tbody>
             </table>
         </div>
-<hr>
+<hr class='broad'>
         <h3>Midis
             <span class="float-right">
                 <a class="btn btn-primary btn-sm float-left" href="#">Preview all</a> &emsp;
@@ -184,7 +184,7 @@
                     </tbody>
             </table>
         </div>
-<hr>
+<hr class='broad'>
         <h3>Video links
             <span class="float-right">
                 <a class="btn btn-primary btn-sm" href="{% url 'song-media:videolink_new_song' song.pk %}">Add a link</a>

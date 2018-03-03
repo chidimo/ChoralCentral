@@ -5,7 +5,7 @@
 {% block content_content %}
 
     <h2>{{ post.title }}</h2>
-    <hr>
+    <hr class='broad'>
 
     {% if post.subtitle %}
         <h5>{{ post.subtitle|markdown_format }}</h5>
@@ -22,9 +22,9 @@
         <span class="float-right">{{ post.comment_set.count }} <i class="fas fa-comments"></i></span>
     </h6>
 
-    <hr>
+    <hr class='broad'>
     {{ post.body|markdown_format }}
-    <hr>
+    <hr class='broad'>
 
     {% for comment in comments %}
     <div class="list-items">
@@ -59,7 +59,7 @@
         <p>No comments on this post at this time.</p>
     {% endfor %}
 
-    <hr>
+    <hr class='broad'>
     <form action="{% url 'blog:comment_add' post.pk %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ comment_form.as_p }}
