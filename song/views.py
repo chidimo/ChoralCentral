@@ -88,13 +88,6 @@ class SongDetail(generic.DetailView):
         return context
     # add download incrementer here
 
-def reader_view(request, pk, slug):
-    template = 'song/reader_view.html'
-    song = Song.objects.get(pk=pk, slug=slug)
-    context = {}
-    context['song'] = song
-    return render_to_pdf(request, template, context)
-
 class NewSong(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
     template_name = 'song/new.html'
     form_class = NewSongForm
@@ -118,129 +111,117 @@ class SongDelete(generic.DeleteView):
     success_url = reverse_lazy('song:index')
     template_name = "song/song_delete.html"
 
-def filter_songs(request):
-    template = "song/index.html"
-    if request.method == 'GET':
-        form = SongFilterForm(request.GET)
-        if form.is_valid():
-            form = form.cleaned_data
+class FilterSongs(PaginationMixin, generic.ListView):
+    model = Song
+    template_name = "song/index.html"
+    context_object_name = "songs"
+    paginate_by = 20
 
-            combinator = form['combinator']
-            season = form['season']
-            masspart = form['masspart']
-            voicing = form["voicing"]
-            language = form["language"]
+    def get_context_data(self, **kwargs):
+        context = super(FilterSongs, self).get_context_data(**kwargs)
+        context['form'] = SongFilterForm()
+        return context
 
-            queries = []
-            msg = []
+    def get_queryset(self):
+        if self.request.method == 'GET':
+            form = SongFilterForm(self.request.GET)
 
-            if season:
-                queries.append(Q(seasons__season=season))
-                msg.append('Season={}'.format(season))
-            if masspart:
-                queries.append(Q(mass_parts__part=masspart))
-                msg.append('Masspart={}'.format(masspart))
-            if voicing:
-                queries.append(Q(voicing__voicing=voicing))
-                msg.append('Vvoicing={}'.format(voicing))
-            if language:
-                queries.append(Q(language__language=language))
-                msg.append('Language={}'.format(language))
+            if form.is_valid():
+                form = form.cleaned_data
 
-            if combinator == 'OR':
-                query = reduce(operator.or_, queries)
-                query_str = " OR ".join(msg)
-            else:
-                query = reduce(operator.and_, queries)
-                query_str = " AND ".join(msg)
+                combinator = form['combinator']
+                season = form['season']
+                masspart = form['masspart']
+                voicing = form["voicing"]
+                language = form["language"]
 
-            # combine queries
-            if combinator == 'OR':
-                try:
-                    query = reduce(operator.or_, queries)
-                    query_str = " OR ".join(msg)
-                except TypeError:
-                    query = []
-                    query_str = ""
-            else:
-                try:
-                    query = reduce(operator.and_, queries)
-                    query_str = " AND ".join(msg)
-                except TypeError:
-                    query = []
-                    query_str = ""
+                queries = []
+                msg = []
 
-            # execute query
-            if not query:
-                songs = Song.published_set.all()
-            else:
-                songs = Song.objects.filter(query)
+                if season:
+                    queries.append(Q(seasons__season=season))
+                    msg.append('Season={}'.format(season))
+                if masspart:
+                    queries.append(Q(mass_parts__part=masspart))
+                    msg.append('Masspart={}'.format(masspart))
+                if voicing:
+                    queries.append(Q(voicing__voicing=voicing))
+                    msg.append('Voicing={}'.format(voicing))
+                if language:
+                    queries.append(Q(language__language=language))
+                    msg.append('Language={}'.format(language))
 
-            context = {}
-            context['query_str'] = query_str
-            context['songs'] = songs
-            context['form'] = SongFilterForm()
+                if combinator == 'OR':
+                    try:
+                        query = reduce(operator.or_, queries)
+                        query_str = " OR ".join(msg)
+                    except TypeError:
+                        query = []
+                        # query_str = ""
+                else:
+                    try:
+                        query = reduce(operator.and_, queries)
+                        query_str = " AND ".join(msg)
+                    except TypeError:
+                        query = []
+                        query_str = ""
 
-            return render(request, template, context)
-    else:
-        form = SongFilterForm()
-        return render(request, template, {'form' : form})
+                # self.get_context_data(**self.kwargs).update({'query_str' : query_str})
+                # execute query
+                if query:
+                    return Song.objects.filter(query)
+                else:
+                    return Song.published_set.all()
 
 def reader_view(request, pk, slug):
-    pass
-    # song = get_object_or_404(Song, pk=pk, slug=slug)
-    # response = HttpResponse(content_type="application/pdf")
-    # response["Content-Disposition"] = "attachment; filename={}.pdf".format(song.slug)
-
-    # canv = canvas.Canvas(response)
-
-    # canv.drawString(100, 100, song.title)
-
-    # canv.showPage()
-    # canv.save()
-    # return response
-
-def filter_season(request, season):
-    template = "song/filter_season.html"
-    songs = Song.published_set.filter(seasons__season=season)
-    paginator = Paginator(songs, 20)
-
-    page = request.GET.get('page')
-    songs = paginator.get_page(page)
-
+    template = 'song/reader_view.html'
+    song = Song.objects.get(pk=pk, slug=slug)
     context = {}
-    context['songs'] = songs
-    context['season'] = season
-    # context['is_paginated'] = True
-    return render(request, template, context)
+    context['song'] = song
+    return render_to_pdf(request, template, context)
 
-def filter_masspart(request, masspart):
-    template = "song/filter_masspart.html"
-    songs = Song.published_set.filter(mass_parts__part=masspart)
-    paginator = Paginator(songs, 20)
+class FilterBySeason(PaginationMixin, generic.ListView):
+    model = Song
+    template_name = "song/filter_season.html"
+    context_object_name = "songs"
+    paginate_by = 20
 
-    page = request.GET.get('page')
-    songs = paginator.get_page(page)
+    def get_context_data(self, **kwargs):
+        context = super(FilterBySeason, self).get_context_data(**kwargs)
+        context['season'] = self.kwargs['season']
+        return context
 
-    context = {}
-    context['songs'] = songs
-    context['masspart'] = masspart
-    # context['is_paginated'] = True
-    return render(request, template, context)
+    def get_queryset(self):
+        return Song.published_set.filter(seasons__season=self.kwargs['season'])
 
-def filter_author(request, pk, slug):
-    template = "song/filter_author.html"
-    songs = Song.published_set.filter(authors__pk=pk, authors__slug=slug)
-    paginator = Paginator(songs, 20)
+class FilterByMasspart(PaginationMixin, generic.ListView):
+    model = Song
+    template_name = "song/filter_masspart.html"
+    context_object_name = "songs"
+    paginate_by = 20
 
-    page = request.GET.get('page')
-    songs = paginator.get_page(page)
+    def get_context_data(self, **kwargs):
+        context = super(FilterByMasspart, self).get_context_data(**kwargs)
+        context['masspart'] = self.kwargs['masspart']
+        return context
 
-    context = {}
-    context['songs'] = songs
-    context['author'] = Author.objects.get(pk=pk, slug=slug)
-    # context['is_paginated'] = True
-    return render(request, template, context)
+    def get_queryset(self):
+        return Song.published_set.filter(mass_parts__part=self.kwargs['masspart'])
+
+class FilterByAuthor(PaginationMixin, generic.ListView):
+    model = Song
+    template_name = "song/filter_author.html"
+    context_object_name = "songs"
+    paginate_by = 20
+
+    def get_context_data(self, **kwargs):
+        context = super(FilterByAuthor, self).get_context_data(**kwargs)
+        context['author'] = Author.objects.get(pk=self.kwargs['pk'], slug=self.kwargs['slug'])
+        return context
+
+    def get_queryset(self):
+        return Song.published_set.filter(authors__pk=self.kwargs['pk'], authors__slug=self.kwargs['slug'])
+
 # https://www.webforefront.com/django/
 def share_by_mail(request, pk, slug):
     context = {}
@@ -263,8 +244,6 @@ def share_by_mail(request, pk, slug):
         context['sharer'] = sharer
         context['song_link'] = request.build_absolute_uri(song.get_absolute_url())
 
-
-
         form = GetEmailAddressForm(request.GET)
         if form.is_valid():
             form = form.cleaned_data
@@ -277,7 +256,6 @@ def share_by_mail(request, pk, slug):
     msg.attach_alternative(html_email, "text/html")
     msg.send()
     return redirect('song:index')
-
 
 def share_on_facebook(request, pk, slug):
     pass

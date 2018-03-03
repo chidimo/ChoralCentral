@@ -65,7 +65,17 @@ class CommentCreateForm(forms.ModelForm):
 
         widgets = {
             "comment" : forms.Textarea(
-                attrs={'class' : 'form-control', "placeholder" : "Comment."})
+                attrs={'class' : 'form-control', "placeholder" : "Type your comments."})
+        }
+
+class CommentEditForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ("comment", )
+
+        widgets = {
+            "comment" : forms.Textarea(
+                attrs={'class' : 'form-control', "placeholder" : "Type your comments."})
         }
 
 class CommentNumberForm(forms.Form):

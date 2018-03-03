@@ -4,22 +4,21 @@
 
 {% block content_content %}
 
-    <h2>Lyricists and Composers</h2>
+<h2>Lyricists and Composers</h2>
+<hr>
 
-    <div class="list-group">
-        {% for author in authors %}
-        <div class="list-group-item list-group-item-primary">
-            <a href="{% url 'author:detail' author.pk author.slug %}">
-                <h3>{{ author }}</h3>
-            </a>
-            <h5>{{ author.author_type|title }} &raquo;
-                {% with auth=author.song_set.all|published_author_songs %}
-                    {{ auth.count }}
-                {% endwith %} published songs on <a href="/">ChoralCentral</a>
-            </h5>
-        </div>
-        {% empty %}
-            <p>No authors added yet</p>
-        {% endfor %}
-    </div>
+{% for author in authors %}
+<div class="list-items">
+    <a href="{% url 'author:detail' author.pk author.slug %}">
+        <h3>{{ author }}</h3>
+    </a>
+    <h5>{{ author.author_type|title }} &raquo;
+        {% with auth=author.song_set.all|published_author_songs %}
+            {{ auth.count }}
+        {% endwith %} published songs on <a href="/">ChoralCentral</a>
+    </h5>
+</div>
+{% empty %}
+    <p>No authors added yet</p>
+{% endfor %}
 {% endblock content_content %}

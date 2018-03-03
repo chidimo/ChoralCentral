@@ -16,7 +16,7 @@ from song.models import Song
 from song.forms import GetEmailAddressForm
 
 from .models import Post, Comment
-from . import forms as fm
+from .forms import NewPostForm, PostEditForm, PostCreateFromSongForm, CommentCreateForm, CommentEditForm, CommentNumberForm
 
 # pylint: disable=R0901, C0111
 
@@ -38,7 +38,7 @@ def auto_blog(request):
 class PostCreate(LoginRequiredMixin, generic.CreateView):
     context_object_name = 'post'
     template_name = 'blog/new.html'
-    form_class = fm.NewPostForm
+    form_class = NewPostForm
 
     def get_form_kwargs(self):
         """include 'user' and 'pk' in the kwargs to be sent to form"""
@@ -48,16 +48,21 @@ class PostCreate(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         form.instance.creator = SiteUser.objects.get(user=self.request.user)
+        self.object = form.save()
+        self.object.likes.add(SiteUser.objects.get(user=self.request.user))
         return super(PostCreate, self).form_valid(form)
 
 class PostCreateFromSong(LoginRequiredMixin, generic.CreateView):
-    form_class = fm.PostCreateFromSongForm
+    form_class = PostCreateFromSongForm
     context_object_name = 'post'
     template_name = 'blog/new.html'
 
     def form_valid(self, form):
         form.instance.creator = SiteUser.objects.get(user=self.request.user)
-        form.instance.song = Song.objects.get(pk=self.kwargs.get("pk", None))
+        form.instance.song = Song.objects.get(pk=self.kwargs["pk"])
+
+        self.object = form.save()
+        self.object.likes.add(SiteUser.objects.get(user=self.request.user))
         return super(PostCreateFromSong, self).form_valid(form)
 
 class PostIndex(PaginationMixin, generic.ListView):
@@ -78,7 +83,7 @@ class PostDetail(PaginationMixin, generic.ListView):
     model = Post
     template_name = "blog/detail.html"
     context_object_name = "comments"
-    paginate_by = 15
+    paginate_by = 20
 
     def get_queryset(self):
         post = Post.objects.get(pk=self.kwargs.get("pk", None))
@@ -86,29 +91,31 @@ class PostDetail(PaginationMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(PostDetail, self).get_context_data(**kwargs)
-        context["comment_form"] = fm.CommentCreateForm()
-        context["comment_number"] = fm.CommentNumberForm()
+        context["comment_form"] = CommentCreateForm()
         context["post"] = Post.objects.get(pk=self.kwargs.get("pk", None))
         return context
 
 class PostEdit(LoginRequiredMixin, generic.UpdateView):
     model = Post
-    form_class = fm.PostEditForm
+    form_class = PostEditForm
     template_name = "blog/edit.html"
+
+class EditComment(LoginRequiredMixin, generic.UpdateView):
+    model = Comment
+    form_class = CommentEditForm
+    template_name = "blog/comment_edit.html"
 
 class CommentCreate(LoginRequiredMixin, generic.CreateView):
     context_object_name = 'comment'
-    form_class = fm.CommentCreateForm
+    form_class = CommentCreateForm
 
     def form_valid(self, form):
         form.instance.creator = SiteUser.objects.get(user=self.request.user)
         form.instance.post = Post.objects.get(pk=self.kwargs.get("pk", None))
-        return super(CommentCreate, self).form_valid(form)
 
-class CommentEdit(LoginRequiredMixin, generic.CreateView):
-    model = Comment
-    context_object_name = 'comment'
-    form_class = fm.CommentCreateForm
+        self.object = form.save()
+        self.object.likes.add(SiteUser.objects.get(user=self.request.user))
+        return super(CommentCreate, self).form_valid(form)
 
 def share_by_mail(request, pk, slug):
     context = {}

@@ -1,20 +1,16 @@
 {% extends "choralcentral_base.html" %}
-
-{% block title %}New Comment{% endblock %}
+{% block title %}Edit Comment{% endblock %}
 
 {% block content_content %}
-    <h4>Edit Comment</h4>
-  
-    {% if form.errors %}
-        <p>{{ form.errors }}</p>
-    {% endif %}
+<div class="container upload-forms">
+    <h2>Edit Comment</h2>
+    <hr>
 
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-
         {{ form.as_p }}
-
         <button class="btn btn-primary btn-sm float-right" type="submit" value="Save">Save</button>
     </form>
+</div>
 {% endblock %}
 

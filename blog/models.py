@@ -24,14 +24,14 @@ class Post(mdl.TimeStampedModel):
     subtitle = models.CharField(max_length=100, blank=True, null=True)
     body = models.TextField()
     slug = fdl.AutoSlugField(set_using="title")
-    song = models.ForeignKey(Song, on_delete=models.CASCADE, blank=True, null=True)
+    song = models.ForeignKey(Song, on_delete=models.SET_NULL, blank=True, null=True)
     publish = models.BooleanField(default=False)
     views = models.IntegerField(default=1)
     likes = models.ManyToManyField(SiteUser, related_name="post_likes", blank=True)
-    like_count = models.IntegerField(default=1)
+    like_count = models.IntegerField(default=0)
 
-    published_set = PublishedManager()
     objects = models.Manager()
+    published_set = PublishedManager()
 
     class Meta:
         ordering = ('-like_count', '-created', 'title')
@@ -43,6 +43,7 @@ class Post(mdl.TimeStampedModel):
         return self.title
 
     def save(self, *args, **kwargs):
+        super(Post, self).save(*args, **kwargs)
         self.like_count = self.likes.count()
         return super(Post, self).save(*args, **kwargs)
 
@@ -63,5 +64,10 @@ class Comment(mdl.TimeStampedModel):
         return self.comment
 
     def save(self, *args, **kwargs):
+        super(Comment, self).save(*args, **kwargs)
         self.like_count = self.likes.count()
         return super(Comment, self).save(*args, **kwargs)
+
+
+
+

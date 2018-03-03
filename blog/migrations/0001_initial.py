@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
                 'abstract': False,
             },
             managers=[
-                ('published_set', django.db.models.manager.Manager()),
+                (django.db.models.manager.Manager(), 'published_set'),
             ],
         ),
         migrations.AddField(

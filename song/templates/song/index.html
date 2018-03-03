@@ -12,6 +12,10 @@
 
 {% block content_content %}
 
+{% if query_str %}
+True
+{% endif %}
+
     {% for song in songs %}
     <div class="list-items">
         <h4><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h4>
