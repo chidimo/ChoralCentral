@@ -65,20 +65,20 @@
                     <td><a href="{% url 'siteuser:detail' song.originator.pk song.originator.slug %}">{{ song.originator.screen_name }}</a></td>
                     <td>{{ song.voicing }}</td>
                     <td>{{ song.tempo_text }}</td>
-                    <td><a href=''>{{ song.language }}</a></td>
+                    <td>{{ song.language }}</td>
                     <td>
                         {% for season in song.seasons.all %}
-                            <a href="{% url 'song:filter_season' season %}">{{ season }}</a>{% if not forloop.last %},<br>{% endif %}
+                            {{ season }}{% if not forloop.last %},<br>{% endif %}
                         {% endfor %}
                     </td>
                     <td>
                         {% for masspart in song.mass_parts.all %}
-                            <a href="{% url 'song:filter_masspart' masspart %}">{{ masspart }}</a>{% if not forloop.last %},<br>{% endif %}
+                            {{ masspart }}{% if not forloop.last %},<br>{% endif %}
                         {% endfor %}
                     </td>
                     <td>
                         {% for author in song.authors.all %}
-                            <a href="{% url 'song:filter_author' author.pk author.slug %}">{{ author }}</a>{% if not forloop.last %},<br>{% endif %}
+                            {{ author }}{% if not forloop.last %},<br>{% endif %}
                         {% endfor %}
                     </td>
                     <td>{{ song.tempo }}</td>

@@ -134,10 +134,13 @@ class FilterSongs(PaginationMixin, generic.ListView):
                 masspart = form['masspart']
                 voicing = form["voicing"]
                 language = form["language"]
+                author = form['author']
 
                 queries = []
                 msg = []
 
+                if author:
+                    queries.append(Q(authors=author))
                 if season:
                     queries.append(Q(seasons__season=season))
                     msg.append('Season={}'.format(season))
@@ -179,48 +182,6 @@ def reader_view(request, pk, slug):
     context = {}
     context['song'] = song
     return render_to_pdf(request, template, context)
-
-class FilterBySeason(PaginationMixin, generic.ListView):
-    model = Song
-    template_name = "song/filter_season.html"
-    context_object_name = "songs"
-    paginate_by = 20
-
-    def get_context_data(self, **kwargs):
-        context = super(FilterBySeason, self).get_context_data(**kwargs)
-        context['season'] = self.kwargs['season']
-        return context
-
-    def get_queryset(self):
-        return Song.published_set.filter(seasons__season=self.kwargs['season'])
-
-class FilterByMasspart(PaginationMixin, generic.ListView):
-    model = Song
-    template_name = "song/filter_masspart.html"
-    context_object_name = "songs"
-    paginate_by = 20
-
-    def get_context_data(self, **kwargs):
-        context = super(FilterByMasspart, self).get_context_data(**kwargs)
-        context['masspart'] = self.kwargs['masspart']
-        return context
-
-    def get_queryset(self):
-        return Song.published_set.filter(mass_parts__part=self.kwargs['masspart'])
-
-class FilterByAuthor(PaginationMixin, generic.ListView):
-    model = Song
-    template_name = "song/filter_author.html"
-    context_object_name = "songs"
-    paginate_by = 20
-
-    def get_context_data(self, **kwargs):
-        context = super(FilterByAuthor, self).get_context_data(**kwargs)
-        context['author'] = Author.objects.get(pk=self.kwargs['pk'], slug=self.kwargs['slug'])
-        return context
-
-    def get_queryset(self):
-        return Song.published_set.filter(authors__pk=self.kwargs['pk'], authors__slug=self.kwargs['slug'])
 
 # https://www.webforefront.com/django/
 def share_by_mail(request, pk, slug):

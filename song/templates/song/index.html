@@ -12,18 +12,14 @@
 
 {% block content_content %}
 
-{% if query_str %}
-True
-{% endif %}
-
     {% for song in songs %}
     <div class="list-items">
         <h4><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h4>
         <p class="" id="songFirstLine">{{ song.first_line }}</p>
 
         <span class="h5 float-left">
-            <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'blog:new_song' song.pk %}" title="Blog this song"><i class="fas fa-pen-square"></i></a>
-            <a data-toggle="modal" data-target="top" aria-hidden="true" href="{% url 'song:reader_view' song.pk song.slug %}" title="Print view"><i class="fas fa-print"></i></a>
+            <a href="{% url 'blog:new_song' song.pk %}" title="Blog this song"><i class="fas fa-pen-square"></i></a>
+            <a href="{% url 'song:reader_view' song.pk song.slug %}" title="Print view"><i class="fas fa-print"></i></a>
         </span>
 
         <span class="h5 float-right">

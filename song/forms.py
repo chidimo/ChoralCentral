@@ -1,7 +1,6 @@
 """Forms"""
 
 from django import forms
-from django.forms.fields import DateField
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from django_addanother.widgets import AddAnotherWidgetWrapper
@@ -11,6 +10,7 @@ from season.models import Season
 from masspart.models import MassPart
 from voicing.models import Voicing
 from language.models import Language
+from author.models import Author
 
 # pylint: disable=C0326, C0301, C0103, C0111
 
@@ -28,6 +28,11 @@ class SongFilterForm(forms.Form):
         required=True,
         initial = 'OR',
         widget=forms.Select(attrs={"class" : "form-control"}))
+
+    author = forms.ModelChoiceField(
+        queryset=Author.objects.all(),
+        required=False,
+        widget=forms.Select(attrs={"class" : "form-control",}))
 
     season = forms.ModelChoiceField(
         queryset=Season.objects.all(),

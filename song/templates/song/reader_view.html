@@ -1,16 +1,57 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
-        <title>ChoralCentral &#124; {{ song.title }}</title>
+        <title>ChoralCentral &#124; {{ song.title }} print view</title>
+        {% load song_ttags %}
     </head>
 
     <body>
-        <h2>
-            ChoralCentral &#124; {{ song.title }}
-        </h2>
-        <hr>
-        <p>{{ song.lyrics }}</p>
+        <h4>{{ song.title }}</h4>
 
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>For</th>
+                    <th>Performed</th>
+                    <th>Language</th>
+                    <th>Seasons</th>
+                    <th>Masspart</th>
+                    <th>Authors</th>
+                    <th>Tempo</th>
+                    <th>Timing</th>
+                    <th>Scripture</th>
+                    <th>Composed</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ song.voicing }}</td>
+                    <td>{{ song.tempo_text }}</td>
+                    <td>{{ song.language }}</td>
+                    <td>
+                        {% for season in song.seasons.all %}
+                            {{ season }}{% if not forloop.last %},<br>{% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for masspart in song.mass_parts.all %}
+                            {{ masspart }}{% if not forloop.last %},<br>{% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for author in song.authors.all %}
+                            {{ author }}{% if not forloop.last %},<br>{% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>{{ song.tempo }}</td>
+                    <td>{{ song.bpm }}/{{ song.divisions }}</td>
+                    <td>{{ song.scripture_ref }}</td>
+                    <td>{{ song.compose_date }}</td>
+                </tr>
+            </tbody>
+        </table>
+    <!-- END SHEET -->
+        <p>{{ song.lyrics|markdown_format }}</p>
 
         <div id="pageFooter"></div>
     </body>
