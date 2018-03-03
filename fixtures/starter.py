@@ -158,19 +158,21 @@ def songs_from_file():
         for name, about in song["author"].items():
             names = name.rsplit(" ")
             try:
-                first_name=names[0]
-                last_name=names[1]
+                first_name=names[0].strip()
+                last_name=names[1].strip()
             except IndexError:
                 first_name = last_name = "Unknown"
 
-            authors.append(
-                Author.objects.get_or_create(
+            try:
+                author = Author.objects.get(first_name=first_name, last_name=last_name)
+            except:
+                author = Author.objects.create(
                     originator=choice(users),
                     first_name=first_name,
                     last_name=last_name,
-                    bio=about,
-                    )
-                )
+                    bio=about)
+
+            authors.append(author)
 
         originator = choice(users)
         song = Song.objects.create(
