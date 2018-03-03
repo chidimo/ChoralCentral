@@ -1,24 +1,17 @@
 {% extends "choralcentral_base.html" %}
-
 {% block title %}Site siteusers{% endblock title %}
-
 
 {% block content_content %}
 
-<h2>Meet the choir</h2>
+<h2>The choir</h2>
+<hr>
 
-    {% if siteuser_list %}
-    <div class="list-group">
-        {% for siteuser in siteuser_list %}
-
-        <div class="list-group-item list-group-item-primary">
-            <a href="{% url 'siteuser:detail' siteuser.pk siteuser.slug %}">{{ siteuser.screen_name }}</a>
-            <p>{{ siteuser.song_set.count }} uploads</p>
-        </div>
-
-        {% endfor %}
+{% for siteuser in siteuser_list %}
+    <div class="list-items">
+        <a href="{% url 'siteuser:detail' siteuser.pk siteuser.slug %}">{{ siteuser.screen_name }}</a>
+        <p>{{ siteuser.song_set.count }} uploads</p>
     </div>
-    {% else %}
-        <p>No profiles added yet.</p>
-    {% endif %}
+{% empty %}
+    <p>No profiles added yet.</p>
+{% endfor %}
 {% endblock content_content %}

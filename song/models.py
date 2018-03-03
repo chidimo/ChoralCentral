@@ -72,7 +72,7 @@ class Song(mdl.TimeStampedModel):
         return ", ".join(["{}".format(part.part) for part in self.mass_parts.all()])
 
     def save(self, *args, **kwargs):
-        super(Song, self).save(*args, **kwargs)
         self.tempo_text = get_tempo_text(self.tempo)
-        self.like_count = self.likes.count()
+        if self.id:
+            self.like_count = self.likes.count()
         return super(Song, self).save(*args, **kwargs)

@@ -32,14 +32,19 @@ from universal.utils import render_to_pdf
 
 # pylint: disable=R0901, C0111
 
-def instant_song(request):
-    context = {}
-    context['appID'] = settings.ALGOLIA['APPLICATION_ID']
-    context['searchKey'] = settings.ALGOLIA['SEARCH_API_KEY']
-    context['indexName'] = get_adapter(Song).index_name
+class InstantSong(PaginationMixin, generic.ListView):
+    model = Song
+    context_object_name = 'songs'
+    template_name = 'song/instant_song.html'
+    paginate_by = 50
 
-    context['is_paginated'] = True
-    return render(request, 'song/instant_song.html', context)
+    def get_context_data(self, **kwargs):
+        context = super(InstantSong, self).get_context_data(**kwargs)
+        context['form'] = SongFilterForm()
+        context['appID'] = settings.ALGOLIA['APPLICATION_ID']
+        context['searchKey'] = settings.ALGOLIA['SEARCH_API_KEY']
+        context['indexName'] = get_adapter(Song).index_name
+        return context
 
 def auto_song(request):
     context = {}

@@ -5,7 +5,6 @@
 {% block content_content %}
 
 <h2>{{ author }} - {{ author.author_type|title}}</h2>
-
 <hr>
 
 <h3>Biography</h3>
@@ -14,11 +13,11 @@
 
 <hr>
 
-<h3>Published works</h3>
-
-    <div class="list-group">
-        {% for song in author.song_set.all|published_author_songs %}
-            <li class="list-group-item"><h4><a href="{% url 'song:detail' song.pk song.slug %}">{{ song }}</a></h4></li>
+<h3>Songs</h3>
+    {% for song in author.song_set.all|published_author_songs %}
+        <div class="list-group">
+            <div class="list-items">
+                <h4><a href="{% url 'song:detail' song.pk song.slug %}">{{ song }}</a></h4></div>
         {% empty %}
             <p>No song from this author yet</p>
         {% endfor %}

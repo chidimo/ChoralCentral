@@ -54,6 +54,15 @@ def clear():
     else:
         os.system('cls')
 
+def run_all():
+    roles()
+    superuser()
+    seasons()
+    massparts()
+    voice_notation()
+    members()
+    voicing_language()
+
 def independents():
     roles()
     seasons()
@@ -129,15 +138,13 @@ def members():
         location = lorem.word()
         screen_name = LoremPysum().word()
 
-        try:
-            pro = SiteUser(user=user, first_name=first_name,
-                          last_name=last_name, location=location,
-                          screen_name=screen_name)
-            pro.save()
-        except IntegrityError:
+        pro, created = SiteUser.objects.get_or_create(
+                user=user, first_name=first_name,
+                last_name=last_name, location=location,
+                screen_name=screen_name)
+        if created:
             print("profile name error")
             _ = CustomUser.objects.get(email=email).delete()
-            continue
 
         try:
             role = choice(roles)
@@ -149,6 +156,7 @@ def songs_from_file():
     users = SiteUser.objects.all()
     voices = Voicing.objects.all()
     languages = Language.objects.all()
+
     fn = os.path.join(settings.BASE_DIR, 'fixtures', 'data_hymnal.json')
     with open(fn, "r+") as rh:
         song_file = json.load(rh)
@@ -175,22 +183,26 @@ def songs_from_file():
             authors.append(author)
 
         originator = choice(users)
-        song = Song.objects.create(
-            originator=originator,
-            title=song.get("title", "Unknown"),
-            publish=choice([True, False]),
-            lyrics=song.get("lyrics", "No lyrics"),
-            scripture_reference=choice(SCRIPTURE),
-            tempo=randint(45, 250),
-            bpm=randint(4, 8),
-            divisions=randint(4, 8),
-            voicing=choice(voices),
-            language=choice(languages))
+        title = song.get("title", "Unknown").strip()
 
-        for each in authors:
-            for author, _ in authors:
+        try:
+            song = Song.objects.get(title=title)
+        except:
+            song = Song.objects.create(
+                originator=originator,
+                title=title,
+                publish=choice([True, False]),
+                lyrics=song.get("lyrics", "No lyrics"),
+                scripture_reference=choice(SCRIPTURE),
+                tempo=randint(45, 250),
+                bpm=randint(4, 8),
+                divisions=randint(4, 8),
+                voicing=choice(voices),
+                language=choice(languages))
+
+            for each in authors:
                 song.authors.add(author)
-        song.likes.add(originator.pk)
+            song.likes.add(originator)
 
 def songs():
     users = SiteUser.objects.all()

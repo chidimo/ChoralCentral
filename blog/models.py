@@ -43,8 +43,8 @@ class Post(mdl.TimeStampedModel):
         return self.title
 
     def save(self, *args, **kwargs):
-        super(Post, self).save(*args, **kwargs)
-        self.like_count = self.likes.count()
+        if self.id:
+            self.like_count = self.likes.count()
         return super(Post, self).save(*args, **kwargs)
 
 class Comment(mdl.TimeStampedModel):
@@ -64,10 +64,6 @@ class Comment(mdl.TimeStampedModel):
         return self.comment
 
     def save(self, *args, **kwargs):
-        super(Comment, self).save(*args, **kwargs)
-        self.like_count = self.likes.count()
+        if self.id:
+            self.like_count = self.likes.count()
         return super(Comment, self).save(*args, **kwargs)
-
-
-
-
