@@ -109,14 +109,19 @@ def superuser():
         su.is_admin = True
         su.is_active = True
         su.save()
-        pro = SiteUser(user=su,first_name="Chidi",
-                     last_name="Orji", location="Abu Dhabi",
-                     screen_name="CCAdmin")
-        pro.save()
-
     except IntegrityError:
         su = CustomUser.objects.get(email='admin@choralcentral.net')
-        print("Superuser {} already exists".format(su.email))
+
+    try:
+        pro = SiteUser.objects.create(
+            user=su,
+            screen_name="CCAdmin",
+            first_name="Chidi",
+            last_name="Orji",
+            location="Abu Dhabi",
+        )
+    except IntegrityError:
+        pass
 
 def members():
     roles = Role.objects.all()
