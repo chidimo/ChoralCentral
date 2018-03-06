@@ -73,7 +73,7 @@ class SongIndex(PaginationMixin, generic.ListView):
     model = Song
     context_object_name = 'songs'
     template_name = 'song/index.html'
-    # paginate_by = 50
+    paginate_by = 25
 
     def get_context_data(self, **kwargs):
         # print("IP Address for debug-toolbar: " + self.request.META['REMOTE_ADDR'])
