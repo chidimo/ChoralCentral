@@ -18,7 +18,6 @@ def get_env_variable(var_name):
         error_msg = "Set the {} environment variable".format(var_name)
         raise ImproperlyConfigured(error_msg)
 
-
 ALLOWED_HOSTS = ['*']
 ROOT_URLCONF = 'choralcentral.urls'
 SECRET_KEY = get_env_variable("SECRET_KEY")

@@ -20,8 +20,7 @@ class AuthorIndex(PaginationMixin, generic.ListView):
     paginate_by = 25
 
     def get_queryset(self):
-        return Author.objects.all().annotate(Count("song__publish")).order_by("-song__count")
-        # return Author.objects.all().annotate(Count("likes")).order_by("-likes__count")
+        return Author.objects.all().annotate(Count("song__publish")).order_by("-song__publish__count")
 
 class AuthorAdd(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
     form_class = NewAuthorForm

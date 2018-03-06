@@ -192,22 +192,13 @@ def reader_view(request, pk, slug):
 def share_by_mail(request, pk, slug):
     context = {}
 
-    sharer = request.user.siteuser.screen_name
     from_email = settings.EMAIL_HOST_USER
 
     if request.method == 'GET':
-
-        with open('kkk.txt', 'a+') as fh:
-            fh.write(str(pk))
-            fh.write('\n')
-            fh.write(slug)
-            fh.write('\n')
-            fh.write('\n')
         song = Song.objects.get(pk=pk, slug=slug)
 
-        subject = '{} from {}'.format(song.title, sharer)
+        subject = '{} was shared with you from ChoralCentral'.format(song.title)
         context['song'] = song
-        context['sharer'] = sharer
         context['song_link'] = request.build_absolute_uri(song.get_absolute_url())
 
         form = GetEmailAddressForm(request.GET)

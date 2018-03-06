@@ -86,7 +86,7 @@
 						</li>
 					{% endif %}
 					<li class="nav-item">
-						<a class="btn btn-primary btn-sm" href="{% url 'song:new' %}">UPLOAD</a>
+						<a href="{% url 'song:new' %}" class="btn btn-primary btn-sm">UPLOAD</a>
 					</li>
 
 				</ul>
@@ -95,9 +95,18 @@
 		{% endblock navigation %}
 
 		{% block introduction %}
-			<div class="container-fluid">
-
-			</div>
+		<section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="jumbotron-heading">ChoralCentral</h1>
+                <p>If music be the food of the soul ...<p>
+                    <a href="{% url 'song:new' %}" class="btn btn-primary">UPLOAD</a>
+                    <a href="{% url 'blog:new' %}" class="btn btn-secondary">Blog</a>
+                    <a href="{% url 'request:new' %}" class="btn btn-secondary">Request</a>
+                    <a href="{% url 'song:instant_song' %}" class="btn btn-secondary target="blank" ">Search</a>
+                    <a href="#" class="btn btn-secondary">Douay-Rheims bible</a>
+                </p>
+            </div>
+        </section>
 		{% endblock introduction %}
 
 		<div class="container-fluid">
