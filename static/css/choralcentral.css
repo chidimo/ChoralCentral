@@ -109,6 +109,11 @@ th, td {
   background: blanchedalmond;
 }
 
+hr .narrow {
+  margin-top: .25rem;
+  margin-bottom: 0.25rem;
+}
+
 label {
     color: red;
 }

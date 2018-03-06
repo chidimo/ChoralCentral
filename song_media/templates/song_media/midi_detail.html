@@ -9,7 +9,7 @@
 
 {% for song in masspart.song_set.all %}
     <h4><a href="{% url 'song:song_detailview' song.pk song.slug %}">{{ song.template_name }}</a></h4>
-<hr>
+<hr class='broad'>
 {% empty %}
     <p>There are no songs for {{ masspart }} yet</p>
 {% endfor %}
