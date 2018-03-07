@@ -35,7 +35,7 @@ class MidiFeed(Feed):
         return 'http://www.choralcentral.net{}'.format(item.get_absolute_url())
 
     def items(self):
-        return Midi.objects.order_by('created').all()
+        return Midi.objects.all()
 
     def item_title(self, item):
         return '{}_{}'.format(item.song.title, item.part.name)
