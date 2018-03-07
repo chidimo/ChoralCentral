@@ -1,11 +1,9 @@
 """Feeds"""
 # https://validator.w3.org/feed/docs/rss2.html
+# https://goonan.io/podcast-feeds-in-django/
 import os
 
-# from django.shortcuts import reverse
-# from django.db.models import Count
 from django.conf import settings
-# from django.template.defaultfilters import truncatewords
 from django.contrib.syndication.views import Feed
 
 from .models import Song
@@ -13,16 +11,18 @@ from song_media.models import Midi
 
 class MidiFeed(Feed):
     link = "http://www.choralcentral.net/"
-    description = "Catch the most popular scores on http://www.choralcentral.net/"
     author_name = 'Chidi Orji'
     author_email = 'orjichidi95@gmail.com'
     categories = ("music", "midi", "choral", "choir", "scores")
+
+    def description(self):
+        return "Midi feed from http://www.choralcentral.net/"
 
     def title(self):
         return "Midis on ChoralCentral"
 
     def item_enclosure_url(self, item):
-        return os.path.abspath(settings.BASE_DIR + item.media_file.url)
+        return 'http://www.choralcentral.net{}'.format(item.media_file.url)
 
     def item_enclosure_length(self, item):
         return os.path.getsize(
@@ -32,10 +32,10 @@ class MidiFeed(Feed):
         return 'audio/mpeg'
 
     def item_link(self, item):
-        return item.song.get_absolute_url()
+        return 'http://www.choralcentral.net{}'.format(item.get_absolute_url())
 
     def items(self):
-        return Midi.objects.all().order_by('created')[:10]
+        return Midi.objects.order_by('created').all()
 
     def item_title(self, item):
         return '{}_{}'.format(item.song.title, item.part.name)
@@ -60,7 +60,7 @@ class SongFeed(Feed):
             return "Most recent songs on http://www.choralcentral.net/"
 
     def item_link(self, item):
-        return item.get_absolute_url()
+        return 'http://www.choralcentral.net{}'.format(item.get_absolute_url())
 
     def title(self, obj):
         if obj[1] == 'popular':

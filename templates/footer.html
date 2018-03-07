@@ -40,9 +40,9 @@
         <h5>Feeds</h5>
         <div class="container">
             <p>
+                <a aria-hidden="true" href="{% url 'song:midi_feed' %}">Midi</a> &#124;
                 <a aria-hidden="true" href="{% url 'song:song_feed' 'popular' %}">Popular</a> &#124;
                 <a aria-hidden="true" href="{% url 'song:song_feed' 'latest' %}">Latest</a> &#124;
-                <a aria-hidden="true" href="{% url 'song:midi_feed' %}">Midi</a> &#124;
                 <a aria-hidden="true" href="{% url 'blog:post_feed' %}">Blog</a>
             </p>
         </div>

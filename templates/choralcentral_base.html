@@ -60,17 +60,12 @@
 					<li class="nav-item"><a class="nav-link" href="{% url 'siteuser:index' %}">Members</a></li>
 				</ul>
 
-				<form class="form-inline my-2 my-md-0">
-					<input class="form-control" type="text" placeholder="Search">
-				</form>
 				<ul class="nav navbar-nav ml-auto">
 					{% if user.is_authenticated %}
 						{% if user.is_admin %}
-							<li class="nav-item">
-								<a class="nav-link" href="/admin/"><i class='fas fa-cog'></i></a>
-								<a class="nav-link" href="{% url 'song-media:midi_index' %}">Midis</a>
-								<a class="nav-link" href="{% url 'song-media:score_index' %}">Scores</a>
-							</li>
+							<li class="nav-item"><a class="nav-link" href="/admin/"><i class='fas fa-cog'></i></a></li>
+							<li><a class="nav-link" href="{% url 'song-media:midi_index' %}"><i class="fas fa-music"></i></a></li>
+							<li><a class="nav-link" href="{% url 'song-media:score_index' %}"><i class="fas fa-file-pdf"></i></a></li>
 						{% endif %}
 						<li class="nav-item">
 							<a class="nav-link" href="{% url 'siteuser:detail' user.siteuser.pk user.siteuser.slug %}">{{ user.siteuser.screen_name }}</a>
@@ -103,8 +98,8 @@
                     <a href="{% url 'song:new' %}" class="btn btn-primary">UPLOAD</a>
                     <a href="{% url 'blog:new' %}" class="btn btn-secondary">Blog</a>
                     <a href="{% url 'request:new' %}" class="btn btn-secondary">Request</a>
-                    <a href="{% url 'song:instant_song' %}" class="btn btn-secondary target="blank" ">Search</a>
-                    <a href="#" class="btn btn-secondary">Douay-Rheims bible</a>
+                    <a href="{% url 'song:instant_song' %}" class="btn btn-secondary" target="_blank">Search</a>
+                    <a href="#" class="btn btn-secondary" target="_blank">Douay-Rheims bible</a>
                 </p>
             </div>
         </section>
