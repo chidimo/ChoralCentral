@@ -1,0 +1,36 @@
+{% extends "choralcentral_base.html" %}
+{% load static %}
+{% block title %}Midi index{% endblock %}
+
+{% block left_sidebar %}{% endblock left_sidebar %}
+{% block introduction %}{% endblock %}
+{% block right_sidebar %}{% endblock right_sidebar %}
+
+{% block content_content %}
+
+   <div class="container">
+        <h2 class="my-4 text-center text-lg-left">Midis</h2>
+        <hr>
+
+        <div class="row text-center text-lg-left">
+            {% for midi in midis %}
+                <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2">
+                    <p class="text-left">{{ midi }}</p>
+                    {% if '.mp3' in midi.media_file.url %}
+                    <p class='text-left'>
+                        <a href="{% url 'song-media:play_midiview' midi.pk %}" target="_blank"><i class="fas fa-play"></i></a>
+                    </p>
+                    {% else %}
+                    <p class='text-left'>
+                        <a href="" onClick="MIDIjs.play('{{ midi.media_file.url }}');"><i class='fas fa-play'></i></a> |
+                        <a href="" onClick="MIDIjs.stop();"><i class='fas fa-stop'></i></a>
+                    </p>
+                    {% endif %}
+                </div>
+            {% empty %}
+                <p>No midi</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content_content %}
+{% block footer %}{% endblock %}

@@ -38,6 +38,10 @@ a:hover {
   width: 15%;
 }
 
+section a {
+    margin: 0.5rem 0 0.5rem 0.5rem;
+}
+
 .navbar-nav a {
    color: #BCC6CC;
    font-size: 16px;

@@ -169,8 +169,8 @@
                                     <a href="{% url 'song-media:play_midiview' midi.pk %}" target="_blank"><i class="fas fa-play"></i></a> |
                                     <a href="">&emsp;</a>|
                                     {% else %}
-                                        <a href="#" onClick="MIDIjs.play('{{ midi.media_file.url }}');"><i class='fas fa-play'></i></a> |
-                                        <a href="#" onClick="MIDIjs.stop();"><i class='fas fa-stop'></i></a> |
+                                        <a href="" onClick="MIDIjs.play('{{ midi.media_file.url }}');"><i class='fas fa-play'></i></a> |
+                                        <a href="" onClick="MIDIjs.stop();"><i class='fas fa-stop'></i></a> |
                                     {% endif %}
                                     {% if user == midi.uploader.user %}
                                         <a href=""><i class="fas fa-edit"></i></a> |

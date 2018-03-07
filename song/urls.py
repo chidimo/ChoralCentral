@@ -27,8 +27,8 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    path("feed/latest/", feeds.LatestSongFeed(), name="latest_song_feed"),
-    path("feed/popular/", feeds.PopularSongFeed(), name="popular_song_feed"),
+    path("feed/<str:feed_type>/rss/", feeds.SongFeed(), name="song_feed"),
+    path("feed/midi/rss/", feeds.MidiFeed(), name="midi_feed"),
     path("instant-search/", views.InstantSong.as_view(), name="instant_song"),
     path("auto-complete/", views.auto_song, name="auto_song"),
 ]

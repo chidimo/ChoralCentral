@@ -23,6 +23,11 @@ class NewVocalPart(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
     form_class = NewVocalPartForm
     template_name = 'song_media/part_new.html'
 
+class ScoreIndex(LoginRequiredMixin, generic.ListView):
+    model = Score
+    context_object_name = 'scores'
+    template_name = 'song_media/score_index.html'
+
 class NewScoreNotation(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
     model = ScoreNotation
     form_class = NewScoreNotationForm
@@ -45,8 +50,8 @@ class NewScore(LoginRequiredMixin, generic.CreateView):
         kwargs['pk'] = self.kwargs.get('pk', None)
         return kwargs
 
-def show_score(self, request, *args, **kwargs):
-    doc = get_object_or_404(Score, pk=self.kwargs.get('pk', None))
+def show_score(request, pk):
+    doc = get_object_or_404(Score, pk=pk)
     doc.downloads += 1
     doc.save()
     fname = doc.media_file.url
@@ -61,6 +66,11 @@ class DeleteScore(LoginRequiredMixin, generic.DeleteView):
 
     def get_success_url(self):
         return reverse("song:detail", kwargs={'pk' : self.kwargs['song_pk'], 'slug' : self.kwargs['slug']})
+
+class MidiIndex(LoginRequiredMixin, generic.ListView):
+    model = Midi
+    context_object_name = 'midis'
+    template_name = 'song_media/midi_index.html'
 
 class NewMidi(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
     template_name = 'song_media/midi_new.html'

@@ -57,7 +57,6 @@
 					<li class="nav-item"><a class="nav-link" href="{% url 'author:index' %}">Authors</a></li>
 					<li class="nav-item"><a class="nav-link" href="{% url 'request:index' %}">Requests</a></li>
 					<li class="nav-item"><a class="nav-link" href="{% url 'blog:index' %}">Blog</a></li>
-					<li class="nav-item"><a class="nav-link" href="{% url 'song:instant_song' %}" target="blank">Search</a></li>
 					<li class="nav-item"><a class="nav-link" href="{% url 'siteuser:index' %}">Members</a></li>
 				</ul>
 
@@ -69,6 +68,8 @@
 						{% if user.is_admin %}
 							<li class="nav-item">
 								<a class="nav-link" href="/admin/"><i class='fas fa-cog'></i></a>
+								<a class="nav-link" href="{% url 'song-media:midi_index' %}">Midis</a>
+								<a class="nav-link" href="{% url 'song-media:score_index' %}">Scores</a>
 							</li>
 						{% endif %}
 						<li class="nav-item">
@@ -95,10 +96,10 @@
 		{% endblock navigation %}
 
 		{% block introduction %}
-		<section class="jumbotron text-center">
+		<section class="jumbotron text-center d-none d-sm-block">
             <div class="container">
                 <h1 class="jumbotron-heading">ChoralCentral</h1>
-                <p>If music be the food of the soul ...<p>
+                <p>If music be the food of love ...<p>
                     <a href="{% url 'song:new' %}" class="btn btn-primary">UPLOAD</a>
                     <a href="{% url 'blog:new' %}" class="btn btn-secondary">Blog</a>
                     <a href="{% url 'request:new' %}" class="btn btn-secondary">Request</a>

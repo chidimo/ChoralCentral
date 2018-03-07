@@ -1,0 +1,30 @@
+{% extends "choralcentral_base.html" %}
+{% load static %}
+{% block title %}Score index{% endblock %}
+
+{% block left_sidebar %}{% endblock left_sidebar %}
+{% block introduction %}{% endblock %}
+{% block right_sidebar %}{% endblock right_sidebar %}
+
+{% block content_content %}
+
+   <div class="container">
+        <h2 class="my-4 text-center text-lg-left">Scores</h2>
+        <hr>
+
+        <div class="row text-center text-lg-left">
+            {% for score in scores %}
+                <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2">
+                    <p class='text-left'>
+                        <a href="{% url 'song-media:score_view' score.pk %}" target="_blank"><i class="fas fa-file-pdf"></i></a>
+                    </p>
+                    <p class="text-left">{{ score }}</p>
+                </div>
+            {% empty %}
+                <p>No score</p>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock content_content %}
+{% block footer %}{% endblock %}
