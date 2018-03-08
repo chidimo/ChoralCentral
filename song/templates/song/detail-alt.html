@@ -1,0 +1,204 @@
+{% extends "choralcentral_base.html" %}
+{% if song %}{% block title %}{{ song }}{% endblock title %} {% endif %}
+{% load thumbnail %}
+{% load static %}
+{% load song_ttags %}
+
+{% block content_content %}
+
+<h2>{{ song.title }}</h2>
+
+<hr>
+
+<div class='container'>
+    <div class='row'>
+        <span class='h3'>
+            <!-- like script -->
+            <a href="" id="like" title="{{ song.pk }}" value="Like"><i class="fas fa-star"></i></a>
+            <script>
+            $('#like').click(function(){
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'song:like_song' %}",
+                    data: {'pk': $(this).attr('title'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                    dataType: "json",
+                    success: function(response) {
+                            alert(response.message);
+                    },
+                    error: function(rs, e) {
+                            alert(rs.responseText);
+                    }
+                });
+                })
+            </script>
+            <!-- end like script -->
+
+            <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'song:share_on_facebook' song.pk song.slug %}" title="Share on facebook"><i class="fab fa-facebook"></i></a>
+
+            <a href='' title="Share by email" data-toggle="modal" data-target="#emailModal"><i class="fas fa-at"></i></a>
+            {% include 'song/get_email_modal.html' %}
+        </span>
+    </div>
+</div>
+<hr>
+
+<div class="container">
+    <h2 class="my-4 text-center text-lg-left">About</h2>
+    <hr>
+
+    <div class="row text-center text-lg-left">
+        <div class="col-lg-3 col-md-4 col-sm-6 py-2 my-2" style="border: 1px solid">
+            <p class='text-left'><a href="{% url 'siteuser:detail' song.originator.pk song.originator.slug %}">{{ song.originator.screen_name }}</a></p>
+            <p class='text-left'>{{ song. }}</p>
+            <p class='text-left'>{{ song.voicing }}</p>
+            <p class='text-left'>{{ song.tempo_text }}</p>
+            <p class='text-left'><a href=''>{{ song.tempo }}</a></p>
+            <p class='text-left'>{{ song.bpm }}/{{ song.divisions }}</p>
+            <p class='text-left'>{{ song.scripture_ref }}</p>
+            <p class='text-left'>{{ song.compose_date }}</p>
+            <p class='text-left'>{{ song.language }}</p>
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-sm-6 py-2 my-2" style="border: 1px solid">
+            <p class='text-left'>
+                {% for season in song.seasons.all %}
+                    {{ season }}{% if not forloop.last %},<br>{% endif %}
+                {% endfor %}</p>
+            <p class='text-left'>
+                {% for masspart in song.mass_parts.all %}
+                    {{ masspart }}{% if not forloop.last %},<br>{% endif %}
+                {% endfor %}
+            </p>
+            <p class='text-left'>
+                {% for author in song.authors.all %}
+                    {{ author }}{% if not forloop.last %},<br>{% endif %}
+                {% endfor %}
+            </p>
+        </div>
+
+    </div>
+</div>
+
+<hr>
+
+<div class="container">
+    <h2 class="my-4 text-center text-lg-left">
+        Scores
+        <span class="float-right">
+            <a class="btn btn-primary btn-sm" href="{% url 'song-media:score_add_song' song.pk %}">Add score</a>
+        </span>
+        </h2>
+    <hr>
+
+    <div class="row text-center text-lg-left">
+        {% for score in song.score_set.all %}
+            <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2" style="border: 1px solid">
+                <a href="{% url 'song-media:score_view' score.pk %}" target="_blank">
+                    <i class="fas fa-file-pdf fa-3x"></i>
+                </a>
+                <div class='divider'></div>
+                <p class="text-left"><a href="{% url 'siteuser:detail' score.uploader.pk score.uploader.slug %}">{{ score.uploader.screen_name }}</a></p>
+                <p class="text-left">{{ score.part }}</p>
+                <p class="text-left">{{ score.notation }}</p>
+                <p class="text-left">{{ score.score_likes }}<a href=""><i class="fas fa-star"></i></a></p>
+                <p class="text-left">{{ score.downloads }} views</p>
+                <p class='text-left'>
+                    {% if request.user == score.uploader.user %}
+                        <a href=""><i  class="fas fa-edit"></i></a> &emsp;
+                        <a href="{% url 'song-media:delete_score' score.pk song.pk song.slug %}"><i class="fas fa-trash"></i></a>
+                    {% endif %}
+                </p>
+            </div>
+        {% empty %}
+            <p>No score.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="container">
+    <h2 class="my-4 text-center text-lg-left">
+        Midis
+        <span class="float-right">
+            <a class="btn btn-primary btn-sm float-right" href="{% url 'song-media:midi_add_song' song.pk %}">Add midi</a>
+        </span>
+        </h2>
+    <hr>
+
+    <div class="row text-center text-lg-left">
+        {% for midi in song.midi_set.all %}
+            <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2">
+
+                {% if '.mp3' in midi.media_file.url %}
+                    <i class="fas fa-music fa-3x"></i>
+                        <div class='container'>
+                            <div class='row'>
+                                <audio controls>
+                                  <source src="{{ midi.media_file.url }}" type="audio/mpeg">
+                                  <source src="{{ midi.media_file.url }}" type="audio/ogg">
+                                  Your browser does not support the sound element.
+                                </audio>
+                            </div>
+                        </div>
+                {% else %}
+                    <i class="fas fa-music fa-3x"></i>
+                        <div class='container'>
+                            <div class='row'>
+                                <div class='midi-controls' style="height: 32px;">
+                                    <a href="#" onClick="MIDIjs.play('{{ midi.media_file.url }}');"><i class='fas fa-play'></i></a> &emsp;
+                                    <a href="#" onClick="MIDIjs.stop();"><i class='fas fa-stop'></i></a> &emsp;
+                                    <a href="{% url 'song-media:download_midi' midi.pk %}"><i class="fas fa-download"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                {% endif %}
+
+                <p class='text-left'><a href="{% url 'siteuser:detail' midi.uploader.pk midi.uploader.slug %}">{{ midi.uploader.screen_name }}</a></p>
+                <p class='text-left'>{{ midi.part }}</p>
+                <p class='text-left'>{{ midi.midi_likes }}<a href=""><i class="fas fa-star"></i></a></p>
+                <p class='text-left'>{{ midi.downloads }} views</p>
+                <p class='text-left'>
+                    {% if user == midi.uploader.user %}
+                        <a href=""><i class="fas fa-edit"></i></a> &emsp;
+                        <a href="{% url 'song-media:delete_midi' midi.pk song.pk song.slug %}"><i  class="fas fa-trash"></i></a>
+                    {% endif %}
+                </p>
+
+            </div>
+        {% empty %}
+            <p>No midi.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="container">
+    <h2 class="my-4 text-center text-lg-left">
+        Video links
+        <span class="float-right">
+            <a class="btn btn-primary btn-sm" href="{% url 'song-media:videolink_new_song' song.pk %}">Add a link</a>
+        </span>
+    </h2>
+    <hr>
+
+    <div class="row text-center text-lg-left">
+        {% for link in song.videolink_set.all %}
+            <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2" style="border: 1px solid">
+                <i class="fab fa-youtube fa-3x"></i>
+                <div class='divider'></div>
+                <p class="text-left"><a href="{% url 'siteuser:detail' link.uploader.pk link.uploader.slug %}">{{ link.uploader.screen_name }}</a></p>
+                <p class="text-left">{<a href="{{ link.video_link }}" target="_blank">{{ link.video_link|urlencode }}</a></p>
+            </div>
+        {% empty %}
+            <p>No video link.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<hr>
+<h2>Lyrics</h2>
+{{ song.lyrics|markdown_format }}
+{% endblock content_content %}
+
+{%  block right_sidebar %}{% endblock right_sidebar %}
+{% block left_sidebar %}{% endblock left_sidebar %}
+
+

@@ -1,5 +1,7 @@
 {% extends "choralcentral_base.html" %}
 {% if song %}{% block title %}{{ song }}{% endblock title %} {% endif %}
+{% load thumbnail %}
+{% load static %}
 {% load song_ttags %}
 
 {% block content_content %}
@@ -219,6 +221,7 @@
         {{ song.lyrics|markdown_format }}
     </div>
 </div>
+
 {% endblock content_content %}
 
 {%  block right_sidebar %}

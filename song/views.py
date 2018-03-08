@@ -85,7 +85,7 @@ class SongIndex(PaginationMixin, generic.ListView):
 class SongDetail(generic.DetailView):
     model = Song
     context_object_name = 'song'
-    template_name = 'song/detail.html'
+    template_name = 'song/detail-alt.html'
 
     def get_context_data(self, **kwargs):
         context = super(SongDetail, self).get_context_data(**kwargs)

@@ -16,7 +16,7 @@ urlpatterns += [
     path('new/sound/', views.NewMidi.as_view(), name='midi_add'),
     path('new/sound/<int:pk>/', views.NewMidi.as_view(), name='midi_add_song'),
     path('sound/play/<int:pk>/', views.play_mp3, name='play_midiview'),
-    path('download/<int:pk>/', views.download_midi, name='download_midi'),
+    path('download/midi/<int:pk>/', views.download_midi, name='download_midi'),
 ]
 
 urlpatterns += [
