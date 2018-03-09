@@ -19,7 +19,3 @@ class Voicing(mdl.TimeStampedModel):
 
     def get_absolute_url(self):
         return reverse('song:index')
-
-    def save(self, *args, **kwargs):
-        self.voicing = self.voicing.upper()
-        super(Voicing, self).save(*args, **kwargs)

@@ -13,7 +13,3 @@ class Language(mdl.TimeStampedModel):
 
     def get_absolute_url(self):
         return reverse('song:index')
-
-    def save(self, *args, **kwargs):
-        self.language = self.language.upper()
-        super(Language, self).save(*args, **kwargs)

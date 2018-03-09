@@ -24,10 +24,14 @@ class NewAuthorForm(forms.ModelForm):
         data = self.cleaned_data
         first_name = data['first_name']
         last_name = data['last_name']
-        check = Author.objects.get(first_name=first_name, last_name=last_name)
+        author_type = data['author_type']
+
+        check = Author.objects.get(
+            first_name=first_name, last_name=last_name, author_type=author_type)
 
         if check:
-            self.add_error('first_name', 'This author probably already exists.')
+            msg = '{} {} already exists as a {}. Perhaps you meant to include one as a '.format(first_name, last_name, author_type.title())
+            self.add_error('first_name', msg)
 
 class AuthorEditForm(forms.ModelForm):
     class Meta:

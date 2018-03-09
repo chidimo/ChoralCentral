@@ -20,10 +20,6 @@ class VocalPart(mdl.TimeStampedModel):
     # def get_absolute_url(self):
     #     return reverse()
 
-    def save(self, *args, **kwargs):
-        self.name = self.name.title()
-        super(VocalPart, self).save(*args, **kwargs)
-
 class ScoreNotation(mdl.TimeStampedModel):
     name = models.CharField(max_length=30, default='Solfa', unique=True)
 
@@ -35,10 +31,6 @@ class ScoreNotation(mdl.TimeStampedModel):
 
     # def get_absolute_url(self):
     #     return reverse()
-
-    def save(self, *args, **kwargs):
-        self.name = self.name.title()
-        super(ScoreNotation, self).save(*args, **kwargs)
 
 class Score(mdl.TimeStampedModel):
     uploader = models.ForeignKey(SiteUser, null=True, on_delete=models.SET_NULL)

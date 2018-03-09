@@ -94,13 +94,6 @@ class SiteUser(mdl.TimeStampedModel):
     def get_user_creation_url(self):
         return reverse('siteuser:new_activation', args=[str(self.user.id), str(self.screen_name)])
 
-    def save(self, *args, **kwargs):
-        if self.first_name:
-            self.first_name = self.first_name.title()
-        if self.last_name:
-            self.last_name = self.last_name.title()
-        super(SiteUser, self).save(*args, **kwargs)
-
 class HandShake(mdl.TimeStampedModel):
     from_siteuser = models.ForeignKey(
         SiteUser,
