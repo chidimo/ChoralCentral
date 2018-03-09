@@ -109,9 +109,9 @@ hr .narrow {
   margin-bottom: 0.25rem;
 }
 
-/* label {
-    color: midnightblue;
-  } */
+label {
+  font-weight: bold;
+  }
   
 .leftsidebar {
     border: 0.5px solid grey;

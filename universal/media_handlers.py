@@ -1,13 +1,13 @@
-from os.path import splitext
+import os
 from django.template.defaultfilters import slugify
 
 def upload_avatar(instance, filename):
     _, ext = os.path.splitext(filename)
-    return "avatars/{}{}".format(instance.display_name.lower(), ext)
+    return "avatars/{}{}".format(instance.screen_name.lower(), ext)
 
 def upload_midi(instance, filename):
     """Take the midi instance and original filename and return appropriate name"""
-    filename, ext = splitext(filename)
+    filename, ext = os.path.splitext(filename)
     normalized_song_name = "_".join([each.lower() for each in instance.song.title.split()])
     normalized_song_name = slugify(instance.song.title)
     return "midis/{}_{}{}".format(normalized_song_name, instance.song.pk, ext)
@@ -17,6 +17,6 @@ def upload_pdf(instance, filename):
     Append the Primary key to each file name so that names may not clash
     in case of multiple instance of same song title.
     """
-    filename, ext = splitext(filename)
+    filename, ext = os.path.splitext(filename)
     normalized_song_name = slugify(instance.song.title)
     return "scores/{}_{}.{}".format(normalized_song_name, instance.song.pk, ext)

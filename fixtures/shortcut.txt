@@ -16,7 +16,6 @@ independents()
 
 superuser()
 members()
-10
-voicing_language()
+20
 songs_from_file()
 add_manyfields()
