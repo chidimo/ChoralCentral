@@ -44,12 +44,7 @@ class AuthorDetail(generic.DetailView):
     #     author = Author.objects.get(pk=self.kwargs.get("pk", None))
     #     return author
 
-class AuthorDelete(generic.DeleteView):
+class DeleteAuthor(generic.DeleteView):
     model = Author
     success_url = reverse_lazy('song:index')
     template_name = "confirm_delete.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(AuthorDelete, self).get_context_data(**kwargs)
-        context["which_model"] = "Author"
-        return context
