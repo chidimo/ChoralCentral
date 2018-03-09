@@ -14,9 +14,13 @@ from author.models import Author
 
 # pylint: disable=C0326, C0301, C0103, C0111
 
-class GetEmailAddressForm(forms.Form):
-    email = forms.EmailField(
-        widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Enter email"})
+class ShareForm(forms.Form):
+    receiver_email = forms.EmailField(
+        widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Enter email"}),
+    )
+    name = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Please enter your name (optional)"})
     )
 
 class SongFilterForm(forms.Form):

@@ -13,7 +13,7 @@ from algoliasearch_django import get_adapter
 
 from siteuser.models import SiteUser
 from song.models import Song
-from song.forms import GetEmailAddressForm
+from song.forms import ShareForm
 
 from .models import Post, Comment
 from .forms import NewPostForm, PostEditForm, PostCreateFromSongForm, CommentCreateForm, CommentEditForm, CommentNumberForm
@@ -76,7 +76,7 @@ class PostIndex(PaginationMixin, generic.ListView):
 
     def get_context_data(self):
         context = super(PostIndex, self).get_context_data()
-        context['share_form'] = GetEmailAddressForm()
+        context['share_form'] = ShareForm()
         return context
 
 class PostDetail(PaginationMixin, generic.ListView):
@@ -128,7 +128,7 @@ def share_by_mail(request, pk, slug):
     context['post_link'] = request.build_absolute_uri(post.get_absolute_url())
 
     if request.method == 'GET':
-        form = GetEmailAddressForm(request.GET)
+        form = ShareForm(request.GET)
         if form.is_valid():
             form = form.cleaned_data
             email = form['email']

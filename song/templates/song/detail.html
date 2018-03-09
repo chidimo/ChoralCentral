@@ -36,7 +36,7 @@
             <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'song:share_on_facebook' song.pk song.slug %}" title="Share on facebook"><i class="fab fa-facebook"></i></a>
 
             <a href='' title="Share by email" data-toggle="modal" data-target="#emailModal"><i class="fas fa-at"></i></a>
-            {% include 'song/get_email_modal.html' %}
+            {% include 'song/song_share_modal.html' %}
         </span>
     </div>
 </div>

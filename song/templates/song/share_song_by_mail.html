@@ -16,8 +16,14 @@
         <hr class='broad'>
 
         <p>Hello, <br>
-        Someone would like you to see <a href="{{ song_link }}">{{ song.title }}</a> over on
-        <a href="http://www.choralcentral.net">ChoralCentral</a></p>
+        
+        {% if name %}
+            {{ name }} would like you to see <a href="{{ song_link }}">{{ song.title }}</a> over on
+            <a href="http://www.choralcentral.net">ChoralCentral</a></p>
+        {% else %}
+            Someone would like you to see <a href="{{ song_link }}">{{ song.title }}</a> over on
+            <a href="http://www.choralcentral.net">ChoralCentral</a></p>
+        {% endif %}
 
         <p>{{ song.lyrics }}</p>
     </body>

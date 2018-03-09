@@ -26,7 +26,7 @@ from siteuser.models import SiteUser
 from .models import Song
 from author.models import Author
 
-from .forms import GetEmailAddressForm, NewSongForm, SongEditForm, SongFilterForm
+from .forms import ShareForm, NewSongForm, SongEditForm, SongFilterForm
 
 from universal.utils import render_to_pdf
 
@@ -79,7 +79,7 @@ class SongIndex(PaginationMixin, generic.ListView):
         # print("IP Address for debug-toolbar: " + self.request.META['REMOTE_ADDR'])
         context = super(SongIndex, self).get_context_data(**kwargs)
         context['form'] = SongFilterForm()
-        # context['share_form'] = GetEmailAddressForm()
+        # context['share_form'] = ShareForm()
         return context
 
 class SongDetail(generic.DetailView):
@@ -89,7 +89,7 @@ class SongDetail(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(SongDetail, self).get_context_data(**kwargs)
-        context['share_form'] = GetEmailAddressForm()
+        context['share_form'] = ShareForm()
         return context
     # add download incrementer here
 
@@ -189,7 +189,7 @@ def reader_view(request, pk, slug):
     return render_to_pdf(request, template, context)
 
 # https://www.webforefront.com/django/
-def share_by_mail(request, pk, slug):
+def share_song_by_mail(request, pk, slug):
     context = {}
 
     from_email = settings.EMAIL_HOST_USER
@@ -201,18 +201,20 @@ def share_by_mail(request, pk, slug):
         context['song'] = song
         context['song_link'] = request.build_absolute_uri(song.get_absolute_url())
 
-        form = GetEmailAddressForm(request.GET)
+        form = ShareForm(request.GET)
         if form.is_valid():
             form = form.cleaned_data
-            email = form['email']
+            email = form['receiver_email']
+            name = form['name']
+            context['name'] = name
 
-    text_email = render_to_string("song/share_by_mail.txt", context)
-    html_email = render_to_string("song/share_by_mail.html", context)
+    text_email = render_to_string("song/share_song_by_mail.txt", context)
+    html_email = render_to_string("song/share_song_by_mail.html", context)
 
     msg = EmailMultiAlternatives(subject, text_email, from_email, [email])
     msg.attach_alternative(html_email, "text/html")
     msg.send()
-    return redirect('song:index')
+    return redirect(song.get_absolute_url())
 
 def share_on_facebook(request, pk, slug):
     pass
