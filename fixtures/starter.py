@@ -58,15 +58,6 @@ def clear():
     else:
         os.system('cls')
 
-def run_all():
-    roles()
-    superuser()
-    seasons()
-    massparts()
-    voice_notation()
-    members()
-    voicing_language()
-
 def independents():
     roles()
     seasons()
@@ -82,13 +73,13 @@ def voicing_language():
     users = SiteUser.objects.all()
     for each in VOICING:
         try:
-            _, _ = Voicing.objects.get_or_create(originator=choice(users), voicing=each)
+            _, _ = Voicing.objects.get_or_create(voicing=each)
         except IntegrityError:
             continue
 
     for each in LANGUAGE:
         try:
-            _, _ = Language.objects.get_or_create(originator=choice(users), language=each.upper())
+            _, _ = Language.objects.get_or_create(language=each)
         except IntegrityError:
             continue
 

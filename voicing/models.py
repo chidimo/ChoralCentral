@@ -5,7 +5,6 @@ from siteuser.models import SiteUser
 from universal.models import TimeStampedModel
 
 class Voicing(TimeStampedModel):
-    originator = models.ForeignKey(SiteUser, on_delete=models.CASCADE)
     voicing = models.CharField(max_length=10, unique=True)
     objects = models.Manager()
 
