@@ -1,6 +1,10 @@
 from os.path import splitext
 from django.template.defaultfilters import slugify
 
+def upload_avatar(instance, filename):
+    _, ext = os.path.splitext(filename)
+    return "avatars/{}{}".format(instance.display_name.lower(), ext)
+
 def upload_midi(instance, filename):
     """Take the midi instance and original filename and return appropriate name"""
     filename, ext = splitext(filename)

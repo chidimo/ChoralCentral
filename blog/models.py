@@ -8,7 +8,7 @@ from django.urls import reverse
 from taggit.managers import TaggableManager
 
 from universal.models import TimeStampedModel
-from universal.fields import 
+from universal.fields import AutoSlugField
 
 from siteuser.models import SiteUser
 from song.models import Song

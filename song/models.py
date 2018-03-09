@@ -14,7 +14,7 @@ from season.models import Season
 from masspart.models import MassPart
 
 from universal.models import TimeStampedModel
-from universal.fields import 
+from universal.fields import AutoSlugField
 from universal.utils import get_tempo_text
 
 class PublishedManager(models.Manager):

@@ -1,12 +1,14 @@
 """fixtures"""
 import os
 import sys
+import glob
 import json
 from random import choice, randint
 
 import django
 from django.conf import settings
 from django.db import IntegrityError
+from django.core.files import File
 from django.contrib.auth import get_user_model
 
 from pywebber import LoremPysum
@@ -22,6 +24,8 @@ from request.models import Request, Reply
 from language.models import Language
 from voicing.models import Voicing
 
+AVATAR_PATH = os.path.join(settings.BASE_DIR, 'fixtures/wallpaper/')
+IMAGES = [os.path.abspath(each) for each in glob.glob("{}/*.jpg".format(AVATAR_PATH))]
 AUTHORS = ["LYRICIST", "COMPOSER"]
 LANGUAGE = ["english", "igbo", "bini", "ibibio", "hausa", "chinese", "yoruba"]
 VOICING = ["SATB", "SSAB", "SAB", "SSABTT", "ATB", "SATTB"]
@@ -119,6 +123,7 @@ def superuser():
             first_name="Chidi",
             last_name="Orji",
             location="Abu Dhabi",
+            avatar=File(open(choice(IMAGES), "rb")),
         )
     except IntegrityError:
         pass
@@ -144,9 +149,13 @@ def members():
         screen_name = LoremPysum().word()
 
         pro, created = SiteUser.objects.get_or_create(
-                user=user, first_name=first_name,
-                last_name=last_name, location=location,
-                screen_name=screen_name)
+                user=user,
+                first_name=first_name,
+                last_name=last_name,
+                location=location,
+                screen_name=screen_name,
+                avatar=File(open(choice(IMAGES), "rb")),
+                )
         if created:
             print("profile name error")
             _ = CustomUser.objects.get(email=email).delete()

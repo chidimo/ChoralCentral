@@ -8,7 +8,7 @@ from siteuser.models import SiteUser
 from song.models import Song
 
 from universal.models import TimeStampedModel
-from universal.fields import 
+from universal.fields import AutoSlugField
 
 class Request(TimeStampedModel):
     originator = models.ForeignKey(SiteUser, null=True, on_delete=models.SET_NULL)
