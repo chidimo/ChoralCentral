@@ -5,10 +5,6 @@ from siteuser.models import SiteUser
 from universal import models as mdl
 from universal import fields as fdl
 
-class AuthorManager(models.Manager):
-    def author_exists(self, author):
-        return super(AuthorManager, self).get_queryset().filter(author=author.upper()).exists()
-
 class Author(mdl.TimeStampedModel):
     LY = 'LYRICIST'
     CP = 'COMPOSER'
@@ -24,7 +20,6 @@ class Author(mdl.TimeStampedModel):
     likes = models.ManyToManyField(SiteUser, related_name="author_likes")
     author_type = models.CharField(choices=CHOICES, max_length=15, default="COMPOSER")
     objects = models.Manager()
-    auth_similar = AuthorManager()
 
     class Meta:
         ordering = ["first_name"]
