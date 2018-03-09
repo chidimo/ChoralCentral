@@ -10,7 +10,7 @@ nav {
 }
 
 h1, h2, h3, h4, h5, h6 {
-	color: darkblue;
+	color: midnightblue;
   }
 
 p {
@@ -81,21 +81,12 @@ th, td {
 
 .upload-forms {
   max-width:450px;
-  margin-top: 3.5rem;
-  /* margin: 3.5rem auto; */
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
   padding: 0 1rem 2.75rem 1rem;
-  background: #b8daff;
-  border-radius: 7.5px;
-}
-
-.upload-forms h2 {
-  padding-top: 0.5rem;
-  color: #007bff;
-}
-
-.upload-forms .btn-md {
-  margin-top: 0.75rem;
-  font-size: 24px;
+  background: #f0eeee;
+  border: 1px solid #d7d7d7;
+  border-radius: 3.5px;
 }
 
 .login-form {
@@ -118,16 +109,17 @@ hr .narrow {
   margin-bottom: 0.25rem;
 }
 
-label {
-    color: red;
-}
-.centerspread {
+/* label {
+    color: midnightblue;
+} */
+/* .centerspread {
     border: 0.5px solid;
 }
 
 .leftsidebar, .rightsidebar {
     border: 0.5px solid;
-}
+} */
+
 /* Add icons to registration form fields */
 .form-group {
   position: relative;
@@ -297,6 +289,15 @@ tbody tr:nth-child(odd) {
 
 .row {
     padding: 0.5rem 0;
+}
+
+ul.errorlist {
+  /* style django errors */
+  color: red;
+  text-align: left;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
 .form-control {

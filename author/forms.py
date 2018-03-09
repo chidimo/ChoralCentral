@@ -15,10 +15,19 @@ class NewAuthorForm(forms.ModelForm):
             "last_name" : forms.TextInput(
                 attrs={'class' : 'form-control', 'placeholder' : "Last Name"}),
             "bio" : forms.Textarea(
-                attrs={'rows' : 5, 'columns' : 10, 'class' : 'form-control', 'placeholder' : "Biography (optional)"}),
+                attrs={'class' : 'form-control', 'placeholder' : "Biography (optional)"}),
             "author_type" : forms.Select(
                 attrs={'class' : 'form-control'})
         }
+
+    def clean(self):
+        data = self.cleaned_data
+        first_name = data['first_name']
+        last_name = data['last_name']
+        check = Author.objects.get(first_name=first_name, last_name=last_name)
+
+        if check:
+            self.add_error('first_name', 'This author probably already exists.')
 
 class AuthorEditForm(forms.ModelForm):
     class Meta:
@@ -31,7 +40,7 @@ class AuthorEditForm(forms.ModelForm):
             "last_name" : forms.TextInput(
                 attrs={'class' : 'form-control', 'placeholder' : "Last Name"}),
             "bio" : forms.Textarea(
-                attrs={'rows' : 5, 'columns' : 10, 'class' : 'form-control', 'placeholder' : "Biography (optional)"}),
+                attrs={'class' : 'form-control', 'placeholder' : "Biography (optional)"}),
             "author_type" : forms.Select(
                 attrs={'class' : 'form-control'})
         }

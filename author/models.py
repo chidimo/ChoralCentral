@@ -9,10 +9,6 @@ class AuthorManager(models.Manager):
     def author_exists(self, author):
         return super(AuthorManager, self).get_queryset().filter(author=author.upper()).exists()
 
-    def author_similar(self, author):
-        """Find and display similar authors"""
-        pass
-
 class Author(mdl.TimeStampedModel):
     LY = 'LYRICIST'
     CP = 'COMPOSER'
@@ -38,12 +34,3 @@ class Author(mdl.TimeStampedModel):
 
     def __str__(self):
         return "{} {}".format(self.first_name, self.last_name)
-
-    @property
-    def author_likes(self):
-        return self.likes.count()
-
-    def save(self, *args, **kwargs):
-        self.first_name = self.first_name.title()
-        self.last_name = self.last_name.title()
-        super(Author, self).save(*args, **kwargs)
