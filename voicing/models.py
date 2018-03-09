@@ -2,9 +2,9 @@ from django.db import models
 from django.shortcuts import reverse
 from siteuser.models import SiteUser
 
-from universal import models as mdl
+from universal.models import TimeStampedModel
 
-class Voicing(mdl.TimeStampedModel):
+class Voicing(TimeStampedModel):
     originator = models.ForeignKey(SiteUser, on_delete=models.CASCADE)
     voicing = models.CharField(max_length=10, unique=True)
     objects = models.Manager()

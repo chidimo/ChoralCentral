@@ -5,10 +5,10 @@ from django.shortcuts import reverse
 from song.models import Song
 from siteuser.models import SiteUser
 
-from universal import models as mdl
+from universal.models import TimeStampedModel
 from universal.media_handlers import upload_pdf, upload_midi
 
-class VocalPart(mdl.TimeStampedModel):
+class VocalPart(TimeStampedModel):
     name = models.CharField(max_length=30, default='Choir', unique=True)
 
     class Meta:
@@ -20,7 +20,7 @@ class VocalPart(mdl.TimeStampedModel):
     # def get_absolute_url(self):
     #     return reverse()
 
-class ScoreNotation(mdl.TimeStampedModel):
+class ScoreNotation(TimeStampedModel):
     name = models.CharField(max_length=30, default='Solfa', unique=True)
 
     class Meta:
@@ -32,7 +32,7 @@ class ScoreNotation(mdl.TimeStampedModel):
     # def get_absolute_url(self):
     #     return reverse()
 
-class Score(mdl.TimeStampedModel):
+class Score(TimeStampedModel):
     uploader = models.ForeignKey(SiteUser, null=True, on_delete=models.SET_NULL)
     song = models.ForeignKey(Song, on_delete=models.CASCADE)
     part = models.ForeignKey(VocalPart, on_delete=models.CASCADE)
@@ -54,7 +54,7 @@ class Score(mdl.TimeStampedModel):
     def get_absolute_url(self):
         return reverse('song:detail', kwargs={'pk' : (self.song.id), 'slug' : self.song.slug})
 
-class Midi(mdl.TimeStampedModel):
+class Midi(TimeStampedModel):
     uploader = models.ForeignKey(SiteUser, null=True, on_delete=models.SET_NULL)
     song = models.ForeignKey(Song, null=True, on_delete=models.SET_NULL)
     part = models.ForeignKey(VocalPart, on_delete=models.CASCADE)
@@ -75,7 +75,7 @@ class Midi(mdl.TimeStampedModel):
     def get_absolute_url(self):
         return reverse('song:detail', kwargs={'pk' : (self.song.id), 'slug' : self.song.slug})
 
-class VideoLink(mdl.TimeStampedModel):
+class VideoLink(TimeStampedModel):
     uploader = models.ForeignKey(SiteUser, null=True, on_delete=models.SET_NULL)
     song = models.ForeignKey(Song, null=True, on_delete=models.SET_NULL)
     video_link = models.URLField(max_length=250, unique=True)

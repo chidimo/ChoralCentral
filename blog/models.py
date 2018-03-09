@@ -7,8 +7,8 @@ from django.urls import reverse
 
 from taggit.managers import TaggableManager
 
-from universal import models as mdl
-from universal import fields as fdl
+from universal.models import TimeStampedModel
+from universal.fields import 
 
 from siteuser.models import SiteUser
 from song.models import Song
@@ -18,12 +18,12 @@ class PublishedManager(models.Manager):
     def get_queryset(self):
         return super(PublishedManager, self).get_queryset().filter(publish=True)
 
-class Post(mdl.TimeStampedModel):
+class Post(TimeStampedModel):
     creator = models.ForeignKey(SiteUser, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     subtitle = models.CharField(max_length=100, blank=True, null=True)
     body = models.TextField()
-    slug = fdl.AutoSlugField(set_using="title")
+    slug = AutoSlugField(set_using="title")
     song = models.ForeignKey(Song, on_delete=models.SET_NULL, blank=True, null=True)
     publish = models.BooleanField(default=False)
     views = models.IntegerField(default=1)
@@ -47,7 +47,7 @@ class Post(mdl.TimeStampedModel):
             self.like_count = self.likes.count()
         return super(Post, self).save(*args, **kwargs)
 
-class Comment(mdl.TimeStampedModel):
+class Comment(TimeStampedModel):
     creator = models.ForeignKey(SiteUser, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     likes = models.ManyToManyField(SiteUser, related_name="comment_likes", blank=True)

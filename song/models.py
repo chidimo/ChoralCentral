@@ -13,8 +13,8 @@ from author.models import Author
 from season.models import Season
 from masspart.models import MassPart
 
-from universal import models as mdl
-from universal import fields as fdl
+from universal.models import TimeStampedModel
+from universal.fields import 
 from universal.utils import get_tempo_text
 
 class PublishedManager(models.Manager):
@@ -22,7 +22,7 @@ class PublishedManager(models.Manager):
     def get_queryset(self):
         return super(PublishedManager, self).get_queryset().filter(publish=True)
 
-class Song(mdl.TimeStampedModel):
+class Song(TimeStampedModel):
     originator      = models.ForeignKey(SiteUser, on_delete=models.CASCADE)
     voicing         = models.ForeignKey(Voicing, on_delete=models.CASCADE)
     language        = models.ForeignKey(Language, on_delete=models.CASCADE)
@@ -31,7 +31,7 @@ class Song(mdl.TimeStampedModel):
     title           = models.CharField(max_length=100)
     compose_date    = models.DateField(null=True, blank=True)
     likes           = models.ManyToManyField(SiteUser, related_name="song_likes")
-    slug            = fdl.AutoSlugField(set_using="title", max_length=255)
+    slug            = AutoSlugField(set_using="title", max_length=255)
 
     lyrics          = models.TextField(blank=True)
     first_line      = models.CharField(max_length=100, blank=True)

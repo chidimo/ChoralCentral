@@ -1,8 +1,8 @@
 from django.db import models
 
-from universal import models as mdl
+from universal.models import TimeStampedModel
 
-class MassPart(mdl.TimeStampedModel):
+class MassPart(TimeStampedModel):
     EN = "ENTRANCE"
     KY = "KYRIE"
     GL = "GLORIA"

@@ -2,10 +2,10 @@ from django.db import models
 from django.shortcuts import reverse
 from siteuser.models import SiteUser
 
-from universal import models as mdl
-from universal import fields as fdl
+from universal.models import TimeStampedModel
+from universal.fields import AutoMultipleSlugField
 
-class Author(mdl.TimeStampedModel):
+class Author(TimeStampedModel):
     LY = 'LYRICIST'
     CP = 'COMPOSER'
     CHOICES = (('', 'Select author type'),
@@ -16,7 +16,7 @@ class Author(mdl.TimeStampedModel):
     first_name = models.CharField(max_length=75)
     last_name = models.CharField(max_length=75)
     bio = models.TextField(blank=True, null=True)
-    slug = fdl.AutoMultipleSlugField(set_using=["last_name", "first_name"])
+    slug = AutoMultipleSlugField(set_using=["last_name", "first_name"])
     likes = models.ManyToManyField(SiteUser, related_name="author_likes")
     author_type = models.CharField(choices=CHOICES, max_length=15, default="COMPOSER")
     objects = models.Manager()

@@ -2,9 +2,9 @@ from django.db import models
 
 from siteuser.models import SiteUser
 
-from universal import models as mdl
+from universal.models import TimeStampedModel
 
-class Language(mdl.TimeStampedModel):
+class Language(TimeStampedModel):
     originator = models.ForeignKey(SiteUser, on_delete=models.CASCADE)
     language = models.CharField(max_length=25, unique=True)
  

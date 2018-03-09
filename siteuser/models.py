@@ -7,8 +7,8 @@ from django.conf import settings
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 # from song.models import Song
-from universal import models as mdl
-from universal import fields as fdl
+from universal.models import TimeStampedModel
+from universal.fields import 
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None):
@@ -57,7 +57,7 @@ class CustomUser(AbstractBaseUser):
     def prof(self):
         return self.siteuser.screen_name
 
-class Role(mdl.TimeStampedModel):
+class Role(TimeStampedModel):
     role = models.CharField(max_length=20, unique=True)
 
     class Meta:
@@ -69,9 +69,9 @@ class Role(mdl.TimeStampedModel):
     def get_absolute_url(self):
         return reverse('siteuser:role_index')
 
-class SiteUser(mdl.TimeStampedModel):
+class SiteUser(TimeStampedModel):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
-    slug = fdl.AutoSlugField(set_using="screen_name")
+    slug = AutoSlugField(set_using="screen_name")
     roles = models.ManyToManyField(Role)
     screen_name = models.CharField(max_length=20, unique=True)
     first_name = models.CharField(max_length=30, blank=True, null=True)
@@ -94,7 +94,7 @@ class SiteUser(mdl.TimeStampedModel):
     def get_user_creation_url(self):
         return reverse('siteuser:new_activation', args=[str(self.user.id), str(self.screen_name)])
 
-class HandShake(mdl.TimeStampedModel):
+class HandShake(TimeStampedModel):
     from_siteuser = models.ForeignKey(
         SiteUser,
         on_delete=models.CASCADE,

@@ -7,13 +7,13 @@ from django.utils import timezone
 from siteuser.models import SiteUser
 from song.models import Song
 
-from universal import models as mdl
-from universal import fields as fdl
+from universal.models import TimeStampedModel
+from universal.fields import 
 
-class Request(mdl.TimeStampedModel):
+class Request(TimeStampedModel):
     originator = models.ForeignKey(SiteUser, null=True, on_delete=models.SET_NULL)
     request = models.CharField(max_length=200)
-    slug = fdl.AutoSlugField(set_using="request")
+    slug = AutoSlugField(set_using="request")
     status = models.BooleanField(default=False)
 
     class Meta:
@@ -25,7 +25,7 @@ class Request(mdl.TimeStampedModel):
     def get_absolute_url(self):
         return reverse("request:detail", args=[str(self.id), str(self.slug)])
 
-class Reply(mdl.TimeStampedModel):
+class Reply(TimeStampedModel):
     originator = models.ForeignKey(SiteUser, on_delete=models.CASCADE)
     request = models.ForeignKey(Request, on_delete=models.CASCADE)
     song = models.OneToOneField(Song, on_delete=models.SET_NULL, null=True)
