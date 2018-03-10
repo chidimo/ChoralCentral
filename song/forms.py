@@ -16,11 +16,11 @@ from author.models import Author
 
 class ShareForm(forms.Form):
     receiving_emails = forms.CharField(
-        widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Enter receiving emails, separated by commas."}),
+        widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Enter any number of emails, separated by commas."}),
     )
     name = forms.CharField(
         required=False,
-        widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Please enter your name (optional)"})
+        widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Enter your name (optional)"})
     )
 
 class SongFilterForm(forms.Form):
@@ -104,6 +104,7 @@ class SongEditForm(forms.ModelForm):
                   "authors", "seasons", "mass_parts",]
 
         widgets = {
+            "publish" : forms.CheckboxInput(attrs={'class' : 'form-control'}),
             "title" : forms.TextInput(
                 attrs={'class' : 'form-control', 'placeholder' : "Song title"}),
             "compose_date" : forms.DateInput(

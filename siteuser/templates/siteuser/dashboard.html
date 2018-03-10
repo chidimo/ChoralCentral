@@ -3,7 +3,12 @@
 
 {% block content_content %}
 
-<h2>Dashboard</h2>
+{% if request.user == siteuser.user %}
+    <h2>Dashboard</h2>
+{% else %}
+    <h2>About {{ siteuser.screen_name }}</h2>
+{% endif %}
+<hr>
 
 {% if user == siteuser.user %}
 <div class="admin-actions">
@@ -46,7 +51,7 @@
 
 <h5>Email</h5>
 <div class="dash-values">
-    <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+    <a href="mailto:{{ user.email }}">{{ siteuser.user.email }}</a>
 </div>
 
 <h5>Location</h5>

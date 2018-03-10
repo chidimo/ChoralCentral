@@ -29,7 +29,7 @@ class CustomUserManager(BaseUserManager):
 
 class CustomUser(AbstractBaseUser):
     email = models.EmailField(max_length=255, unique=True, verbose_name='email address')
-    is_active = models.BooleanField(default=False) # default to false later. activate by email
+    is_active = models.BooleanField(default=False) # activate by email
     is_admin = models.BooleanField(default=False)
 
     objects = CustomUserManager()
@@ -71,7 +71,7 @@ class Role(TimeStampedModel):
         return reverse('siteuser:role_index')
 
 class SiteUser(TimeStampedModel):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     slug = AutoSlugField(set_using="screen_name")
     roles = models.ManyToManyField(Role)
     screen_name = models.CharField(max_length=20, unique=True)

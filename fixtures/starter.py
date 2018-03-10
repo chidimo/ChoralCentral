@@ -131,15 +131,13 @@ def members():
             user.set_password("dwarfstar")
             user.is_active = True
             user.save()
-        except IntegrityError:
-            continue
 
-        first_name = lorem.word()
-        last_name = lorem.word()
-        location = lorem.word()
-        screen_name = LoremPysum().word()
+            first_name = lorem.word()
+            last_name = lorem.word()
+            location = lorem.word()
+            screen_name = LoremPysum().word()
 
-        pro, created = SiteUser.objects.get_or_create(
+            member = SiteUser.objects.create(
                 user=user,
                 first_name=first_name,
                 last_name=last_name,
@@ -147,13 +145,12 @@ def members():
                 screen_name=screen_name,
                 avatar=File(open(choice(IMAGES), "rb")),
                 )
-        if created:
-            print("profile name error")
-            _ = CustomUser.objects.get(email=email).delete()
 
+        except IntegrityError:
+            continue
         try:
             role = choice(roles)
-            pro.roles.add(role.pk)
+            member.roles.add(role.pk)
         except IntegrityError:
             continue
 
