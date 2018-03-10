@@ -53,20 +53,23 @@ def auto_song(request):
     context['indexName'] = get_adapter(Song).index_name
     return render(request, 'song/autocomplete_song.html', context)
 
-@login_required
+# https://stackoverflow.com/questions/1960240/jquery-ajax-submit-form?rq=1
 @require_POST
+@login_required
 def song_like_view(request):
     if request.method == 'POST':
         user = SiteUser.objects.get(user=request.user)
-        song = get_object_or_404(Song, id=request.POST.get('pk', None))
+        song = get_object_or_404(Song, pk=request.POST.get('pk', None))
 
-        if song.likes.filter(id=user.id).exists():
+        if song.likes.filter(pk=user.pk).exists():
             song.likes.remove(user)
-            message = "You unstarred this song"
+            song.save()
+            message = "You unstarred this song.\n {} now has {} stars".format(song.title, song.like_count)
         else:
             song.likes.add(user)
-            message = "You starred this song"
-    context = {'like_count' : song.like_count, 'message' : message}
+            song.save()
+            message = "You starred this song.\n {} now has {} stars".format(song.title, song.like_count)
+    context = {'message' : message}
     return HttpResponse(json.dumps(context), content_type='application/json')
 
 class SongIndex(PaginationMixin, generic.ListView):

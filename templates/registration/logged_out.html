@@ -1,16 +1,19 @@
 {% extends "choralcentral_base.html" %}
 {% block title %}Logged out{% endblock title %}
 
+{% block navigation %}{% endblock %}
+{% block introduction %}{% endblock %}
+{% block k %}{% endblock %}
 
-{% block body %}
+{% block content_content %}
 
-    <div class="container">
-        <p><a href="/">Home</a></p>
-    
-        <h2>Logged out!</h2>
-    
-        <h4>You're logged out. <a href="{% url 'siteuser:login' %}">Click here to login again.</a></h4>
-    </div>
+        <h1 class='text-center'><a href="/">ChoralCentral</a></h1>
+        <hr>
 
-{% endblock body %}
+        <h4>You're logged out.</h4>
+        <h4><a href="{% url 'siteuser:login' %}">Login</a></h4>
 
+{% endblock content_content %}
+{% block footer %}{% endblock %}
+{% block left_sidebar %}{% endblock %}
+{% block right_sidebar %}{% endblock %}

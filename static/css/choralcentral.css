@@ -37,6 +37,9 @@ a:hover {
   width: 15%;
 }
 
+.song-icons {
+    margin-top: .59rem;
+}
 .jumbotron {
     margin-bottom: 0;
     background: #cacaca;

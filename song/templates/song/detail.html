@@ -14,24 +14,27 @@
     <div class='row'>
         <span class='h3'>
             <!-- like script -->
-            <a href="" id="like" title="{{ song.pk }}" value="Like"><i class="fas fa-star"></i></a>
-            <script>
-            $('#like').click(function(){
-                $.ajax({
-                    type: "POST",
-                    url: "{% url 'song:like_song' %}",
-                    data: {'pk': $(this).attr('title'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
-                    dataType: "json",
-                    success: function(response) {
-                            alert(response.message);
-                    },
-                    error: function(rs, e) {
-                            alert(rs.responseText);
-                    }
-                });
-                })
-            </script>
+            <!--<a href="" id="like" title="{{ song.pk }}" value="Like"><i class="fas fa-star"></i></a>-->
+            <!--<script>-->
+            <!--$('#like').click(function(){-->
+            <!--    $.ajax({-->
+            <!--        type: "POST",-->
+            <!--        url: "{% url 'song:like_song' %}",-->
+            <!--        data: {'pk': $(this).attr('title'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},-->
+            <!--        dataType: "json",-->
+            <!--        success: function(response) {-->
+            <!--                alert(response.message);-->
+            <!--        },-->
+            <!--        error: function(rs, e) {-->
+            <!--                alert(rs.responseText);-->
+            <!--        }-->
+            <!--    });-->
+            <!--    })-->
+            <!--</script>-->
             <!-- end like script -->
+
+            <input type="button" id="like" name="{{ song.pk }}" value="Like" />
+            {% include 'song/like_script.html' %}
 
             <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'song:share_on_facebook' song.pk song.slug %}" title="Share on facebook"><i class="fab fa-facebook"></i></a>
 

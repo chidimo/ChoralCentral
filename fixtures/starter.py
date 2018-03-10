@@ -236,13 +236,14 @@ def songs():
 
 def add_manyfields():
     users = SiteUser.objects.all()
-    for each in Song.objects.all():
-        each.seasons.add(randint(1, 3), randint(4, 7))
-        each.mass_parts.add(randint(1, 5), randint(6, 10))
-        each.likes.add(choice(users), choice(users), choice(users), choice(users))
+    for song in Song.objects.all():
+        song.seasons.add(randint(1, 3), randint(4, 7))
+        song.mass_parts.add(randint(1, 5), randint(6, 10))
+        song.likes.add(choice(users), choice(users), choice(users), choice(users))
+        song.save()
         aut = len(Author.objects.all())
-        if not each.authors:
-            each.authors.add(randint(1, aut-1), randint(1, aut-1))
+        if not song.authors:
+            song.authors.add(randint(1, aut-1), randint(1, aut-1))
 
 def requests():
     numb = int(input("Enter number of requests to create "))

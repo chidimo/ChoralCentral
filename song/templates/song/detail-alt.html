@@ -6,37 +6,22 @@
 
 {% block content_content %}
 
-<h2>{{ song.title }}</h2>
-<hr>
-
 <div class='container'>
     <div class='row'>
-        <span class='h3'>
-            <!-- like script -->
-            <a href="" id="like" title="{{ song.pk }}" value="Like"><i class="fas fa-star"></i></a>
-            <script>
-            $('#like').click(function(){
-                $.ajax({
-                    type: "POST",
-                    url: "{% url 'song:like_song' %}",
-                    data: {'pk': $(this).attr('title'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
-                    dataType: "json",
-                    success: function(response) {
-                            alert(response.message);
-                    },
-                    error: function(rs, e) {
-                            alert(rs.responseText);
-                    }
-                });
-                })
-            </script>
-            <!-- end like script -->
+        <div class='col-sm-12'>
+            <span class='h2 float-left'>{{ song.title }}</span>
 
-            <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'song:share_on_facebook' song.pk song.slug %}" title="Share on facebook"><i class="fab fa-facebook"></i></a>
+            <span class='h5 float-right song-icons'>
+                <a href="" id="like" pk="{{ song.pk }}" value="Like"><i class="fas fa-star"></i></a>
+                {% include 'song/song_like_script.html' %}
 
-            <a href='' title="Share by email" data-toggle="modal" data-target="#emailModal"><i class="fas fa-at"></i></a>
-            {% include 'song/song_share_modal.html' %}
-        </span>
+                <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'song:share_on_facebook' song.pk song.slug %}" title="Share on facebook">
+                    <i class="fab fa-facebook"></i></a>
+                <a href='' title="Share by email" data-toggle="modal" data-target="#emailModal">
+                    <i class="fas fa-at"></i></a>
+                {% include 'song/song_share_modal.html' %}
+            </span>
+        </div>
     </div>
 </div>
 <hr>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        {% load song_ttags %}
         <title>ChoralCentral | Where sheet music lives</title>
 
         <style>
@@ -16,7 +17,7 @@
         <hr class='broad'>
 
         <p>Hello, <br>
-        
+
         {% if name %}
             {{ name }} would like you to see <a href="{{ song_link }}">{{ song.title }}</a> over on
             <a href="http://www.choralcentral.net">ChoralCentral</a></p>
@@ -25,6 +26,6 @@
             <a href="http://www.choralcentral.net">ChoralCentral</a></p>
         {% endif %}
 
-        <p>{{ song.lyrics }}</p>
+        <p>{{ song.lyrics|markdown_format }}</p>
     </body>
 </html>
