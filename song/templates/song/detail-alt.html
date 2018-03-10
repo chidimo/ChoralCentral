@@ -12,7 +12,13 @@
             <span class='h2 float-left'>{{ song.title }}</span>
 
             <span class='h5 float-right song-icons'>
-                <a href="" id="like" pk="{{ song.pk }}" value="Like"><i class="fas fa-star"></i></a>
+                <a href="" id="like" pk="{{ song.pk }}" value="Like">
+                    {% if request.user.siteuser in song.likes.all %}
+                        <i class="fas fa-star"></i>ii
+                    {% else %}
+                        <i class="fas fa-star"></i>
+                    {% endif %}
+                </a>
                 {% include 'song/song_like_script.html' %}
 
                 <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'song:share_on_facebook' song.pk song.slug %}" title="Share on facebook">
@@ -25,7 +31,8 @@
     </div>
 </div>
 <hr>
-
+{{ song.likes.all }}<br>
+{{ request.user.siteuser }}
 <div class="container">
     <h2 class="my-4 text-left">About</h2>
 
