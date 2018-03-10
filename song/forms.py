@@ -15,8 +15,8 @@ from author.models import Author
 # pylint: disable=C0326, C0301, C0103, C0111
 
 class ShareForm(forms.Form):
-    receiver_email = forms.EmailField(
-        widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Enter email"}),
+    receiving_emails = forms.CharField(
+        widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Enter receiving emails, separated by commas."}),
     )
     name = forms.CharField(
         required=False,

@@ -42,7 +42,6 @@
 	<body>
 		{% block navigation %}
 		<nav class="navbar fixed-top navbar-expand-lg">
-
 			<a class="navbar-brand" href="{% url 'song:index' %}">
 				<h3 style="color:blanchedalmond">ChoralCentral</h3>
 			</a>
@@ -57,7 +56,7 @@
 					<li class="nav-item"><a class="nav-link" href="{% url 'author:index' %}">Authors</a></li>
 					<li class="nav-item"><a class="nav-link" href="{% url 'request:index' %}">Requests</a></li>
 					<li class="nav-item"><a class="nav-link" href="{% url 'blog:index' %}">Blog</a></li>
-					<li class="nav-item"><a class="nav-link" href="{% url 'siteuser:index' %}">Members</a></li>
+					<li class="nav-item"><a class="nav-link" href="{% url 'siteuser:index' %}">Choir</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav ml-auto">
@@ -71,18 +70,18 @@
 							<a class="nav-link" href="{% url 'siteuser:detail' user.siteuser.pk user.siteuser.slug %}">{{ user.siteuser.screen_name }}</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="{% url 'siteuser:logout' %}">Logout</a>
+							<a class="btn btn-info btn-sm upload-button" href="{% url 'siteuser:logout' %}">Logout</a>
 						</li>
 					{% else %}
 						<li class="nav-item">
-							<a class="nav-link" href="{% url 'siteuser:login' %}">Login</a>
+							<a class="btn btn-info btn-sm upload-button" href="{% url 'siteuser:login' %}">Login</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="{% url 'siteuser:new' %}">Join</a>
+							<a class="btn btn-primary btn-sm upload-button" href="{% url 'siteuser:new' %}">Join</a>
 						</li>
 					{% endif %}
 					<li class="nav-item">
-						<a href="{% url 'song:new' %}" class="btn btn-primary btn-sm">UPLOAD</a>
+						<a href="{% url 'song:new' %}" class="btn btn-primary btn-sm upload-button">UPLOAD</a>
 					</li>
 
 				</ul>
@@ -120,7 +119,7 @@
 					{% block javascript %}{% endblock javascript %}
 
 					{% if is_paginated %}
-						<div>{% include "pure_pagination.html" %}</div>
+						{% include "pure_pagination.html" %}
 					{% endif %}
 				</div>
 

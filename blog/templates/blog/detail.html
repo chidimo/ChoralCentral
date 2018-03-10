@@ -59,7 +59,7 @@
         <p>No comments on this post at this time.</p>
     {% endfor %}
 
-    <hr class='broad'>
+    <hr>
     <form action="{% url 'blog:comment_add' post.pk %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ comment_form.as_p }}

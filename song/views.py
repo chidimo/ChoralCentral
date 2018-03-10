@@ -204,16 +204,21 @@ def share_song_by_mail(request, pk, slug):
         form = ShareForm(request.GET)
         if form.is_valid():
             form = form.cleaned_data
-            email = form['receiver_email']
+            receiving_emails = form['receiving_emails']
             name = form['name']
             context['name'] = name
 
-    text_email = render_to_string("song/share_song_by_mail.txt", context)
-    html_email = render_to_string("song/share_song_by_mail.html", context)
+            email_list = [each.strip() for each in receiving_emails.split(',')]
+            with open('a.txt', 'w+') as fh:
+                fh.write(str(email_list))
 
-    msg = EmailMultiAlternatives(subject, text_email, from_email, [email])
-    msg.attach_alternative(html_email, "text/html")
-    msg.send()
+            for email in email_list:
+                text_email = render_to_string("song/share_song_by_mail.txt", context)
+                html_email = render_to_string("song/share_song_by_mail.html", context)
+
+                msg = EmailMultiAlternatives(subject, text_email, from_email, [email])
+                msg.attach_alternative(html_email, "text/html")
+                msg.send()
     return redirect(song.get_absolute_url())
 
 def share_on_facebook(request, pk, slug):

@@ -1,7 +1,6 @@
 body {
-  background: #EFEFEF;
-  color: #0000A0;
-  padding-top: 62px;
+  color: midnightblue;
+  padding-top: 3.4rem;
 }
 
 nav {
@@ -10,7 +9,7 @@ nav {
 }
 
 h1, h2, h3, h4, h5, h6 {
-	color: darkblue;
+	color: midnightblue;
   }
 
 p {
@@ -38,6 +37,11 @@ a:hover {
   width: 15%;
 }
 
+.jumbotron {
+    margin-bottom: 0;
+    background: #cacaca;
+}
+
 section a {
     margin: 0.5rem 0 0.5rem 0.5rem;
 }
@@ -57,7 +61,7 @@ section a {
   max-width: 1000px;
   margin: auto;
   box-shadow: 1px 3px 7px 3px #c4c7ce inset;
-  border-radius: 5px;
+  border-radius: .3rem;
   padding-bottom: 10px;
 }
 
@@ -71,7 +75,7 @@ th, td {
   background: #e9ecef;
   margin-top: 0.5rem;
   padding: .5rem 1rem 3rem 1rem;
-  border-radius: 7.5px;
+  border-radius: .3rem;
   border: 1px solid mintcream;
 }
 
@@ -81,34 +85,30 @@ th, td {
 
 .upload-forms {
   max-width:450px;
-  margin-top: 3.5rem;
-  /* margin: 3.5rem auto; */
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
   padding: 0 1rem 2.75rem 1rem;
-  background: #b8daff;
-  border-radius: 7.5px;
-}
-
-.upload-forms h2 {
-  padding-top: 0.5rem;
-  color: #007bff;
-}
-
-.upload-forms .btn-md {
-  margin-top: 0.75rem;
-  font-size: 24px;
+  background: #f0eeee;
+  border: 1px solid #d7d7d7;
+  border-radius: .3rem;
 }
 
 .login-form {
   max-width:350px;
   margin:auto;
   border: 1px solid #aaccf0;
-  border-radius: 5px;
+  border-radius: .3rem;
   padding-bottom: 1rem;
   background: #a7d2ff;
   margin: auto;
   /* margin-top: 10rem; */
 }
 
+a.upload-button {
+    color: white;
+    margin-right: .35rem;
+    margin-top: .3rem;
+}
 .related-widget-wrapper-link {
   background: blanchedalmond;
 }
@@ -119,15 +119,22 @@ hr .narrow {
 }
 
 label {
-    color: red;
-}
-.centerspread {
-    border: 0.5px solid;
+  font-weight: bold;
+  }
+
+.leftsidebar {
+    /*border: 0.5px solid grey;*/
 }
 
-.leftsidebar, .rightsidebar {
-    border: 0.5px solid;
+.centerspread {
+    background: #EFEFEF;
+    margin: 2rem 0;
 }
+
+.rightsidebar {
+    /*border: 0.5px solid grey;*/
+}
+
 /* Add icons to registration form fields */
 .form-group {
   position: relative;
@@ -179,9 +186,7 @@ input#id_password {
 
 .large-print {
   padding: 40px 0;
-  margin-top: 40px;
-  text-align: left;
-  background: #d3d3d3;
+  background: #cacaca;
 }
 
 .large-print-item {
@@ -221,19 +226,6 @@ input#id_password {
   /* padding: 0 0; */
 }
 
-.dash-main-cont {
-  padding-right: 0;
-  padding-left: 0;
-}
-
-.dash-main-cont > .row {
-  background: azure;
-  margin: 10px 0;
-  border: .25px solid black;
-  border-radius: 3px;
-  box-shadow: 1px 2px 3px #1b1e21;
-}
-
 .feed-list {
   list-style: none;
   display: inline;
@@ -250,10 +242,9 @@ tbody tr:nth-child(odd) {
 
 .list-items {
     padding: .1rem 1rem 2rem 1rem;
-    margin-top: 10px;
-    background-color: #b8daff;
-    /* background-color: azure; */
-    border-radius: 5px;
+    margin: .75rem 0;
+    background: #ffffff;
+    border-radius: .3rem;
 }
 
 /*OVERRIDE BOOTSTRAP CLASSES*/
@@ -285,7 +276,9 @@ tbody tr:nth-child(odd) {
 }
 
 .fixed-top {
-    box-shadow: -1px 1px 20px 0px #721c24
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+
 }
 
 .pagination {
@@ -295,14 +288,23 @@ tbody tr:nth-child(odd) {
     padding: 40px 0;
 }
 
-.row {
-    padding: 0.5rem 0;
+/*.row {*/
+/*    padding: 0.5rem 0;*/
+/*}*/
+
+ul.errorlist {
+  /* style django errors */
+  color: red;
+  text-align: left;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
 .form-control {
     background: #fcfcfc;
     border: 1px solid #aaa;
-    border-radius: 5px;
+    border-radius: .3rem;
     box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
 }
 
