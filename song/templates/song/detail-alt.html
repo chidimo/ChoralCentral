@@ -12,23 +12,35 @@
             <span class='h2 float-left'>{{ song.title }}</span>
 
             <span class='h5 float-right song-icons'>
-                {% if user.is_autenticated %}
-                    {% if request.user.siteuser in song.likes.all %}
-                        <a type="button" href="" id="like" name="{{ song.pk }}" value="Like" title="star this song" class="text-danger"><i class="fas fa-star"></i></a>
-                        {% include 'song/song_like_script.html' %}
-                    {% else %}
-                        <a type="button" href="" id="like" name="{{ song.pk }}" value="Like" title="unstar this song"><i class="fas fa-star"></i></a>
-                        {% include 'song/song_like_script.html' %}
-                    {% endif %}
+                {% if not user.is_autenticated %}
+                <button class="icon-buttons-left">
+                    <a href="{% url 'siteuser:login' %}">Login to star this song</a>
+                </button>
                 {% else %}
-                    <a href="{% url 'siteuser:login' %}">Login</a> to star this song
+                    {% if request.user.siteuser in song.likes.all %}
+                    <button class="icon-buttons-left">
+                        <a href="" id="like" name="{{ song.pk }}" value="Like" title="star this song"><i class="fas fa-star"></i> Unstar</a>
+                        {% include 'song/song_like_script.html' %}
+                    </button>
+                    {% else %}
+                    <button class="icon-buttons-left">
+                        <a href="" id="like" name="{{ song.pk }}" value="Like" title="unstar this song"><i class="fas fa-star"></i> Star</a>
+                        {% include 'song/song_like_script.html' %}
+                    </button>
+                    {% endif %}
                 {% endif %}
 
-                <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'song:share_on_facebook' song.pk song.slug %}" title="Share on facebook">
+                <button class="icon-buttons-left">
+                    <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'song:share_on_facebook' song.pk song.slug %}" title="FB Share">
                     <i class="fab fa-facebook"></i></a>
-                <a href='' title="Share by email" data-toggle="modal" data-target="#emailModal">
-                    <i class="fas fa-at"></i></a>
+                </button>
+
+                
+                <button class="icon-buttons-right" title="Share" data-toggle="modal" data-target="#emailModal">
+                        <i class="fas fa-at"></i>
+                </button>
                 {% include 'song/song_share_modal.html' %}
+
             </span>
         </div>
     </div>

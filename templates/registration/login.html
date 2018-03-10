@@ -12,7 +12,7 @@
     {% endif %}
 
     <h2>Login</h2>
-    <hr class='broad'>
+    <hr>
 
     <form method="post" action="{% url 'siteuser:login' %}">
         {% csrf_token %}
@@ -30,9 +30,12 @@
         <button class="btn btn-primary btn-sm" type="submit" value="login">Log In</button>
         <input type="hidden" name="next" value="{{ next }}" />
     </form>
-<br>
-    <div><a class="btn btn-primary btn-sm" href="{% url 'siteuser:new' %}">Join</a></div>
-    <br>
-    <p><a class="btn btn-danger btn-sm" href="{% url 'siteuser:reset_password' %}">Forgot password?</a></p>
+    <div class="dropdown-divider"></div>
+    <div class="row">
+        <div class="col-sm-12">
+            <a class="btn btn-primary btn-sm float-left" href="{% url 'siteuser:new' %}">Join</a>
+            <a class="btn btn-danger btn-sm float-right" href="{% url 'siteuser:reset_password' %}">Forgot password?</a>
+        </div>
+    </div>
 </div>
 {% endblock body %}

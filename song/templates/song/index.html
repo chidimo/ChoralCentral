@@ -18,17 +18,20 @@
         <p class="" id="songFirstLine">{{ song.first_line }}</p>
 
         <span class="h5 float-left">
-            <a href="{% url 'blog:new_song' song.pk %}" title="Blog this song"><i class="fas fa-pencil-alt"></i></a>
-            <a href="{% url 'song:reader_view' song.pk song.slug %}" title="Print view" target="_blank"><i class="fas fa-print"></i></a>
+            <button class="icon-buttons-left">
+                <a href="{% url 'blog:new_song' song.pk %}" title="Blog this song"><i class="fas fa-pencil-alt"></i> Blog</a>
+            </button>
+            <button class="icon-buttons-right">
+                <a href="{% url 'song:reader_view' song.pk song.slug %}" title="Print this song" target="_blank"><i class="fas fa-print"></i> Print</a>
+            </button>
         </span>
 
         <span class="h5 float-right">
-            <span>{{ song.views }} <i class="fas fa-eye"></i></span>
             <span>
-                <button class="starrer">
+                <button class="icon-buttons-left">
                     <a href="" title="Star {{ song.title }}"><i class="fas fa-star"></i> Stars</a>  
                 </button>
-                <a href="{% url 'siteuser:song_likers' song.pk %}" class="like-counter" title="{{ song.title|title }} lovers">{{ song.like_count }}</a>
+                <a href="{% url 'siteuser:song_likers' song.pk %}" class="like-counter" title="Love birds">{{ song.like_count }}</a>
             </span>
         </span>
     </div>

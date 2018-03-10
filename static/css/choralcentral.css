@@ -56,6 +56,11 @@ section a {
     margin: 0.5rem 0 0.5rem 0.5rem;
 }
 
+.fixed-top {
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+}
+
 .navbar-nav a {
    color: #BCC6CC;
    font-size: 16px;
@@ -106,10 +111,10 @@ th, td {
 .login-form {
   max-width:350px;
   margin:auto;
-  border: 1px solid #aaccf0;
+  border: 1px solid #d7d7d7;
   border-radius: .3rem;
   padding-bottom: 1rem;
-  background: #a7d2ff;
+  background: #f0eeee;
   margin: auto;
   /* margin-top: 10rem; */
 }
@@ -121,11 +126,6 @@ a.upload-button {
 }
 .related-widget-wrapper-link {
   background: blanchedalmond;
-}
-
-hr .narrow {
-  margin-top: .25rem;
-  margin-bottom: 0.25rem;
 }
 
 label {
@@ -154,7 +154,6 @@ label {
 .login-logo {
   margin:auto;
 }
-
 
 input#id_username {
   text-indent: 30px;
@@ -223,19 +222,6 @@ input#id_password {
   margin: 20px 0;
 }
 
-.dash-values {
-  /* padding-left: 0px; */
-  word-break: break-all;
-}
-
-.dash-subject {
-  padding-right: 0px;
-}
-
-.dash-main-col {
-  /* padding: 0 0; */
-}
-
 .feed-list {
   list-style: none;
   display: inline;
@@ -256,13 +242,6 @@ tbody tr:nth-child(odd) {
     background: #ffffff;
     border-radius: .3rem;
 }
-
-/*OVERRIDE BOOTSTRAP CLASSES*/
-
- .badge-light {
-   background-color: coral;
-   color: midnightblue;
- }
 
 .table td {
     padding: .2rem .5rem .2rem .5rem;
@@ -285,12 +264,6 @@ tbody tr:nth-child(odd) {
     border: none;
 }
 
-.fixed-top {
-    padding-top: 0.1rem;
-    padding-bottom: 0.1rem;
-
-}
-
 .pagination {
     text-align: center;
     font-weight: bold;
@@ -298,7 +271,21 @@ tbody tr:nth-child(odd) {
     padding: 40px 0;
 }
 
-button.starrer {
+button.icon-buttons-right {
+  float: left;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 20px;
+  color: #24292e;
+  vertical-align: middle;
+  background-color: #fff;
+  border: 1px solid rgba(27,31,35,0.2);
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+button.icon-buttons-left {
   float: left;
   padding: 3px 10px;
   font-size: 12px;
@@ -312,6 +299,12 @@ button.starrer {
   border-bottom-left-radius: 3px;
 }
 
+
+button.icon-buttons-left a, button.icon-buttons-right a {
+  text-decoration: none;
+  color: midnightblue;
+}
+
 a.like-counter {
   float: left;
   padding: 3px 10px;
@@ -320,6 +313,7 @@ a.like-counter {
   line-height: 20px;
   color: #24292e;
   vertical-align: middle;
+  text-decoration: none;
   background-color: #fff;
   border: 1px solid rgba(27,31,35,0.2);
   border-left: 0;
