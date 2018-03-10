@@ -22,27 +22,23 @@ class AuthorIndex(PaginationMixin, generic.ListView):
     def get_queryset(self):
         return Author.objects.all().annotate(Count("song__publish")).order_by("-song__publish__count")
 
-class AuthorAdd(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
-    form_class = NewAuthorForm
-    template_name = 'author/new.html'
-
-    def form_valid(self, form):
-        form.instance.originator = SiteUser.objects.get(user=self.request.user)
-        return super(AuthorAdd, self).form_valid(form)
-
-class AuthorEdit(LoginRequiredMixin, generic.UpdateView):
-    model = Author
-    form_class = AuthorEditForm
-    template_name = 'author/edit.html'
-
 class AuthorDetail(generic.DetailView):
     model = Author
     context_object_name = 'author'
     template_name = 'author/detail.html'
 
-    # def get_object(self):
-    #     author = Author.objects.get(pk=self.kwargs.get("pk", None))
-    #     return author
+class NewAuthor(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
+    form_class = NewAuthorForm
+    template_name = 'author/new.html'
+
+    def form_valid(self, form):
+        form.instance.originator = SiteUser.objects.get(user=self.request.user)
+        return super(NewAuthor, self).form_valid(form)
+
+class AuthorEdit(LoginRequiredMixin, generic.UpdateView):
+    model = Author
+    form_class = AuthorEditForm
+    template_name = 'author/edit.html'
 
 class DeleteAuthor(generic.DeleteView):
     model = Author
