@@ -12,7 +12,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from django.views import generic
+from django.views import generic, View
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 # from django.contrib.auth import get_user_model
@@ -54,12 +54,13 @@ def auto_song(request):
     return render(request, 'song/autocomplete_song.html', context)
 
 # https://stackoverflow.com/questions/1960240/jquery-ajax-submit-form?rq=1
-@require_POST
 @login_required
+@require_POST
 def song_like_view(request):
     if request.method == 'POST':
         user = SiteUser.objects.get(user=request.user)
-        song = get_object_or_404(Song, pk=request.POST.get('pk', None))
+        pk = request.POST.get('pk', None)
+        song = get_object_or_404(Song, pk=pk)
 
         if song.likes.filter(pk=user.pk).exists():
             song.likes.remove(user)
@@ -71,6 +72,22 @@ def song_like_view(request):
             message = "You starred this song.\n {} now has {} stars".format(song.title, song.like_count)
     context = {'message' : message}
     return HttpResponse(json.dumps(context), content_type='application/json')
+
+class SongLike(LoginRequiredMixin, View):
+    def post(self):
+        user = SiteUser.objects.get(user=self.request.user)
+        song = get_object_or_404(Song, pk=self.request.POST.get('pk', None))
+
+        if song.likes.filter(pk=user.pk).exists():
+            song.likes.remove(user)
+            song.save()
+            message = "You unstarred this song.\n {} now has {} stars".format(song.title, song.like_count)
+        else:
+            song.likes.add(user)
+            song.save()
+            message = "You starred this song.\n {} now has {} stars".format(song.title, song.like_count)
+        context = {'message' : message}
+        return HttpResponse(json.dumps(context), content_type='application/json')
 
 class SongIndex(PaginationMixin, generic.ListView):
     model = Song

@@ -298,6 +298,35 @@ tbody tr:nth-child(odd) {
     padding: 40px 0;
 }
 
+button.starrer {
+  float: left;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 20px;
+  color: #24292e;
+  vertical-align: middle;
+  background-color: #fff;
+  border: 1px solid rgba(27,31,35,0.2);
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+a.like-counter {
+  float: left;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 20px;
+  color: #24292e;
+  vertical-align: middle;
+  background-color: #fff;
+  border: 1px solid rgba(27,31,35,0.2);
+  border-left: 0;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
 /*.row {*/
 /*    padding: 0.5rem 0;*/
 /*}*/

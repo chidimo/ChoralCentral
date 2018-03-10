@@ -24,7 +24,12 @@
 
         <span class="h5 float-right">
             <span>{{ song.views }} <i class="fas fa-eye"></i></span>
-            <span>{{ song.like_count }} <i class="fas fa-star"></i></span>
+            <span>
+                <button class="starrer">
+                    <a href="" title="Star {{ song.title }}"><i class="fas fa-star"></i> Stars</a>  
+                </button>
+                <a href="{% url 'siteuser:song_likers' song.pk %}" class="like-counter" title="{{ song.title|title }} lovers">{{ song.like_count }}</a>
+            </span>
         </span>
     </div>
     {% empty %}

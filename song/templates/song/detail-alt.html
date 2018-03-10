@@ -12,14 +12,17 @@
             <span class='h2 float-left'>{{ song.title }}</span>
 
             <span class='h5 float-right song-icons'>
-                <a href="" id="like" pk="{{ song.pk }}" value="Like">
+                {% if user.is_autenticated %}
                     {% if request.user.siteuser in song.likes.all %}
-                        <i class="fas fa-star"></i>ii
+                        <a type="button" href="" id="like" name="{{ song.pk }}" value="Like" title="star this song" class="text-danger"><i class="fas fa-star"></i></a>
+                        {% include 'song/song_like_script.html' %}
                     {% else %}
-                        <i class="fas fa-star"></i>
+                        <a type="button" href="" id="like" name="{{ song.pk }}" value="Like" title="unstar this song"><i class="fas fa-star"></i></a>
+                        {% include 'song/song_like_script.html' %}
                     {% endif %}
-                </a>
-                {% include 'song/song_like_script.html' %}
+                {% else %}
+                    <a href="{% url 'siteuser:login' %}">Login</a> to star this song
+                {% endif %}
 
                 <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'song:share_on_facebook' song.pk song.slug %}" title="Share on facebook">
                     <i class="fab fa-facebook"></i></a>
@@ -31,8 +34,7 @@
     </div>
 </div>
 <hr>
-{{ song.likes.all }}<br>
-{{ request.user.siteuser }}
+
 <div class="container">
     <h2 class="my-4 text-left">About</h2>
 

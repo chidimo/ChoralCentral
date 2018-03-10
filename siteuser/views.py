@@ -18,6 +18,7 @@ from pure_pagination.mixins import PaginationMixin
 from .models import SiteUser, Role
 from blog.models import Comment
 from song.forms import ShareForm
+from song.models import Song
 
 from .forms import (
     SiteUserRegistrationForm, SiteUserEditForm, NewRoleForm, RoleEditForm
@@ -38,6 +39,20 @@ class UserDetail(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super(UserDetail, self).get_context_data(**kwargs)
         context["share_form"] = ShareForm()
+        return context
+
+class SongLikers(PaginationMixin, generic.ListView):
+    model = SiteUser
+    context_object_name = 'song_likers'
+    template_name = 'siteuser/song_likers.html'
+
+    def get_queryset(self):
+        song = Song.objects.get(pk=self.kwargs['pk'])
+        return song.likes.all()
+
+    def get_context_data(self, *args):
+        context = super(SongLikers, self).get_context_data(*args)
+        context['song'] = Song.objects.get(pk=self.kwargs['pk'])
         return context
 
 class UserComments(PaginationMixin, generic.ListView):
