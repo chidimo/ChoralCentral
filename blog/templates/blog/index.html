@@ -9,7 +9,7 @@
 <hr>
 
 {% for post in posts %}
-    <div class="list-items">
+    <div class="list-items-high">
         <h4><a href="{% url 'blog:detail' post.pk post.slug %}">{{ post }}</a></h4>
 
         {% if post.song %}

@@ -4,14 +4,15 @@
 {% load static %}
 {% load song_ttags %}
 
+{% block introduction %}{% endblock introduction %}
 {% block content_content %}
 
 <div class='container'>
     <div class='row'>
-        <div class='col-sm-12'>
-            <span class='h2 float-left'>{{ song.title }}</span>
+        <div class='col-sm-12 head-title'>
+            <span class='h5 float-left'>{{ song.title }}</span>
 
-            <span class='h5 float-right song-icons'>
+            <span class='float-right song-icons'>
                 {% if user.is_authenticated %}
 
                     {% if request.user.siteuser in song.likes.all %}
@@ -49,7 +50,7 @@
 <hr>
 
 <div class="container">
-    <h2 class="my-4 text-left">About</h2>
+    <h5 class="my-4 text-left">About</h5>
 
     <div class="row text-left">
         <div class="col-lg-6 my-2">
@@ -83,46 +84,46 @@
                     <span class="h6 float-left">Scripture</span>
                     <span class="h6 float-right">{{ song.scripture_reference }}</span>
                 </div>
-
-                <div class="col-sm-12">
-                    <span class="h6 float-left">Composed</span>
-                    <span class="h6 float-right">{{ song.compose_date }}</span>
-                </div>
-
+            </div>
+        </div>
+        
+        <div class="col-lg-6 my-2">
+            <div class="row">
+                
                 <div class="col-sm-12">
                     <span class="h6 float-left">Language</span>
                     <span class="h6 float-right">{{ song.language|upper }}</span>
                 </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6 my-2">
-            <div class="row">
                 <div class="col-sm-12">
                     <span class="h6 float-left">Seasons</span>
                     <span class="h6 float-right text-left">
                         {% for season in song.seasons.all %}
-                            {{ season }}{% if not forloop.last %},{% endif %}
+                        {{ season }}{% if not forloop.last %},{% endif %}
                         {% endfor %}
                     </span>
                 </div>
-
+                
                 <div class="col-sm-12">
                     <span class="h6 float-left">Massparts</span>
                     <span class="h6 float-right">
                         {% for masspart in song.mass_parts.all %}
-                            {{ masspart }}{% if not forloop.last %},{% endif %}
+                        {{ masspart }}{% if not forloop.last %},{% endif %}
+                        {% endfor %}
+                    </span>
+                </div>
+                
+                <div class="col-sm-12">
+                    <span class="h6 float-left">Authors</span>
+                    <span class="h6 float-right">
+                        {% for author in song.authors.all %}
+                        {{ author }}{% if not forloop.last %},{% endif %}
                         {% endfor %}
                     </span>
                 </div>
 
                 <div class="col-sm-12">
-                    <span class="h6 float-left">Authors</span>
-                    <span class="h6 float-right">
-                        {% for author in song.authors.all %}
-                            {{ author }}{% if not forloop.last %},{% endif %}
-                        {% endfor %}
-                    </span>
+                    <span class="h6 float-left">Composed</span>
+                    <span class="h6 float-right">{{ song.compose_date }}</span>
                 </div>
             </div>
         </div>
@@ -131,12 +132,12 @@
 <hr>
 
 <div class="container">
-    <h2 class="my-4 text-left">
+    <h5 class="my-4 text-left">
         Scores
         <span class="float-right">
             <a class="btn btn-primary btn-sm" href="{% url 'song-media:score_add_song' song.pk %}">Add score</a>
         </span>
-        </h2>
+        </h5>
     <hr>
 
     <div class="row text-left">
@@ -165,12 +166,12 @@
 </div>
 
 <div class="container">
-    <h2 class="my-4 text-left">
+    <h5 class="my-4 text-left">
         Midis
         <span class="float-right">
             <a class="btn btn-primary btn-sm float-right" href="{% url 'song-media:midi_add_song' song.pk %}">Add midi</a>
         </span>
-        </h2>
+        </h5>
     <hr>
 
     <div class="row text-left">
@@ -220,12 +221,12 @@
 </div>
 
 <div class="container">
-    <h2 class="my-4 text-left">
+    <h5 class="my-4 text-left">
         Video links
         <span class="float-right">
             <a class="btn btn-primary btn-sm" href="{% url 'song-media:videolink_new_song' song.pk %}">Add a link</a>
         </span>
-    </h2>
+    </h5>
     <hr>
 
     <div class="row text-left">
@@ -243,7 +244,7 @@
 </div>
 
 <hr>
-<h2>Lyrics</h2>
+<h5>Lyrics</h5>
 {{ song.lyrics|markdown_format }}
 {% endblock content_content %}
 

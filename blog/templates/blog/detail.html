@@ -2,12 +2,14 @@
 {% block title %}{{ post }}{% endblock title %}
 {% load blog_ttags %}
 
+{% block introduction %}{% endblock introduction %}
+
 {% block content_content %}
 
 <div class='container'>
     <div class='row'>
-        <div class='col-sm-12'>
-            <span class='h3 float-left'>{{ post.title }}</span>
+        <div class='col-sm-12 head-title'>
+            <span class='h5 float-left'>{{ post.title }}</span>
 
             <span class='h5 float-right song-icons'>
                 {% if user.is_authenticated %}
@@ -68,22 +70,21 @@
     <hr>
 
     {% for comment in comments %}
-    <div class="list-items">
-        <p>
+    <div class="list-items-high">
+        <div class="row metadata">
             <span class='float-left h6'>
                 <a href="{% url 'siteuser:detail' comment.creator.pk comment.creator.slug %}">{{ comment.creator.screen_name }}</a>
-                 | Created: {{ comment.modified }}
+                 | Created: {{ comment.created }}
             </span>
-            <span class='float-right h6'>
+            <span class='float-right h6 d-none d-lg-block'>
                 Modified: {{ comment.modified }}
             </span>
-        </p>
+        </div>
+        <hr>
 
-        <div class='body'>
+        <div class='row body'>
             {{ comment.comment|markdown_format }}
         </div>
-
-        </hr>
 
         <span class='h6'>
             <span class='float-left'>

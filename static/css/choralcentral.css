@@ -44,9 +44,14 @@ a:hover {
   width: 15%;
 }
 
-.song-icons {
-    margin-top: .59rem;
+.head-title {
+  margin-top: .5rem;
 }
+
+/* .song-icons {
+    margin-top: .25rem;
+} */
+
 .jumbotron {
     margin-bottom: 0;
     background: #cacaca;
@@ -138,7 +143,6 @@ label {
 
 .centerspread {
     background: #EFEFEF;
-    margin: 2rem 0;
 }
 
 .rightsidebar {
@@ -236,8 +240,15 @@ tbody tr:nth-child(odd) {
   background-color: #efefef;
 }
 
-.list-items {
+.list-items-high {
     padding: .1rem 1rem 2rem 1rem;
+    margin: .75rem 0;
+    background: #ffffff;
+    border-radius: .3rem;
+}
+
+.list-items {
+    padding: .1rem 1rem .5rem 1rem;
     margin: .75rem 0;
     background: #ffffff;
     border-radius: .3rem;
