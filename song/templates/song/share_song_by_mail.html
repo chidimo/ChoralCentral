@@ -2,30 +2,55 @@
 <html>
     <head>
         {% load song_ttags %}
+        {% load static %}
         <title>ChoralCentral | Where sheet music lives</title>
-
-        <style>
-            body {background: white}
-            h1, h2, h3 {
-                color: #007bff;}
-            a:hover {text-decoration: underline; color: #007bff;}
-        </style>
+        <link rel='stylesheet' type='text/css' href="{% static 'css/reader_view.css' %}">
     </head>
 
     <body>
-        <h2>Song share from ChoralCentral</h2>
-        <hr class='broad'>
+        <h2>Song share from <a href="http://www.choralcentral.net/">ChoralCentral</a> | <span class='song-title'>{{ song.title }}</span></h2>
+        <hr>
 
         <p>Hello, <br>
+            {% if name %}{{ name|title }}{% else %}Someone{% endif %} would like you to see <a href="{{ song_link }}">{{ song.title|title }}</a> over on
+            <a href="http://www.choralcentral.net">ChoralCentral</a>
+        </p>
+        <p>Be sure to check out the uploaded sheet music and midis as well. Happy Choralling !!!</p>
 
-        {% if name %}
-            {{ name }} would like you to see <a href="{{ song_link }}">{{ song.title }}</a> over on
-            <a href="http://www.choralcentral.net">ChoralCentral</a></p>
-        {% else %}
-            Someone would like you to see <a href="{{ song_link }}">{{ song.title }}</a> over on
-            <a href="http://www.choralcentral.net">ChoralCentral</a></p>
-        {% endif %}
+        <div class='about'>
+            <h4>About</h4>
+            <div class="column-1">
+                <p>For: {{ song.voicing }}</p>
+                <p>Tempo: {{ song.tempo }}</p>
+                <p>Performed: {{ song.tempo_text }}</p>
+                <p>Timing: {{ song.bpm }}/{{ song.divisions }}</p>
+                <p>Scripture: {{ song.scripture_reference }}</p>
+            </div>
 
-        <p>{{ song.lyrics|markdown_format }}</p>
+            <div class="column-2">
+                <p>Language: {{ song.language|upper }}</p>
+                <p>Seasons: {% for season in song.seasons.all %}
+                                {{ season }}{% if not forloop.last %},{% endif %}
+                            {% endfor %}
+                </p>
+                <p>Massparts: {% for masspart in song.mass_parts.all %}
+                                {{ masspart }}{% if not forloop.last %},{% endif %}
+                            {% endfor %}
+                </p>
+
+                <p>Authors: {% for author in song.authors.all %}
+                                {{ author }}{% if not forloop.last %},{% endif %}
+                            {% endfor %}
+                </p>
+                <p>Composed: {{ song.compose_date }}</p>
+            </div>
+        </div>
+
+        <div class='lyrics'>
+            <hr>
+            <h4>Lyrics</h4>
+            {{ song.lyrics|markdown_format }}
+        </div>
+
     </body>
 </html>
