@@ -5,7 +5,7 @@
     {% if page_obj.has_previous %}
         <a href="?{{ page_obj.previous_page_number.querystring }}" class="prev">&lsaquo;&lsaquo; {% trans "prev" %}</a>
     {% else %}
-        <span class="disabled prev">&lsaquo;&lsaquo; {% trans "prev" %}</span>
+        <span class="disabled prev">&lsaquo;&lsaquo; {% trans "previous" %}</span>
     {% endif %}
     {% for page in page_obj.pages %}
         {% if page %}

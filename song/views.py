@@ -245,7 +245,7 @@ def share_song_by_mail(request, pk, slug):
                 msg.attach_alternative(html_email, "text/html")
                 msg.send()
 
-    success_msg = "Message was successfully sent to {}".format(", ".join(email_list))
+    success_msg = "Song was successfully sent to {}".format(", ".join(email_list))
     messages.success(request, success_msg)
     return redirect(song.get_absolute_url())
 

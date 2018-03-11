@@ -268,13 +268,16 @@ tbody tr:nth-child(odd) {
     text-align: center;
     font-weight: bold;
     display: block;
-    padding: 40px 0;
+    padding: 1rem 1rem;
+    margin: .75rem 0;
+    background: #ffffff;
+    border-radius: .3rem;
 }
 
 button.icon-buttons-right {
   float: left;
   padding: 3px 10px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   line-height: 20px;
   color: #24292e;
@@ -285,10 +288,22 @@ button.icon-buttons-right {
   border-bottom-right-radius: 3px;
 }
 
+button.icon-buttons-center {
+  float: left;
+  padding: 3px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 20px;
+  color: #24292e;
+  vertical-align: middle;
+  background-color: #fff;
+  border: 1px solid rgba(27,31,35,0.2);
+}
+
 button.icon-buttons-left {
   float: left;
   padding: 3px 10px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   line-height: 20px;
   color: #24292e;

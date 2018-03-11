@@ -2,7 +2,7 @@
 $('#like').click(function(){
       $.ajax({
                type: "POST",
-               url: "{% url 'song:like_song' %}",
+               url: "{% url 'blog:like_post' %}",
                data: {'pk': $(this).attr('name'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
                dataType: "json",
                success: function(response) {

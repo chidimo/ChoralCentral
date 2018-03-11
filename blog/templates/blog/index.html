@@ -22,31 +22,24 @@
             </em>
         </h6>
         <div>
-            <span class="h5 float-left">
-                <button class="icon-buttons-left">
-                    <a href="" title="Share post on facebook"><i class="fab fa-facebook"></i> FB Share</a>
-                </button>
-                <button class="icon-buttons-right">
-                    <a href='' title="Share post by email" data-toggle="modal" data-target="#emailModal"><i class="fas fa-at"></i> Share</a>
-                </button>
-                {% include 'blog/post_share_modal.html' %}
-            </span>
-
-            <span class="h5 float-right">
-                <span>
-                    <button class="icon-buttons-left">
-                        <a href="" title="Star {{ post.title }}"><i class="fas fa-star"></i> Stars</a>  
-                    </button>
-                    <a href="#" class="like-counter" title="Love birds">{{ post.like_count }}</a>                <span>
-                    <button class="icon-buttons-left">
-                        {{ post.comment_set.count }} <i class="fas fa-comments"></i>
-                    </button>
-                </span>
-            </span>
+        <span class="h5 float-left">
+            <button class="icon-buttons-center">
+                <a href="" title="Share post on facebook"><i class="fab fa-facebook"></i> FB Share</a>
+            </button>
+        </span>
+        <span class="h5 float-right">
+            <button class="icon-buttons-left">
+                <a href="" title="Star {{ post.title }}"><i class="fas fa-star"></i> Stars</a>
+            </button>
+            <button class="icon-buttons-center">
+                {{ post.comment_set.count }} <i class="fas fa-comments"></i>
+            </button>
+            <a href="#" class="like-counter" title="Love birds">{{ post.like_count }}</a>
+        </span>
         </div>
     </div>
 {% empty %}
-    <p>No posts added yet</p>
+    <p>No post.</p>
 {% endfor %}
 
 {% endblock content_content %}

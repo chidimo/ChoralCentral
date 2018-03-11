@@ -4,8 +4,47 @@
 
 {% block content_content %}
 
-    <h2>{{ post.title }}</h2>
-    <hr class='broad'>
+<div class='container'>
+    <div class='row'>
+        <div class='col-sm-12'>
+            <span class='h3 float-left'>{{ post.title }}</span>
+
+            <span class='h5 float-right song-icons'>
+                {% if user.is_authenticated %}
+
+                    {% if request.user.siteuser in post.likes.all %}
+                        <button class="icon-buttons-left">
+                            <a href="" id="like" name="{{ post.pk }}" value="Like" title="unstar this post"><i class="fas fa-star"></i> Unstar</a>
+                            {% include 'blog/post_like_script.html' %}
+                        </button>
+                    {% else %}
+                        <button class="icon-buttons-left">
+                            <a href="" id="like" name="{{ post.pk }}" value="Like" title="star this post"><i class="fas fa-star"></i> Star</a>
+                            {% include 'blog/post_like_script.html' %}
+                        </button>
+                    {% endif %}
+                {% else %}
+                    <button class="icon-buttons-left">
+                        <a href="{% url 'siteuser:login' %}">Login to star this post</a>
+                    </button>
+                {% endif %}
+
+                <button class="icon-buttons-center">
+                    <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="#" title="FB Share">
+                    <i class="fab fa-facebook"></i></a>
+                </button>
+
+                <button class="icon-buttons-right" title="Share" data-toggle="modal" data-target="#postModal">
+                        <i class="fas fa-at"></i>
+                </button>
+                {% include 'blog/post_share_modal.html' %}
+
+            </span>
+        </div>
+    </div>
+</div>
+<hr>
+
 
     {% if post.subtitle %}
         <h5>{{ post.subtitle|markdown_format }}</h5>
@@ -22,9 +61,11 @@
         <span class="float-right">{{ post.comment_set.count }} <i class="fas fa-comments"></i></span>
     </h6>
 
-    <hr class='broad'>
-    {{ post.body|markdown_format }}
-    <hr class='broad'>
+    <hr>
+    <div class='post-body'>
+        {{ post.body|markdown_format }}
+    </div>
+    <hr>
 
     {% for comment in comments %}
     <div class="list-items">

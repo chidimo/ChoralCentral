@@ -16,12 +16,12 @@
 
                     {% if request.user.siteuser in song.likes.all %}
                         <button class="icon-buttons-left">
-                            <a href="" id="like" name="{{ song.pk }}" value="Like" title="star this song"><i class="fas fa-star"></i> Unstar</a>
+                            <a href="" id="like" name="{{ song.pk }}" value="Like" title="unstar this song"><i class="fas fa-star"></i> Unstar</a>
                             {% include 'song/song_like_script.html' %}
                         </button>
                     {% else %}
                         <button class="icon-buttons-left">
-                            <a href="" id="like" name="{{ song.pk }}" value="Like" title="unstar this song"><i class="fas fa-star"></i> Star</a>
+                            <a href="" id="like" name="{{ song.pk }}" value="Like" title="star this song"><i class="fas fa-star"></i> Star</a>
                             {% include 'song/song_like_script.html' %}
                         </button>
                     {% endif %}
@@ -32,7 +32,7 @@
                     </button>
                 {% endif %}
 
-                <button class="icon-buttons-left">
+                <button class="icon-buttons-center">
                     <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'song:share_on_facebook' song.pk song.slug %}" title="FB Share">
                     <i class="fab fa-facebook"></i></a>
                 </button>

@@ -5,6 +5,15 @@ from siteuser.models import SiteUser
 from song.models import Song
 from .models import Post, Comment
 
+class PostShareForm(forms.Form):
+    receiving_emails = forms.CharField(
+        widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Enter any number of emails, separated by commas."}),
+    )
+    name = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Enter your name (optional)"})
+    )
+
 class NewPostForm(forms.ModelForm):
     class Meta:
         model = Post
@@ -77,10 +86,6 @@ class CommentEditForm(forms.ModelForm):
             "comment" : forms.Textarea(
                 attrs={'class' : 'form-control', "placeholder" : "Type your comments."})
         }
-
-class CommentNumberForm(forms.Form):
-    number = forms.IntegerField(widget=forms.NumberInput(
-        attrs={'class' : 'form-control', 'placeholder' : "Number of comments to display"}))
 
 class SearchForm(forms.Form):
     query = forms.CharField(widget=forms.TextInput(
