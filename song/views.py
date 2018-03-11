@@ -206,6 +206,7 @@ def reader_view(request, pk, slug):
     song = Song.objects.get(pk=pk, slug=slug)
     context = {}
     context['song'] = song
+    # return render(request, template, context)
     return render_to_pdf(request, template, context)
 
 # https://www.webforefront.com/django/

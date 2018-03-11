@@ -1,57 +1,55 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
-        <title>ChoralCentral &#124; {{ song.title }} print view</title>
         {% load song_ttags %}
+        {% load static %}
+        <title>ChoralCentral &#124; {{ song.title }}</title>
+        <link rel='stylesheet' type='text/css' href="{% static 'css/reader_view.css' %}">
     </head>
 
     <body>
-        <h4>{{ song.title }}</h4>
+        <h2><a href="http://www.choralcentral.net/">ChoralCentral</a> | <span class='song-title'>{{ song.title }}</span></h2>
+        <div class='heading'>
+            <p class='uploader'>
+                by <a href="{% url 'siteuser:detail' song.originator.pk song.originator.slug %}">{{ song.originator.screen_name }}</a>
+            </p>
+            <hr>
+        </div>
 
-        <table class="table table-striped">
-            <thead class="thead-dark">
-                <tr>
-                    <th>For</th>
-                    <th>Performed</th>
-                    <th>Language</th>
-                    <th>Seasons</th>
-                    <th>Masspart</th>
-                    <th>Authors</th>
-                    <th>Tempo</th>
-                    <th>Timing</th>
-                    <th>Scripture</th>
-                    <th>Composed</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{ song.voicing }}</td>
-                    <td>{{ song.tempo_text }}</td>
-                    <td>{{ song.language }}</td>
-                    <td>
-                        {% for season in song.seasons.all %}
-                            {{ season }}{% if not forloop.last %},<br>{% endif %}
-                        {% endfor %}
-                    </td>
-                    <td>
-                        {% for masspart in song.mass_parts.all %}
-                            {{ masspart }}{% if not forloop.last %},<br>{% endif %}
-                        {% endfor %}
-                    </td>
-                    <td>
-                        {% for author in song.authors.all %}
-                            {{ author }}{% if not forloop.last %},<br>{% endif %}
-                        {% endfor %}
-                    </td>
-                    <td>{{ song.tempo }}</td>
-                    <td>{{ song.bpm }}/{{ song.divisions }}</td>
-                    <td>{{ song.scripture_ref }}</td>
-                    <td>{{ song.compose_date }}</td>
-                </tr>
-            </tbody>
-        </table>
-    <!-- END SHEET -->
-        <p>{{ song.lyrics|markdown_format }}</p>
+        <div class='about'>
+            <h4>About</h4>
+            <div class="column-1">
+                <p>For: {{ song.voicing }}</p>
+                <p>Tempo: {{ song.tempo }}</p>
+                <p>Performed: {{ song.tempo_text }}</p>
+                <p>Timing: {{ song.bpm }}/{{ song.divisions }}</p>
+                <p>Scripture: {{ song.scripture_reference }}</p>
+            </div>
+
+            <div class="column-2">
+                <p>Language: {{ song.language|upper }}</p>
+                <p>Seasons: {% for season in song.seasons.all %}
+                                {{ season }}{% if not forloop.last %},{% endif %}
+                            {% endfor %}
+                </p>
+                <p>Massparts: {% for masspart in song.mass_parts.all %}
+                                {{ masspart }}{% if not forloop.last %},{% endif %}
+                            {% endfor %}
+                </p>
+
+                <p>Authors: {% for author in song.authors.all %}
+                                {{ author }}{% if not forloop.last %},{% endif %}
+                            {% endfor %}
+                </p>
+                <p>Composed: {{ song.compose_date }}</p>
+            </div>
+        </div>
+
+        <div class='lyrics'>
+            <hr>
+            <h4>Lyrics</h4>
+            {{ song.lyrics|markdown_format }}
+        </div>
 
         <div id="pageFooter"></div>
     </body>
