@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta content="text/html">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<title>ChoralCentral &raquo; {% block title %}Where sheet music lives{% endblock title %}</title>
+		<title>ChoralCentral | {% block title %}Where sheet music lives{% endblock title %}</title>
 
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
@@ -105,6 +105,7 @@
 		{% endblock introduction %}
 
 		<div class="container-fluid">
+		    {% include 'messages.html' %}
 			<div class="row">
 				<div class="col-sm-3 leftsidebar">
 					{% block left_sidebar %}
@@ -112,8 +113,9 @@
 				</div>
 
 				<div class="col-sm-6 centerspread" role='main'>
+
 					{% block content_content %}
-						content block
+					    content-block
 					{% endblock content_content %}
 
 					{% block javascript %}{% endblock javascript %}

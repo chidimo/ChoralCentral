@@ -10,6 +10,8 @@ from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.shortcuts import get_object_or_404, render, redirect
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.views import generic, View
@@ -113,7 +115,7 @@ class SongDetail(generic.DetailView):
         return context
     # add download incrementer here
 
-class NewSong(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
+class NewSong(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):
     template_name = 'song/new.html'
     form_class = NewSongForm
 
@@ -124,23 +126,25 @@ class NewSong(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
             form.instance.first_line = form.instance.lyrics.split("\n")[0]
         self.object = form.save()
         self.object.likes.add(SiteUser.objects.get(user=self.request.user))
+        messages.success(self.request, "Song was successfully added")
         return redirect(self.get_success_url())
 
-class SongEdit(LoginRequiredMixin, generic.UpdateView):
+class SongEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     model = Song
     form_class = SongEditForm
     template_name = 'song/edit.html'
+    success_message = "Song updated successfully"
 
 class SongDelete(generic.DeleteView):
     model = Song
     success_url = reverse_lazy('song:index')
     template_name = "song/song_delete.html"
 
-class FilterSongs(PaginationMixin, generic.ListView):
+class FilterSongs(PaginationMixin, SuccessMessageMixin, generic.ListView):
     model = Song
     template_name = "song/index.html"
     context_object_name = "songs"
-    paginate_by = 20
+    paginate_by = 25
 
     def get_context_data(self, **kwargs):
         context = super(FilterSongs, self).get_context_data(**kwargs)
@@ -166,6 +170,7 @@ class FilterSongs(PaginationMixin, generic.ListView):
 
                 if author:
                     queries.append(Q(authors=author))
+                    msg.append('Author={}'.format(author))
                 if season:
                     queries.append(Q(seasons__season=season))
                     msg.append('Season={}'.format(season))
@@ -194,11 +199,12 @@ class FilterSongs(PaginationMixin, generic.ListView):
                         query = []
                         query_str = ""
 
-                # self.get_context_data(**self.kwargs).update({'query_str' : query_str})
                 # execute query
                 if query:
+                    messages.success(self.request, "Search results for {}".format(query_str))
                     return Song.objects.filter(query)
                 else:
+                    messages.success(self.request, "You did not make any selection.")
                     return Song.published_set.all()
 
 def reader_view(request, pk, slug):
@@ -230,8 +236,6 @@ def share_song_by_mail(request, pk, slug):
             context['name'] = name
 
             email_list = [each.strip() for each in receiving_emails.split(',')]
-            with open('a.txt', 'w+') as fh:
-                fh.write(str(email_list))
 
             for email in email_list:
                 text_email = render_to_string("song/share_song_by_mail.txt", context)
@@ -240,6 +244,9 @@ def share_song_by_mail(request, pk, slug):
                 msg = EmailMultiAlternatives(subject, text_email, from_email, [email])
                 msg.attach_alternative(html_email, "text/html")
                 msg.send()
+
+    success_msg = "Message was successfully sent to {}".format(", ".join(email_list))
+    messages.success(request, success_msg)
     return redirect(song.get_absolute_url())
 
 def share_on_facebook(request, pk, slug):

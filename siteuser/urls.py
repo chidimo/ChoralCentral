@@ -18,7 +18,7 @@ urlpatterns = [
 urlpatterns += [
     path("new-role/", views.NewRole.as_view(), name="role_create"),
     path("view/roles/", views.RoleIndex.as_view(), name="role_index"),
-    path('likers/<int:pk>/', views.SongLikers.as_view(), name='song_likers')
+    path('love-birds/<int:pk>/', views.SongLikers.as_view(), name='song_likers')
 ]
 
 urlpatterns += [

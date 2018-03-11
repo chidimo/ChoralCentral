@@ -12,22 +12,24 @@
             <span class='h2 float-left'>{{ song.title }}</span>
 
             <span class='h5 float-right song-icons'>
-                {% if not user.is_autenticated %}
-                <button class="icon-buttons-left">
-                    <a href="{% url 'siteuser:login' %}">Login to star this song</a>
-                </button>
-                {% else %}
+                {% if user.is_authenticated %}
+
                     {% if request.user.siteuser in song.likes.all %}
-                    <button class="icon-buttons-left">
-                        <a href="" id="like" name="{{ song.pk }}" value="Like" title="star this song"><i class="fas fa-star"></i> Unstar</a>
-                        {% include 'song/song_like_script.html' %}
-                    </button>
+                        <button class="icon-buttons-left">
+                            <a href="" id="like" name="{{ song.pk }}" value="Like" title="star this song"><i class="fas fa-star"></i> Unstar</a>
+                            {% include 'song/song_like_script.html' %}
+                        </button>
                     {% else %}
-                    <button class="icon-buttons-left">
-                        <a href="" id="like" name="{{ song.pk }}" value="Like" title="unstar this song"><i class="fas fa-star"></i> Star</a>
-                        {% include 'song/song_like_script.html' %}
-                    </button>
+                        <button class="icon-buttons-left">
+                            <a href="" id="like" name="{{ song.pk }}" value="Like" title="unstar this song"><i class="fas fa-star"></i> Star</a>
+                            {% include 'song/song_like_script.html' %}
+                        </button>
                     {% endif %}
+
+                {% else %}
+                    <button class="icon-buttons-left">
+                        <a href="{% url 'siteuser:login' %}">Login to star this song</a>
+                    </button>
                 {% endif %}
 
                 <button class="icon-buttons-left">
@@ -35,7 +37,6 @@
                     <i class="fab fa-facebook"></i></a>
                 </button>
 
-                
                 <button class="icon-buttons-right" title="Share" data-toggle="modal" data-target="#emailModal">
                         <i class="fas fa-at"></i>
                 </button>

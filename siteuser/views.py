@@ -8,9 +8,12 @@ from django.views.decorators.http import require_POST
 from django.views import generic
 from django.shortcuts import render, reverse
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 # from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
+
 # from django.contrib.auth.models import Group, Permission
 
 from django_addanother.views import CreatePopupMixin
@@ -36,6 +39,7 @@ class UserDetail(generic.DetailView):
     model = SiteUser
     context_object_name = 'siteuser'
     template_name = "siteuser/detail.html"
+
     def get_context_data(self, **kwargs):
         context = super(UserDetail, self).get_context_data(**kwargs)
         context["share_form"] = ShareForm()
@@ -43,8 +47,9 @@ class UserDetail(generic.DetailView):
 
 class SongLikers(PaginationMixin, generic.ListView):
     model = SiteUser
-    context_object_name = 'song_likers'
-    template_name = 'siteuser/song_likers.html'
+    context_object_name = 'song_love_birds'
+    template_name = 'siteuser/song_love_birds.html'
+    paginate_by = 24
 
     def get_queryset(self):
         song = Song.objects.get(pk=self.kwargs['pk'])
@@ -59,7 +64,7 @@ class UserComments(PaginationMixin, generic.ListView):
     model = Comment
     context_object_name = 'user_comments'
     template_name = "siteuser/comments.html"
-    paginate_by = 20
+    paginate_by = 25
 
     def get_context_data(self, **kwargs):
         context = super(UserComments, self).get_context_data(**kwargs)
@@ -129,14 +134,16 @@ def activate_siteuser(request, screen_name, pk):
     context["screen_name"] = screen_name
     return render(request, "siteuser/new_activation.html", context)
 
-class SiteUserEdit(LoginRequiredMixin, generic.UpdateView):
+class SiteUserEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     model = SiteUser
     form_class = SiteUserEditForm
     template_name = 'siteuser/edit.html'
+    success_message = "Profile updated successfully."
 
-class NewRole(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
+class NewRole(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):
     form_class = NewRoleForm
     template_name = 'siteuser/role_new.html'
+    success_message = "New role added successfully"
 
 class RoleIndex(generic.ListView):
     model = Role

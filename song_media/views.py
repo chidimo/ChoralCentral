@@ -7,6 +7,8 @@ from django.views import generic, View
 from django.shortcuts import reverse, render
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, get_object_or_404
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django_addanother.views import CreatePopupMixin
 
@@ -18,22 +20,24 @@ from .forms import (
 
 from siteuser.models import SiteUser
 
-class NewVocalPart(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
+class NewVocalPart(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):
     model = VocalPart
     form_class = NewVocalPartForm
     template_name = 'song_media/part_new.html'
+    success_message = "Vocal part added successfully !"
 
 class ScoreIndex(LoginRequiredMixin, generic.ListView):
     model = Score
     context_object_name = 'scores'
     template_name = 'song_media/score_index.html'
 
-class NewScoreNotation(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
+class NewScoreNotation(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):
     model = ScoreNotation
     form_class = NewScoreNotationForm
     template_name = 'song_media/notation_new.html'
+    success_message = "Notation added successfully !"
 
-class NewScore(LoginRequiredMixin, generic.CreateView):
+class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     template_name = 'song_media/score_new.html'
     form_class = NewScoreForm
 
@@ -41,6 +45,7 @@ class NewScore(LoginRequiredMixin, generic.CreateView):
         form.instance.uploader = SiteUser.objects.get(user=self.request.user)
         self.object = form.save()
         self.object.likes.add(SiteUser.objects.get(user=self.request.user))
+        messages.success(self.request, "Score successfully added to {}".format(self.object.song.title))
         return redirect(self.get_success_url())
 
     def get_form_kwargs(self):
@@ -72,7 +77,7 @@ class MidiIndex(LoginRequiredMixin, generic.ListView):
     context_object_name = 'midis'
     template_name = 'song_media/midi_index.html'
 
-class NewMidi(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
+class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):
     template_name = 'song_media/midi_new.html'
     form_class = NewMidiForm
 
@@ -80,6 +85,7 @@ class NewMidi(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
         form.instance.uploader = SiteUser.objects.get(user=self.request.user)
         self.object = form.save()
         self.object.likes.add(SiteUser.objects.get(user=self.request.user))
+        messages.success(self.request, "Midi successfully added to {}".format(self.object.song.title))
         return redirect(self.get_success_url())
 
     def get_form_kwargs(self):
@@ -116,10 +122,11 @@ class DeleteMidi(LoginRequiredMixin, generic.DeleteView):
     def get_success_url(self):
         return reverse("song:detail", kwargs={'pk' : self.kwargs['song_pk'], 'slug' : self.kwargs['slug']})
 
-class NewVideoLink(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
+class NewVideoLink(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):
     model = VideoLink
     template_name = 'song_media/videolink_new.html'
     form_class = NewVideoLinkForm
+    success_message = "Video link added successfully !"
 
     def form_valid(self, form):
         form.instance.uploader = SiteUser.objects.get(user=self.request.user)

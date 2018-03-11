@@ -325,6 +325,14 @@ a.like-counter {
 /*    padding: 0.5rem 0;*/
 /*}*/
 
+ul.messages {
+    color: green;
+    text-align: left;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
 ul.errorlist {
   /* style django errors */
   color: red;

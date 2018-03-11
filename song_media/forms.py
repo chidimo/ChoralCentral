@@ -23,7 +23,7 @@ class NewVocalPartForm(forms.ModelForm):
                 }
 
     def clean_name(self):
-        name = self.cleaned_data.get("name", None).upper()
+        name = self.cleaned_data.get("name", None)
         if VocalPart.objects.filter(name=name).exists():
             raise forms.ValidationError(_("{} already exists".format(name)))
         return name
@@ -39,7 +39,7 @@ class NewScoreNotationForm(forms.ModelForm):
                 }
 
     def clean_name(self):
-        name = self.cleaned_data.get("name", None).upper()
+        name = self.cleaned_data.get("name", None)
         if VocalPart.objects.filter(name=name).exists():
             raise forms.ValidationError(_("{} already exists".format(name)))
         return name
@@ -58,7 +58,7 @@ class NewScoreForm(forms.ModelForm):
                    'notation' : AddAnotherWidgetWrapper(
                        forms.Select(attrs={'class' : 'form-control'}),
                        reverse_lazy('song-media:new_notation')),
-                    
+
                     'media_file' : ClearableFileInput(attrs={'class' : 'form-control'}),
                   }
 
@@ -74,7 +74,6 @@ class NewScoreForm(forms.ModelForm):
             self.fields['song'].initial = Song.objects.get(pk=pk)
         else:
             self.fields['song'].queryset = Song.objects.filter(originator__user=user)
-            # self.fields['song'].queryset = Song.objects.filter(originator=originator)
 
 class NewMidiForm(forms.ModelForm):
     class Meta:
