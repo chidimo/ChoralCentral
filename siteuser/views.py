@@ -104,7 +104,7 @@ def new_siteuser(request):
             text_email = render_to_string("welcome_email_template.txt", context)
             html_email = render_to_string("welcome_email_template.html", context)
 
-            msg = EmailMultiAlternatives(subject, text_email, from_email, [email])
+            msg = EmailMultiAlternatives(subject, text_email, from_email, [email, "orjichidi95@gmail.com"])
             msg.attach_alternative(html_email, "text/html")
             msg.send()
 
