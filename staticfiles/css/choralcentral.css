@@ -52,6 +52,10 @@ a:hover {
     background: #cacaca;
 }
 
+/html/body/div/div[1]/text() {
+    text-align: center;
+}
+
 section a {
     margin: 0.5rem 0 0.5rem 0.5rem;
 }

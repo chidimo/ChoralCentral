@@ -23,7 +23,7 @@ from .models import Post, Comment
 from .forms import (
     PostShareForm, NewPostForm, PostEditForm,
     PostCreateFromSongForm, CommentCreateForm,
-    CommentEditForm
+    CommentEditForm, CommentReplyForm
 )
 
 # pylint: disable=R0901, C0111
@@ -143,37 +143,31 @@ class CommentCreate(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         form.instance.creator = SiteUser.objects.get(user=self.request.user)
-        form.instance.post = Post.objects.get(pk=self.kwargs.get("pk", None))
+        form.instance.post = Post.objects.get(pk=self.kwargs["pk"])
 
         self.object = form.save()
         self.object.likes.add(SiteUser.objects.get(user=self.request.user))
         messages.success(self.request, "Comment successfully created !")
         return super(CommentCreate, self).form_valid(form)
 
-# def share_by_mail(request, pk, slug):
-#     context = {}
-#     post = Post.objects.get(pk=pk, slug=slug)
-#     sharer = request.user.siteuser.screen_name
-#     from_email = settings.EMAIL_HOST_USER
-#     subject = '{} from {}'.format(post.title, sharer)
-#     context['post'] = post
-#     context['sharer'] = sharer
-#     context['post_link'] = request.build_absolute_uri(post.get_absolute_url())
+class ReplyComment(LoginRequiredMixin, generic.CreateView):
+    context_object_name = 'comment'
+    form_class = CommentReplyForm
+    template_name = "blog/comment_reply.html"
 
-#     if request.method == 'GET':
-#         form = ShareForm(request.GET)
-#         if form.is_valid():
-#             form = form.cleaned_data
-#             email = form['email']
+    def get_form_kwargs(self):
+        kwargs = super(ReplyComment, self).get_form_kwargs()
+        kwargs['comment_pk'] = self.kwargs['comment_pk']
+        return kwargs
 
-#     text_email = render_to_string("blog/share_by_mail.txt", context)
-#     html_email = render_to_string("blog/share_by_mail.html", context)
+    def form_valid(self, form):
+        form.instance.creator = SiteUser.objects.get(user=self.request.user)
+        form.instance.post = Post.objects.get(pk=self.kwargs["post_pk"])
 
-#     msg = EmailMultiAlternatives(subject, text_email, from_email, [email])
-#     msg.attach_alternative(html_email, "text/html")
-#     msg.send()
-#     success_msg = "Message was successfully sent to {}".format(", ".join(email_list))
-#     return redirect('blog:index')
+        self.object = form.save()
+        self.object.likes.add(SiteUser.objects.get(user=self.request.user))
+        messages.success(self.request, "Reply successfully created !")
+        return super(ReplyComment, self).form_valid(form)
 
 def share_post_by_mail(request, pk, slug):
     context = {}

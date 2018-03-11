@@ -87,6 +87,22 @@ class CommentEditForm(forms.ModelForm):
                 attrs={'class' : 'form-control', "placeholder" : "Type your comments."})
         }
 
+class CommentReplyForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ("comment", )
+
+        widgets = {
+            "comment" : forms.Textarea(
+                attrs={'class' : 'form-control', "placeholder" : "Reply comment."})
+        }
+    def __init__(self, *args, **kwargs):
+        comment_pk = kwargs.pop("comment_pk")
+        super(CommentReplyForm, self).__init__(*args, **kwargs)
+        comment = Comment.objects.get(pk=comment_pk)
+        data = "> " + comment.comment
+        self.fields['comment'].initial = data
+
 class SearchForm(forms.Form):
     query = forms.CharField(widget=forms.TextInput(
         attrs={'class' : 'form-control', 'placeholder' : "Search posts."}

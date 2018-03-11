@@ -79,20 +79,25 @@
             </span>
         </p>
 
-        {{ comment.comment|markdown_format }}
-        </hr>
+        <div class='body'>
+            {{ comment.comment|markdown_format }}
+        </div>
 
+        </hr>
 
         <span class='h6'>
             <span class='float-left'>
-                {{ comment.like_count }} <a href='#'><i class='fas fa-star'></i></a>
+                <button class="icon-buttons-left">
+                    {{ comment.like_count }}
+                </button>
+                <a href='#' class='like-counter'><i class='fas fa-star'></i></a>
             </span>
 
             <span class='float-right'>
                 {% if request.user == comment.creator.user %}
-                    <a href="{% url 'blog:comment_edit' comment.pk %}"><i class="fas fa-edit"></i></a>
+                    <a  class='like-counter' href="{% url 'blog:comment_edit' comment.pk %}"><i class="fas fa-edit"></i></a>
                 {% endif %}
-                <a href="#"><i class="fas fa-reply"></i></a>
+                <a  class='like-counter' href="{% url 'blog:comment_reply' comment.pk post.pk %}"><i class="fas fa-reply"></i></a>
             </span>
         </span>
     </div>
