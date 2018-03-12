@@ -55,7 +55,7 @@ class Comment(TimeStampedModel):
     comment = models.TextField()
 
     class Meta:
-        ordering = ('-like_count', '-created',)
+        ordering = ('-like_count', 'created',)
 
     def get_absolute_url(self):
         return reverse('blog:detail', args=[str(self.post.id), str(self.post.slug)])

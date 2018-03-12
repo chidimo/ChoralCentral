@@ -15,7 +15,6 @@
     {% for song in songs %}
     <div class="list-items-high">
         <h4><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h4>
-        <p class="" id="songFirstLine">{{ song.first_line }}</p>
 
         <span class="h5 float-left">
             <button class="icon-buttons">
@@ -30,7 +29,9 @@
             <button class="icon-buttons">
                 <a href="" title="Star {{ song.title }}"><i class="fas fa-star"></i> Stars</a>
             </button>
-            <a href="{% url 'siteuser:song_likers' song.pk %}" class="like-counter" title="{{ song.like_count }} Love birds">{{ song.like_count }}</a>
+            <button class="icon-buttons">
+                <a href="{% url 'siteuser:song_likers' song.pk %}" title="{{ song.like_count }} Love birds">{{ song.like_count }}</a>
+            </button>
         </span>
     </div>
     {% empty %}

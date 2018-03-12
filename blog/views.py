@@ -6,7 +6,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.contrib.auth.decorators import login_required
@@ -141,6 +141,20 @@ class CommentCreate(LoginRequiredMixin, generic.CreateView):
     context_object_name = 'comment'
     form_class = CommentCreateForm
 
+    def get_success_url(self):
+        post = self.object.post
+        pagination = PostDetail().paginate_by
+        post_url = reverse('blog:detail', kwargs={'pk' : post.pk, 'slug' : post.slug})
+        number_of_comments = post.comment_set.count()
+
+        pages = number_of_comments // pagination # get whole pages
+        remainder_comments = number_of_comments % pagination
+        if remainder_comments: # check for remainder
+            pages += 1
+        comment_page = '?page={}'.format(pages)
+        comment_target_id = '#{}'.format(remainder_comments-1)
+        return post_url + comment_page + comment_target_id
+
     def form_valid(self, form):
         form.instance.creator = SiteUser.objects.get(user=self.request.user)
         form.instance.post = Post.objects.get(pk=self.kwargs["pk"])
@@ -166,9 +180,12 @@ class ReplyComment(LoginRequiredMixin, generic.CreateView):
 
         self.object = form.save()
         self.object.likes.add(SiteUser.objects.get(user=self.request.user))
-        messages.success(self.request, "Reply successfully created !")
+        messages.success(self.request, "Reply successfully created.")
         return super(ReplyComment, self).form_valid(form)
 
+class DeleteComment(LoginRequiredMixin, generic.DeleteView):
+    model = Comment
+    template_name = 'blog/comment_delete.html'
 def share_post_by_mail(request, pk, slug):
     context = {}
 

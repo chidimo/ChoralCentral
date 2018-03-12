@@ -129,7 +129,7 @@ a.upload-button {
   background: blanchedalmond;
 }
 
-.song-actions {
+.song-actions, .post-actions {
     background: #f2f3fb;
     border: .6px solid midnightblue;
     margin: .5rem 0;
@@ -165,7 +165,7 @@ a.upload-button {
     border-radius: .3rem;
 }
 
-.song-lyrical {
+.song-lyrical, .post-body {
     background: #f2f3fb;
     border: .6px solid midnightblue;
     margin: .5rem 0;
@@ -174,6 +174,17 @@ a.upload-button {
 
 .score-list {
     border: .5px solid #d2d3da;
+}
+
+.commenter-stats {
+  background: white;
+  border: .5px solid midnightblue;
+  border-radius: .3rem;
+  margin-top: -2px;
+  margin-left: -16px;
+  margin-right: -16px;
+  padding: 0 .5rem;
+}
 }
 
 label {
@@ -280,10 +291,11 @@ tbody tr:nth-child(odd) {
 }
 
 .list-items-high {
-    padding: .1rem 1rem 2rem 1rem;
+    padding: .1rem 1rem 2.2rem 1rem;
     margin: .75rem 0;
     background: #e9ecef;
     border-radius: .3rem;
+    border: .6px solid midnightblue;
 }
 
 .list-items {
@@ -291,6 +303,7 @@ tbody tr:nth-child(odd) {
     margin: .75rem 0;
     background: #e9ecef;
     border-radius: .3rem;
+    border: .6px solid midnightblue;
 }
 
 .table td {
