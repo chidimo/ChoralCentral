@@ -14,7 +14,6 @@
 
             <span class='float-right song-icons'>
                 {% if user.is_authenticated %}
-
                     {% if request.user.siteuser in song.likes.all %}
                         <button class="icon-buttons">
                             <a href="" id="like" name="{{ song.pk }}" value="Like" title="unstar this song"><i class="fas fa-star"></i> Unstar</a>
@@ -26,7 +25,6 @@
                             {% include 'song/song_like_script.html' %}
                         </button>
                     {% endif %}
-
                 {% else %}
                     <button class="icon-buttons">
                         <a href="{% url 'siteuser:login' %}">Login to star this song</a>
@@ -34,12 +32,20 @@
                 {% endif %}
 
                 <button class="icon-buttons">
-                    <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'song:share_on_facebook' song.pk song.slug %}" title="FB Share">
-                    <i class="fab fa-facebook"></i></a>
+                    <a href="{% url 'blog:new_song' song.pk %}" title="Blog this song"><i class="fas fa-pencil-alt"></i> Blog</a>
+                </button>
+                <button class="icon-buttons">
+                    <a href="{% url 'song:reader_view' song.pk song.slug %}" title="Print in pdf format" target="_blank"><i class="fas fa-print"></i> Print</a>
                 </button>
 
-                <button class="icon-buttons" title="Share" data-toggle="modal" data-target="#emailModal">
-                        <i class="fas fa-at"></i>
+                <button class="icon-buttons">
+                    <a aria-hidden="true" href="{% url 'song:share_on_facebook' song.pk song.slug %}" title="Share on Facebook">
+                    <i class="fab fa-facebook"></i> Share</a>
+                </button>
+
+                <button class="icon-buttons">
+                    <a href="" title="Share by email" data-toggle="modal" data-target="#emailModal">
+                    <i class="fas fa-at"></i> Email</a>
                 </button>
                 {% include 'song/song_share_modal.html' %}
             </span>
@@ -154,11 +160,17 @@
                         <a href=""><i class="fas fa-star"></i></a>
                     </button>
                 </p>
-                <p class="text-left">{{ score.downloads }} <i class="fas fa-eye"></i></p>
+                <p class="text-left">
+                    <button class="icon-buttons">
+                        {{ score.downloads }}2 <i class="fas fa-eye"></i>
+                    </button>
+                </p>
                 <p class='text-left'>
                     {% if request.user == score.uploader.user %}
-                        <a href=""><i  class="fas fa-edit"></i></a> &emsp;
+                    <button class="icon-buttons">
+                        <a href=""><i  class="fas fa-edit"></i></a>
                         <a href="{% url 'song-media:delete_score' score.pk song.pk song.slug %}"><i class="fas fa-trash"></i></a>
+                    </button>
                     {% endif %}
                 </p>
             </div>

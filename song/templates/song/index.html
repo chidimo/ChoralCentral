@@ -27,10 +27,10 @@
         </span>
 
         <span class="h5 float-right">
-                <button class="icon-buttons">
-                    <a href="" title="Star {{ song.title }}"><i class="fas fa-star"></i> Stars</a>
-                </button>
-                <a href="{% url 'siteuser:song_likers' song.pk %}" class="like-counter" title="{{ song.like_count }} Love birds">{{ song.like_count }}</a>
+            <button class="icon-buttons">
+                <a href="" title="Star {{ song.title }}"><i class="fas fa-star"></i> Stars</a>
+            </button>
+            <a href="{% url 'siteuser:song_likers' song.pk %}" class="like-counter" title="{{ song.like_count }} Love birds">{{ song.like_count }}</a>
         </span>
     </div>
     {% empty %}

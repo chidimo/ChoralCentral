@@ -48,10 +48,6 @@ a:hover {
   margin-top: .5rem;
 }
 
-/* .song-icons {
-    margin-top: .25rem;
-} */
-
 .jumbotron {
     margin-bottom: 0;
     background: #cacaca;
@@ -135,47 +131,44 @@ a.upload-button {
 
 .song-actions {
     background: #f2f3fb;
-    border: .5px solid #f2f3fb;
-    margin-bottom: 0.5rem;
+    border: .6px solid midnightblue;
+    margin: .5rem 0;
     border-radius: .3rem;
-
+    padding-bottom: .5rem;
 }
 
 .song-about {
     background: #f2f3fb;
-    border: .5px solid #f2f3fb;
-    margin-bottom: 0.5rem;
+    border: .6px solid midnightblue;
+    margin: .5rem 0;
     border-radius: .3rem;
-
 }
 
 .song-readable {
     background: #f2f3fb;
-    border: .5px solid #f2f3fb;
-    margin-bottom: 0.5rem;
+    border: .6px solid midnightblue;
+    margin: .5rem 0;
     border-radius: .3rem;
-
 }
 
 .song-audible {
     background: #f2f3fb;
-    border: .5px solid #f2f3fb;
-    margin-bottom: 0.5rem;
+    border: .6px solid midnightblue;
+    margin: .5rem 0;
     border-radius: .3rem;
-
 }
+
 .song-watchable {
     background: #f2f3fb;
-    border: .5px solid #f2f3fb;
-    margin-bottom: 0.5rem;
+    border: .6px solid midnightblue;
+    margin: .5rem 0;
     border-radius: .3rem;
-
 }
 
 .song-lyrical {
     background: #f2f3fb;
-    border: .5px solid #f2f3fb;
-    margin-bottom: 0.5rem;
+    border: .6px solid midnightblue;
+    margin: .5rem 0;
     border-radius: .3rem;
 }
 
@@ -338,13 +331,15 @@ button.icon-buttons {
   font-weight: 600;
   line-height: 20px;
   color: #24292e;
-  text-decoration: none;
   vertical-align: middle;
   background-color: #fff;
   border: 1px solid rgba(27,31,35,0.2);
   border-radius: 3px;
-  margin-left: 1px;
-  margin-right: 1px;
+  margin: 2px 1px;
+}
+
+.icon-buttons a {
+    text-decoration: none;
 }
 
 a.like-counter {
