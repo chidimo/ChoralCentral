@@ -7,7 +7,7 @@
 {% block introduction %}{% endblock introduction %}
 {% block content_content %}
 
-<div class='container'>
+<div class='container song-actions'>
     <div class='row'>
         <div class='col-sm-12 head-title'>
             <span class='h5 float-left'>{{ song.title }}</span>
@@ -16,40 +16,38 @@
                 {% if user.is_authenticated %}
 
                     {% if request.user.siteuser in song.likes.all %}
-                        <button class="icon-buttons-left">
+                        <button class="icon-buttons">
                             <a href="" id="like" name="{{ song.pk }}" value="Like" title="unstar this song"><i class="fas fa-star"></i> Unstar</a>
                             {% include 'song/song_like_script.html' %}
                         </button>
                     {% else %}
-                        <button class="icon-buttons-left">
+                        <button class="icon-buttons">
                             <a href="" id="like" name="{{ song.pk }}" value="Like" title="star this song"><i class="fas fa-star"></i> Star</a>
                             {% include 'song/song_like_script.html' %}
                         </button>
                     {% endif %}
 
                 {% else %}
-                    <button class="icon-buttons-left">
+                    <button class="icon-buttons">
                         <a href="{% url 'siteuser:login' %}">Login to star this song</a>
                     </button>
                 {% endif %}
 
-                <button class="icon-buttons-center">
+                <button class="icon-buttons">
                     <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'song:share_on_facebook' song.pk song.slug %}" title="FB Share">
                     <i class="fab fa-facebook"></i></a>
                 </button>
 
-                <button class="icon-buttons-right" title="Share" data-toggle="modal" data-target="#emailModal">
+                <button class="icon-buttons" title="Share" data-toggle="modal" data-target="#emailModal">
                         <i class="fas fa-at"></i>
                 </button>
                 {% include 'song/song_share_modal.html' %}
-
             </span>
         </div>
     </div>
 </div>
-<hr>
 
-<div class="container">
+<div class="container song-about">
     <h5 class="my-4 text-left">About</h5>
 
     <div class="row text-left">
@@ -86,10 +84,10 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-lg-6 my-2">
             <div class="row">
-                
+
                 <div class="col-sm-12">
                     <span class="h6 float-left">Language</span>
                     <span class="h6 float-right">{{ song.language|upper }}</span>
@@ -102,7 +100,7 @@
                         {% endfor %}
                     </span>
                 </div>
-                
+
                 <div class="col-sm-12">
                     <span class="h6 float-left">Massparts</span>
                     <span class="h6 float-right">
@@ -111,7 +109,7 @@
                         {% endfor %}
                     </span>
                 </div>
-                
+
                 <div class="col-sm-12">
                     <span class="h6 float-left">Authors</span>
                     <span class="h6 float-right">
@@ -129,29 +127,34 @@
         </div>
     </div>
 </div>
-<hr>
 
-<div class="container">
+<div class="container song-readable">
     <h5 class="my-4 text-left">
         Scores
         <span class="float-right">
             <a class="btn btn-primary btn-sm" href="{% url 'song-media:score_add_song' song.pk %}">Add score</a>
         </span>
         </h5>
-    <hr>
 
     <div class="row text-left">
         {% for score in song.score_set.all %}
-            <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2" style="border: 1px solid">
+            <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 score-list">
                 <a href="{% url 'song-media:score_view' score.pk %}" target="_blank">
-                    <i class="fas fa-file-pdf fa-3x"></i>
+                    <i class="fas fa-file-pdf fa-2x"></i>
                 </a>
                 <div class='divider'></div>
                 <p class="text-left"><a href="{% url 'siteuser:detail' score.uploader.pk score.uploader.slug %}">{{ score.uploader.screen_name }}</a></p>
-                <p class="text-left">{{ score.part }}</p>
-                <p class="text-left">{{ score.notation }}</p>
-                <p class="text-left">{{ score.score_likes }}<a href=""><i class="fas fa-star"></i></a></p>
-                <p class="text-left">{{ score.downloads }} views</p>
+                <p class="text-left">{{ score.part|title }}</p>
+                <p class="text-left">{{ score.notation|title }}</p>
+                <p class="text-left">
+                    <button class="icon-buttons">
+                        {{ score.score_likes }}22
+                    </button>
+                    <button class="icon-buttons">
+                        <a href=""><i class="fas fa-star"></i></a>
+                    </button>
+                </p>
+                <p class="text-left">{{ score.downloads }} <i class="fas fa-eye"></i></p>
                 <p class='text-left'>
                     {% if request.user == score.uploader.user %}
                         <a href=""><i  class="fas fa-edit"></i></a> &emsp;
@@ -165,14 +168,13 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container song-audible">
     <h5 class="my-4 text-left">
         Midis
         <span class="float-right">
             <a class="btn btn-primary btn-sm float-right" href="{% url 'song-media:midi_add_song' song.pk %}">Add midi</a>
         </span>
         </h5>
-    <hr>
 
     <div class="row text-left">
         {% for midi in song.midi_set.all %}
@@ -220,14 +222,13 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container song-watchable">
     <h5 class="my-4 text-left">
         Video links
         <span class="float-right">
             <a class="btn btn-primary btn-sm" href="{% url 'song-media:videolink_new_song' song.pk %}">Add a link</a>
         </span>
     </h5>
-    <hr>
 
     <div class="row text-left">
         {% for link in song.videolink_set.all %}
@@ -243,8 +244,10 @@
     </div>
 </div>
 
-<hr>
-<h5>Lyrics</h5>
-{{ song.lyrics|markdown_format }}
+<div class="container song-lyrical">
+    <h5>Lyrics</h5>
+    {{ song.lyrics|markdown_format }}
+
+</div>
 {% endblock content_content %}
 

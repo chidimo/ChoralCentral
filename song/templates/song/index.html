@@ -18,16 +18,16 @@
         <p class="" id="songFirstLine">{{ song.first_line }}</p>
 
         <span class="h5 float-left">
-            <button class="icon-buttons-left">
+            <button class="icon-buttons">
                 <a href="{% url 'blog:new_song' song.pk %}" title="Blog this song"><i class="fas fa-pencil-alt"></i> Blog</a>
             </button>
-            <button class="icon-buttons-right">
+            <button class="icon-buttons">
                 <a href="{% url 'song:reader_view' song.pk song.slug %}" title="Print this song" target="_blank"><i class="fas fa-print"></i> Print</a>
             </button>
         </span>
 
         <span class="h5 float-right">
-                <button class="icon-buttons-left">
+                <button class="icon-buttons">
                     <a href="" title="Star {{ song.title }}"><i class="fas fa-star"></i> Stars</a>
                 </button>
                 <a href="{% url 'siteuser:song_likers' song.pk %}" class="like-counter" title="{{ song.like_count }} Love birds">{{ song.like_count }}</a>

@@ -15,28 +15,28 @@
                 {% if user.is_authenticated %}
 
                     {% if request.user.siteuser in post.likes.all %}
-                        <button class="icon-buttons-left">
+                        <button class="icon-buttons">
                             <a href="" id="like" name="{{ post.pk }}" value="Like" title="unstar this post"><i class="fas fa-star"></i> Unstar</a>
                             {% include 'blog/post_like_script.html' %}
                         </button>
                     {% else %}
-                        <button class="icon-buttons-left">
+                        <button class="icon-buttons">
                             <a href="" id="like" name="{{ post.pk }}" value="Like" title="star this post"><i class="fas fa-star"></i> Star</a>
                             {% include 'blog/post_like_script.html' %}
                         </button>
                     {% endif %}
                 {% else %}
-                    <button class="icon-buttons-left">
+                    <button class="icon-buttons">
                         <a href="{% url 'siteuser:login' %}">Login to star this post</a>
                     </button>
                 {% endif %}
 
-                <button class="icon-buttons-center">
+                <button class="icon-buttons">
                     <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="#" title="FB Share">
                     <i class="fab fa-facebook"></i></a>
                 </button>
 
-                <button class="icon-buttons-right" title="Share" data-toggle="modal" data-target="#postModal">
+                <button class="icon-buttons" title="Share" data-toggle="modal" data-target="#postModal">
                         <i class="fas fa-at"></i>
                 </button>
                 {% include 'blog/post_share_modal.html' %}
@@ -88,7 +88,7 @@
 
         <span class='h6'>
             <span class='float-left'>
-                <button class="icon-buttons-left">
+                <button class="icon-buttons">
                     {{ comment.like_count }}
                 </button>
                 <a href='#' class='like-counter'><i class='fas fa-star'></i></a>

@@ -133,16 +133,62 @@ a.upload-button {
   background: blanchedalmond;
 }
 
+.song-actions {
+    background: #f2f3fb;
+    border: .5px solid #f2f3fb;
+    margin-bottom: 0.5rem;
+    border-radius: .3rem;
+
+}
+
+.song-about {
+    background: #f2f3fb;
+    border: .5px solid #f2f3fb;
+    margin-bottom: 0.5rem;
+    border-radius: .3rem;
+
+}
+
+.song-readable {
+    background: #f2f3fb;
+    border: .5px solid #f2f3fb;
+    margin-bottom: 0.5rem;
+    border-radius: .3rem;
+
+}
+
+.song-audible {
+    background: #f2f3fb;
+    border: .5px solid #f2f3fb;
+    margin-bottom: 0.5rem;
+    border-radius: .3rem;
+
+}
+.song-watchable {
+    background: #f2f3fb;
+    border: .5px solid #f2f3fb;
+    margin-bottom: 0.5rem;
+    border-radius: .3rem;
+
+}
+
+.song-lyrical {
+    background: #f2f3fb;
+    border: .5px solid #f2f3fb;
+    margin-bottom: 0.5rem;
+    border-radius: .3rem;
+}
+
+.score-list {
+    border: .5px solid #d2d3da;
+}
+
 label {
   font-weight: bold;
   }
 
 .leftsidebar {
     /*border: 0.5px solid grey;*/
-}
-
-.centerspread {
-    background: #EFEFEF;
 }
 
 .rightsidebar {
@@ -243,14 +289,14 @@ tbody tr:nth-child(odd) {
 .list-items-high {
     padding: .1rem 1rem 2rem 1rem;
     margin: .75rem 0;
-    background: #ffffff;
+    background: #e9ecef;
     border-radius: .3rem;
 }
 
 .list-items {
     padding: .1rem 1rem .5rem 1rem;
     margin: .75rem 0;
-    background: #ffffff;
+    background: #e9ecef;
     border-radius: .3rem;
 }
 
@@ -285,66 +331,36 @@ tbody tr:nth-child(odd) {
     border-radius: .3rem;
 }
 
-button.icon-buttons-right {
+button.icon-buttons {
   float: left;
   padding: 3px 10px;
   font-size: 13px;
   font-weight: 600;
   line-height: 20px;
   color: #24292e;
-  vertical-align: middle;
-  background-color: #fff;
-  border: 1px solid rgba(27,31,35,0.2);
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
-}
-
-button.icon-buttons-center {
-  float: left;
-  padding: 3px 10px;
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 20px;
-  color: #24292e;
-  vertical-align: middle;
-  background-color: #fff;
-  border: 1px solid rgba(27,31,35,0.2);
-}
-
-button.icon-buttons-left {
-  float: left;
-  padding: 3px 10px;
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 20px;
-  color: #24292e;
-  vertical-align: middle;
-  background-color: #fff;
-  border: 1px solid rgba(27,31,35,0.2);
-  border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
-}
-
-
-button.icon-buttons-left a, button.icon-buttons-right a {
   text-decoration: none;
-  color: midnightblue;
+  vertical-align: middle;
+  background-color: #fff;
+  border: 1px solid rgba(27,31,35,0.2);
+  border-radius: 3px;
+  margin-left: 1px;
+  margin-right: 1px;
 }
 
 a.like-counter {
   float: left;
   padding: 3px 10px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   line-height: 20px;
   color: #24292e;
-  vertical-align: middle;
   text-decoration: none;
+  vertical-align: middle;
   background-color: #fff;
   border: 1px solid rgba(27,31,35,0.2);
-  border-left: 0;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
+  border-radius: 3px;
+  margin-left: 1px;
+  margin-right: 1px;
 }
 
 /*.row {*/
