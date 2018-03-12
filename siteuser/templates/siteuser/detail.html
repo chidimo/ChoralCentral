@@ -1,5 +1,6 @@
 {% extends "choralcentral_base.html" %}
 {% block title %}{{ siteuser.screen_name }}'s library{% endblock title %}
+{% block introduction %}{% endblock introduction %}
 
 {% block content_content %}
 
@@ -87,7 +88,7 @@
         </div>
         <div>
             <span class="h5">Comments:</span>
-            <span class="h5"><a href="{% url 'siteuser:comments' siteuser.pk %}">{{ siteuser.comment_set.count }}</a></span>
+            <span class="h5"><a href="{% url 'siteuser:comments' siteuser.pk siteuser.slug %}">{{ siteuser.comment_set.count }}</a></span>
         </div>
     </div>
 </div>

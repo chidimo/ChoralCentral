@@ -12,7 +12,7 @@ urlpatterns = [
     path("welcome/<str:screen_name>/", views.welcome_siteuser, name="new_success"),
     path("activate/<int:pk>/<str:screen_name>/", views.activate_siteuser, name="new_activation"),
     path("<int:pk>/<slug:slug>/", views.UserDetail.as_view(), name="detail"),
-    path("comments/<int:pk>/", views.UserComments.as_view(), name="comments"),
+    path("comments/<int:pk>/<slug:slug>/", views.UserComments.as_view(), name="comments"),
 ]
 
 urlpatterns += [

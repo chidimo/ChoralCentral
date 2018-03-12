@@ -76,7 +76,6 @@
     {{ post.body|markdown_format }}
 </div>
     
-
     {% for comment in comments %}
         <div class="list-items-high" id='{{ forloop.counter }}'>
             <p class="commenter-stats">
@@ -84,7 +83,8 @@
                     <a href="{% url 'siteuser:detail' comment.creator.pk comment.creator.slug %}">{{ comment.creator.screen_name }}</a>
                     <span class="float-right">
                         On {{ comment.created|date:"d-m-Y" }} |
-                        Edited: {{ comment.modified|date:"d-m-Y" }}</span>
+                        Edited: {{ comment.modified|date:"d-m-Y" }}
+                    </span>
                 </strong>
             </p>
 

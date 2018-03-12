@@ -20,6 +20,8 @@
                     {% endthumbnail %}
                     <p class="text-left"><a href="{% url 'siteuser:detail' siteuser.pk siteuser.slug %}">{{ siteuser.screen_name }}</a></p>
                     <p class="text-left">{{ siteuser.song_set.count }} uploads</p>
+                    <p class="text-left">{{ siteuser.post_set.count }} blog posts</p>
+                    <p class="text-left">{{ siteuser.comment_set.count }} comments</p>
                     <p class="text-left">{% for role in siteuser.roles.all %}{{ role }}{% endfor %}</p>
                 </div>
             {% empty %}
