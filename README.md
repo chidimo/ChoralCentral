@@ -8,3 +8,12 @@
 1. In siteusers index, count only published songs and posts
 1. Display comment replies properly
 1. Add Douay-Rheims bible
+1. Add Django allauth
+1. Revisit request status
+1. If a person's upload becomes more than a certain number, add paginated subpage
+1. Add score preview in sidebar via ajax
+1. Cache
+1. fix request status
+1. Explore delivering midis via podcast
+1. Redefine scripture reference as a model
+1. Add douay rheims bible app
