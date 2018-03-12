@@ -1,29 +1,43 @@
 {% extends "choralcentral_base.html" %}
 {% block title %}{{ author }}{% endblock title %}
-
 {% block introduction %}{% endblock introduction %}
 {% load author_ttags %}
 
 {% block content_content %}
 
-<h2>{{ author }} - {{ author.author_type|title}}</h2>
-<hr>
 
-<h3>Biography</h3>
-
-{{ author.bio|markdown_format }}
-
-<hr>
-
-<h3>Songs</h3>
-    {% for song in author.song_set.all|published_author_songs %}
-        <div class="list-items">
-            <h4><a href="{% url 'song:detail' song.pk song.slug %}">{{ song }}</a></h4>
+<div class='container author-heading'>
+    <div class='row'>
+        <div class='col-sm-12 head-title'>
+            <span class='h5 float-left'>{{ author }} - {{ author.author_type|title}}</span>
         </div>
-    {% empty %}
-        <p>No song from this author yet</p>
-    {% endfor %}
-<hr>
+    </div>
+</div>
+
+
+<div class="container author-bio">
+    <h5>Biography</h5>
+    {{ author.bio|markdown_format }}
+</div>
+
+
+<div class='container author-heading'>
+    <div class='row'>
+        <div class='col-sm-12 head-title'>
+            <span class='h5 float-left'>Songs</span>
+        </div>
+    </div>
+</div>
+
+
+{% for song in author.song_set.all|published_author_songs %}
+
+<div class="list-items">
+    <h4><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h4>
+</div>
+{% empty %}
+    <p>Author as no song</p>
+{% endfor %}
 
 <p>First added by <a href="{% url 'siteuser:detail' author.originator.pk author.originator.slug %}">{{ author.originator.screen_name }}</a></p>
 {% endblock content_content %}

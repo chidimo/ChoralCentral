@@ -4,219 +4,263 @@
 {% load static %}
 {% load song_ttags %}
 
+{% block introduction %}{% endblock introduction %}
 {% block content_content %}
 
-<h2>{{ song.title }}</h2>
-
-<hr class='narrow'>
-
-<div class='container'>
+<div class='container song-actions'>
     <div class='row'>
-        <span class='h3'>
-            <input type="button" id="like" name="{{ song.pk }}" value="Like" />
-            {% include 'song/like_script.html' %}
+        <div class='col-sm-12 head-title'>
+            <span class='h5 float-left'>{{ song.title }}</span>
 
-            <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="{% url 'song:share_on_facebook' song.pk song.slug %}" title="Share on facebook"><i class="fab fa-facebook"></i></a>
+            <span class='float-right song-icons'>
+                {% if user.is_authenticated %}
+                    {% if request.user.siteuser in song.likes.all %}
+                        <button class="icon-buttons">
+                            <a href="" id="like" name="{{ song.pk }}" value="Like" title="unstar this song"><i class="fas fa-star"></i> Unstar</a>
+                            {% include 'song/song_like_script.html' %}
+                        </button>
+                    {% else %}
+                        <button class="icon-buttons">
+                            <a href="" id="like" name="{{ song.pk }}" value="Like" title="star this song"><i class="fas fa-star"></i> Star</a>
+                            {% include 'song/song_like_script.html' %}
+                        </button>
+                    {% endif %}
+                {% else %}
+                    <button class="icon-buttons">
+                        <a href="{% url 'siteuser:login' %}">Login to star this song</a>
+                    </button>
+                {% endif %}
 
-            <a href='' title="Share by email" data-toggle="modal" data-target="#emailModal"><i class="fas fa-at"></i></a>
-            {% include 'song/song_share_modal.html' %}
-        </span>
+                <button class="icon-buttons">
+                    <a href="{% url 'blog:new_song' song.pk %}" title="Blog this song"><i class="fas fa-pencil-alt"></i> Blog</a>
+                </button>
+                <button class="icon-buttons">
+                    <a href="{% url 'song:reader_view' song.pk song.slug %}" title="Print in pdf format" target="_blank"><i class="fas fa-print"></i> Print</a>
+                </button>
+
+                <button class="icon-buttons">
+                    <a aria-hidden="true" href="{% url 'song:share_on_facebook' song.pk song.slug %}" title="Share on Facebook">
+                    <i class="fab fa-facebook"></i> Share</a>
+                </button>
+
+                <button class="icon-buttons">
+                    <a href="" title="Share by email" data-toggle="modal" data-target="#emailModal">
+                    <i class="fas fa-at"></i> Email</a>
+                </button>
+                {% include 'song/song_share_modal.html' %}
+            </span>
+        </div>
     </div>
 </div>
 
-<hr class='narrow'>
+<div class="container song-about">
+    <h5 class="my-4 text-left">About</h5>
 
-    <h3>Metadata</h3>
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead class="thead-dark">
-                <caption>Metadata</caption>
-                <tr>
-                    <th>OP</th>
-                    <th>For</th>
-                    <th>Performed</th>
-                    <th>Language</th>
-                    <th>Seasons</th>
-                    <th>Masspart</th>
-                    <th>Authors</th>
-                    <th>Tempo</th>
-                    <th>Timing</th>
-                    <th>Scripture</th>
-                    <th>Composed</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><a href="{% url 'siteuser:detail' song.originator.pk song.originator.slug %}">{{ song.originator.screen_name }}</a></td>
-                    <td>{{ song.voicing }}</td>
-                    <td>{{ song.tempo_text }}</td>
-                    <td>{{ song.language }}</td>
-                    <td>
+    <div class="row text-left">
+        <div class="col-lg-6 my-2">
+            <div class="row">
+                <div class="col-sm-12">
+                    <span class="h6 float-left">Uploader</span>
+                    <span class="h6 float-right"><a href="{% url 'siteuser:detail' song.originator.pk song.originator.slug %}">{{ song.originator.screen_name }}</a></span>
+                </div>
+
+                <div class="col-sm-12">
+                    <span class="h6 float-left">For</span>
+                    <span class="h6 float-right">{{ song.voicing }}</span>
+                </div>
+
+                <div class="col-sm-12">
+                    <span class="h6 float-left">Tempo</span>
+                    <span class="h6 float-right">{{ song.tempo }}</span>
+                </div>
+
+                <div class="col-sm-12">
+                    <span class="h6 float-left">Performed</span>
+                    <span class="h6 float-right">{{ song.tempo_text }}</span>
+                </div>
+
+                <div class="col-sm-12">
+                    <span class="h6 float-left">Timing</span>
+                    <span class="h6 float-right">{{ song.bpm }}/{{ song.divisions }}</span>
+                </div>
+
+                <div class="col-sm-12">
+                    <span class="h6 float-left">Scripture</span>
+                    <span class="h6 float-right">{{ song.scripture_reference }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 my-2">
+            <div class="row">
+
+                <div class="col-sm-12">
+                    <span class="h6 float-left">Language</span>
+                    <span class="h6 float-right">{{ song.language|upper }}</span>
+                </div>
+                <div class="col-sm-12">
+                    <span class="h6 float-left">Seasons</span>
+                    <span class="h6 float-right text-left">
                         {% for season in song.seasons.all %}
-                            {{ season }}{% if not forloop.last %},<br>{% endif %}
+                        {{ season }}{% if not forloop.last %},{% endif %}
                         {% endfor %}
-                    </td>
-                    <td>
+                    </span>
+                </div>
+
+                <div class="col-sm-12">
+                    <span class="h6 float-left">Massparts</span>
+                    <span class="h6 float-right">
                         {% for masspart in song.mass_parts.all %}
-                            {{ masspart }}{% if not forloop.last %},<br>{% endif %}
+                        {{ masspart }}{% if not forloop.last %},{% endif %}
                         {% endfor %}
-                    </td>
-                    <td>
+                    </span>
+                </div>
+
+                <div class="col-sm-12">
+                    <span class="h6 float-left">Authors</span>
+                    <span class="h6 float-right">
                         {% for author in song.authors.all %}
-                            {{ author }}{% if not forloop.last %},<br>{% endif %}
+                        {{ author }}{% if not forloop.last %},{% endif %}
                         {% endfor %}
-                    </td>
-                    <td>{{ song.tempo }}</td>
-                    <td>{{ song.bpm }}/{{ song.divisions }}</td>
-                    <td>{{ song.scripture_ref }}</td>
-                    <td>{{ song.compose_date }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div><!-- END SHEET -->
+                    </span>
+                </div>
 
-<hr class='broad'>
-
-<div class="row">
-    <div class="col-md-8 col-lg-7">
-        <h3>Scores
-            <span class="float-right">
-                <a class="btn btn-primary btn-sm" href="{% url 'song-media:score_add_song' song.pk %}">Add score</a>
-            </span>
-        </h3>
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead class="thead-dark">
-                    <caption>Scores</caption>
-                    <tr>
-                        <th>OP</th>
-                        <th>Part</th>
-                        <th>Notation</th>
-                        <th><i class="fas fa-star"></i></th>
-                        <th><i class="fas fa-download"></i></th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for score in song.score_set.all %}
-                        <tr>
-                            <td><a href="{% url 'siteuser:detail' score.uploader.pk score.uploader.slug %}">{{ score.uploader.screen_name }}</a></td>
-                            <td>{{ score.part }}</td>
-                            <td>{{ score.notation }}</td>
-                            <td><a href="">{{ score.score_likes }}</a></td>
-                            <td>{{ score.downloads }}</td>
-                            <td><a href="{% url 'song-media:score_view' score.pk %}" target="_blank"><i class="fas fa-file-pdf"></i></a> |
-                                {% if request.user == score.uploader.user %}
-                                    <a href=""><i  class="fas fa-edit"></i></a> |
-                                    <a href="{% url 'song-media:delete_score' score.pk song.pk song.slug %}"><i class="fas fa-trash"></i></a>
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% empty %}
-                        <p>No music score for this song</p>
-                    {% endfor %}
-                </tbody>
-            </table>
+                <div class="col-sm-12">
+                    <span class="h6 float-left">Composed</span>
+                    <span class="h6 float-right">{{ song.compose_date }}</span>
+                </div>
+            </div>
         </div>
-<hr class='broad'>
-        <h3>Midis
-            <span class="float-right">
-                <a class="btn btn-primary btn-sm float-left" href="#">Preview all</a> &emsp;
-                <a class="btn btn-primary btn-sm float-right" href="{% url 'song-media:midi_add_song' song.pk %}">Add midi</a>
-            </span>
-        </h3>
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead class="thead-dark">
-                    <caption>Midis</caption>
-                    <tr>
-                        <th>OP</th>
-                        <th>Part</th>
-                        <th><i class="fas fa-star"></i></th>
-                        <th><i class="fas fa-download"></i></th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                    <tbody>
-                        {% for midi in song.midi_set.all %}
-
-                            {% if '.mp3' in midi.media_file.url %}
-                                <tr class='table-danger'>
-                            {% else %}
-                                <tr>
-                            {% endif %}
-                                <td><a href="{% url 'siteuser:detail' midi.uploader.pk midi.uploader.slug %}">{{ midi.uploader.screen_name }}</a></td>
-                                <td>{{ midi.part }}</td>
-                                <td><a href="">{{ midi.midi_likes }}</a></td>
-                                <td>{{ midi.downloads }}</td>
-                                <td>
-                                    {% if '.mp3' in midi.media_file.url %}
-                                    <a href="{% url 'song-media:play_midiview' midi.pk %}" target="_blank"><i class="fas fa-play"></i></a> |
-                                    <a href="">&emsp;</a>|
-                                    {% else %}
-                                        <a href="" onClick="MIDIjs.play('{{ midi.media_file.url }}');"><i class='fas fa-play'></i></a> |
-                                        <a href="" onClick="MIDIjs.stop();"><i class='fas fa-stop'></i></a> |
-                                    {% endif %}
-                                    {% if user == midi.uploader.user %}
-                                        <a href=""><i class="fas fa-edit"></i></a> |
-                                        <a href="{% url 'song-media:delete_midi' midi.pk song.pk song.slug %}"><i  class="fas fa-trash"></i></a>
-                                    {% endif %}
-                                </td>
-                            </tr>
-                        {% empty %}
-                            <p>No midis for this song</p>
-                        {% endfor %}
-                    </tbody>
-            </table>
-        </div>
-<hr class='broad'>
-        <h3>Video links
-            <span class="float-right">
-                <a class="btn btn-primary btn-sm" href="{% url 'song-media:videolink_new_song' song.pk %}">Add a link</a>
-            </span>
-        </h3>
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead class="thead-dark">
-                    <caption>Video links</caption>
-                    <tr>
-                        <th>OP</th>
-                        <th>Link</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                    <tbody>
-                        {% for link in song.videolink_set.all %}
-                            <tr>
-                                <td><a href="{% url 'siteuser:detail' link.uploader.pk link.uploader.slug %}">{{ link.uploader.screen_name }}</a></td>
-                                <td><a href="{{ link.video_link }}" target="_blank">{{ link.video_link|urlencode }}</a></td>
-                                <td>action</td>
-                            </tr>
-                        {% empty %}
-                            <p>No video link for this song</p>
-                        {% endfor %}
-                    </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="col-md-4 col-lg-5">
-        <h4>Lyrics</h4>
-        {{ song.lyrics|markdown_format }}
     </div>
 </div>
 
+<div class="container song-readable">
+    <h5 class="my-4 text-left">
+        Scores
+        <span class="float-right">
+            <a class="btn btn-primary btn-sm" href="{% url 'song-media:score_add_song' song.pk %}">Add score</a>
+        </span>
+        </h5>
+
+    <div class="row text-left">
+        {% for score in song.score_set.all %}
+            <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 score-list">
+                <a href="{% url 'song-media:score_view' score.pk %}" target="_blank">
+                    <i class="fas fa-file-pdf fa-2x"></i>
+                </a>
+                <div class='divider'></div>
+                <p class="text-left"><a href="{% url 'siteuser:detail' score.uploader.pk score.uploader.slug %}">{{ score.uploader.screen_name }}</a></p>
+                <p class="text-left">{{ score.part|title }}</p>
+                <p class="text-left">{{ score.notation|title }}</p>
+                <p class="text-left">
+                    <button class="icon-buttons">
+                        {{ score.score_likes }}
+                    </button>
+                    <button class="icon-buttons">
+                        <a href=""><i class="fas fa-star"></i></a>
+                    </button>
+                </p>
+                <p class="text-left">
+                    <button class="icon-buttons">
+                        {{ score.downloads }} <i class="fas fa-eye"></i>
+                    </button>
+                </p>
+                <p class='text-left'>
+                    {% if request.user == score.uploader.user %}
+                    <button class="icon-buttons">
+                        <a href=""><i  class="fas fa-edit"></i></a>
+                    </button>
+                    <button class="icon-buttons">
+                        <a href="{% url 'song-media:delete_score' score.pk song.pk song.slug %}"><i class="fas fa-trash"></i></a>
+                    </button>
+                    {% endif %}
+                </p>
+            </div>
+        {% empty %}
+            <p>No score.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="container song-audible">
+    <h5 class="my-4 text-left">
+        Midis
+        <span class="float-right">
+            <a class="btn btn-primary btn-sm float-right" href="{% url 'song-media:midi_add_song' song.pk %}">Add midi</a>
+        </span>
+        </h5>
+
+    <div class="row text-left">
+        {% for midi in song.midi_set.all %}
+            <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 audio-list">
+
+                {% if '.mp3' in midi.media_file.url %}
+                    <i class="fas fa-music fa-3x"></i>
+                        <div class='container'>
+                            <div class='row'>
+                                <audio controls>
+                                  <source src="{{ midi.media_file.url }}" type="audio/mpeg">
+                                  <source src="{{ midi.media_file.url }}" type="audio/ogg">
+                                  Your browser does not support the sound element.
+                                </audio>
+                            </div>
+                        </div>
+                {% else %}
+                    <i class="fas fa-music fa-3x"></i>
+                        <div class='container'>
+                            <div class='row'>
+                                <div class='midi-controls' style="height: 32px;">
+                                    <a href="#" onClick="MIDIjs.play('{{ midi.media_file.url }}');"><i class='fas fa-play'></i></a> &emsp;
+                                    <a href="#" onClick="MIDIjs.stop();"><i class='fas fa-stop'></i></a> &emsp;
+                                    <a href="{% url 'song-media:download_midi' midi.pk %}"><i class="fas fa-download"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                {% endif %}
+
+                <p class='text-left'><a href="{% url 'siteuser:detail' midi.uploader.pk midi.uploader.slug %}">{{ midi.uploader.screen_name }}</a></p>
+                <p class='text-left'>{{ midi.part }}</p>
+                <p class='text-left'>{{ midi.midi_likes }}<a href=""><i class="fas fa-star"></i></a></p>
+                <p class='text-left'>{{ midi.downloads }} views</p>
+                <p class='text-left'>
+                    {% if user == midi.uploader.user %}
+                        <a href=""><i class="fas fa-edit"></i></a> &emsp;
+                        <a href="{% url 'song-media:delete_midi' midi.pk song.pk song.slug %}"><i  class="fas fa-trash"></i></a>
+                    {% endif %}
+                </p>
+
+            </div>
+        {% empty %}
+        <p class="my-4 text-left">No audio</p>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="container song-watchable">
+    <h5 class="my-4 text-left">
+        Video links
+        <span class="float-right">
+            <a class="btn btn-primary btn-sm" href="{% url 'song-media:videolink_new_song' song.pk %}">Add a link</a>
+        </span>
+    </h5>
+
+    <div class="row text-left">
+        {% for link in song.videolink_set.all %}
+            <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2" style="border: 1px solid">
+                <i class="fab fa-youtube fa-3x"></i>
+                <div class='divider'></div>
+                <p class="text-left"><a href="{% url 'siteuser:detail' link.uploader.pk link.uploader.slug %}">{{ link.uploader.screen_name }}</a></p>
+                <p class="text-left">{<a href="{{ link.video_link }}" target="_blank">{{ link.video_link|urlencode }}</a></p>
+            </div>
+        {% empty %}
+            <p>No video link.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="container song-lyrical">
+    <h5>Lyrics</h5>
+    {{ song.lyrics|markdown_format }}
+</div>
 {% endblock content_content %}
 
-{%  block right_sidebar %}
-right
-{% endblock right_sidebar %}
-
-{% block left_sidebar %}
-left sidebar
-    <div id="subPages">
-        <div>
-            <input type="hidden" id="pagination-id" value="1">
-            <button id="load-id" type="submit">Show</button>
-        </div>
-    </div>
-{% endblock left_sidebar %}

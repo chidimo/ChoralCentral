@@ -1,17 +1,16 @@
 {% extends "choralcentral_base.html" %}
-
 {% block title %}{{ masspart }}{% endblock title %}
+{% block introduction %}{% endblock introduction %}
 
+{% block content_content %}
 
-{% block content %}
+    <h3>{{ masspart }} songs</h3>
 
-<h3>{{ masspart }} songs</h3>
-
-{% for song in masspart.song_set.all %}
-    <h4><a href="{% url 'song:song_detailview' song.pk song.slug %}">{{ song.template_name }}</a></h4>
-<hr class='broad'>
-{% empty %}
-    <p>There are no songs for {{ masspart }} yet</p>
-{% endfor %}
+    {% for song in masspart.song_set.all %}
+        <h4><a href="{% url 'song:song_detailview' song.pk song.slug %}">{{ song.template_name }}</a></h4>
+    <hr class='broad'>
+    {% empty %}
+        <p>There are no songs for {{ masspart }} yet</p>
+    {% endfor %}
     
 {% endblock %}

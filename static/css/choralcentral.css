@@ -129,7 +129,7 @@ a.upload-button {
   background: blanchedalmond;
 }
 
-.song-actions, .post-actions {
+.song-actions, .post-actions, .author-heading {
     background: #f2f3fb;
     border: .6px solid midnightblue;
     margin: .5rem 0;
@@ -165,15 +165,18 @@ a.upload-button {
     border-radius: .3rem;
 }
 
-.song-lyrical, .post-body {
+.song-lyrical, .post-body, .author-bio {
     background: #f2f3fb;
     border: .6px solid midnightblue;
     margin: .5rem 0;
     border-radius: .3rem;
 }
 
-.score-list {
-    border: .5px solid #d2d3da;
+.score-list, .audio-list {
+    border: .5px solid midnightblue;
+    border-radius: .3rem;
+    /* margin-left: .2rem;
+    margin-right: .2rem; */
 }
 
 .commenter-stats {
