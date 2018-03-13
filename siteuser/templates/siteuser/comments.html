@@ -13,7 +13,7 @@
 
             <span class='float-right song-icons'>
                 <button class="icon-buttons">
-                    <a href="#" title="Download {{ siteuser.screen_name }}'s comments "><i class="fas fa-download"></i> Download</a>
+                    <a href="{% url 'blog-api:user_comments_api' siteuser.pk %}" title="Download {{ siteuser.screen_name }}'s comments "><i class="fas fa-download"></i> Download</a>
                 </button>
             </span>
         </div>

@@ -8,5 +8,6 @@ router.register(r'comments', views.CommentViewSet)
 
 blog_api_urls = [
     path('comment/', views.CommentViewSet.as_view({'get': 'list'}), name='comments_api'),
+    path('comment/<int:pk>', views.UserCommentViewSet.as_view({'get': 'list'}), name='user_comments_api'),
     path('post/', views.PostViewSet.as_view({'get': 'list'}), name='posts_api'),
 ]
