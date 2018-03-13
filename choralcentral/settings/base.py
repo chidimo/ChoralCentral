@@ -85,6 +85,7 @@ PROJECT_APPS = [
 
 THIRD_PARTY_APPS = [
     'guardian',
+    'rest_framework',
     # 'hitcount',
     'sorl.thumbnail',
     'social_django',

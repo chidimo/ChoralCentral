@@ -1,18 +1,4 @@
-"""choralcentral URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/1.11/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path("$", views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path("$", Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import path, include
-    2. Add a URL to urlpatterns:  path("blog/', include('blog.urls'))
-"""
+"""urls"""
 from django.urls import include, path
 from django.conf import settings
 from django.contrib import admin
@@ -24,6 +10,9 @@ from blog.sitemaps import PostSiteMap
 from request.sitemaps import RequestSiteMap
 from siteuser.sitemaps import SiteUserSiteMap
 from song.sitemaps import SongSiteMap
+
+from blog.api.urls import blog_api_urls
+from siteuser.api.urls import user_api_urls
 
 sitemaps = {
     "posts" : PostSiteMap,
@@ -47,6 +36,10 @@ urlpatterns = [
     path('social/', include('social_django.urls', namespace='social')),
     path("sitemap\.xml/", sitemap, {'sitemaps' : sitemaps},
         name="django.contrib.sitemaps.views.sitemap"),
+
+    # path('api/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api-blog/', include((blog_api_urls, 'blog-api'))),
+    path('api-users/', include((user_api_urls, 'user-api'))),
 ]
 
 if settings.DEBUG:

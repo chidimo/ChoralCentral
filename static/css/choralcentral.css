@@ -257,6 +257,15 @@ a.upload-button {
 
 /*SITEUSER*/
 
+
+.register-forms {
+  max-width:400px;
+}
+
+.register-btn {
+    width: 100%;
+    font-size: 1.25rem;
+}
 .siteuser-index-heading {
     background: #f2f3fb;
     border: .6px solid midnightblue;
@@ -345,6 +354,7 @@ input#id_password {
 }
 
 /*LOGIN PAGE*/
+
 .login-btn {
     width: 100%;
 }

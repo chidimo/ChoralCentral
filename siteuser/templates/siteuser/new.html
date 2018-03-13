@@ -1,30 +1,25 @@
 {% extends "choralcentral_base.html" %}
 
-{% block title %}New profile{% endblock %}
-{% block navigation %}{% endblock navigation %}
-{% block introduction %}{% endblock introduction %}
+{% block title %}Register{% endblock %}
 
-{% block content_content %}
+{% block body %}
 
-<div class="container upload-forms">
-
-    <h2>Register on <a href='/'>ChoralCentral</a></h2>
+    <h1 class='text-center'><a href="/" title='Return to homepage' style='text-decoration: none'>ChoralCentral</a></h1>
     <hr>
 
-    <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
+    <div class="container register-forms">
+        <h2 class='text-center'>Register</h2>
+        <hr>
 
-            <p>{{ form.email }}</p>
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
 
-            <p>{{ form.screen_name }}</p>
+                <p>{{ form.email }}</p>
+                <p>{{ form.screen_name }}</p>
+                <p>{{ form.password1 }}</p>
+                <p>{{ form.password2 }}</p>
 
-            <p>{{ form.password1 }}</p>
-
-            <p>{{ form.password2 }}</p>
-
-        <button class="btn btn-primary btn-sm float-right" type="submit" value="Join">Join</button>
-    </form>
-
-</div>
-{% endblock content_content %}
-{% block footer %}{% endblock footer %}
+            <button class="btn btn-primary btn-sm register-btn" type="submit" value="Join">Join</button>
+        </form>
+    </div>
+{% endblock body %}

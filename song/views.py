@@ -104,6 +104,9 @@ class SongIndex(PaginationMixin, generic.ListView):
         # context['share_form'] = ShareForm()
         return context
 
+    def get_queryset(self):
+        return Song.objects.filter(publish=True)
+
 class SongDetail(generic.DetailView):
     model = Song
     context_object_name = 'song'
@@ -169,19 +172,19 @@ class FilterSongs(PaginationMixin, SuccessMessageMixin, generic.ListView):
                 msg = []
 
                 if author:
-                    queries.append(Q(authors=author))
+                    queries.append(Q(authors__id__exact=author.id))
                     msg.append('Author={}'.format(author))
                 if season:
-                    queries.append(Q(seasons__season=season))
+                    queries.append(Q(seasons__id__exact=season.id))
                     msg.append('Season={}'.format(season))
                 if masspart:
-                    queries.append(Q(mass_parts__part=masspart))
+                    queries.append(Q(mass_parts__id__exact=masspart.id))
                     msg.append('Masspart={}'.format(masspart))
                 if voicing:
-                    queries.append(Q(voicing__voicing=voicing))
+                    queries.append(Q(voicing__id__exact=voicing.id))
                     msg.append('Voicing={}'.format(voicing))
                 if language:
-                    queries.append(Q(language__language=language))
+                    queries.append(Q(language__id__exact=language.id))
                     msg.append('Language={}'.format(language))
 
                 if combinator == 'OR':
@@ -190,7 +193,7 @@ class FilterSongs(PaginationMixin, SuccessMessageMixin, generic.ListView):
                         query_str = " OR ".join(msg)
                     except TypeError:
                         query = []
-                        # query_str = ""
+                        query_str = ""
                 else:
                     try:
                         query = reduce(operator.and_, queries)
@@ -202,10 +205,11 @@ class FilterSongs(PaginationMixin, SuccessMessageMixin, generic.ListView):
                 # execute query
                 if query:
                     messages.success(self.request, "Search results for {}".format(query_str))
+                    messages.success(self.request, "Search results for {}".format(query))
                     return Song.objects.filter(query)
                 else:
                     messages.success(self.request, "You did not make any selection.")
-                    return Song.published_set.all()
+                    return Song.objects.filter(publish=True)
 
 def reader_view(request, pk, slug):
     template = 'song/reader_view.html'
@@ -251,7 +255,4 @@ def share_song_by_mail(request, pk, slug):
 
 def share_on_facebook(request, pk, slug):
     pass
-
-
-
 

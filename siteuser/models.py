@@ -96,6 +96,9 @@ class SiteUser(TimeStampedModel):
     def get_user_creation_url(self):
         return reverse('siteuser:new_activation', args=[str(self.user.id), str(self.screen_name)])
 
+    def get_all_roles(self):
+        return ", ".join([role.role for role in self.roles.all()])
+
 class HandShake(TimeStampedModel):
     from_siteuser = models.ForeignKey(
         SiteUser,

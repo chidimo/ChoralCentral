@@ -1,10 +1,8 @@
-"""urls live here"""
+"""urls"""
 
-from django.urls import path
+from django.urls import include, path
 from . import views
 from .feeds import LatestPostSFeed
-
-# pylint: disable=C0326, C0301, C0103, C0111
 
 app_name = "blog"
 urlpatterns = [
@@ -29,3 +27,4 @@ urlpatterns += [
     path("instant-search/", views.instant_blog, name="instant_blog"),
     path("auto-complete/", views.auto_blog, name="auto_blog"),
 ]
+
