@@ -125,7 +125,7 @@ def members():
 
     for _ in range(n):
         lorem = LoremPysum("fixtures/eng_names.txt", "fixtures/igbo_names.txt")
-        email = lorem.email()
+        email = lorem.email()+str(n)
         try:
             user = CustomUser.objects.create_user(email=email)
             user.set_password("dwarfstar")
@@ -137,15 +137,24 @@ def members():
             location = lorem.word()
             screen_name = LoremPysum().word()
 
-            member = SiteUser.objects.create(
-                user=user,
-                first_name=first_name,
-                last_name=last_name,
-                location=location,
-                screen_name=screen_name,
-                avatar=File(open(choice(IMAGES), "rb")),
-                )
-
+            try:
+                member = SiteUser.objects.create(
+                    user=user,
+                    first_name=first_name,
+                    last_name=last_name,
+                    location=location,
+                    screen_name=screen_name,
+                    avatar=File(open(choice(IMAGES), "rb")),
+                    )
+            except IntegrityError:
+                member = SiteUser.objects.create(
+                    user=user,
+                    first_name=first_name,
+                    last_name=last_name,
+                    location=location,
+                    screen_name=screen_name+str(n),
+                    avatar=File(open(choice(IMAGES), "rb")),
+                    )
         except IntegrityError:
             continue
         try:
