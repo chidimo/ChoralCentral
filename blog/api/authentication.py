@@ -10,8 +10,10 @@ class VerifyUserIsActive(authentication.BaseAuthentication):
     def authenticate(self, request):
 
         # Get the username and password
-        username = request.data.get('username', None)
-        password = request.data.get('password', None)
+        username = request.data['username']
+        password = request.data['password']
+        print('USERNAME', username)
+        print('PASSWORD', password)
 
         if not username or not password:
             raise exceptions.AuthenticationFailed("No credentials provided. You're probably logged out. Please login to continue.")

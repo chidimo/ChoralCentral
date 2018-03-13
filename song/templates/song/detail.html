@@ -4,10 +4,8 @@
 {% load static %}
 {% load song_ttags %}
 
-{% block introduction %}{% endblock introduction %}
-{% block content_content %}
-
-<div class='container song-actions'>
+{% block introduction %}
+<div class='container-fluid song-detail-header'>
     <div class='row'>
         <div class='col-sm-12 head-title'>
             <span class='h5 float-left'>{{ song.title }}</span>
@@ -52,9 +50,13 @@
         </div>
     </div>
 </div>
+{% endblock introduction %}
+
+{% block content_content %}
 
 <div class="container song-about">
     <h5 class="my-4 text-left">About</h5>
+    <hr>
 
     <div class="row text-left">
         <div class="col-lg-6 my-2">
@@ -141,6 +143,7 @@
             <a class="btn btn-primary btn-sm" href="{% url 'song-media:score_add_song' song.pk %}">Add score</a>
         </span>
         </h5>
+        <hr>
 
     <div class="row text-left">
         {% for score in song.score_set.all %}
@@ -189,6 +192,7 @@
             <a class="btn btn-primary btn-sm float-right" href="{% url 'song-media:midi_add_song' song.pk %}">Add midi</a>
         </span>
         </h5>
+        <hr>
 
     <div class="row text-left">
         {% for midi in song.midi_set.all %}
@@ -243,6 +247,7 @@
             <a class="btn btn-primary btn-sm" href="{% url 'song-media:videolink_new_song' song.pk %}">Add a link</a>
         </span>
     </h5>
+    <hr>
 
     <div class="row text-left">
         {% for link in song.videolink_set.all %}
@@ -260,6 +265,7 @@
 
 <div class="container song-lyrical">
     <h5>Lyrics</h5>
+    <hr>
     {{ song.lyrics|markdown_format }}
 </div>
 {% endblock content_content %}

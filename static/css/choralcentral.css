@@ -200,6 +200,23 @@ a.upload-button {
     border: .6px solid midnightblue;
 }
 
+.song-detail-header {
+    background: #f2f3fb;
+    border: .6px solid midnightblue;
+    padding-bottom: .5rem;
+    border-left-style: none;
+    border-right-style: none;
+}
+
+.song-detail-header > .row > .col-sm-12 > span.float-left {
+    margin: .3rem 0 0 8rem;
+    font-size: 24px;
+}
+
+.song-detail-header > .row > .col-sm-12 > span.float-right {
+    margin: .3rem 8rem 0 0;
+}
+
 .song-actions {
     background: #f2f3fb;
     border: .6px solid midnightblue;

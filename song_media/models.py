@@ -58,6 +58,7 @@ class Midi(TimeStampedModel):
     uploader = models.ForeignKey(SiteUser, null=True, on_delete=models.SET_NULL)
     song = models.ForeignKey(Song, null=True, on_delete=models.SET_NULL)
     part = models.ForeignKey(VocalPart, on_delete=models.CASCADE)
+    # description = models.CharField(max_length=100)
     likes = models.ManyToManyField(SiteUser, related_name="midi_likes")
     downloads = models.IntegerField(default=0)
     media_file = models.FileField(upload_to=upload_midi)
