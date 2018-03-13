@@ -23,7 +23,7 @@ urlpatterns += [
 
 urlpatterns += [
     path("login/", account_views.login, name="login"),
-    path("logout/", account_views.logout, name="logout"),
+    path("logged-out/", account_views.logout, name="logout"),
     path("logout-then-login/", account_views.logout_then_login, name="logout_then_login"),
 
     path("change-password/", account_views.password_change, name="change_password"),

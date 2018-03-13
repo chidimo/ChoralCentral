@@ -4,7 +4,6 @@ body {
 }
 
 nav {
-  /*background: #830065*/
   background: midnightblue;
 }
 
@@ -15,13 +14,10 @@ nav {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(250, 57, 57, 0.7)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
 
+/*GENERIC ELEMENTS*/
+
 h1, h2, h3, h4, h5, h6 {
 	color: midnightblue;
-  }
-
-p {
-  color: midnightblue;
-  margin-bottom: .25rem;
 }
 
 a {
@@ -29,23 +25,7 @@ a {
 }
 
 a:hover {
-  /* text-decoration: none; */
-  text-decoration: underline;
-}
-
-.logo-container {
-  height: 100%;
-  float: left;
-  text-align: justify;
-}
-
-.logo {
-  float: left;
-  width: 15%;
-}
-
-.head-title {
-  margin-top: .5rem;
+   text-decoration: none;
 }
 
 .jumbotron {
@@ -56,6 +36,12 @@ a:hover {
 section a {
     margin: 0.5rem 0 0.5rem 0.5rem;
 }
+
+label {
+  font-weight: bold;
+}
+
+/*NAVIGATION*/
 
 .fixed-top {
   padding-top: 0.1rem;
@@ -85,6 +71,8 @@ th, td {
     white-space: nowrap;
 }
 
+/*SONG FILTER BLOCK*/
+
 .filter-block {
   max-width:400px;
   margin: auto;
@@ -99,6 +87,8 @@ th, td {
   margin-top: 0.5rem;
 }
 
+/*UPLOAD FORMS*/
+
 .upload-forms {
   max-width:450px;
   margin-top: 0.5rem;
@@ -109,17 +99,6 @@ th, td {
   border-radius: .3rem;
 }
 
-.login-form {
-  max-width:350px;
-  margin:auto;
-  border: 1px solid #d7d7d7;
-  border-radius: .3rem;
-  padding-bottom: 1rem;
-  background: #f0eeee;
-  margin: auto;
-  /* margin-top: 10rem; */
-}
-
 a.upload-button {
     color: white;
     margin-right: .35rem;
@@ -127,6 +106,98 @@ a.upload-button {
 }
 .related-widget-wrapper-link {
   background: blanchedalmond;
+}
+
+/*AUTHOR*/
+
+.list-authors {
+    padding: .1rem 1rem .5rem 1rem;
+    margin: .75rem 0;
+    background: #e9ecef;
+    border-radius: .3rem;
+    border: .6px solid midnightblue;
+}
+
+.author-heading {
+  background: #f2f3fb;
+  border: .6px solid midnightblue;
+  margin: .5rem 0;
+  border-radius: .3rem;
+  padding-bottom: .5rem;
+}
+
+.author-heading > .row > .col-sm-12 > span {
+  margin-top: .5rem;
+}
+
+.list-author-songs {
+    padding: .1rem 1rem .5rem 1rem;
+    margin: .75rem 0;
+    background: #e9ecef;
+    border-radius: .3rem;
+    border: .6px solid midnightblue;
+}
+
+/*BLOG*/
+
+.list-blog-posts {
+    padding: .1rem 1rem 2.2rem 1rem;
+    margin: .75rem 0;
+    background: #e9ecef;
+    border-radius: .3rem;
+    border: .6px solid midnightblue;
+}
+
+.post-actions {
+    background: #f2f3fb;
+    border: .6px solid midnightblue;
+    margin: .5rem 0;
+    border-radius: .3rem;
+    padding-bottom: .5rem;
+}
+
+.comment-box {
+    height: 6rem;
+}
+
+.commenter-stats {
+  background: white;
+  border: .5px solid midnightblue;
+  border-radius: .3rem;
+  margin-top: -2px;
+  margin-left: -16px;
+  margin-right: -16px;
+  padding: 0 .5rem;
+}
+
+.commenter-stats > .col-sm-12 > strong > span {
+    font-size: 12px;
+    margin-top: 0.15rem;
+}
+
+.commenter-stats > .col-sm-12 {
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 2px;
+}
+
+.list-comments {
+    padding: .1rem 1rem 2.2rem 1rem;
+    margin: .75rem 0;
+    background: #e9ecef;
+    border-radius: .3rem;
+    border: .6px solid midnightblue;
+    border-top: none;
+}
+
+/*SONG*/
+
+.list-songs {
+    padding: .1rem 1rem 2.2rem 1rem;
+    margin: .75rem 0;
+    background: #e9ecef;
+    border-radius: .3rem;
+    border: .6px solid midnightblue;
 }
 
 .song-actions {
@@ -165,7 +236,7 @@ a.upload-button {
     border-radius: .3rem;
 }
 
-.song-lyrical {
+.song-lyrical, .post-body, .author-bio {
     background: #f2f3fb;
     border: .6px solid midnightblue;
     margin: .5rem 0;
@@ -173,12 +244,52 @@ a.upload-button {
 }
 
 .score-list {
-    border: .5px solid #d2d3da;
+    border: .5px solid midnightblue;
+    border-radius: .3rem;
+    /* margin-left: .2rem;
+    margin-right: .2rem; */
 }
 
-label {
-  font-weight: bold;
-  }
+.audio-list {
+    border: .5px solid midnightblue;
+    border-radius: .3rem;
+}
+
+/*SITEUSER*/
+
+.siteuser-index-heading {
+    background: #f2f3fb;
+    border: .6px solid midnightblue;
+    margin: .5rem 0;
+    border-radius: .3rem;
+    padding-bottom: .5rem;
+}
+
+.siteuser-index-heading > .row > .col-sm-12 > span {
+    margin-top: .5rem;
+}
+
+.siteuser-index-details > p.text-left {
+    font-size: 14px;
+    margin-top: .25rem;
+    margin-bottom: .25rem;
+}
+
+.siteuser-detail-heading {
+     background: #f2f3fb;
+    border: .6px solid midnightblue;
+    margin: .5rem 0;
+    border-radius: .3rem;
+    padding-bottom: .5rem;
+}
+
+.siteuser-detail-heading > .row > .col-sm-12 > span {
+    margin-top: .5rem;
+}
+
+.administer-account {
+    border-radius: .3rem;
+}
 
 .leftsidebar {
     /*border: 0.5px solid grey;*/
@@ -188,14 +299,11 @@ label {
     /*border: 0.5px solid grey;*/
 }
 
-/* Add icons to registration form fields */
+/* ADD ICONS TO LOGIN FORM FIELDS */
+
 .form-group {
   position: relative;
   color: #aaa;
-}
-
-.login-logo {
-  margin:auto;
 }
 
 input#id_username {
@@ -230,11 +338,33 @@ input#id_password {
   padding-right: 5px;
 }
 
+.login-form {
+  max-width:350px;
+  margin:auto;
+  padding-bottom: 1rem;
+}
+
+/*LOGIN PAGE*/
+.login-btn {
+    width: 100%;
+}
+
+.forgot-password-btn {
+    width: 45%;
+    margin-left: .3rem;
+}
+
+.join-btn {
+    width: 45%;
+    margin-right: .3rem;
+}
+
 .btn-md-span {
   vertical-align: middle;
   font-size: 22px;
 }
 
+/*FOOTER*/
 
 .large-print {
   padding: 40px 0;
@@ -244,7 +374,6 @@ input#id_password {
 .large-print-item {
   padding: 20px 10px;
   text-align: left;
-
 }
 
 .feeds  {
@@ -257,7 +386,6 @@ input#id_password {
 }
 
 .fine-prints {
-  /* text-align: center; */
   padding: 30px 0;
 }
 
@@ -277,20 +405,6 @@ tbody tr:nth-child(even) {
 
 tbody tr:nth-child(odd) {
   background-color: #efefef;
-}
-
-.list-items-high {
-    padding: .1rem 1rem 2rem 1rem;
-    margin: .75rem 0;
-    background: #e9ecef;
-    border-radius: .3rem;
-}
-
-.list-items {
-    padding: .1rem 1rem .5rem 1rem;
-    margin: .75rem 0;
-    background: #e9ecef;
-    border-radius: .3rem;
 }
 
 .table td {
@@ -316,13 +430,16 @@ tbody tr:nth-child(odd) {
 
 .pagination {
     text-align: center;
-    font-weight: bold;
+    font-weight: 600;
     display: block;
     padding: 1rem 1rem;
     margin: .75rem 0;
-    background: #ffffff;
+    background: #e9ecef;
     border-radius: .3rem;
+    border: .6px solid;
 }
+
+/*BUTTON ICONS*/
 
 button.icon-buttons {
   float: left;
@@ -342,26 +459,6 @@ button.icon-buttons {
     text-decoration: none;
 }
 
-a.like-counter {
-  float: left;
-  padding: 3px 10px;
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 20px;
-  color: #24292e;
-  text-decoration: none;
-  vertical-align: middle;
-  background-color: #fff;
-  border: 1px solid rgba(27,31,35,0.2);
-  border-radius: 3px;
-  margin-left: 1px;
-  margin-right: 1px;
-}
-
-/*.row {*/
-/*    padding: 0.5rem 0;*/
-/*}*/
-
 ul.messages {
     color: green;
     text-align: left;
@@ -375,13 +472,11 @@ ul.errorlist {
   color: red;
   text-align: left;
   list-style-type: none;
+  font-weight: bold;
   margin: 0;
   padding: 0;
 }
 
-.comment-box {
-    height: 6rem;
-}
 .form-control {
     background: #fcfcfc;
     border: 1px solid #aaa;

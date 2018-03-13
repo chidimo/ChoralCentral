@@ -1,17 +1,20 @@
 {% extends "choralcentral_base.html" %}
-
 {% block title %}Login{% endblock title %}
-{% load static %}
 
 {% block body %}
+        <h1 class='text-center'><a href="/" title='Return to homepage' style='text-decoration: none'>ChoralCentral</a></h1>
+        <hr>
 
 <div class="container login-form">
 
     {% if form.errors %}
-        <p class="text-danger text-center">Your username and password didn't match</p>
+        <p class="text-danger text-center">
+            <strong>Your username and password didn't match</strong>
+        </p>
+        <hr>
     {% endif %}
 
-    <h2>Login</h2>
+    <h2 class='text-center'>Login</h2>
     <hr>
 
     <form method="post" action="{% url 'siteuser:login' %}">
@@ -27,14 +30,15 @@
             <span class="fas fa-unlock-alt" aria-hidden="true"></span>
         </div>
 
-        <button class="btn btn-primary btn-sm" type="submit" value="login">Log In</button>
+        <button class="btn btn-primary btn-sm login-btn" type="submit" value="login">Log In</button>
         <input type="hidden" name="next" value="{{ next }}" />
     </form>
-    <div class="dropdown-divider"></div>
+    <hr>
+
     <div class="row">
         <div class="col-sm-12">
-            <a class="btn btn-primary btn-sm float-left" href="{% url 'siteuser:new' %}">Join</a>
-            <a class="btn btn-danger btn-sm float-right" href="{% url 'siteuser:reset_password' %}">Forgot password?</a>
+            <a class="btn btn-primary btn-sm join-btn" href="{% url 'siteuser:new' %}">Join</a>
+            <a class="btn btn-danger btn-sm float-right forgot-password-btn" href="{% url 'siteuser:reset_password' %}">Forgot password?</a>
         </div>
     </div>
 </div>

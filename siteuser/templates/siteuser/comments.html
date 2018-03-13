@@ -8,58 +8,60 @@
     <div class='row'>
         <div class='col-sm-12 head-title'>
             <span class='h5 float-left'>
-                <a href="{% url 'siteuser:detail' siteuser.pk siteuser.slug %}">{{ siteuser.screen_name }}</a>'s comments
+                Comments made by <a href="{% url 'siteuser:detail' siteuser.pk siteuser.slug %}">{{ siteuser.screen_name }}</a>
             </span>
 
             <span class='float-right song-icons'>
                 <button class="icon-buttons">
-                    <a href="#" title="Blog this song"><i class="fas fa-download"></i> Download</a>
+                    <a href="#" title="Download {{ siteuser.screen_name }}'s comments "><i class="fas fa-download"></i> Download</a>
                 </button>
             </span>
         </div>
     </div>
 </div>
 
-    {% for comment in siteuser.comment_set.all %}
-        <div class="list-items-high">
-            <p class="commenter-stats">
+{% for comment in siteuser.comment_set.all %}
+    <div class="list-comments">
+        <div class="row commenter-stats">
+            <div class='col-sm-12'>
                 <strong>
-                    <a href="{% url 'siteuser:detail' comment.creator.pk comment.creator.slug %}">{{ comment.creator.screen_name }}</a>
+                    <a href="{% url 'blog:detail' comment.post.pk comment.post.slug %}">{{ comment.post }}</a>
                     <span class="float-right">
-                        On {{ comment.created|date:"d-m-Y" }} |
-                        Edited: {{ comment.modified|date:"d-m-Y" }}
+                        Posted {{ comment.created|date:"d-m-Y" }} |
+                        Modified {{ comment.modified|date:"d-m-Y" }}
                     </span>
                 </strong>
-            </p>
-
-            <div class='comment-body'>
-                {{ comment.comment|markdown_format }}
             </div>
-
-            <span class='float-left'>
-                <button class="icon-buttons">
-                    {{ comment.like_count }}
-                </button>
-                <button class="icon-buttons">
-                    <a href='#'><i class='fas fa-star'></i></a>
-                </button>
-            </span>
-
-            <span class='float-right'>
-                {% if request.user == comment.creator.user %}
-                <button class="icon-buttons">
-                    <a href="{% url 'blog:comment_edit' comment.pk %}"><i class="fas fa-edit"></i></a>
-                </button>
-                <button class="icon-buttons">
-                    <a href="{% url 'blog:comment_delete' comment.pk %}"><i class="fas fa-trash"></i></a>
-                </button>
-                {% endif %}
-                <button class="icon-buttons">
-                    <a href="{% url 'blog:comment_reply' comment.pk comment.post.pk %}"><i class="fas fa-reply"></i></a>
-                </button>
-            </span>
         </div>
-    {% empty %}
-        <p>No comments to display</p>
-    {% endfor %}
+
+        <div class='comment-body'>
+            {{ comment.comment|markdown_format }}
+        </div>
+
+        <span class='float-left'>
+            <button class="icon-buttons">
+                {{ comment.like_count }}
+            </button>
+            <button class="icon-buttons">
+                <a href='#'><i class='fas fa-star'></i></a>
+            </button>
+        </span>
+
+        <span class='float-right'>
+            {% if request.user == comment.creator.user %}
+            <button class="icon-buttons">
+                <a href="{% url 'blog:comment_edit' comment.pk %}"><i class="fas fa-edit"></i></a>
+            </button>
+            <button class="icon-buttons">
+                <a href="{% url 'blog:comment_delete' comment.pk %}"><i class="fas fa-trash"></i></a>
+            </button>
+            {% endif %}
+            <button class="icon-buttons">
+                <a href="{% url 'blog:comment_reply' comment.pk comment.post.pk %}"><i class="fas fa-reply"></i></a>
+            </button>
+        </span>
+    </div>
+{% empty %}
+    <p>No comments to display</p>
+{% endfor %}
 {% endblock content_content %}

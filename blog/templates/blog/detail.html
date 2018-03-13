@@ -69,22 +69,24 @@
     </div>
 </div>
 
-    
+
 <div class='container post-body'>
     {{ post.body|markdown_format }}
 </div>
-    
+
     {% for comment in comments %}
         <div class="list-items-high" id='{{ forloop.counter }}'>
-            <p class="commenter-stats">
-                <strong>
-                    <a href="{% url 'siteuser:detail' comment.creator.pk comment.creator.slug %}">{{ comment.creator.screen_name }}</a>
-                    <span class="float-right">
-                        On {{ comment.created|date:"d-m-Y" }} |
-                        Edited: {{ comment.modified|date:"d-m-Y" }}
-                    </span>
-                </strong>
-            </p>
+            <div class="row commenter-stats">
+                <div class='col-sm-12'>
+                    <strong>
+                        <a href="{% url 'siteuser:detail' comment.creator.pk comment.creator.slug %}">{{ comment.creator.screen_name }}</a>
+                        <span class="float-right">
+                            Posted {{ comment.created|date:"d-m-Y" }} |
+                            Modified {{ comment.modified|date:"d-m-Y" }}
+                        </span>
+                    </strong>
+                </div>
+            </div>
 
             <div class='comment-body'>
                 {{ comment.comment|markdown_format }}

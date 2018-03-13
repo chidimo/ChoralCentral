@@ -5,10 +5,9 @@
 
 {% block content_content %}
 
-
 <div class='container author-heading'>
     <div class='row'>
-        <div class='col-sm-12 head-title'>
+        <div class='col-sm-12'>
             <span class='h5 float-left'>{{ author }} - {{ author.author_type|title}}</span>
         </div>
     </div>
@@ -32,8 +31,8 @@
 
 {% for song in author.song_set.all|published_author_songs %}
 
-<div class="list-items">
-    <h4><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h4>
+<div class="list-author-songs">
+    <h5><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h5>
 </div>
 {% empty %}
     <p>Author as no song</p>

@@ -13,7 +13,7 @@
 {% block content_content %}
 
     {% for song in songs %}
-    <div class="list-items-high">
+    <div class="list-songs">
         <h4><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h4>
 
         <span class="h5 float-left">
