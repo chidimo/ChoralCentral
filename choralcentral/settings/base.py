@@ -59,9 +59,9 @@ SHELL_PLUS_POST_IMPORTS = [
     ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES' : (
-        'blog.api.authentication.VerifyUserIsActive',
-     ),
+    # 'DEFAULT_AUTHENTICATION_CLASSES' : (
+    #     'blog.api.authentication.VerifyUserIsActive',
+    #  ),
 
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE' : 100,

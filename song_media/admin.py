@@ -7,7 +7,7 @@ class ScoreAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'part')
 
 class MidiAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'part')
+    list_display = ('__str__', 'part', 'description')
     raw_id_fields = ("song",)
 
 admin.site.register(VocalPart)

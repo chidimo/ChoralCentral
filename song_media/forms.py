@@ -78,7 +78,7 @@ class NewScoreForm(forms.ModelForm):
 class NewMidiForm(forms.ModelForm):
     class Meta:
         model = Midi
-        fields = ('song', 'part', 'media_file',)
+        fields = ('song', 'part', 'media_file', 'description')
 
         widgets = {'song' : forms.Select(attrs={'class' : 'form-control'}),
 
@@ -87,6 +87,9 @@ class NewMidiForm(forms.ModelForm):
                        reverse_lazy('song-media:new_part')),
 
                     'media_file' : ClearableFileInput(attrs={'class' : 'form-control'}),
+
+                    'name' : forms.TextInput(
+                        attrs={'class' : 'form-control', 'placeholder' : 'Notation name'}),
                   }
 
     def __init__(self, *args, **kwargs):

@@ -214,7 +214,7 @@
                         <div class='container'>
                             <div class='row'>
                                 <div class='midi-controls' style="height: 32px;">
-                                    <a href="#" onClick="MIDIjs.play('{{ midi.media_file.url }}');"><i class='fas fa-play'></i></a> &emsp;
+                                    <a href="#" onClick="MIDIjs.play('{{ midi.media_file.url }}');" title='{{ midi.description }}'><i class='fas fa-play'></i></a> &emsp;
                                     <a href="#" onClick="MIDIjs.stop();"><i class='fas fa-stop'></i></a> &emsp;
                                     <a href="{% url 'song-media:download_midi' midi.pk %}"><i class="fas fa-download"></i></a>
                                 </div>
