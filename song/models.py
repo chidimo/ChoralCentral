@@ -26,6 +26,15 @@ class Voicing(TimeStampedModel):
     def get_absolute_url(self):
         return reverse('song:index')
 
+class Language(TimeStampedModel):
+    language = models.CharField(max_length=25, unique=True)
+ 
+    def __str__(self):
+        return self.language
+
+    def get_absolute_url(self):
+        return reverse('song:index')
+
 class Song(TimeStampedModel):
     originator      = models.ForeignKey(SiteUser, on_delete=models.CASCADE)
     voicing         = models.ForeignKey(Voicing, on_delete=models.CASCADE)

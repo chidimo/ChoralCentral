@@ -29,7 +29,8 @@ from siteuser.models import SiteUser
 
 from .models import Song
 from .forms import (
-    NewVoicingForm, EditVoicingForm
+    NewVoicingForm, EditVoicingForm,
+    NewLanguageForm, EditLanguageForm,
     ShareForm, NewSongForm, SongEditForm, SongFilterForm
 )
 
@@ -44,6 +45,34 @@ class NewVoicing(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
 class VoicingEdit(LoginRequiredMixin, generic.UpdateView):
     form_class = EditVoicingForm
     template_name = 'song/voicing_edit.html'
+
+class LanguageIndex(generic.ListView):
+    template_name = "song/language_index.html"
+    context_object_name = 'languages'
+    model = Language
+
+class NewLanguage(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
+    form_class = NewLanguageForm
+    template_name = 'song/language_new.html'
+
+    def form_valid(self, form):
+        form.instance.originator = SiteUser.objects.get(user=self.request.user)
+        return super(NewLanguage, self).form_valid(form)
+
+class LanguageEdit(LoginRequiredMixin, generic.CreateView):
+    model = Language
+    form_class = NewLanguageForm
+    template_name = 'song/language_new.html'
+
+class LanguageDetail(generic.DetailView):
+    model = Language
+    context_object_name = 'language'
+    template_name = 'song/language_detail.html'
+
+class LanguageDelete(generic.DeleteView):
+    model = Language
+    success_url = reverse_lazy('song:language_index')
+    template_name = "confirm_delete.html"
 
 class InstantSong(PaginationMixin, generic.ListView):
     model = Song
@@ -229,7 +258,6 @@ def reader_view(request, pk, slug):
     # return render(request, template, context)
     return render_to_pdf(request, template, context)
 
-# https://www.webforefront.com/django/
 def share_song_by_mail(request, pk, slug):
     context = {}
 

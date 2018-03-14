@@ -82,9 +82,6 @@ PREREQ_APPS = [
 PROJECT_APPS = [
     'author',
     'blog',
-    'masspart',
-    'season',
-    'language',
     'request',
     'siteuser',
     'song',

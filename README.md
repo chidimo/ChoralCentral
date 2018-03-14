@@ -19,3 +19,4 @@
 1. Add douay rheims bible app
 
 # https://stackoverflow.com/questions/1960240/jquery-ajax-submit-form?rq=1
+# https://www.webforefront.com/django/

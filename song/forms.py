@@ -5,12 +5,13 @@ from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from django_addanother.widgets import AddAnotherWidgetWrapper
 
-from .models import Voicing, Song
 from season.models import Season
 from masspart.models import MassPart
 from voicing.models import Voicing
 from language.models import Language
 from author.models import Author
+
+from .models import Voicing, Language, Song
 
 class NewVoicingForm(forms.ModelForm):
     class Meta:
@@ -32,6 +33,27 @@ class EditVoicingForm(forms.ModelForm):
     class Meta:
         model = Voicing
         fields = ("voicing", )
+
+class NewLanguageForm(forms.ModelForm):
+    class Meta:
+        model = Language
+        fields = ("language", )
+
+        widgets = {
+            "language" : forms.TextInput(
+                attrs={'class' : 'form-control', 'placeholder' : "Language"})
+        }
+
+    def clean_language(self):
+        language = self.cleaned_data.get("language", None).upper()
+        if Language.objects.filter(language=language):
+            raise forms.ValidationError(_("{} already exists".format(language)))
+        return language
+
+class EditLanguageForm(forms.ModelForm):
+    class Meta:
+        model = Language
+        fields = ("language",)
 
 class ShareForm(forms.Form):
     receiving_emails = forms.CharField(
@@ -108,11 +130,11 @@ class NewSongForm(forms.ModelForm):
                 ),
             "voicing" : AddAnotherWidgetWrapper(
                 forms.Select(attrs={'class' : 'form-control'}),
-                reverse_lazy('voicing:new')
+                reverse_lazy('song:new_voicing')
                 ),
             "language" : AddAnotherWidgetWrapper(
                 forms.Select(attrs={'class' : 'form-control'}),
-                reverse_lazy('language:new'))}
+                reverse_lazy('song:new_language'))}
 
 class SongEditForm(forms.ModelForm):
     class Meta:
@@ -146,8 +168,8 @@ class SongEditForm(forms.ModelForm):
                 ),
             "voicing" : AddAnotherWidgetWrapper(
                 forms.Select(attrs={'class' : 'form-control'}),
-                reverse_lazy('voicing:new')
+                reverse_lazy('song:new_voicing')
                 ),
             "language" : AddAnotherWidgetWrapper(
                 forms.Select(attrs={'class' : 'form-control'}),
-                reverse_lazy('language:new'))}
+                reverse_lazy('song:new_language'))}
