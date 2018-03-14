@@ -40,7 +40,7 @@
         {% else %}
         <span class="float-right">
             <button class="icon-buttons">
-                <a href="{% url 'request:accept_reply' request.pk reply.pk %}" title='Mark this song as accepted reply.'><i class='fas fa-check'></i></a>
+                <a href="{% url 'request:accept_reply' request.pk reply.song.pk %}" title='Mark this song as accepted reply.'><i class='fas fa-check'></i></a>
             </button>
         </span>
         {% endif %}
