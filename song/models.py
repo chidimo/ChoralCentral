@@ -2,20 +2,29 @@
 
 import  datetime
 from django.db import models
-from django.urls import reverse
+from django.shortcuts import reverse
 
 from taggit.managers import TaggableManager
 
-from siteuser.models import SiteUser
-from voicing.models import Voicing
-from language.models import Language
 from author.models import Author
+from siteuser.models import SiteUser
+
+from language.models import Language
 from season.models import Season
 from masspart.models import MassPart
 
 from universal.models import TimeStampedModel
 from universal.fields import AutoSlugField
 from universal.utils import get_tempo_text
+
+class Voicing(TimeStampedModel):
+    voicing = models.CharField(max_length=10, unique=True)
+
+    def __str__(self):
+        return self.voicing
+
+    def get_absolute_url(self):
+        return reverse('song:index')
 
 class Song(TimeStampedModel):
     originator      = models.ForeignKey(SiteUser, on_delete=models.CASCADE)

@@ -17,3 +17,5 @@
 1. Explore delivering midis via podcast
 1. Redefine scripture reference as a model
 1. Add douay rheims bible app
+
+# https://stackoverflow.com/questions/1960240/jquery-ajax-submit-form?rq=1

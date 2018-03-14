@@ -2,7 +2,10 @@
 
 from django.contrib import admin
 
-from .models import Song
+from .models import Voicing, Song
+
+class VoicingAdmin(admin.ModelAdmin):
+    list_display = ("voicing", )
 
 class SongAdmin(admin.ModelAdmin):
     list_display = (
@@ -13,4 +16,5 @@ class SongAdmin(admin.ModelAdmin):
     filter_horizontal = ("seasons", "mass_parts")
     search_fields = ("title", )
 
+admin.site.register(Voicing, VoicingAdmin)
 admin.site.register(Song, SongAdmin)

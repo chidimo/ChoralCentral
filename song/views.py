@@ -22,15 +22,28 @@ from django_addanother.views import CreatePopupMixin
 from pure_pagination.mixins import PaginationMixin
 from algoliasearch_django import get_adapter
 
-from siteuser.models import SiteUser
-from .models import Song
-from author.models import Author
-
-from .forms import ShareForm, NewSongForm, SongEditForm, SongFilterForm
-
 from universal.utils import render_to_pdf
 
-# pylint: disable=R0901, C0111
+from author.models import Author
+from siteuser.models import SiteUser
+
+from .models import Song
+from .forms import (
+    NewVoicingForm, EditVoicingForm
+    ShareForm, NewSongForm, SongEditForm, SongFilterForm
+)
+
+class NewVoicing(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
+    form_class = NewVoicingForm
+    template_name = "song/voicing_new.html"
+
+    def form_valid(self, form):
+        form.instance.originator = SiteUser.objects.get(user=self.request.user)
+        return super(NewVoicing, self).form_valid(form)
+
+class VoicingEdit(LoginRequiredMixin, generic.UpdateView):
+    form_class = EditVoicingForm
+    template_name = 'song/voicing_edit.html'
 
 class InstantSong(PaginationMixin, generic.ListView):
     model = Song
@@ -53,7 +66,6 @@ def auto_song(request):
     context['indexName'] = get_adapter(Song).index_name
     return render(request, 'song/autocomplete_song.html', context)
 
-# https://stackoverflow.com/questions/1960240/jquery-ajax-submit-form?rq=1
 @login_required
 @require_POST
 def song_like_view(request):

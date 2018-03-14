@@ -89,7 +89,6 @@ PROJECT_APPS = [
     'siteuser',
     'song',
     'song_media',
-    'voicing',
 ]
 
 THIRD_PARTY_APPS = [

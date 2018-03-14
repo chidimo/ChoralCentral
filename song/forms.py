@@ -5,14 +5,33 @@ from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from django_addanother.widgets import AddAnotherWidgetWrapper
 
-from .models import Song
+from .models import Voicing, Song
 from season.models import Season
 from masspart.models import MassPart
 from voicing.models import Voicing
 from language.models import Language
 from author.models import Author
 
-# pylint: disable=C0326, C0301, C0103, C0111
+class NewVoicingForm(forms.ModelForm):
+    class Meta:
+        model = Voicing
+        fields = ("voicing", )
+
+        widgets = {
+            "voicing" : forms.TextInput(
+                attrs={'class' : 'form-control', 'placeholder' : "Voicing"})
+        }
+
+    def clean_voicing(self):
+        voicing = self.cleaned_data.get("voicing", None).upper()
+        if Voicing.objects.filter(voicing=voicing).exists():
+            raise forms.ValidationError(_("{} already exists".format(voicing)))
+        return voicing
+
+class EditVoicingForm(forms.ModelForm):
+    class Meta:
+        model = Voicing
+        fields = ("voicing", )
 
 class ShareForm(forms.Form):
     receiving_emails = forms.CharField(
