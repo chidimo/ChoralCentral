@@ -54,9 +54,6 @@
     </div>
 </div>
 
-
-
-
 <div class="container song-about">
     <h5 class="my-4 text-left">About</h5>
     <hr>
@@ -183,7 +180,7 @@
                 </p>
             </div>
         {% empty %}
-            <p>No score.</p>
+            <div class="container"><p>No score.</p></div>
         {% endfor %}
     </div>
 </div>
@@ -238,7 +235,7 @@
 
             </div>
         {% empty %}
-        <p class="my-4 text-left">No audio</p>
+            <div class="container"><p>No audio</p></div>
         {% endfor %}
     </div>
 </div>
@@ -261,7 +258,7 @@
                 <p class="text-left">{<a href="{{ link.video_link }}" target="_blank">{{ link.video_link|urlencode }}</a></p>
             </div>
         {% empty %}
-            <p>No video link.</p>
+            <div class="container"><p>No video link.</p></div>
         {% endfor %}
     </div>
 </div>

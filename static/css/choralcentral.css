@@ -75,6 +75,8 @@ label {
 
 hr {
     margin: 0;
+    border: 0;
+    border-top: 1px solid midnightblue;
 }
 
 .instant-search {
@@ -371,6 +373,12 @@ a.upload-button {
 
 .siteuser-index-heading > .row > .col-sm-12 > span {
     margin-top: .5rem;
+}
+
+.siteuser-index-details {
+    border: 1px solid midnightblue;
+    border-radius: .3rem;
+    background: magenta;
 }
 
 .siteuser-index-details > p.text-left {
