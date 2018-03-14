@@ -5,13 +5,9 @@ from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from django_addanother.widgets import AddAnotherWidgetWrapper
 
-from season.models import Season
-from masspart.models import MassPart
-from voicing.models import Voicing
-from language.models import Language
 from author.models import Author
 
-from .models import Voicing, Language, Song
+from .models import Voicing, Language, Season, MassPart, Song
 
 class NewVoicingForm(forms.ModelForm):
     class Meta:

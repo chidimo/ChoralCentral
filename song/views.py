@@ -27,7 +27,7 @@ from universal.utils import render_to_pdf
 from author.models import Author
 from siteuser.models import SiteUser
 
-from .models import Song
+from .models import Voicing, Language, Season, MassPart, Song
 from .forms import (
     NewVoicingForm, EditVoicingForm,
     NewLanguageForm, EditLanguageForm,

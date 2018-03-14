@@ -8,7 +8,7 @@ class SongSiteMap(Sitemap):
     priority = 1.0
 
     def items(self):
-        return Song.published_set.all()
+        return Song.objects.filter(publish=True)
 
     def lastmod(self, obj):
         return obj.modified

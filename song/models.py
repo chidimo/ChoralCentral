@@ -9,10 +9,6 @@ from taggit.managers import TaggableManager
 from author.models import Author
 from siteuser.models import SiteUser
 
-from language.models import Language
-from season.models import Season
-from masspart.models import MassPart
-
 from universal.models import TimeStampedModel
 from universal.fields import AutoSlugField
 from universal.utils import get_tempo_text
