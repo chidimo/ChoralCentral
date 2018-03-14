@@ -13,16 +13,12 @@ from django.contrib.auth import get_user_model
 
 from pywebber import LoremPysum
 
-from masspart.models import MassPart
-from season.models import Season
 from author.models import Author
 from siteuser.models import SiteUser, Role
-from song.models import Song
+from song.models import Voicing, Language, Season, MassPart, Song
 from song_media.models import VocalPart, ScoreNotation, Score, Midi, VideoLink
 from blog.models import Post, Comment
 from request.models import Request, Reply
-from language.models import Language
-from voicing.models import Voicing
 
 AVATAR_PATH = os.path.join(settings.BASE_DIR, 'fixtures/wallpaper/')
 IMAGES = [os.path.abspath(each) for each in glob.glob("{}/*.jpg".format(AVATAR_PATH))]
