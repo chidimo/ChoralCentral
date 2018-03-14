@@ -209,6 +209,20 @@ a.upload-button {
     padding-bottom: 2px;
 }
 
+.comment-detail-header {
+    background: #f2f3fb;
+    border: .6px solid midnightblue;
+    margin: .5rem 0;
+    border-radius: .3rem;
+}
+
+.comment-detail-header > .row > .col-sm-12 > span.float-left {
+    margin-top: .5rem;
+}
+.comment-detail-header > .row > .col-sm-12 > span.float-right {
+    margin-top: .2rem;
+}
+
 .list-comments {
     padding: .1rem 1rem 2.2rem 1rem;
     margin: .75rem 0;
@@ -239,6 +253,29 @@ a.upload-button {
     border: .6px solid midnightblue;
 }
 
+.request-detail-replies {
+    padding: .1rem 1rem 2.2rem 1rem;
+    margin: .75rem 0;
+    background: #e9ecef;
+    border-radius: .3rem;
+    border: .6px solid midnightblue;
+}
+
+.request-detail-heading {
+    background: #f2f3fb;
+    border: .6px solid midnightblue;
+    margin: .5rem 0;
+    border-radius: .3rem;
+}
+
+.request-detail-heading > .row > .col-sm-12 > span.float-left {
+    margin-top: .5rem;
+}
+
+.request-detail-heading > .row > .col-sm-12 > span.float-right {
+    margin-top: .2rem;
+}
+
 /*SONG*/
 
 .list-songs {
@@ -259,6 +296,7 @@ a.upload-button {
 .song-detail-header > .row > .col-sm-12 > span.float-left {
     font-size: 22px;
     padding-top: .6rem;
+    padding-bottom: .5rem;
 }
 
 .song-detail-header > .row > .col-sm-12 > span.float-right {

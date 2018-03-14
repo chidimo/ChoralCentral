@@ -1,13 +1,19 @@
 {% extends "choralcentral_base.html" %}
 {% block title %}New Song{% endblock %}
-{% block introduction %}{% endblock introduction %}
-
 {% load song_ttags %}
 {% block introduction %}{% endblock introduction %}
+
 {% block content_content %}
 <div class="container upload-forms">
-    <h2>New Song</h2>
-    <hr class='broad'>
+    <h2>New Song
+    <span class='float-right'>
+        <button class="icon-buttons">
+            <a href="" title="Share {{ song.title }} by email" data-toggle="modal" data-target="#markdownModal">Markdown</a>
+        </button>
+        {% include 'song/markdown_help.html' %}
+    </span>
+    </h2>
+    <hr>
 
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}

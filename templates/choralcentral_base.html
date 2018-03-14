@@ -81,7 +81,7 @@
 							<a class="btn btn-primary btn-sm upload-button" href="{% url 'siteuser:new' %}">Join</a>
 						</li>
 					{% endif %}
-					<li class="nav-item">
+					<li class="nav-item" id=uploadButtonNav>
 						<a href="{% url 'song:new' %}" class="btn btn-primary btn-sm upload-button">UPLOAD</a>
 					</li>
 
@@ -163,9 +163,13 @@
 		</script>
 
 		<script>
+        // Add .active class to navigation menu item.
             $(document).ready(function() {
-              $('li.active').removeClass('active');
+            //   $('li.active').removeClass('active');
               $('a[href="' + location.pathname + '"]').closest('li').addClass('active');
+
+            //   Remove the class from the big upload button
+              $('#uploadButtonNav').removeClass('active');
             });
 		</script>
 
@@ -174,7 +178,7 @@
 			$(function () {
 				$('[data-toggle="tooltip"]').tooltip()
 			})
-// 			Initialize popover component
+            // Initialize popover component
 			$(function () {
 				$('[data-toggle="popover"]').popover()
 			})

@@ -1,13 +1,15 @@
 """Various forms for admin page"""
 
 from django import forms
+from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
-from .models import Request, Reply
 from django.urls import reverse_lazy
 from django_addanother.widgets import AddAnotherWidgetWrapper
 
 from siteuser.models import SiteUser
 from song.models import Song
+
+from .models import Request, Reply
 
 class RequestCreateForm(forms.ModelForm):
     class Meta:
@@ -50,7 +52,7 @@ class ReplyCreateFromRequestForm(forms.ModelForm):
     def clean_song(self):
         song = self.cleaned_data["song"]
         if Reply.objects.filter(song=song).exists():
-            raise forms.ValidationError("This song has already been added to this request")
+            raise forms.ValidationError("This song is already listed as a reply to this request")
         return song
 
     def __init__(self, *args, **kwargs):
@@ -59,6 +61,6 @@ class ReplyCreateFromRequestForm(forms.ModelForm):
         super(ReplyCreateFromRequestForm, self).__init__(*args, **kwargs)
         if pk:
             self.fields["request"].initial = Request.objects.get(pk=pk)
+            self.fields["request"].queryset = Request.objects.filter(pk=pk)
         if user:
-            originator = SiteUser.objects.get(user=user)
-            self.fields["song"].queryset = Song.objects.filter(originator=originator)
+            self.fields["song"].queryset = Song.objects.filter(Q(originator__user=user) & Q(publish=True))

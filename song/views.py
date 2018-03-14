@@ -5,7 +5,7 @@ from functools import reduce
 
 import json
 from django.conf import settings
-from django.db.models import Count, Q
+from django.db.models import Q
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
@@ -17,8 +17,6 @@ from django.views.decorators.http import require_POST
 from django.views import generic, View
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-# from django.contrib.auth import get_user_model
-from django.core.paginator import Paginator
 
 from django_addanother.views import CreatePopupMixin
 from pure_pagination.mixins import PaginationMixin

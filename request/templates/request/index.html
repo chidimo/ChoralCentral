@@ -14,7 +14,7 @@
 
 {% for request in requests %}
     <div class="list-requests">
-        <h4><a href="{% url 'request:detail' request.pk request.slug %}">{{ request }}</h4>
+        <h4><a href="{% url 'request:detail' request.pk request.slug %}" title="Request for {{ request }}">{{ request }}</a></h4>
 
         <h6><em>
             <a href="{% url 'siteuser:detail' request.originator.pk request.originator.slug %}">{{request.originator.screen_name }}</a>
@@ -28,7 +28,7 @@
                     <a href="{% url 'request:filter' %}?status={{ request.status }}">{% if request.status %}Fulfilled{% else %}Unfulfilled{% endif %}</a>
                 </button>
                 <button class="icon-buttons">
-                    <a href="{% url 'request:reply_new_from_request' request.pk %}"><i class="fa fa-medkit" aria-hidden="true"></i></a>
+                    <a href="{% url 'request:reply_new_from_request' request.pk %}"><i class="fas fa-reply" aria-hidden="true"></i></a>
                 </button>
                 <button class="icon-buttons">
                     {{ request.reply_set.count }}

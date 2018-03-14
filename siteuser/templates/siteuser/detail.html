@@ -231,8 +231,7 @@
                             <td class="text-danger">{{ request.status }}</td>
                         {% endif %}
                         <td>
-                            <a href="{% url 'request:edit' request.pk %}"><i class="fas fa-edit"></i></a> |
-                            <a href="#"><i class="fas fa-check"></i></a>
+                            <a href="{% url 'request:edit' request.pk %}"><i class="fas fa-edit"></i></a>
                         </td>
                     </tr>
                 {% empty %}

@@ -4,11 +4,11 @@
 {% load blog_ttags %}
 {% block content_content %}
 
-<div class='container song-actions'>
+<div class='container comment-detail-header'>
     <div class='row'>
         <div class='col-sm-12 head-title'>
             <span class='h5 float-left'>
-                Comments made by <a href="{% url 'siteuser:detail' siteuser.pk siteuser.slug %}">{{ siteuser.screen_name }}</a>
+                Comments by <a href="{% url 'siteuser:detail' siteuser.pk siteuser.slug %}">{{ siteuser.screen_name }}</a>
             </span>
 
             <span class='float-right song-icons'>
@@ -27,8 +27,8 @@
                 <strong>
                     <a href="{% url 'blog:detail' comment.post.pk comment.post.slug %}">{{ comment.post }}</a>
                     <span class="float-right">
-                        Posted {{ comment.created|date:"d-m-Y" }} |
-                        Modified {{ comment.modified|date:"d-m-Y" }}
+                        Posted {{ comment.created|date }} |
+                        Modified {{ comment.modified|date }}
                     </span>
                 </strong>
             </div>

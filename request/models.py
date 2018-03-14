@@ -2,7 +2,6 @@
 
 from django.db import models
 from django.urls import reverse
-from django.utils import timezone
 
 from siteuser.models import SiteUser
 from song.models import Song
@@ -15,9 +14,10 @@ class Request(TimeStampedModel):
     request = models.CharField(max_length=200)
     slug = AutoSlugField(set_using="request")
     status = models.BooleanField(default=False)
+    answer = models.OneToOneField(Song, on_delete=models.SET_NULL, null=True)
 
     class Meta:
-        ordering = ["-created", "status"]
+        ordering = ("status", "-created")
 
     def __str__(self):
         return self.request
@@ -31,7 +31,7 @@ class Reply(TimeStampedModel):
     song = models.OneToOneField(Song, on_delete=models.SET_NULL, null=True)
 
     class Meta:
-        ordering = ["request"] # change to date
+        ordering = ("request", )
 
     def __str__(self):
         return self.request.request

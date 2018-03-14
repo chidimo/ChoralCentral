@@ -24,7 +24,7 @@
 
             <div class='col-sm-12 post-subtitle'>
                 <p><em><a href="{% url 'siteuser:detail' post.creator.pk post.creator.slug %}">
-                        {{ post.creator.screen_name }}</a> | {{ post.created }}</em>
+                        {{ post.creator.screen_name }}</a> | Posted {{ post.created|date }} | Modified {{ post.modified|date }}</em>
                 </p>
             </div>
 
@@ -86,8 +86,8 @@
                     <strong>
                         <a href="{% url 'siteuser:detail' comment.creator.pk comment.creator.slug %}">{{ comment.creator.screen_name }}</a>
                         <span class="float-right">
-                            Posted {{ comment.created|date:"d-m-Y" }} |
-                            Modified {{ comment.modified|date:"d-m-Y" }}
+                            Posted {{ comment.created|date }} |
+                            Modified {{ comment.modified|date }}
                         </span>
                     </strong>
                 </div>

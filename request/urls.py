@@ -17,4 +17,5 @@ urlpatterns = [
 urlpatterns += [
     path("reply/request/<int:pk>/", views.ReplyAddFromRequest.as_view(), name="reply_new_from_request"),
     path("replys/", views.ReplyIndex.as_view(), name="reply_index"),
+    path("accept/<str:request_pk>/<str:song_pk>/", views.accept_reply, name="accept_reply"),
 ]
