@@ -83,12 +83,13 @@ class ReplyIndex(PaginationMixin, generic.ListView):
 @login_required
 def accept_reply(request, request_pk, song_pk):
     request_to_be_answered = Request.objects.get(pk=request_pk)
-    song = Song.objects.get(pk=song_pk)
 
     if request_to_be_answered.originator.user != request.user:
         messages.error(request, "You're not authorized to accept an answer for this request.")
         return redirect(request_to_be_answered.get_absolute_url())
 
+    song = Song.objects.get(pk=song_pk)
+    
     request_to_be_answered.answer = song
     request_to_be_answered.status = True
     request_to_be_answered.save()
