@@ -35,6 +35,70 @@ class Language(TimeStampedModel):
     def get_absolute_url(self):
         return reverse('song:index')
 
+class Season(TimeStampedModel):
+    OT = "ORDINARY TIME"
+    AD = "ADVENT"
+    CM = "CHRISTMAS"
+    LT = "LENT"
+    ER = "EASTER"
+    PT = "PENTECOST"
+    NA = "NA"
+    SEASON_CHOICES = (
+        ("", "Select Season"),
+        (OT, "Ordinary Time"),
+        (AD, "Advent"),
+        (CM, "Christmas"),
+        (LT, "Lent"),
+        (ER, "Easter"),
+        (PT, "Pentecost"),
+        (NA, "NA")
+    )
+    season = models.CharField(max_length=15, choices=SEASON_CHOICES, unique=True)
+    about = models.TextField()
+
+    def get_absolute_url(self):
+        return reverse('song:index')
+
+    def __str__(self):
+        return self.season
+
+class MassPart(TimeStampedModel):
+    EN = "ENTRANCE"
+    KY = "KYRIE"
+    GL = "GLORIA"
+    AC = "ACCLAMATION"
+    OF = "OFFERTORY"
+    CM = "COMMUNION"
+    SS = "SANCTUS"
+    AD = "AGNUS DEI"
+    RC = "RECESSION"
+    GN = "GENERAL"
+    CR = "CAROL"
+    NA = "NA"
+    PART_CHOICES = (
+        ("", "Select Mass part"),
+        (EN, "Entrance"),
+        (KY, "Kyrie"),
+        (GL, "Gloria"),
+        (AC, "Acclamation"),
+        (OF, "Offertory"),
+        (CM, "Communion"),
+        (SS, "Sanctus"),
+        (AD, "Agnus Dei"),
+        (RC, "Recesssion"),
+        (CR, "Carol"),
+        (GN, "General"),
+        (NA, "NA")
+    )
+    part = models.CharField(max_length=15, choices=PART_CHOICES, unique=True)
+    about = models.TextField()
+
+    def get_absolute_url(self):
+        return reverse('song:index', args=[str(self.id)])
+
+    def __str__(self):
+        return self.part
+
 class Song(TimeStampedModel):
     originator      = models.ForeignKey(SiteUser, on_delete=models.CASCADE)
     voicing         = models.ForeignKey(Voicing, on_delete=models.CASCADE)

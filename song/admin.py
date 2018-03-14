@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 
-from .models import Voicing, Language, Song
+from .models import Voicing, Language, Season, MassPart, Song
 
 class VoicingAdmin(admin.ModelAdmin):
     list_display = ("voicing", )
@@ -21,4 +21,6 @@ class SongAdmin(admin.ModelAdmin):
 
 admin.site.register(Voicing, VoicingAdmin)
 admin.site.register(Language, LanguageAdmin)
+admin.site.register(Season)
+admin.site.register(MassPart)
 admin.site.register(Song, SongAdmin)
