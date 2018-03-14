@@ -53,6 +53,7 @@
 
 			<div class="collapse navbar-collapse navcontent">
 				<ul class="nav navbar-nav">
+					<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
 					<li class="nav-item"><a class="nav-link" href="{% url 'author:index' %}">Authors</a></li>
 					<li class="nav-item"><a class="nav-link" href="{% url 'request:index' %}">Requests</a></li>
 					<li class="nav-item"><a class="nav-link" href="{% url 'blog:index' %}">Blog</a></li>
@@ -66,7 +67,7 @@
 							<li><a class="nav-link" href="{% url 'song-media:midi_index' %}"><i class="fas fa-music"></i></a></li>
 							<li><a class="nav-link" href="{% url 'song-media:score_index' %}"><i class="fas fa-file-pdf"></i></a></li>
 						{% endif %}
-						<li class="nav-item">
+						<li class="nav-item logged-in-username">
 							<a class="nav-link" href="{% url 'siteuser:detail' user.siteuser.pk user.siteuser.slug %}">{{ user.siteuser.screen_name }}</a>
 						</li>
 						<li class="nav-item">
@@ -159,6 +160,13 @@
 				$("#id_new_password2").attr('class', 'form-control');
 				$("#id_new_password2").attr('placeholder', '{{ form.new_password2.label }}');
 			});
+		</script>
+
+		<script>
+            $(document).ready(function() {
+              $('li.active').removeClass('active');
+              $('a[href="' + location.pathname + '"]').closest('li').addClass('active');
+            });
 		</script>
 
 		<script>

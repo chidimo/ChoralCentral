@@ -35,8 +35,7 @@ class NewPostForm(forms.ModelForm):
         """How to do query in forms"""
         user = kwargs.pop("user")
         super(NewPostForm, self).__init__(*args, **kwargs)
-        originator = SiteUser.objects.get(user=user)
-        self.fields['song'].queryset = Song.objects.filter(originator=originator)
+        self.fields['song'].queryset = Song.objects.filter(originator__user=user)
 
 class PostEditForm(forms.ModelForm):
     class Meta:
@@ -52,6 +51,12 @@ class PostEditForm(forms.ModelForm):
                    "body" : forms.Textarea(
                        attrs={'class' : 'form-control', "placeholder" : "Body"}),
                   }
+
+    def __init__(self, *args, **kwargs):
+        """How to do query in forms"""
+        user = kwargs.pop("user")
+        super(PostEditForm, self).__init__(*args, **kwargs)
+        self.fields['song'].queryset = Song.objects.filter(originator__user=user)
 
 class PostCreateFromSongForm(forms.ModelForm):
     class Meta:

@@ -18,10 +18,10 @@
 
         <span class="h5 float-left">
             <button class="icon-buttons">
-                <a href="{% url 'blog:new_song' song.pk %}" title="Blog this song"><i class="fas fa-pencil-alt"></i> Blog</a>
+                <a href="{% url 'blog:new_song' song.pk %}" title="Make a post about {{ song.title }}"><i class="fas fa-pencil-alt"></i> Blog</a>
             </button>
             <button class="icon-buttons">
-                <a href="{% url 'song:reader_view' song.pk song.slug %}" title="Print this song" target="_blank"><i class="fas fa-print"></i> Print</a>
+                <a href="{% url 'song:reader_view' song.pk song.slug %}" title="Print {{ song.title }}" target="_blank"><i class="fas fa-print"></i> Print</a>
             </button>
         </span>
 
@@ -30,7 +30,7 @@
                 <a href="" title="Star {{ song.title }}"><i class="fas fa-star"></i> Stars</a>
             </button>
             <button class="icon-buttons">
-                <a href="{% url 'siteuser:song_likers' song.pk %}" title="{{ song.like_count }} Love birds">{{ song.like_count }}</a>
+                <a href="{% url 'siteuser:song_likers' song.pk song.slug %}" title="{{ song.like_count }} Love birds">{{ song.like_count }}</a>
             </button>
         </span>
     </div>

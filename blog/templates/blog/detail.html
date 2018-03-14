@@ -4,14 +4,44 @@
 {% block introduction %}{% endblock introduction %}
 
 {% block content_content %}
-<div class='container post-actions'>
+<div class='container post-detail-heading'>
     <div class='row'>
         <div class='col-sm-12'>
-            <span class='h5 float-left'>{{ post.title }}</span>
+            <h5 class='text-left'>{{ post.title }}</h5>
+            <hr>
+
+            {% if post.subtitle %}
+                <div class='col-sm-12 post-subtitle'>
+                    {{ post.subtitle|markdown_format }}
+                </div>
+            {% endif %}
+
+            {% if post.song %}
+                <div class='col-sm-12 post-song'>
+                    <p>on <a href="{% url 'song:detail' post.song.pk post.song.slug %}">{{ post.song }}</a></p>
+                </div>
+            {% endif %}
+
+            <div class='col-sm-12 post-subtitle'>
+                <p><em><a href="{% url 'siteuser:detail' post.creator.pk post.creator.slug %}">
+                        {{ post.creator.screen_name }}</a> | {{ post.created }}</em>
+                </p>
+            </div>
+
+
+
+            <span class='float-left'>
+                <button class="icon-buttons">
+                    <i class="fas fa-comments"></i>
+                </button>
+
+                <button class="icon-buttons">
+                    {{ post.comment_set.count }}
+                </button>
+            </span>
 
             <span class='h5 float-right song-icons'>
                 {% if user.is_authenticated %}
-
                     {% if request.user.siteuser in post.likes.all %}
                         <button class="icon-buttons">
                             <a href="" id="like" name="{{ post.pk }}" value="Like" title="unstar this post"><i class="fas fa-star"></i> Unstar</a>
@@ -39,32 +69,7 @@
                         <i class="fas fa-at"></i></a>
                 </button>
                 {% include 'blog/post_share_modal.html' %}
-
             </span>
-        </div>
-    </div>
-</div>
-
-
-
-<div class='container post-actions'>
-    <div class='row'>
-        <div class='col-sm-12'>
-
-            {% if post.subtitle %}
-                <h5>{{ post.subtitle|markdown_format }}</h5>
-            {% endif %}
-
-            {% if post.song %}
-                <h6>on <a href="{% url 'song:detail' post.song.pk post.song.slug %}">{{ post.song }}</a></h6>
-            {% endif %}
-
-            <h6>
-                <em>
-                    by <a href="{% url 'siteuser:detail' post.creator.pk post.creator.slug %}">{{ post.creator.screen_name }}</a> | {{ post.created }}
-                </em>
-                <span class="float-right">{{ post.comment_set.count }} <i class="fas fa-comments"></i></span>
-            </h6>
         </div>
     </div>
 </div>

@@ -3,8 +3,21 @@ body {
   padding-top: 3.4rem;
 }
 
+/*NAVIGATION*/
+
 nav {
   background: midnightblue;
+}
+
+.fixed-top {
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+}
+
+.navbar-nav a {
+   color: #BCC6CC;
+   font-size: 16px;
+   font-weight: bold;
 }
 
 .my-toggler.navbar-toggler {
@@ -14,10 +27,29 @@ nav {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(250, 57, 57, 0.7)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
 
+ul.nav > li.logged-in-username.active {
+    margin-right: .35rem;
+    margin-top: .35rem;
+    margin-bottom: .45rem;
+}
+
+ul.nav > li.logged-in-username.active > a.nav-link {
+    padding-bottom: .35rem;
+    padding-top: .35rem;
+}
 /*GENERIC ELEMENTS*/
 
 h1, h2, h3, h4, h5, h6 {
 	color: midnightblue;
+}
+
+.active {
+    background: white;
+    border-radius: .2rem;
+}
+
+.active > a.nav-link {
+    color: blue;
 }
 
 a {
@@ -41,17 +73,8 @@ label {
   font-weight: bold;
 }
 
-/*NAVIGATION*/
-
-.fixed-top {
-  padding-top: 0.1rem;
-  padding-bottom: 0.1rem;
-}
-
-.navbar-nav a {
-   color: #BCC6CC;
-   font-size: 16px;
-   font-weight: bold;
+hr {
+    margin: 0;
 }
 
 .instant-search {
@@ -123,7 +146,6 @@ a.upload-button {
   border: .6px solid midnightblue;
   margin: .5rem 0;
   border-radius: .3rem;
-  padding-bottom: .5rem;
 }
 
 .author-heading > .row > .col-sm-12 > span {
@@ -148,7 +170,15 @@ a.upload-button {
     border: .6px solid midnightblue;
 }
 
-.post-actions {
+.post-detail-heading {
+    background: #f2f3fb;
+    border: .6px solid midnightblue;
+    margin: .5rem 0;
+    border-radius: .3rem;
+    padding-bottom: .5rem;
+}
+
+.post-detail-subheading {
     background: #f2f3fb;
     border: .6px solid midnightblue;
     margin: .5rem 0;
@@ -190,6 +220,27 @@ a.upload-button {
     border-top: none;
 }
 
+/*REQUEST*/
+
+.request-index-heading {
+    background: #f2f3fb;
+    border: .6px solid midnightblue;
+    margin: .5rem 0;
+    border-radius: .3rem;
+}
+
+.request-index-heading > .row > .col-sm-12 > span {
+    margin-top: .5rem;
+}
+
+.list-requests {
+    padding: .1rem 1rem 2.2rem 1rem;
+    margin: .75rem 0;
+    background: #e9ecef;
+    border-radius: .3rem;
+    border: .6px solid midnightblue;
+}
+
 /*SONG*/
 
 .list-songs {
@@ -203,25 +254,17 @@ a.upload-button {
 .song-detail-header {
     background: #f2f3fb;
     border: .6px solid midnightblue;
-    padding-bottom: .5rem;
-    border-left-style: none;
-    border-right-style: none;
+    margin: .5rem 0;
+    border-radius: .3rem;
 }
 
 .song-detail-header > .row > .col-sm-12 > span.float-left {
-    margin: .3rem 0 0 8rem;
-    font-size: 24px;
+    font-size: 22px;
+    padding-top: .6rem;
 }
 
 .song-detail-header > .row > .col-sm-12 > span.float-right {
-    margin: .3rem 8rem 0 0;
-}
-
-.song-actions {
-    background: #f2f3fb;
-    border: .6px solid midnightblue;
-    margin: .5rem 0;
-    border-radius: .3rem;
+    padding-top: .6rem;
     padding-bottom: .5rem;
 }
 
@@ -274,7 +317,6 @@ a.upload-button {
 
 /*SITEUSER*/
 
-
 .register-forms {
   max-width:400px;
 }
@@ -306,7 +348,6 @@ a.upload-button {
     border: .6px solid midnightblue;
     margin: .5rem 0;
     border-radius: .3rem;
-    padding-bottom: .5rem;
 }
 
 .siteuser-detail-heading > .row > .col-sm-12 > span {
@@ -390,6 +431,16 @@ input#id_password {
   vertical-align: middle;
   font-size: 22px;
 }
+
+/*RESET PASSWORD*/
+
+.password-reset-conditions {
+    border: 1px solid midnightblue;
+    text-align: left;
+    color: red;
+    border-radius: .3rem;
+}
+
 
 /*FOOTER*/
 

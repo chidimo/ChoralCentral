@@ -22,6 +22,7 @@ from .models import SiteUser, Role
 from blog.models import Comment
 from song.forms import ShareForm
 from song.models import Song
+from blog.models import Post, Comment
 
 from .forms import (
     SiteUserRegistrationForm, SiteUserEditForm, NewRoleForm, RoleEditForm
@@ -45,19 +46,49 @@ class UserDetail(generic.DetailView):
         context["share_form"] = ShareForm()
         return context
 
-class SongLikers(PaginationMixin, generic.ListView):
+class SongLoveBirds(PaginationMixin, generic.ListView):
     model = SiteUser
     context_object_name = 'song_love_birds'
-    template_name = 'siteuser/song_love_birds.html'
+    template_name = 'siteuser/love_birds_song.html'
     paginate_by = 24
 
     def get_queryset(self):
-        song = Song.objects.get(pk=self.kwargs['pk'])
+        song = Song.objects.get(pk=self.kwargs['pk'], slug=self.kwargs['slug'])
         return song.likes.all()
 
     def get_context_data(self, *args):
-        context = super(SongLikers, self).get_context_data(*args)
+        context = super(SongLoveBirds, self).get_context_data(*args)
         context['song'] = Song.objects.get(pk=self.kwargs['pk'])
+        return context
+
+class PostLoveBirds(PaginationMixin, generic.ListView):
+    model = SiteUser
+    context_object_name = 'post_love_birds'
+    template_name = 'siteuser/love_birds_post.html'
+    paginate_by = 24
+
+    def get_queryset(self):
+        post = Post.objects.get(pk=self.kwargs['pk'], slug=self.kwargs['slug'])
+        return post.likes.all()
+
+    def get_context_data(self, *args):
+        context = super(PostLoveBirds, self).get_context_data(*args)
+        context['post'] = Post.objects.get(pk=self.kwargs['pk'], slug=self.kwargs['slug'])
+        return context
+
+class CommentLoveBirds(PaginationMixin, generic.ListView):
+    model = SiteUser
+    context_object_name = 'comment_love_birds'
+    template_name = 'siteuser/love_birds_comment.html'
+    paginate_by = 24
+
+    def get_queryset(self):
+        comment = Comment.objects.get(pk=self.kwargs['pk'])
+        return comment.likes.all()
+
+    def get_context_data(self, *args):
+        context = super(CommentLoveBirds, self).get_context_data(*args)
+        context['comment'] = Comment.objects.get(pk=self.kwargs['pk'])
         return context
 
 class UserComments(PaginationMixin, generic.ListView):

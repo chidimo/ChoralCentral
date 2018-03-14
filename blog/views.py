@@ -131,6 +131,12 @@ class PostEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     template_name = "blog/edit.html"
     success_message = "Post updated successfully !"
 
+    def get_form_kwargs(self):
+        """include 'user' and 'pk' in the kwargs to be sent to form"""
+        kwargs = super(PostEdit, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
 class EditComment(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     model = Comment
     form_class = CommentEditForm

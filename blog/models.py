@@ -42,6 +42,9 @@ class Post(TimeStampedModel):
     def __str__(self):
         return self.title
 
+    def likers(self):
+        return ", ".join([each.screen_name for each in self.likes.all()])
+
     def save(self, *args, **kwargs):
         if self.id:
             self.like_count = self.likes.count()

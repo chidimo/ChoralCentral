@@ -4,11 +4,6 @@
 
 {% block content_content %}
 
-<h2>Blog Posts
-    <span class="float-right"><a class="btn btn-primary" href="{% url 'blog:new' %}">New post</a></span>
-</h2>
-<hr>
-
 {% for post in posts %}
     <div class="list-blog-posts">
         <h4><a href="{% url 'blog:detail' post.pk post.slug %}">{{ post }}</a></h4>
@@ -22,21 +17,24 @@
             | {{ post.created }}
             </em>
         </h6>
+
         <div>
-        <span class="h5 float-left">
-            <button class="icon-buttons">
-                <a href="" title="Share post on facebook"><i class="fab fa-facebook"></i> FB Share</a>
-            </button>
-        </span>
-        <span class="h5 float-right">
-            <button class="icon-buttons">
-                <a href="" title="Star {{ post.title }}"><i class="fas fa-star"></i> Stars</a>
-            </button>
-            <button class="icon-buttons">
-                {{ post.comment_set.count }} <i class="fas fa-comments"></i>
-            </button>
-            <a href="#" class="like-counter" title="Love birds">{{ post.like_count }}</a>
-        </span>
+            <span class="h5 float-left">
+                <button class="icon-buttons">
+                    <a href="" title="Share {{ post.title }} on facebook"><i class="fab fa-facebook"></i> FB Share</a>
+                </button>
+            </span>
+            <span class="h5 float-right">
+                <button class="icon-buttons">
+                    <a href="" title="Star {{ post.title }}"><i class="fas fa-star"></i> Stars</a>
+                </button>
+                <button class="icon-buttons">
+                    {{ post.comment_set.count }} <i class="fas fa-comments"></i>
+                </button>
+                <button class="icon-buttons">
+                    <a href="{% url 'siteuser:post_likers' post.pk post.slug %}" title="{{ post.like_count }} Love birds">{{ post.like_count }}</a>
+                </button>
+            </span>
         </div>
     </div>
 {% empty %}
