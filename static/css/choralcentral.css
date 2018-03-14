@@ -378,7 +378,8 @@ a.upload-button {
 .siteuser-index-details {
     border: 1px solid midnightblue;
     border-radius: .3rem;
-    background: magenta;
+    background: #94dbeb;
+    color: midnightblue;
 }
 
 .siteuser-index-details > p.text-left {
