@@ -12,7 +12,7 @@ class LanguageAdmin(admin.ModelAdmin):
 
 class SongAdmin(admin.ModelAdmin):
     list_display = (
-        "title", "like_count", "all_authors", "all_seasons", "all_masspart",
+        "title", "like_count", "song_likers", "all_authors", "all_seasons", "all_masspart",
         "originator", "publish", "voicing", "scripture_reference", "language")
     list_filter = ("seasons", "mass_parts")
     list_editable = ("publish", )

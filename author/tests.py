@@ -1,4 +1,4 @@
-"""Test views"""
+"""Tests"""
 
 from django.test import TestCase
 from django.shortcuts import reverse
@@ -9,10 +9,10 @@ from .models import Author
 from siteuser.models import CustomUser
 
 class AuthorModelTests(TestCase):
-    
+
     def setUp(self):
         self.author = mommy.make('author.Author')
-    
+
     def test_model_representation(self):
         self.assertIsInstance(self.author, Author)
         self.assertEqual(
@@ -40,7 +40,7 @@ class AuthorIndexViewTests(TestCase):
         resp = self.client.get(reverse('author:index'))
         self.assertEqual(resp.status_code, 200)
         self.assertTemplateUsed(resp, 'author/index.html')
-    
+
     def test_correct_pagination(self):
         resp = self.client.get(reverse('author:index'))
         self.assertEqual(resp.status_code, 200)
@@ -61,7 +61,7 @@ class AuthorDetailViewTests(TestCase):
 
     # @classmethod
     def setUp(self):
-        # set bio manually to avoid error being thrown by template tag markdown_format        
+        # set bio manually to avoid error being thrown by template tag markdown_format
         self.author = mommy.make('author.Author', bio='Some bio text')
 
     def test_view_exists_at_desired_location(self):
@@ -71,7 +71,7 @@ class AuthorDetailViewTests(TestCase):
     def test_view_url_accessible_by_name(self):
         resp = self.client.get(reverse('author:detail', kwargs={'pk' : self.author.pk, 'slug' : self.author.slug}))
         self.assertEqual(resp.status_code, 200)
-    
+
     def test_view_renders_correct_template(self):
         resp = self.client.get(reverse('author:detail', kwargs={'pk' : self.author.pk, 'slug' : self.author.slug}))
         self.assertEqual(resp.status_code, 200)
@@ -96,7 +96,7 @@ class NewAuthorViewTests(TestCase):
     def test_redirects_if_not_logged_in(self):
         resp = self.client.get(reverse('author:new'))
         self.assertRedirects(resp, '/users/login/?next=/author/new/')
-    
+
     def test_view_renders_correct_template(self):
         login = self.client.login(username='test@user.app', password='testpassword')
         resp = self.client.get(reverse('author:new'))

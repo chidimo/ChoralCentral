@@ -24,7 +24,7 @@ class Voicing(TimeStampedModel):
 
 class Language(TimeStampedModel):
     language = models.CharField(max_length=25, unique=True)
- 
+
     def __str__(self):
         return self.language
 
@@ -115,8 +115,8 @@ class Song(TimeStampedModel):
     tempo_text      = models.CharField(max_length=30, blank=True)
     bpm             = models.IntegerField(null=True, blank=True)
     divisions       = models.IntegerField(null=True, blank=True)
-    views           = models.IntegerField(default=1)
-    like_count      = models.IntegerField(default=1)
+    views           = models.IntegerField(default=0)
+    like_count      = models.IntegerField(default=0)
 
     authors         = models.ManyToManyField(Author)
     seasons         = models.ManyToManyField(Season)
@@ -131,6 +131,9 @@ class Song(TimeStampedModel):
     def __str__(self):
         return self.title
 
+    def song_likers(self):
+        return ", ".join([each.screen_name for each in self.likes.all()])
+
     def all_authors(self):
         names = ["{} {}".format(author.first_name, author.last_name) for author in self.authors.all()]
         return ", ".join(names)
@@ -143,6 +146,10 @@ class Song(TimeStampedModel):
 
     def save(self, *args, **kwargs):
         self.tempo_text = get_tempo_text(self.tempo)
-        if self.id:
-            self.like_count = self.likes.count()
         return super(Song, self).save(*args, **kwargs)
+
+
+
+
+
+

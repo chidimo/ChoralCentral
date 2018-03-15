@@ -20,3 +20,4 @@
 
 # https://stackoverflow.com/questions/1960240/jquery-ajax-submit-form?rq=1
 # https://www.webforefront.com/django/
+[Save specific model field](https://docs.djangoproject.com/en/2.0/ref/models/instances/#specifying-which-fields-to-save)

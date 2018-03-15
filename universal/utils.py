@@ -34,7 +34,7 @@ def render_to_pdf(request, template, context):
 
 def get_tempo_text(tempo):
     if not tempo:
-        return
+        return "Not set"
     if tempo <= 25:
         return "Larghissimo"
     elif 40 <= tempo <= 45:

@@ -105,30 +105,18 @@ def song_like_view(request):
 
         if song.likes.filter(pk=user.pk).exists():
             song.likes.remove(user)
+            song.like_count = song.likes.count()
+            song.save(update_fields=['like_count'])
             song.save()
             message = "You unstarred this song.\n {} now has {} stars".format(song.title, song.like_count)
         else:
             song.likes.add(user)
+            song.like_count = song.likes.count()
+            song.save(update_fields=['like_count'])
             song.save()
             message = "You starred this song.\n {} now has {} stars".format(song.title, song.like_count)
     context = {'message' : message}
     return HttpResponse(json.dumps(context), content_type='application/json')
-
-class SongLike(LoginRequiredMixin, View):
-    def post(self):
-        user = SiteUser.objects.get(user=self.request.user)
-        song = get_object_or_404(Song, pk=self.request.POST.get('pk', None))
-
-        if song.likes.filter(pk=user.pk).exists():
-            song.likes.remove(user)
-            song.save()
-            message = "You unstarred this song.\n {} now has {} stars".format(song.title, song.like_count)
-        else:
-            song.likes.add(user)
-            song.save()
-            message = "You starred this song.\n {} now has {} stars".format(song.title, song.like_count)
-        context = {'message' : message}
-        return HttpResponse(json.dumps(context), content_type='application/json')
 
 class SongIndex(PaginationMixin, generic.ListView):
     model = Song
@@ -137,10 +125,8 @@ class SongIndex(PaginationMixin, generic.ListView):
     paginate_by = 25
 
     def get_context_data(self, **kwargs):
-        # print("IP Address for debug-toolbar: " + self.request.META['REMOTE_ADDR'])
         context = super(SongIndex, self).get_context_data(**kwargs)
         context['form'] = SongFilterForm()
-        # context['share_form'] = ShareForm()
         return context
 
     def get_queryset(self):
@@ -155,7 +141,7 @@ class SongDetail(generic.DetailView):
         context = super(SongDetail, self).get_context_data(**kwargs)
         context['share_form'] = ShareForm()
         return context
-    # add download incrementer here
+    # add view counter here
 
 class NewSong(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):
     template_name = 'song/new.html'
@@ -166,8 +152,11 @@ class NewSong(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
 
         if (form.instance.first_line == "") and (form.instance.lyrics != ""):
             form.instance.first_line = form.instance.lyrics.split("\n")[0]
-        self.object = form.save()
+        self.object = form.save(commit=True)
         self.object.likes.add(SiteUser.objects.get(user=self.request.user))
+
+        self.object.like_counts = self.object.likes.count()
+        self.object.save(update_fields=['like_count'])
         messages.success(self.request, "Song was successfully added")
         return redirect(self.get_success_url())
 

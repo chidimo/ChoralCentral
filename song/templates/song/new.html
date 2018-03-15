@@ -7,8 +7,9 @@
 <div class="container upload-forms">
     <h2>New Song
     <span class='float-right'>
-        <button class="icon-buttons">
-            <a href="" title="Share {{ song.title }} by email" data-toggle="modal" data-target="#markdownModal">Markdown</a>
+
+        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#markdownModal">
+            Formatting help
         </button>
         {% include 'song/markdown_help.html' %}
     </span>

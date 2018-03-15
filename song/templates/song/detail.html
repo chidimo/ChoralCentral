@@ -55,7 +55,7 @@
 </div>
 
 <div class="container song-about">
-    <h5 class="my-4 text-left">About</h5>
+    <h5 class="my-2 text-left">About</h5>
     <hr>
 
     <div class="row text-left">
@@ -137,7 +137,7 @@
 </div>
 
 <div class="container song-readable">
-    <h5 class="my-4 text-left">
+    <h5 class="my-2 text-left">
         Scores
         <span class="float-right">
             <a class="btn btn-primary btn-sm" href="{% url 'song-media:score_add_song' song.pk %}">Add score</a>
@@ -186,7 +186,7 @@
 </div>
 
 <div class="container song-audible">
-    <h5 class="my-4 text-left">
+    <h5 class="my-2 text-left">
         Midis
         <span class="float-right">
             <a class="btn btn-primary btn-sm float-right" href="{% url 'song-media:midi_add_song' song.pk %}">Add midi</a>
@@ -241,7 +241,7 @@
 </div>
 
 <div class="container song-watchable">
-    <h5 class="my-4 text-left">
+    <h5 class="my-2 text-left">
         Video links
         <span class="float-right">
             <a class="btn btn-primary btn-sm" href="{% url 'song-media:videolink_new_song' song.pk %}">Add a link</a>
@@ -264,7 +264,7 @@
 </div>
 
 <div class="container song-lyrical">
-    <h5>Lyrics</h5>
+    <h5 class="my-2 text-left">Lyrics</h5>
     <hr>
     {{ song.lyrics|markdown_format }}
 </div>
