@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 from django_addanother.widgets import AddAnotherWidgetWrapper
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from .models import SiteUser, Role
+from .models import SiteUser, Role, SiteUserGroup, GroupMembership, GroupJoinRequest, Follow
 
 CustomUser = get_user_model()
 
@@ -125,4 +125,18 @@ class RoleEditForm(forms.ModelForm):
     widgets = {
         "role" : forms.TextInput(
             attrs={'class' : 'form-control', "placeholder" : "Role"})
+    }
+
+class NewSiteUserGroupForm(forms.ModelForm):
+    class Meta:
+        model = SiteUserGroup
+        fields = ('name', 'about_group', 'group_social', )
+
+    widgets = {
+        "name" : forms.TextInput(
+            attrs={'class' : 'form-control', "placeholder" : "Role"}),
+        "about_group" : forms.Textarea(
+            attrs={'class' : 'form-control', "placeholder" : "Role"}),
+        "group_social" : forms.TextInput(
+            attrs={'class' : 'form-control', "placeholder" : "Role"}),
     }

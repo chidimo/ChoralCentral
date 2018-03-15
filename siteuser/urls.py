@@ -24,6 +24,10 @@ urlpatterns += [
 ]
 
 urlpatterns += [
+    path('new-group/', views.NewSiteUserGroup.as_view(), name='new_group'),
+]
+
+urlpatterns += [
     path("login/", account_views.login, name="login"),
     path("logged-out/", account_views.logout, name="logout"),
     path("logout-then-login/", account_views.logout_then_login, name="logout_then_login"),

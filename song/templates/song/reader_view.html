@@ -8,7 +8,10 @@
     </head>
 
     <body>
-        <h2><a href="http://www.choralcentral.net/">ChoralCentral</a> | <span class='song-title'>{{ song.title }}</span></h2>
+        <h2>
+            <a href="http://www.choralcentral.net/">ChoralCentral</a> |
+            <span class='song-title'><a href="{{ song.get_absolute_url }}">{{ song.title }}</a></span>
+        </h2>
         <div class='heading'>
             <p class='uploader'>
                 by <a href="{% url 'siteuser:detail' song.originator.pk song.originator.slug %}">{{ song.originator.screen_name }}</a>
@@ -17,7 +20,6 @@
         </div>
 
         <div class='about'>
-            <h4>About</h4>
             <div class="column-1">
                 <p>For: {{ song.voicing }}</p>
                 <p>Tempo: {{ song.tempo }}</p>

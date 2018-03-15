@@ -2,8 +2,8 @@
 
 from django.db import models
 from django.urls import reverse
-from django.utils import timezone
 from django.conf import settings
+# from django.contrib.auth.models import Group
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 from sorl.thumbnail import ImageField
@@ -99,12 +99,37 @@ class SiteUser(TimeStampedModel):
     def get_all_roles(self):
         return ", ".join([role.role for role in self.roles.all()])
 
-class HandShake(TimeStampedModel):
-    from_siteuser = models.ForeignKey(
-        SiteUser,
-        on_delete=models.CASCADE,
-        related_name="from_siteuser_set")
-    to_siteuser = models.ForeignKey(
-        SiteUser,
-        on_delete=models.CASCADE,
-        related_name="to_siteuser_set")
+class SiteUserGroup(TimeStampedModel):
+    name = models.CharField(max_length=30, blank=True, null=True)
+    about_group = models.TextField()
+    group_social = models.URLField(blank=True, null=True)
+    members = models.ManyToManyField(SiteUser, through='GroupMembership')
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('song:index')
+
+class GroupMembership(TimeStampedModel):
+    siteuser = models.ForeignKey(SiteUser, blank=True, null=True, on_delete=models.SET_NULL)
+    group = models.ForeignKey(SiteUserGroup, blank=True, null=True, on_delete=models.SET_NULL)
+    is_group_admin = models.BooleanField(default=False)
+
+class GroupJoinRequest(TimeStampedModel):
+    requesting_user = models.OneToOneField(SiteUser, null=True, blank=True, on_delete=models.SET_NULL)
+    group_of_interest = models.OneToOneField(SiteUserGroup, null=True, blank=True, on_delete=models.SET_NULL)
+
+class Follow(TimeStampedModel):
+    from_siteuser = models.ForeignKey(SiteUser, blank=True, null=True, on_delete=models.SET_NULL, related_name="from_siteuser_set")
+    to_siteuser = models.ForeignKey(SiteUser, on_delete=models.CASCADE, related_name="to_siteuser_set")
+
+# class HandShake(TimeStampedModel):
+#     from_siteuser = models.ForeignKey(
+#         SiteUser,
+#         on_delete=models.CASCADE,
+#         related_name="from_siteuser_set")
+#     to_siteuser = models.ForeignKey(
+#         SiteUser,
+#         on_delete=models.CASCADE,
+#         related_name="to_siteuser_set")

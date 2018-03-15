@@ -34,7 +34,7 @@
         </div>
         <div class="btn-group">
             <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Post new
+                Create new
             </button>
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="{% url 'song:new' %}">Song</a>
@@ -42,6 +42,8 @@
                 <a class="dropdown-item" href="{% url 'blog:new' %}">Blog post</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{% url 'request:new' %}">Request</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'siteuser:new_group' %}">Group</a>
             </div>
         </div>
     </div>
@@ -138,7 +140,7 @@
                             <td>
                                 {% if request.user == siteuser.user %}
                                     <a href="{% url 'song:edit' song.pk song.slug %}" title='Edit'><i class="fas fa-edit"></i></a> |
-                                    <a href="{% url 'song:delete' song.pk %}" title='Delete'><i class="fas fa-trash"></i></a> |
+                                    <a href="{% url 'song:delete' song.pk %}" title='Delete {{ song.title }}'><i class="fas fa-trash"></i></a> |
                                 {% endif %}
                             </td>
                         </tr>

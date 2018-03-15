@@ -107,13 +107,11 @@ def song_like_view(request):
             song.likes.remove(user)
             song.like_count = song.likes.count()
             song.save(update_fields=['like_count'])
-            song.save()
             message = "You unstarred this song.\n {} now has {} stars".format(song.title, song.like_count)
         else:
             song.likes.add(user)
             song.like_count = song.likes.count()
             song.save(update_fields=['like_count'])
-            song.save()
             message = "You starred this song.\n {} now has {} stars".format(song.title, song.like_count)
     context = {'message' : message}
     return HttpResponse(json.dumps(context), content_type='application/json')
@@ -152,10 +150,10 @@ class NewSong(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
 
         if (form.instance.first_line == "") and (form.instance.lyrics != ""):
             form.instance.first_line = form.instance.lyrics.split("\n")[0]
-        self.object = form.save(commit=True)
+        self.object = form.save()
         self.object.likes.add(SiteUser.objects.get(user=self.request.user))
 
-        self.object.like_counts = self.object.likes.count()
+        self.object.like_count = self.object.likes.count()
         self.object.save(update_fields=['like_count'])
         messages.success(self.request, "Song was successfully added")
         return redirect(self.get_success_url())
@@ -168,8 +166,10 @@ class SongEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
 
 class SongDelete(generic.DeleteView):
     model = Song
-    success_url = reverse_lazy('song:index')
     template_name = "song/song_delete.html"
+
+    def get_success_url(self):
+        return reverse_lazy('siteuser:detail', kwargs={'pk' : self.request.user.siteuser.pk, 'slug' : self.request.user.siteuser.slug})
 
 class FilterSongs(PaginationMixin, SuccessMessageMixin, generic.ListView):
     model = Song

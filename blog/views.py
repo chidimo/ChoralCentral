@@ -3,6 +3,7 @@ import json
 
 from django.views import generic
 from django.conf import settings
+from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -53,11 +54,13 @@ def post_like_view(request):
 
         if post.likes.filter(pk=user.pk).exists():
             post.likes.remove(user)
-            post.save()
+            post.like_count = post.likes.count()
+            post.save(update_fields=['like_count'])
             message = "You unstarred this post.\n {} now has {} stars".format(post.title, post.like_count)
         else:
             post.likes.add(user)
-            post.save()
+            post.like_count = post.likes.count()
+            post.save(update_fields=['like_count'])
             message = "You starred this post.\n {} now has {} stars".format(post.title, post.like_count)
     context = {'message' : message}
     return HttpResponse(json.dumps(context), content_type='application/json')
@@ -77,6 +80,9 @@ class PostCreate(LoginRequiredMixin, generic.CreateView):
         form.instance.creator = SiteUser.objects.get(user=self.request.user)
         self.object = form.save()
         self.object.likes.add(SiteUser.objects.get(user=self.request.user))
+
+        self.object.like_count = self.object.likes.count()
+        self.object.save(update_fields=['like_count'])
         messages.success(self.request, "Post created successfully !")
         return super(PostCreate, self).form_valid(form)
 
@@ -91,6 +97,9 @@ class PostCreateFromSong(LoginRequiredMixin, generic.CreateView):
 
         self.object = form.save()
         self.object.likes.add(SiteUser.objects.get(user=self.request.user))
+
+        self.object.like_count = self.object.likes.count()
+        self.object.save(update_fields=['like_count'])
         messages.success(self.request, "Post successfully created for song {}".format(self.object.song.title))
         return super(PostCreateFromSong, self).form_valid(form)
 
@@ -167,6 +176,9 @@ class CommentCreate(LoginRequiredMixin, generic.CreateView):
 
         self.object = form.save()
         self.object.likes.add(SiteUser.objects.get(user=self.request.user))
+
+        self.object.like_count = self.object.likes.count()
+        self.object.save(update_fields=['like_count'])
         messages.success(self.request, "Comment successfully created !")
         return super(CommentCreate, self).form_valid(form)
 
@@ -186,12 +198,16 @@ class ReplyComment(LoginRequiredMixin, generic.CreateView):
 
         self.object = form.save()
         self.object.likes.add(SiteUser.objects.get(user=self.request.user))
+
+        self.object.like_count = self.object.likes.count()
+        self.object.save(update_fields=['like_count'])
         messages.success(self.request, "Reply successfully created.")
         return super(ReplyComment, self).form_valid(form)
 
 class DeleteComment(LoginRequiredMixin, generic.DeleteView):
     model = Comment
     template_name = 'blog/comment_delete.html'
+
 def share_post_by_mail(request, pk, slug):
     context = {}
 

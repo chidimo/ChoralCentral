@@ -9,24 +9,24 @@ app_name = "song"
 
 urlpatterns = [
     path("new-voicing/", views.NewVoicing.as_view(), name="new_voicing"),
-    path("edit/<int:pk>/", views.VoicingEdit.as_view(), name="edit_voicing"),
+    path("edit-voicing/<int:pk>/", views.VoicingEdit.as_view(), name="edit_voicing"),
 ]
 
 urlpatterns += [
     path("new-language/", views.NewLanguage.as_view(), name="new_language"),
-    path("edit/<int:pk>/", views.LanguageEdit.as_view(), name="edit_language"),
+    path("edit-language/<int:pk>/", views.LanguageEdit.as_view(), name="edit_language"),
     path("view/<int:pk>/", views.LanguageDetail.as_view(), name="detail"),
-    path("delete/<int:pk>/", views.LanguageDelete.as_view(), name='delete'),
+    path("delete-language/<int:pk>/", views.LanguageDelete.as_view(), name='delete'),
 ]
 
 urlpatterns += [
     path('', views.SongIndex.as_view(), name="index"),
     path("new-song/", views.NewSong.as_view(), name="new"),
-    path("edit/<int:pk>/<slug:slug>/", views.SongEdit.as_view(), name="edit"),
+    path("edit-song/<int:pk>/<slug:slug>/", views.SongEdit.as_view(), name="edit"),
     path("filter/", views.FilterSongs.as_view(), name="filter"),
     path("<int:pk>/<slug:slug>/", views.SongDetail.as_view(), name="detail"),
     path("<int:pk>/<slug:slug>/reader/", views.reader_view, name="reader"),
-    path("delete/<int:pk>/", views.SongDelete.as_view(), name='delete'),
+    path("delete-song/<int:pk>/", views.SongDelete.as_view(), name='delete'),
 ]
 
 urlpatterns += [

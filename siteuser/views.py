@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_POST
 from django.views import generic
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse, redirect
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
@@ -18,15 +18,16 @@ from django.contrib.auth import get_user_model
 
 from django_addanother.views import CreatePopupMixin
 from pure_pagination.mixins import PaginationMixin
-from .models import SiteUser, Role
+from .models import SiteUser, Role, SiteUserGroup, GroupMembership, GroupJoinRequest, Follow
 from blog.models import Comment
 from song.forms import ShareForm
 from song.models import Song
 from blog.models import Post, Comment
 
 from .forms import (
-    SiteUserRegistrationForm, SiteUserEditForm, NewRoleForm, RoleEditForm
-    )
+    SiteUserRegistrationForm, SiteUserEditForm, NewRoleForm, RoleEditForm,
+    NewSiteUserGroupForm
+)
 
 CustomUser = get_user_model()
 
@@ -180,3 +181,22 @@ class RoleIndex(generic.ListView):
     model = Role
     context_object_name = 'role_list'
     template_name = 'siteuser/role_index.html'
+
+# https://docs.djangoproject.com/en/2.0/topics/db/models/
+
+class NewSiteUserGroup(LoginRequiredMixin, generic.CreateView):
+    form_clall = NewSiteUserGroupForm
+    template_name = 'siteuser/new_siteuser_group.html'
+
+    def form_valid(self, form):
+        self.object = form.save()
+
+        initial_group_member = GroupMembership(
+            siteuser=SiteUser.objects.get(user=self.request.user),
+            group = self.object,
+            is_group_admin=True)
+
+        messages.success(self.request, "Your group was created successfully.")
+        return redirect(self.get_absolute_url())
+
+

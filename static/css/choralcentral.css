@@ -352,6 +352,14 @@ a.upload-button {
     border-radius: .3rem;
 }
 
+.search-input-box {
+    margin-top: .5rem;
+}
+
+.search-info-box {
+    font-size: 14px;
+}
+
 /*SITEUSER*/
 
 .register-forms {

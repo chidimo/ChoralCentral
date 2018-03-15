@@ -4,13 +4,13 @@ from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from .models import CustomUser, Role, SiteUser, HandShake
+from .models import CustomUser, Role, SiteUser, SiteUserGroup, GroupMembership, GroupJoinRequest, Follow
 from .forms import UserChangeForm, UserCreationForm
 
 class SiteUserAdmin(admin.ModelAdmin):
     list_display = ("screen_name", "user", "first_name", "last_name", "slug", "location")
 
-class HandShakeAdmin(admin.ModelAdmin):
+class FollowAdmin(admin.ModelAdmin):
     list_display = ("from_siteuser", "to_siteuser", "created")
 
 class UserAdmin(BaseUserAdmin):
@@ -37,7 +37,7 @@ class UserAdmin(BaseUserAdmin):
 
 admin.site.register(SiteUser, SiteUserAdmin)
 admin.site.register(CustomUser, UserAdmin)
-admin.site.register(HandShake, HandShakeAdmin)
+admin.site.register(Follow, FollowAdmin)
 admin.site.register(Role)
 
 admin.site.unregister(Group)
