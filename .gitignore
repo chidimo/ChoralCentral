@@ -8,4 +8,4 @@ choralcentral_dev.log
 choralcentral_prod.log
 choralcentral_stage.log
 htmlcov
-.coverage
+.coveragestaticfiles
