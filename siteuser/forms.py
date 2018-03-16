@@ -122,21 +122,21 @@ class RoleEditForm(forms.ModelForm):
         model = Role
         fields = ("role", )
 
-    widgets = {
-        "role" : forms.TextInput(
-            attrs={'class' : 'form-control', "placeholder" : "Role"})
-    }
+        widgets = {
+            "role" : forms.TextInput(
+                attrs={'class' : 'form-control', "placeholder" : "Role"})
+        }
 
 class NewSiteUserGroupForm(forms.ModelForm):
     class Meta:
         model = SiteUserGroup
-        fields = ('name', 'about_group', 'group_social', )
+        fields = ('name','group_social',  'about_group', )
 
-    widgets = {
-        "name" : forms.TextInput(
-            attrs={'class' : 'form-control', "placeholder" : "Role"}),
-        "about_group" : forms.Textarea(
-            attrs={'class' : 'form-control', "placeholder" : "Role"}),
-        "group_social" : forms.TextInput(
-            attrs={'class' : 'form-control', "placeholder" : "Role"}),
-    }
+        widgets = {
+            "name" : forms.TextInput(
+                attrs={'class' : 'form-control', "placeholder" : "Group name"}),
+            "about_group" : forms.Textarea(
+                attrs={'class' : 'form-control', "placeholder" : "About group"}),
+            "group_social" : forms.TextInput(
+                attrs={'class' : 'form-control', "placeholder" : "Group social media address (optional)"}),
+        }

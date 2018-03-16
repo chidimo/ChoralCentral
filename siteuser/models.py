@@ -117,8 +117,8 @@ class GroupMembership(TimeStampedModel):
     is_group_admin = models.BooleanField(default=False)
 
 class GroupJoinRequest(TimeStampedModel):
-    requesting_user = models.OneToOneField(SiteUser, null=True, blank=True, on_delete=models.SET_NULL)
-    group_of_interest = models.OneToOneField(SiteUserGroup, null=True, blank=True, on_delete=models.SET_NULL)
+    requesting_user = models.ForeignKey(SiteUser, null=True, blank=True, on_delete=models.SET_NULL)
+    group_of_interest = models.ForeignKey(SiteUserGroup, null=True, blank=True, on_delete=models.SET_NULL)
 
 class Follow(TimeStampedModel):
     from_siteuser = models.ForeignKey(SiteUser, blank=True, null=True, on_delete=models.SET_NULL, related_name="from_siteuser_set")

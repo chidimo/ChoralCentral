@@ -185,7 +185,7 @@ class RoleIndex(generic.ListView):
 # https://docs.djangoproject.com/en/2.0/topics/db/models/
 
 class NewSiteUserGroup(LoginRequiredMixin, generic.CreateView):
-    form_clall = NewSiteUserGroupForm
+    form_class = NewSiteUserGroupForm
     template_name = 'siteuser/new_siteuser_group.html'
 
     def form_valid(self, form):
