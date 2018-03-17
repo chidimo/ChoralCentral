@@ -44,8 +44,6 @@ class AuthorIndexViewTests(TestCase):
     def test_correct_pagination(self):
         resp = self.client.get(reverse('author:index'))
         self.assertEqual(resp.status_code, 200)
-        resp = self.client.get(reverse('author:index'))
-        self.assertEqual(resp.status_code, 200)
         self.assertTrue('is_paginated' in resp.context)
         self.assertTrue(resp.context['is_paginated'])
         self.assertTrue(len(resp.context['authors']) == 25)
@@ -59,7 +57,6 @@ class AuthorIndexViewTests(TestCase):
 
 class AuthorDetailViewTests(TestCase):
 
-    # @classmethod
     def setUp(self):
         # set bio manually to avoid error being thrown by template tag markdown_format
         self.author = mommy.make('author.Author', bio='Some bio text')

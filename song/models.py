@@ -131,18 +131,9 @@ class Song(TimeStampedModel):
     def __str__(self):
         return self.title
 
-    def song_likers(self):
-        return ", ".join([each.screen_name for each in self.likes.all()])
-
     def all_authors(self):
         names = ["{} {}".format(author.first_name, author.last_name) for author in self.authors.all()]
         return ", ".join(names)
-
-    def all_seasons(self):
-        return ", ".join(["{}".format(season.season) for season in self.seasons.all()])
-
-    def all_masspart(self):
-        return ", ".join(["{}".format(part.part) for part in self.mass_parts.all()])
 
     def save(self, *args, **kwargs):
         self.tempo_text = get_tempo_text(self.tempo)
