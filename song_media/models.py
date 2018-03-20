@@ -49,7 +49,7 @@ class Score(TimeStampedModel):
         return self.likes.count()
 
     def __str__(self):
-        return "{}_score_{}".format(self.song.title, self.part)
+        return "{}-{}-{}".format(self.song.title, self.part, self.notation)
 
     def get_absolute_url(self):
         return reverse('song:detail', kwargs={'pk' : (self.song.id), 'slug' : self.song.slug})
@@ -58,7 +58,7 @@ class Midi(TimeStampedModel):
     uploader = models.ForeignKey(SiteUser, null=True, on_delete=models.SET_NULL)
     song = models.ForeignKey(Song, null=True, on_delete=models.SET_NULL)
     part = models.ForeignKey(VocalPart, on_delete=models.CASCADE)
-    description = models.CharField(max_length=100, default="Listen")
+    description = models.CharField(max_length=200, blank=True, null=True)
     likes = models.ManyToManyField(SiteUser, related_name="midi_likes")
     downloads = models.IntegerField(default=0)
     media_file = models.FileField(upload_to=upload_midi)

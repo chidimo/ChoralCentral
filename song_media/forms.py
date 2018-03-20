@@ -9,7 +9,7 @@ from django_addanother.widgets import AddAnotherWidgetWrapper
 
 from .models import VocalPart, ScoreNotation, Score, Midi, VideoLink
 
-from siteuser.models import SiteUser
+# from siteuser.models import SiteUser
 from song.models import Song
 
 class NewVocalPartForm(forms.ModelForm):
@@ -78,7 +78,7 @@ class NewScoreForm(forms.ModelForm):
 class NewMidiForm(forms.ModelForm):
     class Meta:
         model = Midi
-        fields = ('song', 'part', 'media_file', 'description')
+        fields = ('song', 'part', 'description', 'media_file')
 
         widgets = {'song' : forms.Select(attrs={'class' : 'form-control'}),
 
@@ -90,6 +90,8 @@ class NewMidiForm(forms.ModelForm):
 
                     'name' : forms.TextInput(
                         attrs={'class' : 'form-control', 'placeholder' : 'Notation name'}),
+
+                    'description' : forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : 'Enter a short description (optional)'}),
                   }
 
     def __init__(self, *args, **kwargs):

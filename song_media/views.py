@@ -3,13 +3,14 @@
 import os
 from django.http import FileResponse
 from django.conf import settings
-from django.views import generic, View
+from django.views import generic
 from django.shortcuts import reverse, render
-from django.urls import reverse_lazy
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.template.defaultfilters import slugify
+
 from django_addanother.views import CreatePopupMixin
 
 from .models import VocalPart, ScoreNotation, Score, Midi, VideoLink
@@ -62,7 +63,7 @@ def show_score(request, pk):
     fname = doc.media_file.url
     path = os.path.abspath(settings.BASE_DIR + fname)
     response = FileResponse(open(path, 'rb'), content_type="application/pdf")
-    response["Content-Disposition"] = "filename={}_{}".format(doc.part, fname)
+    response["Content-Disposition"] = "filename={}.pdf".format(slugify(doc.__str__()))
     return response
 
 class DeleteScore(LoginRequiredMixin, generic.DeleteView):
@@ -112,7 +113,8 @@ def download_midi(self, pk):
     fname = sound.media_file.url
     path = os.path.abspath(settings.BASE_DIR + fname)
     response = FileResponse(open(path, 'rb'), content_type="sound/midi")
-    response["Content-Disposition"] = "filename={}_{}".format(sound.part, fname)
+    file_download_name = slugify("{}_{}".format(sound.part, fname))
+    response["Content-Disposition"] = "filename={}".format(file_download_name)
     return response
 
 class DeleteMidi(LoginRequiredMixin, generic.DeleteView):

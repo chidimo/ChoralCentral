@@ -13,12 +13,17 @@
     </div>
 </div>
 
-
-<div class="container author-bio">
-    <h5>Biography</h5>
-    {{ author.bio|markdown_format }}
+<div class='container author-heading'>
+    <div class='row'>
+        <div class='col-sm-12 head-title'>
+            <span class='h5 float-left'>Biography</span>
+        </div>
+    </div>
 </div>
 
+<div class='container author-bio-text'>
+    {{ author.bio|markdown_format }}
+</div>
 
 <div class='container author-heading'>
     <div class='row'>

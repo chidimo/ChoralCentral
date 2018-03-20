@@ -136,7 +136,7 @@
     </div>
 </div>
 
-<div class="container song-readable">
+<div class="container song-scores">
     <h5 class="my-2 text-left">
         Scores
         <span class="float-right">
@@ -147,37 +147,38 @@
 
     <div class="row text-left">
         {% for score in song.score_set.all %}
-            <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 score-list">
-                <a href="{% url 'song-media:score_view' score.pk %}" target="_blank">
-                    <i class="fas fa-file-pdf fa-2x"></i>
-                </a>
-                <div class='divider'></div>
-                <p class="text-left"><a href="{% url 'siteuser:detail' score.uploader.pk score.uploader.slug %}">{{ score.uploader.screen_name }}</a></p>
-                <p class="text-left">{{ score.part|title }}</p>
-                <p class="text-left">{{ score.notation|title }}</p>
-                <p class="text-left">
-                    <button class="icon-buttons">
-                        {{ score.score_likes }}
-                    </button>
-                    <button class="icon-buttons">
-                        <a href=""><i class="fas fa-star"></i></a>
-                    </button>
-                </p>
-                <p class="text-left">
-                    <button class="icon-buttons">
-                        {{ score.downloads }} <i class="fas fa-eye"></i>
-                    </button>
-                </p>
-                <p class='text-left'>
-                    {% if request.user == score.uploader.user %}
-                    <button class="icon-buttons">
-                        <a href=""><i  class="fas fa-edit"></i></a>
-                    </button>
-                    <button class="icon-buttons">
-                        <a href="{% url 'song-media:delete_score' score.pk song.pk song.slug %}"><i class="fas fa-trash"></i></a>
-                    </button>
-                    {% endif %}
-                </p>
+            <div class="col-sm-6 col-md-4 col-lg-3 py-2 score-list">
+
+                <div class="container score-list-pdf-container">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <a href="{% url 'song-media:score_view' score.pk %}" target="_blank">
+                                <i class="fas fa-file-pdf fa-4x"></i>
+                            </a>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="text-left">{{ score.part|title }}</p>
+                            <p class="text-left">{{ score.notation|title }}</p>
+                            <p class="text-left">
+                                <a href="{% url 'siteuser:detail' score.uploader.pk score.uploader.slug %}">
+                                    {{ score.uploader.screen_name }}</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row score-list-icon-container">
+                    <div class="container">
+                        <button class="icon-buttons float-left">
+                            <span>{{ score.score_likes }}</span>
+                            <a href=""><i class="fas fa-star"></i></a>
+                        </button>
+
+                        <button class="icon-buttons float-right">
+                            <span>{{ score.downloads }}</span>
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
         {% empty %}
             <div class="container"><p>No score.</p></div>
@@ -185,7 +186,7 @@
     </div>
 </div>
 
-<div class="container song-audible">
+<div class="container song-music">
     <h5 class="my-2 text-left">
         Midis
         <span class="float-right">
@@ -196,10 +197,9 @@
 
     <div class="row text-left">
         {% for midi in song.midi_set.all %}
-            <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 audio-list">
+            <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 audio-list">
 
                 {% if '.mp3' in midi.media_file.url %}
-                    <i class="fas fa-music fa-3x"></i>
                         <div class='container'>
                             <div class='row'>
                                 <audio controls>
@@ -210,7 +210,6 @@
                             </div>
                         </div>
                 {% else %}
-                    <i class="fas fa-music fa-3x"></i>
                         <div class='container'>
                             <div class='row'>
                                 <div class='midi-controls' style="height: 32px;">
@@ -222,17 +221,22 @@
                         </div>
                 {% endif %}
 
-                <p class='text-left'><a href="{% url 'siteuser:detail' midi.uploader.pk midi.uploader.slug %}">{{ midi.uploader.screen_name }}</a></p>
                 <p class='text-left'>{{ midi.part }}</p>
-                <p class='text-left'>{{ midi.midi_likes }}<a href=""><i class="fas fa-star"></i></a></p>
-                <p class='text-left'>{{ midi.downloads }} views</p>
-                <p class='text-left'>
-                    {% if user == midi.uploader.user %}
-                        <a href=""><i class="fas fa-edit"></i></a> &emsp;
-                        <a href="{% url 'song-media:delete_midi' midi.pk song.pk song.slug %}"><i  class="fas fa-trash"></i></a>
-                    {% endif %}
-                </p>
+                <p class='text-left'><a href="{% url 'siteuser:detail' midi.uploader.pk midi.uploader.slug %}">{{ midi.uploader.screen_name }}</a></p>
 
+                <div class="row audio-list-icon-container">
+                    <div class="container">
+                        <button class="icon-buttons float-left">
+                            <span>{{ midi.midi_likes }}</span>
+                            <a href=""><i class="fas fa-star"></i></a>
+                        </button>
+
+                        <button class="icon-buttons float-right">
+                            <span>{{ midi.downloads }}</span>
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
         {% empty %}
             <div class="container"><p>No audio</p></div>
@@ -240,7 +244,7 @@
     </div>
 </div>
 
-<div class="container song-watchable">
+<div class="container song-video">
     <h5 class="my-2 text-left">
         Video links
         <span class="float-right">
@@ -251,7 +255,7 @@
 
     <div class="row text-left">
         {% for link in song.videolink_set.all %}
-            <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2" style="border: 1px solid">
+            <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 video-list" style="border: 1px solid">
                 <i class="fab fa-youtube fa-3x"></i>
                 <div class='divider'></div>
                 <p class="text-left"><a href="{% url 'siteuser:detail' link.uploader.pk link.uploader.slug %}">{{ link.uploader.screen_name }}</a></p>

@@ -153,8 +153,16 @@ a.upload-button {
   margin-top: .5rem;
 }
 
+.author-bio-text {
+    padding: .5rem 1rem .5rem 1rem;
+    margin: .75rem 0;
+    background: #e9ecef;
+    border-radius: .3rem;
+    border: .6px solid midnightblue;
+}
+
 .list-author-songs {
-    padding: .1rem 1rem .5rem 1rem;
+    padding: .5rem 1rem .5rem 1rem;
     margin: .75rem 0;
     background: #e9ecef;
     border-radius: .3rem;
@@ -307,50 +315,100 @@ a.upload-button {
 
 .song-about {
     background: #f2f3fb;
-    border: .6px solid midnightblue;
+    border: 1px solid rgba(0,0,0,.125);
     margin: .5rem 0;
     border-radius: .3rem;
 }
 
-.song-readable {
+.song-scores {
     background: #f2f3fb;
-    border: .6px solid midnightblue;
+    border: 1px solid rgba(0,0,0,.125);
     margin: .5rem 0;
     border-radius: .3rem;
 }
 
-.song-audible {
+.song-music {
     background: #f2f3fb;
-    border: .6px solid midnightblue;
+    border: 1px solid rgba(0,0,0,.125);
     margin: .5rem 0;
     border-radius: .3rem;
 }
 
-.song-watchable {
+/*.song-lyrical, .post-body, .author-bio {*/
+.song-lyrical {
     background: #f2f3fb;
-    border: .6px solid midnightblue;
-    margin: .5rem 0;
-    border-radius: .3rem;
-}
-
-.song-lyrical, .post-body, .author-bio {
-    background: #f2f3fb;
-    border: .6px solid midnightblue;
+    border: 1px solid rgba(0,0,0,.125);
     margin: .5rem 0;
     border-radius: .3rem;
 }
 
 .score-list {
-    border: .5px solid midnightblue;
+    border: 1px solid rgba(0,0,0,.125);
+    background-color: #fff;
     border-radius: .3rem;
-    /* margin-left: .2rem;
-    margin-right: .2rem; */
+    margin-top: .5rem;
+}
+
+.score-list-pdf-container {
+    padding-left: .5rem;
+    padding-right: .5rem;
+}
+
+.score-list-pdf-container > .row > .col-sm-6 {
+    padding-left: .1rem;
+    padding-right: .1rem;
+}
+
+.score-list-pdf-container > .row > .col-sm-6 > p.text-left {
+    margin-bottom: 0;
+    font-size: 14px;
+    word-wrap: break-word;
+}
+
+.score-list > p.text-left {
+    margin-bottom: 0;
+    font-size: 14px;
+}
+
+.score-list-icon-container > .container {
+    padding-left: 3.5px;
+    padding-right: 3.5px;
+}
+
+.score-list-icon-container > .container > button {
+    padding-left: 3.5px;
+    padding-right: 3.5px;
+}
+
+.score-list-icon-container > .container > button > span {
+    background: blanchedalmond;
 }
 
 .audio-list {
-    border: .5px solid midnightblue;
+    border: 1px solid rgba(0,0,0,.125);
     border-radius: .3rem;
+    margin-top: .5rem;
 }
+
+.audio-list > p.text-left {
+    margin-bottom: 0;
+    font-size: 14px;
+}
+
+.audio-list-icon-container > .container {
+    padding-left: 3.5px;
+    padding-right: 3.5px;
+}
+
+.audio-list-icon-container > .container > button {
+    padding-left: 3.5px;
+    padding-right: 3.5px;
+}
+
+.audio-list-icon-container > .container > button > span {
+    background: blanchedalmond;
+}
+
 
 .search-input-box {
     margin-top: .5rem;
@@ -358,6 +416,20 @@ a.upload-button {
 
 .search-info-box {
     font-size: 14px;
+}
+
+.song-video {
+    background: #f2f3fb;
+    border: 1px solid rgba(0,0,0,.125);
+    margin: .5rem 0;
+    border-radius: .3rem;
+}
+
+.video-list {
+    border: 1px solid rgba(0,0,0,.125);
+    background-color: #fff;
+    border-radius: .3rem;
+    margin-top: .5rem;
 }
 
 /*SITEUSER*/
