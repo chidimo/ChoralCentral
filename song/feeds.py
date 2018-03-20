@@ -19,7 +19,7 @@ class MidiFeed(Feed):
         return "Midi feed from http://www.choralcentral.net/"
 
     def title(self):
-        return "Midis on ChoralCentral"
+        return "Audios on ChoralCentral"
 
     def item_enclosure_url(self, item):
         return 'http://www.choralcentral.net{}'.format(item.media_file.url)
@@ -69,7 +69,7 @@ class SongFeed(Feed):
             return 'Latest on ChoralCentral'
 
     def items(self, obj):
-        return Song.published_set.all().order_by(obj[0])[:15]
+        return Song.objects.filter(publish=True).order_by(obj[0])[:15]
 
     def item_title(self, item):
         return item.title

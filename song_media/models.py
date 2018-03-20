@@ -71,7 +71,7 @@ class Midi(TimeStampedModel):
         return self.likes.count()
 
     def __str__(self):
-        return "{}_{}_{} midi".format(self.song.title, self.pk, self.part)
+        return "{}-{}".format(self.song.title, self.part)
 
     def get_absolute_url(self):
         return reverse('song:detail', kwargs={'pk' : (self.song.id), 'slug' : self.song.slug})
