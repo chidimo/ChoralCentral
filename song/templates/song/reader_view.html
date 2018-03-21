@@ -5,6 +5,8 @@
         {% load static %}
         <title>ChoralCentral | {{ song.title }}</title>
         <link rel='stylesheet' type='text/css' href="{% static 'css/reader_view.css' %}">
+        <link href="https://fonts.googleapis.com/css?family=Inconsolata:700" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
     </head>
 
     <body>
@@ -15,35 +17,35 @@
         <div class='heading'>
             <p class='uploader'>
                 by <a href="{% url 'siteuser:detail' song.originator.pk song.originator.slug %}">{{ song.originator.screen_name }}</a>
-            </p>
+            </h6>
             <hr>
         </div>
 
         <div class='about'>
             <div class="column-1">
-                <p>For: {{ song.voicing }}</p>
-                <p>Tempo: {{ song.tempo }}</p>
-                <p>Performed: {{ song.tempo_text }}</p>
-                <p>Timing: {{ song.bpm }}/{{ song.divisions }}</p>
-                <p>Scripture: {{ song.scripture_reference }}</p>
+                <h6>For: {{ song.voicing }}</h6>
+                <h6>Tempo: {{ song.tempo }}</h6>
+                <h6>Performed: {{ song.tempo_text }}</h6>
+                <h6>Timing: {{ song.bpm }}/{{ song.divisions }}</h6>
+                <h6>Scripture: {{ song.scripture_reference }}</h6>
             </div>
 
             <div class="column-2">
-                <p>Language: {{ song.language|upper }}</p>
-                <p>Seasons: {% for season in song.seasons.all %}
+                <h6>Language: {{ song.language|upper }}</h6>
+                <h6>Seasons: {% for season in song.seasons.all %}
                                 {{ season }}{% if not forloop.last %},{% endif %}
                             {% endfor %}
-                </p>
-                <p>Massparts: {% for masspart in song.mass_parts.all %}
+                </h6>
+                <h6>Massparts: {% for masspart in song.mass_parts.all %}
                                 {{ masspart }}{% if not forloop.last %},{% endif %}
                             {% endfor %}
-                </p>
+                </h6>
 
-                <p>Authors: {% for author in song.authors.all %}
+                <h6>Authors: {% for author in song.authors.all %}
                                 {{ author }}{% if not forloop.last %},{% endif %}
                             {% endfor %}
-                </p>
-                <p>Composed: {{ song.compose_date }}</p>
+                </h6>
+                <h6>Composed: {{ song.compose_date }}</h6>
             </div>
         </div>
 

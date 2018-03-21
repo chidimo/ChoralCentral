@@ -53,6 +53,9 @@ class Score(TimeStampedModel):
     def get_absolute_url(self):
         return reverse('song:detail', kwargs={'pk' : (self.song.id), 'slug' : self.song.slug})
 
+    def get_score_view_url(self):
+        return "http://www.choralcentral.net" + reverse('song-media:score_view', kwargs={'pk' : (self.id)})
+
 class Midi(TimeStampedModel):
     uploader = models.ForeignKey(SiteUser, null=True, on_delete=models.SET_NULL)
     song = models.ForeignKey(Song, null=True, on_delete=models.SET_NULL)

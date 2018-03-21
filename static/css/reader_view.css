@@ -14,19 +14,25 @@
    }
 }
 
+body {
+    font-family: 'Slabo 27px', serif;
+}
+
 h1, h2, h3, h4, h5, h6 {
     color: darkblue;
     margin: 0;
+    font-family: 'Inconsolata', monospace;
 }
 
+h6 {
+    font-family: 'Slabo 27px', serif;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 15px;
+}
 
 a {
     text-decoration: none;
-}
-p {
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 15px;
 }
 
 span.song-title {
@@ -40,7 +46,7 @@ span.uploader {
 
 .column-1 p, .column-2 p {
     font-size: 14px;
-    font-weight: 600;
+    font-weight: bold;
     line-height: 15px;
 }
 
@@ -51,6 +57,7 @@ span.uploader {
 .lyrics {
     min-width: 100%;
     float: left;
+    font-family: 'IBM+Plex+Mono', serif;
 }
 
 .column-1 {

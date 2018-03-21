@@ -15,8 +15,9 @@
             {% if name %}{{ name|title }}{% else %}Someone{% endif %} would like you to see <a href="{{ song_link }}">{{ song.title|title }}</a> over on
             <a href="http://www.choralcentral.net">ChoralCentral</a>
         </p>
-        <p>Be sure to check out the uploaded sheet music and midis as well. Happy Choralling !!!</p>
+        <p>Be sure to check out the uploaded sheet music and midis as well. The most recent ones are listed just below the lyrics. Happy Choralling !!!</p>
 
+        <hr>
         <div class='about'>
             <h4>About</h4>
             <div class="column-1">
@@ -51,6 +52,16 @@
             <h4>Lyrics</h4>
             {{ song.lyrics|markdown_format }}
         </div>
+        <hr>
+
+        {% for score in song.score_set.all %}
+        <p>
+            <a href="{{ score.get_score_view_url }}" target="_blank">{{ score }}</a>
+        </p>
+
+        {% empty %}
+            <div class="container"><p>No score added yet. You can help your friends out by adding the first score</p></div>
+        {% endfor %}
 
     </body>
 </html>

@@ -1,6 +1,7 @@
 body {
   color: midnightblue;
   padding-top: 3.4rem;
+  font-family: IBM+Plex+Mono, serif;
 }
 
 /*NAVIGATION*/
@@ -63,6 +64,11 @@ a:hover {
 .jumbotron {
     margin-bottom: 0;
     background: #cacaca;
+    border-radius: 0;
+}
+
+section.jumbotron {
+    border-radius: 0;
 }
 
 section a {
@@ -195,7 +201,7 @@ a.upload-button {
     border-radius: .3rem;
 }
 
-.post-detail-heading > h5 {
+.post-detail-heading > .row > .col-sm-12 > h5 {
     margin-top: .5rem;
 }
 
@@ -495,7 +501,7 @@ a.upload-button {
 .siteuser-index-heading {
     background: #f2f3fb;
     border: .6px solid midnightblue;
-    margin: .5rem 0;
+    margin-top: .5rem;
     border-radius: .3rem;
     padding-bottom: .5rem;
 }
@@ -505,9 +511,9 @@ a.upload-button {
 }
 
 .siteuser-index-details {
-    border: 1px solid midnightblue;
+    border: 1px solid rgba(0,0,0,.125);
     border-radius: .3rem;
-    background: #94dbeb;
+    background: #fff;
     color: midnightblue;
 }
 

@@ -1,6 +1,8 @@
+
 body {
   color: midnightblue;
   padding-top: 3.4rem;
+  font-family: 'IBM+Plex+Mono', serif;
 }
 
 /*NAVIGATION*/
@@ -12,6 +14,11 @@ nav {
 .fixed-top {
   padding-top: 0.1rem;
   padding-bottom: 0.1rem;
+  font-family: 'Inconsolata', monospace;
+}
+
+.fixed-top > .navcontent > ul > li > a.nav-link {
+    font-size: 18px;
 }
 
 .navbar-nav a {
@@ -37,10 +44,16 @@ ul.nav > li.logged-in-username.active > a.nav-link {
     padding-bottom: .35rem;
     padding-top: .35rem;
 }
+
 /*GENERIC ELEMENTS*/
 
 h1, h2, h3, h4, h5, h6 {
 	color: midnightblue;
+	font-family: 'Inconsolata', monospace;
+}
+
+p {
+    font-family: 'IBM+Plex+Mono', serif;
 }
 
 .active {
@@ -52,10 +65,6 @@ h1, h2, h3, h4, h5, h6 {
     color: blue;
 }
 
-a {
-  /* color: midnightblue; */
-}
-
 a:hover {
    text-decoration: none;
 }
@@ -63,6 +72,11 @@ a:hover {
 .jumbotron {
     margin-bottom: 0;
     background: #cacaca;
+    border-radius: 0;
+}
+
+section.jumbotron {
+    border-radius: 0;
 }
 
 section a {
@@ -495,7 +509,7 @@ a.upload-button {
 .siteuser-index-heading {
     background: #f2f3fb;
     border: .6px solid midnightblue;
-    margin: .5rem 0;
+    margin-top: .5rem;
     border-radius: .3rem;
     padding-bottom: .5rem;
 }
@@ -505,9 +519,9 @@ a.upload-button {
 }
 
 .siteuser-index-details {
-    border: 1px solid midnightblue;
+    border: 1px solid rgba(0,0,0,.125);
     border-radius: .3rem;
-    background: #94dbeb;
+    background: #fff;
     color: midnightblue;
 }
 

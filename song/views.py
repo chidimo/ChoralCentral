@@ -14,9 +14,11 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from django.views import generic, View
+from django.views import generic
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError as VAE
 
 from django_addanother.views import CreatePopupMixin
 from pure_pagination.mixins import PaginationMixin
@@ -266,19 +268,33 @@ def share_song_by_mail(request, pk, slug):
             name = form['name']
             context['name'] = name
 
-            email_list = [each.strip() for each in receiving_emails.split(',')]
+            email_list = [email.strip() for email in receiving_emails.split(',')]
+            good_emails = []
+            bad_emails = []
 
             for email in email_list:
-                text_email = render_to_string("song/share_song_by_mail.txt", context)
-                html_email = render_to_string("song/share_song_by_mail.html", context)
+                try:
+                    validate_email(email)
+                    good_emails.append(email)
+                except VAE:
+                    bad_emails.append(email)
 
-                msg = EmailMultiAlternatives(subject, text_email, from_email, [email])
-                msg.attach_alternative(html_email, "text/html")
-                msg.send()
+            if good_emails:
 
-    success_msg = "Song was successfully sent to {}".format(", ".join(email_list))
-    messages.success(request, success_msg)
-    return redirect(song.get_absolute_url())
+                for email in good_emails: # avoide mail address bundling in inbox.
+                    text_email = render_to_string("song/share_song_by_mail.txt", context)
+                    html_email = render_to_string("song/share_song_by_mail.html", context)
+
+                    msg = EmailMultiAlternatives(subject, text_email, from_email, [email])
+                    msg.attach_alternative(html_email, "text/html")
+                    msg.send()
+                success_msg = "Song was successfully sent to {}".format(", ".join(good_emails))
+                messages.success(request, success_msg)
+            if bad_emails:
+                error_msg = "Song was not sent to the following invalid emails: {}".format(", ".join(bad_emails))
+                messages.error(request, error_msg)
+
+            return redirect(song.get_absolute_url())
 
 def share_on_facebook(request, pk, slug):
     pass
