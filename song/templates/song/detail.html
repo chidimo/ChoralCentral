@@ -157,9 +157,9 @@
                             </a>
                         </div>
                         <div class="col-sm-6">
-                            <p class="text-left">{{ score.part|title }}</p>
-                            <p class="text-left">{{ score.notation|title }}</p>
-                            <p class="text-left">
+                            <p class="text-right">{{ score.part|title }}</p>
+                            <p class="text-right">{{ score.notation|title }}</p>
+                            <p class="text-right">
                                 <a href="{% url 'siteuser:detail' score.uploader.pk score.uploader.slug %}">
                                     {{ score.uploader.screen_name }}</a></p>
                         </div>
@@ -221,8 +221,8 @@
                         </div>
                 {% endif %}
 
-                <p class='text-left'>{{ midi.part }}</p>
-                <p class='text-left'><a href="{% url 'siteuser:detail' midi.uploader.pk midi.uploader.slug %}">{{ midi.uploader.screen_name }}</a></p>
+                <p class='text-right'>{{ midi.part }}</p>
+                <p class='text-right'><a href="{% url 'siteuser:detail' midi.uploader.pk midi.uploader.slug %}">{{ midi.uploader.screen_name }}</a></p>
 
                 <div class="row audio-list-icon-container">
                     <div class="container">
@@ -255,11 +255,36 @@
 
     <div class="row text-left">
         {% for link in song.videolink_set.all %}
-            <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 video-list" style="border: 1px solid">
-                <i class="fab fa-youtube fa-3x"></i>
-                <div class='divider'></div>
-                <p class="text-left"><a href="{% url 'siteuser:detail' link.uploader.pk link.uploader.slug %}">{{ link.uploader.screen_name }}</a></p>
-                <p class="text-left">{<a href="{{ link.video_link }}" target="_blank">{{ link.video_link|urlencode }}</a></p>
+            <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 video-list">
+
+                <div class="container video-list-video-container">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p class="text-left"><a href="{{ link.video_link }}" target="_blank">
+                                <i class="fab fa-youtube fa-4x"></i></a></p>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <p class="text-right">YouTube title</p>
+                            <p class="text-right">
+                                <a href="{% url 'siteuser:detail' link.uploader.pk link.uploader.slug %}">{{ link.uploader.screen_name }}</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row video-list-icon-container">
+                    <div class="container">
+                        <button class="icon-buttons float-left">
+                            <span>10</span>
+                            <a href=""><i class="fas fa-star"></i></a>
+                        </button>
+
+                        <button class="icon-buttons float-right">
+                            <span>10</span>
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
         {% empty %}
             <div class="container"><p>No video link.</p></div>

@@ -6,7 +6,12 @@
                 <a aria-hidden="true" href="{% url 'user-api:customuser_api' %}">Users</a> &#124;
                 <a aria-hidden="true" href="{% url 'user-api:siteuser_api' %}">Members</a> &#124;
                 <a aria-hidden="true" href="{% url 'blog-api:comments_api' %}">Comment</a> &#124;
-                <a aria-hidden="true" href="{% url 'blog-api:posts_api' %}">Post</a>
+                <a aria-hidden="true" href="{% url 'blog-api:posts_api' %}">Post</a> &#124;
+                <a aria-hidden="true" href="{% url 'song-api:song_published_api' %}">Song</a>
+                {% if user.is_admin %}
+                 &#124;
+                    <a aria-hidden="true" href="{% url 'song-api:song_unpublished_api' %}">unPubSong</a>
+                {% endif %}
             </p>
         </div>
     </div>

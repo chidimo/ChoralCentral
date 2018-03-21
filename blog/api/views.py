@@ -1,8 +1,8 @@
-from django.contrib import messages
+from django.db.models import Q
 
 from rest_framework import viewsets
 from ..models import Post, Comment
-from .import serializers
+from . import serializers
 
 
 class PostViewSet(viewsets.ModelViewSet):
@@ -17,4 +17,4 @@ class UserCommentViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.CommentSerializer
 
     def get_queryset(self):
-        return Comment.objects.filter(creator__pk=self.kwargs['pk'])
+        return Comment.objects.filter(Q(creator__pk=self.kwargs['pk']))

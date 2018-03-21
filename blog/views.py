@@ -34,7 +34,7 @@ def instant_blog(request):
     context['appID'] = settings.ALGOLIA['APPLICATION_ID']
     context['searchKey'] = settings.ALGOLIA['SEARCH_API_KEY']
     context['indexName'] = get_adapter(Post).index_name
-    context['posts'] = Post.published_set.all()
+    context['posts'] = Post.objects.filter(publish=True)
     return render(request, 'blog/instant_blog.html', context)
 
 def auto_blog(request):
@@ -110,7 +110,7 @@ class PostIndex(PaginationMixin, generic.ListView):
     paginate_by = 25
 
     def get_queryset(self):
-        return Post.published_set.all()
+        return Post.objects.filter(publish=True)
 
     def get_context_data(self):
         context = super(PostIndex, self).get_context_data()

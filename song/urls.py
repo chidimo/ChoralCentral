@@ -39,6 +39,6 @@ urlpatterns += [
 urlpatterns += [
     path("feed-<str:feed_type>/", feeds.SongFeed(), name="song_feed"),
     path("midi-feed/", feeds.MidiFeed(), name="midi_feed"),
-    path("instant-search/", views.InstantSong.as_view(), name="instant_song"),
+    path("search/", views.InstantSong.as_view(), name="instant_song"),
     path("auto-complete/", views.auto_song, name="auto_song"),
 ]

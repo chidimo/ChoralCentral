@@ -74,10 +74,10 @@
     </div>
 </div>
 
-
 <div class='container post-body'>
     {{ post.body|markdown_format }}
 </div>
+<hr>
 
     {% for comment in comments %}
         <div class="list-comments">
@@ -124,7 +124,7 @@
         <p>No comments on this post at this time.</p>
     {% endfor %}
 
-    <form action="{% url 'blog:comment_add' post.pk %}" method="post" enctype="multipart/form-data">
+    <form action="{% url 'blog:comment_add' post.pk %}" method="post" enctype="multipart/form-data" class='comment-form'>
         {% csrf_token %}
         {{ comment_form.comment }}
         <button class="btn btn-primary btn-sm float-right" type="submit" value="Post Comment">Post Comment</button>

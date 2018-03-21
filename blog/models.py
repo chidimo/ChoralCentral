@@ -13,11 +13,6 @@ from universal.fields import AutoSlugField
 from siteuser.models import SiteUser
 from song.models import Song
 
-class PublishedManager(models.Manager):
-    """Return songs with 'published'"""
-    def get_queryset(self):
-        return super(PublishedManager, self).get_queryset().filter(publish=True)
-
 class Post(TimeStampedModel):
     creator = models.ForeignKey(SiteUser, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
@@ -29,9 +24,6 @@ class Post(TimeStampedModel):
     views = models.IntegerField(default=1)
     likes = models.ManyToManyField(SiteUser, related_name="post_likes", blank=True)
     like_count = models.IntegerField(default=0)
-
-    objects = models.Manager()
-    published_set = PublishedManager()
 
     class Meta:
         ordering = ('-like_count', '-created', 'title')

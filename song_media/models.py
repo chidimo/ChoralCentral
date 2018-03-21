@@ -1,4 +1,3 @@
-import os
 from django.db import models
 from django.shortcuts import reverse
 
@@ -85,7 +84,7 @@ class VideoLink(TimeStampedModel):
         ordering = ('-created', )
 
     def __str__(self):
-        return "{}_{}_by_{}".format(self.song.title, self.pk, self.uploader.username)
+        return self.song.title
 
     def get_absolute_url(self):
         return reverse('song:detail', args=[str(self.song.id), str(self.song.slug)])

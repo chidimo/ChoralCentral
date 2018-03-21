@@ -15,12 +15,11 @@
 
 {% for author in authors %}
 <div class="list-authors">
-
     <h5><a href="{% url 'author:detail' author.pk author.slug %}">{{ author }}</a></h5>
-    <p>{{ author.author_type|title }} &raquo;
+    <p>{{ author.author_type|title }} &#124;
         {% with auth=author.song_set.all|published_author_songs %}
             {{ auth.count }}
-        {% endwith %} published songs on <a href="/">ChoralCentral</a>
+        {% endwith %} songs</a>
     </p>
 </div>
 {% empty %}
