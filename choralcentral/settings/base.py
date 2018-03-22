@@ -32,6 +32,9 @@ SITE_ID = 1
 LOGIN_REDIRECT_URL = reverse_lazy('song:index')
 LOGIN_URL = reverse_lazy('siteuser:login')
 LOGOUT_URL = reverse_lazy('siteuser:logout')
+LOGOUT_REDIRECT_URL = reverse_lazy('song:index')
+
+PASSWORD_RESET_TIMEOUT_DAYS = 1
 
 MESSAGE_LEVEL = 10  # DEBUG
 MESSAGE_TAGS = {

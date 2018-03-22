@@ -31,7 +31,6 @@ urlpatterns = [
     path("users/", include('siteuser.urls')),
     path("song-media/", include('song_media.urls')),
     # path("permission-denied/", views.permission_denied, name='permission_denied'),
-    path("accounts/", include('django.contrib.auth.urls')),
     path('social/', include('social_django.urls', namespace='social')),
     path("sitemap\.xml/", sitemap, {'sitemaps' : sitemaps},
         name="django.contrib.sitemaps.views.sitemap"),

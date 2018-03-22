@@ -11,7 +11,7 @@ class LatestPostSFeed(Feed):
     description = "Get the latest update."
 
     def items(self):
-        return Post.published_set.all()[:10]
+        return Post.objects.filter(publish=True).order_by('-created')
 
     def item_title(self, item):
         return item.title
