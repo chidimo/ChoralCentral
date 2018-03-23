@@ -131,7 +131,7 @@
             <button class="btn btn-primary btn-sm float-right" type="submit" value="Post Comment">Post Comment</button>
         </form>
     {% else %}
-        <p><a href="{% url 'blog:new_comment' post.pk %}">Login</a> to comment on this post</p>
+        <p><a href="{% url 'blog:new_comment' post.pk %}">Comment</a> on this post</p>
     {% endif %}
 {% endblock content_content %}
 
