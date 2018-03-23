@@ -50,7 +50,7 @@
         <span class='float-right'>
             {% if request.user == comment.creator.user %}
             <button class="icon-buttons">
-                <a href="{% url 'blog:comment_edit' comment.pk %}"><i class="fas fa-edit"></i></a>
+                <a href="{% url 'blog:edit_comment' comment.pk %}"><i class="fas fa-edit"></i></a>
             </button>
             <button class="icon-buttons">
                 <a href="{% url 'blog:comment_delete' comment.pk %}"><i class="fas fa-trash"></i></a>

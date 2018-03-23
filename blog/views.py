@@ -149,12 +149,13 @@ class PostEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
 class EditComment(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     model = Comment
     form_class = CommentEditForm
-    template_name = "blog/comment_edit.html"
-    success_message = "Comment updated successfully !"
+    template_name = "blog/edit_comment.html"
+    success_message = "Comment updated successfully"
 
 class CommentCreate(LoginRequiredMixin, generic.CreateView):
     context_object_name = 'comment'
     form_class = CommentCreateForm
+    template_name = 'blog/comment_new.html'
 
     def get_success_url(self):
         post = self.object.post
@@ -181,6 +182,11 @@ class CommentCreate(LoginRequiredMixin, generic.CreateView):
         self.object.save(update_fields=['like_count'])
         messages.success(self.request, "Comment successfully created !")
         return super(CommentCreate, self).form_valid(form)
+
+    def get_context_data(self, *args):
+        context = super(CommentCreate, self).get_context_data(*args)
+        context['post'] = Post.objects.get(pk=self.kwargs['pk'])
+        return context
 
 class ReplyComment(LoginRequiredMixin, generic.CreateView):
     context_object_name = 'comment'

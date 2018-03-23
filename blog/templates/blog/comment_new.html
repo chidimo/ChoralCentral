@@ -2,15 +2,15 @@
 {% block title %}New Comment{% endblock %}
 {% block introduction %}{% endblock introduction %}
 
-{% block content %}
+{% block content_content %}
 <div class="container upload-forms">
-    <h2>Add Comment</h2>
+    <h2>Comment on {{ post }}</h2>
     <hr class='broad'>
 
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn btn-primary btn-sm float-right" type="submit" value="Save">Save</button>
+        {{ form.comment }}
+        <button class="btn btn-primary btn-sm float-right" type="submit" value="Post comment">Post comment</button>
     </form>
 </div>
 {% endblock %}
