@@ -88,7 +88,7 @@ class Migration(migrations.Migration):
                 ('first_name', models.CharField(blank=True, max_length=30, null=True)),
                 ('last_name', models.CharField(blank=True, max_length=30, null=True)),
                 ('location', models.CharField(blank=True, max_length=100, null=True)),
-                ('avatar', sorl.thumbnail.fields.ImageField(blank=True, null=True, upload_to=universal.media_handlers.upload_avatar)),
+                ('avatar', sorl.thumbnail.fields.ImageField(blank=True, null=True, upload_to=universal.media_handlers.save_avatar)),
                 ('roles', models.ManyToManyField(to='siteuser.Role')),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],

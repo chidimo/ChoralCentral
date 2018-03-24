@@ -9,7 +9,7 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from sorl.thumbnail import ImageField
 from universal.models import TimeStampedModel
 from universal.fields import AutoSlugField
-from universal.media_handlers import upload_avatar
+from universal.media_handlers import save_avatar
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None):
@@ -78,7 +78,7 @@ class SiteUser(TimeStampedModel):
     first_name = models.CharField(max_length=30, blank=True, null=True)
     last_name = models.CharField(max_length=30, blank=True, null=True)
     location = models.CharField(max_length=100, blank=True, null=True)
-    avatar = ImageField(upload_to=upload_avatar, null=True, blank=True)
+    avatar = ImageField(upload_to=save_avatar, null=True, blank=True)
 
     class Meta:
         ordering = ['screen_name']

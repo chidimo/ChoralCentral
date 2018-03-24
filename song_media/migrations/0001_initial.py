@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
                 ('modified', universal.fields.AutoLastModifiedField(default=django.utils.timezone.now, editable=False, verbose_name='modified')),
                 ('description', models.CharField(default='Listen', max_length=100)),
                 ('downloads', models.IntegerField(default=0)),
-                ('media_file', models.FileField(upload_to=universal.media_handlers.upload_midi)),
+                ('media_file', models.FileField(upload_to=universal.media_handlers.save_midi)),
                 ('likes', models.ManyToManyField(related_name='midi_likes', to='siteuser.SiteUser')),
             ],
             options={
@@ -39,7 +39,7 @@ class Migration(migrations.Migration):
                 ('created', universal.fields.AutoCreatedField(default=django.utils.timezone.now, editable=False, verbose_name='created')),
                 ('modified', universal.fields.AutoLastModifiedField(default=django.utils.timezone.now, editable=False, verbose_name='modified')),
                 ('downloads', models.IntegerField(default=0)),
-                ('media_file', models.FileField(upload_to=universal.media_handlers.upload_pdf)),
+                ('media_file', models.FileField(upload_to=universal.media_handlers.save_score)),
                 ('likes', models.ManyToManyField(related_name='score_likes', to='siteuser.SiteUser')),
             ],
             options={

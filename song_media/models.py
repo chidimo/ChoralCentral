@@ -7,7 +7,7 @@ from song.models import Song
 from siteuser.models import SiteUser
 
 from universal.models import TimeStampedModel
-from universal.media_handlers import upload_pdf, upload_midi, upload_video_thumbnail
+from universal.media_handlers import save_score, save_midi, upload_video_thumbnail
 
 class VocalPart(TimeStampedModel):
     name = models.CharField(max_length=30, default='Choir', unique=True)
@@ -40,7 +40,7 @@ class Score(TimeStampedModel):
     notation = models.ForeignKey(ScoreNotation, on_delete=models.CASCADE)
     likes = models.ManyToManyField(SiteUser, related_name="score_likes")
     downloads = models.IntegerField(default=0)
-    media_file = models.FileField(upload_to=upload_pdf)
+    media_file = models.FileField(upload_to=save_score)
 
     class Meta:
         ordering = ('-downloads', 'created', )
@@ -65,7 +65,7 @@ class Midi(TimeStampedModel):
     description = models.CharField(max_length=200, blank=True, null=True)
     likes = models.ManyToManyField(SiteUser, related_name="midi_likes")
     downloads = models.IntegerField(default=0)
-    media_file = models.FileField(upload_to=upload_midi)
+    media_file = models.FileField(upload_to=save_midi)
 
     class Meta:
         ordering = ('-downloads', 'created', )

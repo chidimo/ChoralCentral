@@ -131,7 +131,7 @@ class NewVideoLink(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, ge
     model = VideoLink
     template_name = 'song_media/videolink_new.html'
     form_class = NewVideoLinkForm
-    success_message = "Video link added successfully !"
+    success_message = "Video link added successfully"
 
     def form_valid(self, form):
         form.instance.uploader = SiteUser.objects.get(user=self.request.user)
