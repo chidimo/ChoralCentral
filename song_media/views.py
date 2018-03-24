@@ -135,6 +135,17 @@ class NewVideoLink(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, ge
 
     def form_valid(self, form):
         form.instance.uploader = SiteUser.objects.get(user=self.request.user)
+        self.object = form.save()
+        
+        video_id = get_youtube_video_id(self.object.video_link)
+        video = get_video_information(video_id)
+        title = video['items'][0]['snippet']['title']
+        default_thumbnail_url = video['items'][0]['snippet']['thumbnails']['default']['url']
+
+        self.object.title = title
+        self.object.thumbnail_url = default_thumbnail_url
+        self.object.save()
+
         return super(NewVideoLink, self).form_valid(form)
 
     def get_form_kwargs(self):

@@ -260,12 +260,13 @@
                 <div class="container video-list-video-container">
                     <div class="row">
                         <div class="col-sm-6">
-                            <p class="text-left"><a href="{{ link.video_link }}" target="_blank">
-                                <i class="fab fa-youtube fa-3x"></i></a></p>
+                            <p class="text-left">
+                                <img src='{{ link.thumbnail_url }}' class='card' height="60px" width="60px">
+                            </p>
                         </div>
 
                         <div class="col-sm-6">
-                            <p class="text-right">YouTube title</p>
+                            <p class="text-right"><a href="{{ link.video_link }}" target="_blank">{{ link.title }}</a></p>
                             <p class="text-right">
                                 <a href="{% url 'siteuser:detail' link.uploader.pk link.uploader.slug %}">{{ link.uploader.screen_name }}</a></p>
                         </div>

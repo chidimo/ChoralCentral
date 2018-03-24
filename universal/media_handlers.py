@@ -5,9 +5,9 @@ def save_avatar(instance, filename):
     _, ext = os.path.splitext(filename)
     return "avatars/{}{}".format(instance.screen_name.lower(), ext)
 
-def upload_video_thumbnail(instance, filename):
+def save_video_thumbnail(instance, filename):
     _, ext = os.path.splitext(filename)
-    return "thumbnails/{}{}".format(instance.screen_name.lower(), ext)
+    return "videothumbnails/{}{}".format(instance.screen_name.lower(), ext)
 
 def save_midi(instance, filename):
     """Take the midi instance and original filename and return appropriate name"""

@@ -7,7 +7,7 @@ from song.models import Song
 from siteuser.models import SiteUser
 
 from universal.models import TimeStampedModel
-from universal.media_handlers import save_score, save_midi, upload_video_thumbnail
+from universal.media_handlers import save_score, save_midi, save_video_thumbnail
 
 class VocalPart(TimeStampedModel):
     name = models.CharField(max_length=30, default='Choir', unique=True)
@@ -85,9 +85,10 @@ class VideoLink(TimeStampedModel):
     song = models.ForeignKey(Song, null=True, on_delete=models.SET_NULL)
     video_link = models.URLField(max_length=250, unique=True)
     playlist = models.CharField(max_length=100, default='playlist')
+    video_playlist_link = models.CharField(max_length=100, default='playlist link')
     title = models.CharField(max_length=100, default='video title')
-    thumbnail = ImageField(upload_to=upload_video_thumbnail, blank=True, null=True)
-
+    thumbnail = ImageField(upload_to=save_video_thumbnail, blank=True, null=True)
+    thumbnail_url = models.URLField(default='www.youtube.com')
     class Meta:
         ordering = ('-created', )
 

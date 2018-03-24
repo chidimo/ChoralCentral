@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='videolink',
             name='thumbnail',
-            field=sorl.thumbnail.fields.ImageField(blank=True, null=True, upload_to=universal.media_handlers.upload_video_thumbnail),
+            field=sorl.thumbnail.fields.ImageField(blank=True, null=True, upload_to=universal.media_handlers.save_video_thumbnail),
         ),
         migrations.AddField(
             model_name='videolink',
