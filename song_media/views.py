@@ -13,13 +13,16 @@ from django.template.defaultfilters import slugify
 
 from django_addanother.views import CreatePopupMixin
 
+from universal.youtube import get_youtube_video_id, get_video_information
+
+from siteuser.models import SiteUser
+
 from .models import VocalPart, ScoreNotation, Score, Midi, VideoLink
 from .forms import (
     NewScoreForm, NewMidiForm, NewVideoLinkForm,
     NewVocalPartForm, NewScoreNotationForm
     )
 
-from siteuser.models import SiteUser
 
 class NewVocalPart(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):
     model = VocalPart
