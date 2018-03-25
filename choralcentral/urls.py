@@ -39,6 +39,8 @@ urlpatterns = [
     path('api-blog/', include((blog_api_urls, 'blog-api'))),
     path('api-users/', include((user_api_urls, 'user-api'))),
     path('api-songs/', include((song_api_urls, 'song-api'))),
+
+    path('youtube/', include('youtube.urls')),
 ]
 
 if settings.DEBUG:
