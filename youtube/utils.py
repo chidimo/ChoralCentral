@@ -1,6 +1,6 @@
 """Youtube API"""
 
-import json
+import shelve
 
 import google_auth_oauthlib.flow
 from googleapiclient.discovery import build
@@ -9,8 +9,12 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 
 import pprint
 
-with open('youtube/credentials.json') as fh:
-    credentials = json.load(fh)
+try:
+    shelf = shelve.open('youtube/credentials')
+    credentials = shelf['credentials']
+except KeyError:
+    print('Credentials shelf not set')
+    credentials = ''
 
 API_KEY = "AIzaSyBMNx5aAONSIqm3NCFrC_YoEoDT98bwKjE"
 YOUTUBE_API_SERVICE_NAME = "youtube"
@@ -32,7 +36,7 @@ def get_video_information(youtube, video_ids, part='snippet,contentDetails,stati
     part=part, id=video_ids).execute()
     return response
 
-# These API calls require authentication
+# These API calls require user authorization
 
 def get_playlist_by_id(youtube, playlist_id, part='snippet,status'):    
     response = AUTH_YOUTUBE.playlists().list(part=part, id=playlist_id).execute()

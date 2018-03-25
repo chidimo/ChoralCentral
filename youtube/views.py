@@ -1,5 +1,6 @@
 import os
 import json
+import shelve
 from django.shortcuts import render, redirect, reverse
 from django.conf import settings
 
@@ -13,7 +14,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 API_SERVICE_NAME = 'youtube'
 API_VERSION = 'v3'
 
-CLIENT_SECRETS_FILE = "universal/client.json"
+CLIENT_SECRETS_FILE = "youtube/client_secret.json"
 CHORAL_CENTRAL_CHANNEL_ID = 'UCetUQLixYoAu3iQnXS7H0_Q'
 SCOPES = ['https://www.googleapis.com/auth/youtube.force-ssl']
 
@@ -44,9 +45,6 @@ def youtube_callback(request, flow=FLOW):
     template = 'youtube_access.html'
     context = {}
     authorization_response = request.get_full_path()
-
-    print("**********", authorization_response)
-
     flow.fetch_token(authorization_response=authorization_response)
 
     # Store the credentials in the session.
@@ -55,16 +53,18 @@ def youtube_callback(request, flow=FLOW):
     #     incorporating this code into your real app.
 
     credentials = flow.credentials
+
+    shelf = shelve.open('youtube/credentials')
     
-    user_auth_data = {
+    user_credentials = {
         'token': credentials.token,
         'refresh_token': credentials.refresh_token,
         'token_uri': credentials.token_uri,
         'client_id': credentials.client_id,
         'client_secret': credentials.client_secret,
         'scopes': credentials.scopes}
-    with open('youtube/credentials.json', 'w+') as fh:
-        json.dump(user_auth_data, fh)
+
+    shelf['credentials'] = user_credentials
+    shelf.close()
 
     return render(request, template, context)
-
