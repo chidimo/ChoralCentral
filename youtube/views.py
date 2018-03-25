@@ -13,7 +13,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 API_SERVICE_NAME = 'youtube'
 API_VERSION = 'v3'
 
-CLIENT_SECRETS_FILE = "universal/client_secret_native.json"
+CLIENT_SECRETS_FILE = "universal/client.json"
 CHORAL_CENTRAL_CHANNEL_ID = 'UCetUQLixYoAu3iQnXS7H0_Q'
 SCOPES = ['https://www.googleapis.com/auth/youtube.force-ssl']
 
@@ -63,7 +63,7 @@ def youtube_callback(request, flow=FLOW):
         'client_id': credentials.client_id,
         'client_secret': credentials.client_secret,
         'scopes': credentials.scopes}
-    with open('user_auth_data.json', 'w+') as fh:
+    with open('youtube/credentials.json', 'w+') as fh:
         json.dump(user_auth_data, fh)
 
     return render(request, template, context)

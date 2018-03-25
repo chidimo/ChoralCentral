@@ -1,6 +1,6 @@
 """Youtube API"""
 
-import os
+import json
 
 import google_auth_oauthlib.flow
 from googleapiclient.discovery import build
@@ -9,6 +9,9 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 
 import pprint
 
+with open('youtube/credentials.json') as fh:
+    credentials = json.load(fh)
+
 API_KEY = "AIzaSyBMNx5aAONSIqm3NCFrC_YoEoDT98bwKjE"
 YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_API_VERSION = "v3"
@@ -16,17 +19,10 @@ YOUTUBE_API_VERSION = "v3"
 # authenticated user's account and requires requests to use an SSL connection.
 SCOPES = ['https://www.googleapis.com/auth/youtube.force-ssl']
 
-CLIENT_SECRETS_FILE = "universal/client_secret_native.json"
 CHORAL_CENTRAL_CHANNEL_ID = 'UCetUQLixYoAu3iQnXS7H0_Q'
 
-def get_authenticated_service():
-    """Get credentials for authenticated API requests"""
-    flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRETS_FILE, SCOPES)
-    credentials = flow.run_console()
-    return build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, credentials=credentials)
-
-# AUTH_YOUTUBE = get_authenticated_service()
-API_YOUTUBE = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,developerKey=API_KEY)
+API_YOUTUBE = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=API_KEY)
+AUTH_YOUTUBE = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, credentials=credentials)
 
 def get_youtube_video_id(video_url):
     return video_url.split('watch?v=')[-1].strip()
@@ -35,6 +31,8 @@ def get_video_information(youtube, video_ids, part='snippet,contentDetails,stati
     response = API_YOUTUBE.videos().list(
     part=part, id=video_ids).execute()
     return response
+
+# These API calls require authentication
 
 def get_playlist_by_id(youtube, playlist_id, part='snippet,status'):    
     response = AUTH_YOUTUBE.playlists().list(part=part, id=playlist_id).execute()
