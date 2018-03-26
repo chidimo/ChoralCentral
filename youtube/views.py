@@ -1,12 +1,11 @@
 import os
 import json
-import shelve
+
 from django.shortcuts import render, redirect, reverse
 from django.conf import settings
 
 import google.oauth2.credentials
 import google_auth_oauthlib.flow
-
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -22,24 +21,23 @@ def get_youtube_permissions(request, flow=FLOW):
     flow.redirect_uri = redirect_uri
     authorization_url, state = flow.authorization_url(
         access_type='offline',
-        # login_hint='choralcentral@gmail.com',
+        login_hint='choralcentral@gmail.com',
         prompt='consent',
         # state=settings.SECRET_KEY,
         include_granted_scopes='true')
     return redirect(authorization_url)
 
 def youtube_callback(request, flow=FLOW):
-    # Disable https checks
+    # Disable https
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
     template = 'youtube_access.html'
     context = {}
     authorization_response = request.get_full_path()
     flow.fetch_token(authorization_response=authorization_response)
-
-    # Store the credentials
-
     credentials = flow.credentials
+
+    # Store the credentials in a json file
     credentials = {
         'token': credentials.token,
         'refresh_token': credentials.refresh_token,
@@ -48,8 +46,7 @@ def youtube_callback(request, flow=FLOW):
         'client_secret': credentials.client_secret,
         'scopes': credentials.scopes}
 
-    shelf = shelve.open('youtube/credentials', 'wb')
-    shelf['credentials'] = credentials
-    shelf.close()
+    with open('youtube/credentials', 'w+') as fh:
+        json.dump(credentials, fh)
 
     return render(request, template, context)
