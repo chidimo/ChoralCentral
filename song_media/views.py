@@ -13,7 +13,7 @@ from django.template.defaultfilters import slugify
 
 from django_addanother.views import CreatePopupMixin
 
-from youtube.utils import get_youtube_video_id, get_video_information
+from youtube.api_calls import get_youtube_video_id, get_video_information
 
 from siteuser.models import SiteUser
 
