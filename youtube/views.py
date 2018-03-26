@@ -9,7 +9,7 @@ import google_auth_oauthlib.flow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-CLIENT_SECRETS_FILE = "youtube/client_secret.json"
+CLIENT_SECRETS_FILE = "youtube/credentials/client_secret.json"
 SCOPES = ['https://www.googleapis.com/auth/youtube.force-ssl']
 
 try:
