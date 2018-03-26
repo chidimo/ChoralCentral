@@ -1,7 +1,8 @@
+
 body {
   color: midnightblue;
   padding-top: 3.4rem;
-  font-family: IBM+Plex+Mono, serif;
+  font-family: 'IBM+Plex+Mono', serif;
 }
 
 /*NAVIGATION*/
@@ -13,6 +14,11 @@ nav {
 .fixed-top {
   padding-top: 0.1rem;
   padding-bottom: 0.1rem;
+  font-family: 'Inconsolata', monospace;
+}
+
+.fixed-top > .navcontent > ul > li > a.nav-link {
+    font-size: 18px;
 }
 
 .navbar-nav a {
@@ -38,10 +44,16 @@ ul.nav > li.logged-in-username.active > a.nav-link {
     padding-bottom: .35rem;
     padding-top: .35rem;
 }
+
 /*GENERIC ELEMENTS*/
 
 h1, h2, h3, h4, h5, h6 {
 	color: midnightblue;
+	font-family: 'Inconsolata', monospace;
+}
+
+p {
+    font-family: 'IBM+Plex+Mono', serif;
 }
 
 .active {
@@ -51,10 +63,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .active > a.nav-link {
     color: blue;
-}
-
-a {
-  /* color: midnightblue; */
 }
 
 a:hover {

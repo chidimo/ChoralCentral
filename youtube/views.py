@@ -9,7 +9,7 @@ import google_auth_oauthlib.flow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-CLIENT_SECRETS_FILE = "youtube/credentials/client_secret.json"
+CLIENT_SECRETS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'credentials/client_secret.json')
 SCOPES = ['https://www.googleapis.com/auth/youtube.force-ssl']
 
 try:
@@ -48,7 +48,7 @@ def callback(request, flow=FLOW):
         'client_secret': credentials.client_secret,
         'scopes': credentials.scopes}
 
-    save_credentials = 'youtube/credentials/credentials.json'
+    save_credentials = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'credentials/credentials.json')
 
     with open(save_credentials, 'w+') as fh:
         json.dump(credentials, fh)

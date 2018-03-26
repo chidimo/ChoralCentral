@@ -8,7 +8,7 @@ import google.oauth2.credentials
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-AUTHORIZED_USER_FILE = 'youtube/credentials/credentials.json'
+AUTHORIZED_USER_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'credentials/credentials.json')
 
 try:
     credentials = google.oauth2.credentials.Credentials.from_authorized_user_file(
@@ -51,7 +51,7 @@ def create_playlist(youtube, title, part='snippet,status'):
     resource = {}
     resource['snippet'] = {'title' : title, 'description' : 'playlist for {}'.format(title)}
     resource['status'] = {'privacyStatus' : 'public'}
-    
+
     response = AUTH_YOUTUBE.playlists().insert(
         part=part, body=resource).execute()
     return response
@@ -79,7 +79,7 @@ def add_video_to_playlist(youtube, video_id, playlist_id):
         'playlistId': playlist_id,
         'resourceId': {'kind' : 'youtube#video', 'videoId': video_id}
     }
-    
+
     response = youtube.playlistItems().insert(
         body=resource,
         part='snippet',).execute()
