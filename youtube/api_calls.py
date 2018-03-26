@@ -7,11 +7,15 @@ import google.oauth2.credentials
 
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-from google_auth_oauthlib.flow import InstalledAppFlow
 
-credentials_file = os.path.abspath('youtube/credentials.json')
-credentials = google.oauth2.credentials.Credentials.from_authorized_user_file(
-    credentials_file, scopes = ['https://www.googleapis.com/auth/youtube.force-ssl'])
+AUTHORIZED_USER_FILE = 'youtube/credentials/credentials.json'
+
+try:
+    credentials = google.oauth2.credentials.Credentials.from_authorized_user_file(
+        AUTHORIZED_USER_FILE, scopes = ['https://www.googleapis.com/auth/youtube.force-ssl'])
+except FileNotFoundError:
+    print('Credentials not created')
+    pass
 
 API_KEY = "AIzaSyBMNx5aAONSIqm3NCFrC_YoEoDT98bwKjE"
 CHORAL_CENTRAL_CHANNEL_ID = 'UCetUQLixYoAu3iQnXS7H0_Q'
@@ -19,7 +23,10 @@ API_SERVICE_NAME = "youtube"
 API_VERSION = "v3"
 
 API_ONLY_YOUTUBE = build(API_SERVICE_NAME, API_VERSION, developerKey=API_KEY)
-AUTH_YOUTUBE = build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
+try:
+    AUTH_YOUTUBE = build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
+except NameError:
+    pass
 
 # These calls require only an API key
 def get_youtube_video_id(video_url):
