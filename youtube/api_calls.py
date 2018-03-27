@@ -2,11 +2,10 @@
 
 import os
 
-import google_auth_oauthlib.flow
 import google.oauth2.credentials
 
 from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
+# from googleapiclient.errors import HttpError
 
 AUTHORIZED_USER_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'credentials/credentials.json')
 
@@ -31,7 +30,7 @@ except NameError:
 # These calls require only an API key
 def get_youtube_video_id(video_url):
     """Return a video ID"""
-    return video_url.split('watch?v=')[-1].strip()
+    return video_url.split('v=')[-1].strip()
 
 def get_video_information(youtube, video_ids, part='snippet,contentDetails,statistics'):
     """Get information about a particular video"""
@@ -65,6 +64,8 @@ def get_or_create_playlist(youtube, playlist_id, title):
 
 def get_playlist_id(youtube, playlist_id, title):
     """Get the id of a playlist, whether it exists or not"""
+    if playlist_id is None:
+        playlist_id = ''
     try:
         # return an existing playlist id
         return get_playlist_by_id(AUTH_YOUTUBE, playlist_id, part='snippet,status')['items'][0]['id']
@@ -73,13 +74,13 @@ def get_playlist_id(youtube, playlist_id, title):
         return create_playlist(AUTH_YOUTUBE, title, part='snippet,status')['id']
 
 def add_video_to_playlist(youtube, video_id, playlist_id):
+    """Add a youtube video to a youtube playlist"""
     resource = {}
 
     resource['snippet'] = {
         'playlistId': playlist_id,
         'resourceId': {'kind' : 'youtube#video', 'videoId': video_id}
     }
-
     response = youtube.playlistItems().insert(
         body=resource,
         part='snippet',).execute()

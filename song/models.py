@@ -122,7 +122,7 @@ class Song(TimeStampedModel):
     seasons         = models.ManyToManyField(Season)
     mass_parts      = models.ManyToManyField(MassPart)
 
-    # youtube_id      = models.CharField(max_length=100, blank=True, null=True)
+    youtube_playlist_id = models.CharField(max_length=100, null=True, blank=True)
 
     class Meta:
         ordering = ("-like_count", "title", "-created", "publish", 'tempo_text')

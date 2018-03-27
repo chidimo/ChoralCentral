@@ -13,7 +13,11 @@ from django.template.defaultfilters import slugify
 
 from django_addanother.views import CreatePopupMixin
 
-from youtube.api_calls import get_youtube_video_id, get_video_information
+from youtube.api_calls import (
+    API_ONLY_YOUTUBE, AUTH_YOUTUBE, CHORAL_CENTRAL_CHANNEL_ID,
+    get_youtube_video_id, get_video_information,
+    get_playlist_id, add_video_to_playlist
+)
 
 from siteuser.models import SiteUser
 
@@ -136,10 +140,24 @@ class NewVideoLink(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, ge
     def form_valid(self, form):
         form.instance.uploader = SiteUser.objects.get(user=self.request.user)
         self.object = form.save()
-        
+
+        song = self.object.song
+        playlist_id = song.youtube_playlist_id
+        song_title = song.title.strip()
+        if (playlist_id is None) or (playlist_id == ''):
+            playlist_id = get_playlist_id(AUTH_YOUTUBE, playlist_id, song_title)
+            song.youtube_playlist_id = playlist_id
+            song.save(update_fields=['youtube_playlist_id'])
+
         video_id = get_youtube_video_id(self.object.video_link)
-        video = get_video_information(video_id)
+        add_video_to_playlist(AUTH_YOUTUBE, video_id, playlist_id)
+
+        video = get_video_information(API_ONLY_YOUTUBE, video_id)
         title = video['items'][0]['snippet']['title']
+
+        channel_link = "https://www.youtube.com/watch?list={}&v={}".format(playlist_id, video_id)
+        self.object.channel_link = channel_link
+
         default_thumbnail_url = video['items'][0]['snippet']['thumbnails']['default']['url']
 
         self.object.title = title

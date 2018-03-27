@@ -16,7 +16,7 @@ class MidiAdmin(admin.ModelAdmin):
         return obj.uploader.screen_name
 
 class VideoLinkAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'uploader', 'video_link')
+    list_display = ('__str__', 'uploader', 'channel_link', 'video_link')
 
     def uploader(self, obj):
         return obj.uploader.screen_name

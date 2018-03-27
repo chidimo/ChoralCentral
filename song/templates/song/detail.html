@@ -266,7 +266,8 @@
                         </div>
 
                         <div class="col-sm-6">
-                            <p class="text-right"><a href="{{ link.video_link }}" target="_blank">{{ link.title }}</a></p>
+                            <p class="text-right">
+                                <a href="{{ link.channel_link }}" target="_blank" title='Watch it on our channel'>{{ link.title }}</a></p>
                             <p class="text-right">
                                 <a href="{% url 'siteuser:detail' link.uploader.pk link.uploader.slug %}">{{ link.uploader.screen_name }}</a></p>
                         </div>
