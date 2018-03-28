@@ -4,6 +4,7 @@ from django.urls import path
 from . import views
 
 app_name = "author"
+
 urlpatterns = [
     path("", views.AuthorIndex.as_view(), name="index"),
     path("new/", views.NewAuthor.as_view(), name="new"),

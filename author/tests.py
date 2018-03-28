@@ -60,6 +60,7 @@ class AuthorDetailViewTests(TestCase):
     def setUp(self):
         # set bio manually to avoid error being thrown by template tag markdown_format
         self.author = mommy.make('author.Author', bio='Some bio text')
+        print('***pk:>>****', self.author.pk, '***slug:>>***', self.author.slug)
 
     def test_view_exists_at_desired_location(self):
         resp = self.client.get('/author/detail/{}/{}'.format(self.author.pk, self.author.slug))

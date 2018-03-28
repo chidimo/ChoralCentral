@@ -1,20 +1,33 @@
 from .base import *
 DEBUG = True
 
+# create test database
+# https://docs.djangoproject.com/en/2.0/topics/db/multi-db/
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
-'default': {
-    'ENGINE': 'django.db.backends.mysql',
-    'OPTIONS': {'sql_mode' : 'traditional'},
-    'NAME': 'parousia$choral',
-    'USER': 'parousia',
-    'PASSWORD': get_env_variable('CENTRAL_PASS'),
-    'HOST': 'parousia.mysql.pythonanywhere-services.com',
-    'TEST':{
-        # 'ENGINE': 'django.db.backends.sqlite3', # for sqlite3
-        # 'NAME':'test.db',
+    'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME':'parousia$test_db'
-        }
+        'OPTIONS': {'sql_mode' : 'traditional'},
+        'NAME': 'parousia$choral',
+        'USER': 'parousia',
+        'PASSWORD': get_env_variable('CENTRAL_PASS'),
+        'HOST': 'parousia.mysql.pythonanywhere-services.com',
+        'TEST':{
+            # 'ENGINE': 'django.db.backends.mysql',
+            # 'NAME':'parousia$test_db'
+            'ENGINE': 'django.db.backends.sqlite3', # for sqlite3
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            }
+        },
+    'for_testing': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -52,7 +65,3 @@ LOGGING = {
         },
     }
 }
-
-# heroku specific settings
-import django_heroku
-django_heroku.settings(locals())
