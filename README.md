@@ -22,3 +22,7 @@
 # https://www.webforefront.com/django/
 [Save specific model field](https://docs.djangoproject.com/en/2.0/ref/models/instances/#specifying-which-fields-to-save)
 [Open source projects](https://simpleisbetterthancomplex.com/2015/11/23/small-open-source-django-projects-to-get-started.html)
+
+mysql grant privilege
+GRANT ALL PRIVILEGES ON myproject_test.* TO 'chandan'@'localhost';
+https://docs.djangoproject.com/en/2.0/topics/db/multi-db/
