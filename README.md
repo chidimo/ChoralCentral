@@ -18,6 +18,18 @@
 1. Redefine scripture reference as a model
 1. Add douay rheims bible app
 
+# ChoralCentral
+
+1. Add Django allauth
+2. Revisit request status
+3. If a person's upload becomes more than a certain number, add paginated subpage
+4. Add score preview in sidebar via ajax
+5. Explore caching
+6. fix request status
+7. Explore delivering midis via podcast
+8. Redefine scripture reference as a model
+9. Add douay rheims bible app
+
 # https://stackoverflow.com/questions/1960240/jquery-ajax-submit-form?rq=1
 # https://www.webforefront.com/django/
 [Save specific model field](https://docs.djangoproject.com/en/2.0/ref/models/instances/#specifying-which-fields-to-save)
