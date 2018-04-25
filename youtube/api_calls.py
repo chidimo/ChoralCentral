@@ -64,7 +64,7 @@ def get_playlist_id(youtube, playlist_id, title):
         playlist_id = ''
     try:
         return response['items'][0]['id']# return an existing playlist id
-    except IndexError:
+    except KeyError:
         return response['id']# create a new playlist and return its ID
 
 def add_video_to_playlist(youtube, video_id, playlist_id):
