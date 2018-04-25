@@ -3,14 +3,17 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
+from selenium.common.exceptions import WebDriverException
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re, os
 
 class TestSongView(unittest.TestCase):
     def setUp(self):
-        self.driver = webdriver.Firefox()
-        # self.driver = webdriver.Chrome()
+        try:
+            self.browser = webdriver.Firefox()
+        except WebDriverException:
+            self.browser = webdriver.Chrome()
         self.driver.implicitly_wait(30)
         self.base_url = "http://localhost:8000/"
         self.verificationErrors = []
@@ -25,19 +28,6 @@ class TestSongView(unittest.TestCase):
         song_name = song.text
         song.click()
         self.assertTrue(driver.title, "ChoralCentral | " + song_name)
-    
-    def tearDown(self):
-        self.driver.quit()
-        self.assertEqual([], self.verificationErrors)
-
-class LoginAndUploadView(unittest.TestCase):
-    def setUp(self):
-        self.driver = webdriver.Firefox()
-        # self.driver = webdriver.Chrome()
-        self.driver.implicitly_wait(30)
-        self.base_url = "http://localhost:8000/"
-        self.verificationErrors = []
-        self.accept_next_alert = True
     
     def test_login_and_upload_view(self):
         driver = self.driver
