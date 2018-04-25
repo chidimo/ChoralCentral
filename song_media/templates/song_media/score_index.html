@@ -10,19 +10,34 @@
 
    <div class="container">
         <h2 class="my-4 text-center text-lg-left">Scores</h2>
-        <hr>
 
-        <div class="row text-center text-lg-left">
-            {% for score in scores %}
-                <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2">
-                    <p class='text-left'>
-                        <a href="{% url 'song-media:score_view' score.pk %}" target="_blank"><i class="fas fa-file-pdf"></i></a>
-                    </p>
-                    <p class="text-left">{{ score }}</p>
-                </div>
-            {% empty %}
-                <p>No score</p>
-            {% endfor %}
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="thead-light">
+                    <caption>scores</caption>
+                </thead>
+                <tr>
+                    <th>Song</th>
+                    <th>Uploader</th>
+                    <th>Score uploader</th>
+                    <th>Download</th>
+                </tr>
+
+                {% if scores %}
+                <tbody>
+                    {% for score in scores %}
+                        <tr>
+                            <td>{{ score.song.title }}</td>
+                            <td>{{ score.song.originator }}</td>
+                            <td>{{ score.uploader }}</td>
+                            <td><a href="{% url 'song-media:score_view' score.pk %}" target="_blank"><i class="fas fa-file-pdf"></i></a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                {% else %}
+                    <p>No scores found</p>
+                {% endif %}
+            </table>
         </div>
     </div>
 

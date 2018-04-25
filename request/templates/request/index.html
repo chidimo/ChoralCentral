@@ -24,15 +24,12 @@
 
         <div>
             <span class="h5 float-right">
-                <button class="icon-buttons">
-                    <a href="{% url 'request:filter' %}?status={{ request.status }}">{% if request.status %}Fulfilled{% else %}Unfulfilled{% endif %}</a>
-                </button>
-                <button class="icon-buttons">
-                    <a href="{% url 'request:reply_new_from_request' request.pk %}"><i class="fas fa-reply" aria-hidden="true"></i></a>
-                </button>
-                <button class="icon-buttons">
+                <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'request:filter' %}?status={{ request.status }}">{% if request.status %}Fulfilled{% else %}Unfulfilled{% endif %}</a>
+                <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'request:reply_new_from_request' request.pk %}" title="Reply"><i class="fas fa-reply" aria-hidden="true"></i></a>
+
+                <span class="btn btn-sm btn-primary icon-buttons" title="Replies">
                     {{ request.reply_set.count }}
-                </button>
+                </span>
             </span>
         </div>
     </div>

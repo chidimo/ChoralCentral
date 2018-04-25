@@ -71,7 +71,7 @@ class ReplyAddFromRequest(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         form.instance.originator = SiteUser.objects.get(user=self.request.user)
         self.object = form.save()
-        messages.success(self.request, "Request successfully added to {}".format(self.object))
+        messages.success(self.request, "Reply successfully added to {}".format(self.object))
         return super(ReplyAddFromRequest, self).form_valid(form)
 
 class ReplyIndex(PaginationMixin, generic.ListView):
@@ -89,8 +89,9 @@ def accept_reply(request, request_pk, song_pk):
         return redirect(request_to_be_answered.get_absolute_url())
 
     song = Song.objects.get(pk=song_pk)
-    
+
     request_to_be_answered.answer = song
     request_to_be_answered.status = True
     request_to_be_answered.save()
+    messages.success(request, "You successfully accepted answer to this request.")
     return redirect(request_to_be_answered.get_absolute_url())

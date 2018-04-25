@@ -24,9 +24,7 @@
             {% endif %}
 
             <span class='float-right'>
-                <button class="icon-buttons">
-                    <a href="{% url 'request:reply_new_from_request' request.pk %}">Add reply</a>
-                </button>
+            <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'request:reply_new_from_request' request.pk %}">Add reply</a>
             </span>
         </div>
     </div>
@@ -34,14 +32,14 @@
 
 {% for reply in request.reply_set.all %}
     <div class="request-detail-replies">
-        <span class='h5 float-left'><a href="{% url 'song:detail' reply.song.pk reply.song.slug %}">{{ reply.song }}</a></span>
+        <span class='h5 float-left'>
+            <a href="{% url 'song:detail' reply.song.pk reply.song.slug %}">{{ reply.song }}</a>
+        </span>
 
         {% if request.status %}
         {% else %}
         <span class="float-right">
-            <button class="icon-buttons">
-                <a href="{% url 'request:accept_reply' request.pk reply.song.pk %}" title='Mark this song as accepted reply.'><i class='fas fa-check'></i></a>
-            </button>
+            <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'request:accept_reply' request.pk reply.song.pk %}" title='Mark this song as accepted reply.'><i class='fas fa-check'></i></a>
         </span>
         {% endif %}
     </div>

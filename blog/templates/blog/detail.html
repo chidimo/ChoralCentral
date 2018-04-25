@@ -37,10 +37,10 @@
             <span class='h5 float-right song-icons'>
                 {% if user.is_authenticated %}
                     {% if request.user.siteuser in post.likes.all %}
-                        <a class="btn btn-sm btn-primary icon-buttons"href="" id="like" name="{{ post.pk }}" value="Like" title="unstar this post"><i class="fas fa-star"></i> Unstar</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" href="" id="like" name="{{ post.pk }}" value="Like" title="unstar this post"><i class="fas fa-star"></i> Unstar</a>
                         {% include 'blog/post_like_script.html' %}
                     {% else %}
-                        <a class="btn btn-sm btn-primary icon-buttons"href="" id="like" name="{{ post.pk }}" value="Like" title="star this post"><i class="fas fa-star"></i> Star</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" href="" id="like" name="{{ post.pk }}" value="Like" title="star this post"><i class="fas fa-star"></i> Star</a>
                         {% include 'blog/post_like_script.html' %}
                     {% endif %}
                 {% else %}

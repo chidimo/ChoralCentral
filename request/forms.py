@@ -49,11 +49,11 @@ class ReplyCreateFromRequestForm(forms.ModelForm):
                 reverse_lazy('song:new'))
         }
 
-    def clean_song(self):
+    def clean(self):
         song = self.cleaned_data["song"]
         if Reply.objects.filter(song=song).exists():
-            raise forms.ValidationError("This song is already listed as a reply to this request")
-        return song
+            msg = "This song is already listed as a reply to {}".format(song.reply.request)
+            self.add_error('song', msg)
 
     def __init__(self, *args, **kwargs):
         pk = kwargs.pop("pk")
@@ -63,4 +63,5 @@ class ReplyCreateFromRequestForm(forms.ModelForm):
             self.fields["request"].initial = Request.objects.get(pk=pk)
             self.fields["request"].queryset = Request.objects.filter(pk=pk)
         if user:
-            self.fields["song"].queryset = Song.objects.filter(Q(originator__user=user) & Q(publish=True))
+            f = Q(originator__user=user) & Q(publish=True)
+            self.fields["song"].queryset = Song.objects.filter(f)
