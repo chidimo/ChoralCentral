@@ -55,12 +55,9 @@
         <hr>
 
         {% for score in song.score_set.all %}
-        <p>
-            <a href="{{ score.get_score_view_url }}" target="_blank">{{ score }}</a>
-        </p>
-
+            <p><a href="{{ score.score_absolute_url }}" target="_blank">{{ score }}</a></p>
         {% empty %}
-            <div class="container"><p>No score added yet. You can help your friends out by adding the first score</p></div>
+            <div class="container"><p>Be the first to add a music sheet</p></div>
         {% endfor %}
 
     </body>

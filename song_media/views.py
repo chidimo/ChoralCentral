@@ -154,13 +154,16 @@ class NewVideoLink(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, ge
 
         video = get_video_information(API_ONLY_YOUTUBE, video_id)
         title = video['items'][0]['snippet']['title']
+        youtube_views = video['items'][0]['statistics']['viewCount']
+        youtube_likes = video['items'][0]['statistics']['likeCount']
 
         channel_link = "https://www.youtube.com/watch?list={}&v={}".format(playlist_id, video_id)
-        self.object.channel_link = channel_link
-
         default_thumbnail_url = video['items'][0]['snippet']['thumbnails']['default']['url']
 
+        self.object.channel_link = channel_link
         self.object.title = title
+        self.object.youtube_likes = youtube_likes
+        self.object.youtube_views = youtube_views
         self.object.thumbnail_url = default_thumbnail_url
         self.object.save()
 

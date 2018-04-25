@@ -2,12 +2,11 @@ import os
 import json
 
 from django.shortcuts import render, redirect, reverse
-from django.conf import settings
-
-import google.oauth2.credentials
 import google_auth_oauthlib.flow
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
+# from django.conf import settings
+# import google.oauth2.credentials
+# from googleapiclient.discovery import build
+# from googleapiclient.errors import HttpError
 
 CLIENT_SECRETS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'credentials/client_secret.json')
 SCOPES = ['https://www.googleapis.com/auth/youtube.force-ssl']

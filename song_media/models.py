@@ -55,7 +55,7 @@ class Score(TimeStampedModel):
     def get_absolute_url(self):
         return reverse('song:detail', kwargs={'pk' : (self.song.id), 'slug' : self.song.slug})
 
-    def get_score_view_url(self):
+    def score_absolute_url(self):
         return "http://www.choralcentral.net" + reverse('song-media:score_view', kwargs={'pk' : (self.id)})
 
 class Midi(TimeStampedModel):
@@ -88,6 +88,8 @@ class VideoLink(TimeStampedModel):
     playlist = models.CharField(max_length=100, default='playlist')
     video_playlist_link = models.CharField(max_length=100, default='playlist link')
     title = models.CharField(max_length=100, default='video title')
+    youtube_likes = models.IntegerField(default=0)
+    youtube_views = models.IntegerField(default=0)
     thumbnail = ImageField(upload_to=save_video_thumbnail, blank=True, null=True)
     thumbnail_url = models.URLField(default='www.youtube.com')
     class Meta:
