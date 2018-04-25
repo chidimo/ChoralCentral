@@ -39,26 +39,17 @@
         </div>
 
         <span class='float-left'>
-            <button class="icon-buttons">
-                {{ comment.like_count }}
-            </button>
-            <button class="icon-buttons">
-                <a href='#'><i class='fas fa-star'></i></a>
-            </button>
+            <span class="btn btn-sm btn-primary icon-buttons" href="" title="Total likes">
+                <span>{{ comment.like_count }}</span> <i class="fas fa-star"></i>
+            </span>
         </span>
 
-        <span class='float-right'>
+        <span class="float-right">
             {% if request.user == comment.creator.user %}
-            <button class="icon-buttons">
-                <a href="{% url 'blog:edit_comment' comment.pk %}"><i class="fas fa-edit"></i></a>
-            </button>
-            <button class="icon-buttons">
-                <a href="{% url 'blog:comment_delete' comment.pk %}"><i class="fas fa-trash"></i></a>
-            </button>
+                <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'blog:edit_comment' comment.pk %}" title="Edit"><i class="fas fa-edit"></i></a>
+                <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'blog:comment_delete' comment.pk %}" title="Delete"><i class="fas fa-trash"></i></a>
             {% endif %}
-            <button class="icon-buttons">
-                <a href="{% url 'blog:comment_reply' comment.pk comment.post.pk %}"><i class="fas fa-reply"></i></a>
-            </button>
+            <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'blog:comment_reply' comment.pk comment.post.pk %}" title="Reply"><i class="fas fa-reply"></i></a>
         </span>
     </div>
 {% empty %}

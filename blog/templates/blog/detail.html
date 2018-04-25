@@ -29,45 +29,31 @@
             </div>
 
 
-
-            <span class='float-left'>
-                <button class="icon-buttons">
-                    <i class="fas fa-comments"></i>
-                </button>
-
-                <button class="icon-buttons">
-                    {{ post.comment_set.count }}
-                </button>
+            <span class="btn btn-sm btn-primary icon-buttons float-left" title="Love this score">
+                <span>{{ post.comment_set.count }}</span> <i class="fas fa-comments"></i>
             </span>
+
 
             <span class='h5 float-right song-icons'>
                 {% if user.is_authenticated %}
                     {% if request.user.siteuser in post.likes.all %}
-                        <button class="icon-buttons">
-                            <a href="" id="like" name="{{ post.pk }}" value="Like" title="unstar this post"><i class="fas fa-star"></i> Unstar</a>
-                            {% include 'blog/post_like_script.html' %}
-                        </button>
+                        <a class="btn btn-sm btn-primary icon-buttons"href="" id="like" name="{{ post.pk }}" value="Like" title="unstar this post"><i class="fas fa-star"></i> Unstar</a>
+                        {% include 'blog/post_like_script.html' %}
                     {% else %}
-                        <button class="icon-buttons">
-                            <a href="" id="like" name="{{ post.pk }}" value="Like" title="star this post"><i class="fas fa-star"></i> Star</a>
-                            {% include 'blog/post_like_script.html' %}
-                        </button>
+                        <a class="btn btn-sm btn-primary icon-buttons"href="" id="like" name="{{ post.pk }}" value="Like" title="star this post"><i class="fas fa-star"></i> Star</a>
+                        {% include 'blog/post_like_script.html' %}
                     {% endif %}
                 {% else %}
-                    <button class="icon-buttons">
-                        <a href="{% url 'siteuser:login' %}">Login to star this post</a>
-                    </button>
+                    <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:login' %}">Login to star this post</a>
                 {% endif %}
 
-                <button class="icon-buttons">
-                    <a data-toggle="tooltip" data-placement="top" aria-hidden="true" href="#" title="Share on Facebook">
-                    <i class="fab fa-facebook"></i></a>
-                </button>
+                <a class="btn btn-sm btn-primary icon-buttons" href="#" title="Share on Facebook">
+                    <i class="fab fa-facebook"></i> Share
+                </a>
 
-                <button class="icon-buttons">
-                    <a href="" class="icon-buttons" title="Share by email" data-toggle="modal" data-target="#postModal">
-                        <i class="fas fa-at"></i></a>
-                </button>
+                <a class="btn btn-sm btn-primary icon-buttons"href="" title="Share by email" data-toggle="modal" data-target="#postModal">
+                    <i class="fas fa-at"></i> Email
+                </a>
                 {% include 'blog/post_share_modal.html' %}
             </span>
         </div>
@@ -86,8 +72,8 @@
                     <strong>
                         <a href="{% url 'siteuser:detail' comment.creator.pk comment.creator.slug %}">{{ comment.creator.screen_name }}</a>
                         <span class="float-right">
-                            Posted {{ comment.created|date }} |
-                            Modified {{ comment.modified|date }}
+                            {{ comment.created|date }} |
+                            Edited {{ comment.modified|date }}
                         </span>
                     </strong>
                 </div>
@@ -98,26 +84,17 @@
             </div>
 
             <span class='float-left'>
-                <button class="icon-buttons">
-                    {{ comment.like_count }}
-                </button>
-                <button class="icon-buttons">
-                    <a href='#'><i class='fas fa-star'></i></a>
-                </button>
+                <span class="btn btn-sm btn-primary icon-buttons" href="" title="Total likes">
+                    <span>{{ comment.like_count }}</span> <i class="fas fa-star"></i>
+                </span>
             </span>
 
-            <span class='float-right'>
+            <span class="float-right">
                 {% if request.user == comment.creator.user %}
-                <button class="icon-buttons">
-                    <a href="{% url 'blog:edit_comment' comment.pk %}"><i class="fas fa-edit"></i></a>
-                </button>
-                <button class="icon-buttons">
-                    <a href="{% url 'blog:comment_delete' comment.pk %}"><i class="fas fa-trash"></i></a>
-                </button>
+                    <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'blog:edit_comment' comment.pk %}" title="Edit"><i class="fas fa-edit"></i></a>
+                    <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'blog:comment_delete' comment.pk %}" title="Delete"><i class="fas fa-trash"></i></a>
                 {% endif %}
-                <button class="icon-buttons">
-                    <a href="{% url 'blog:comment_reply' comment.pk post.pk %}"><i class="fas fa-reply"></i></a>
-                </button>
+                <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'blog:comment_reply' comment.pk post.pk %}" title="Reply"><i class="fas fa-reply"></i></a>
             </span>
         </div>
     {% empty %}

@@ -20,20 +20,14 @@
 
         <div>
             <span class="h5 float-left">
-                <button class="icon-buttons">
-                    <a href="" title="Share {{ post.title }} on facebook"><i class="fab fa-facebook"></i> FB Share</a>
-                </button>
+                <a class="btn btn-sm btn-primary icon-buttons" href="" title="Share {{ post.title }} on facebook"><i class="fab fa-facebook"></i> Share</a>
             </span>
             <span class="h5 float-right">
-                <button class="icon-buttons">
-                    <a href="" title="Star {{ post.title }}"><i class="fas fa-star"></i> Stars</a>
-                </button>
-                <button class="icon-buttons">
+                <a class="btn btn-sm btn-primary icon-buttons" href="" title="Love {{ post.title }}">
+                    {{ post.like_count }} <i class="fas fa-heart"></i> Loves</a>
+                <span class="btn btn-sm btn-primary icon-buttons" >
                     {{ post.comment_set.count }} <i class="fas fa-comments"></i>
-                </button>
-                <button class="icon-buttons">
-                    <a href="{% url 'siteuser:post_likers' post.pk post.slug %}" title="{{ post.like_count }} Love birds">{{ post.like_count }}</a>
-                </button>
+                </span>
             </span>
         </div>
     </div>

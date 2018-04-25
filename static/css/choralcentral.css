@@ -707,13 +707,13 @@ tbody tr:nth-child(odd) {
 
 /*BUTTON ICONS*/
 
-button.icon-buttons {
+a.icon-buttons, span.icon-buttons {
   float: left;
   padding: 3px 10px;
   font-size: 13px;
   font-weight: 600;
   line-height: 20px;
-  color: #24292e;
+  color: #007bff;
   vertical-align: middle;
   background-color: #fff;
   border: 1px solid rgba(27,31,35,0.2);
@@ -721,7 +721,7 @@ button.icon-buttons {
   margin: 2px 1px;
 }
 
-.icon-buttons a {
+a.icon-buttons {
     text-decoration: none;
 }
 

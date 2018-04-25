@@ -17,21 +17,13 @@
         <h4><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h4>
 
         <span class="h5 float-left">
-            <button class="icon-buttons">
-                <a href="{% url 'blog:new_song' song.pk %}" title="Make a post about {{ song.title }}"><i class="fas fa-pencil-alt"></i> Blog</a>
-            </button>
-            <button class="icon-buttons">
-                <a href="{% url 'song:reader_view' song.pk song.slug %}" title="Print {{ song.title }}" target="_blank"><i class="fas fa-print"></i> Print</a>
-            </button>
+            <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'blog:new_song' song.pk %}" title="Make a post about {{ song.title }}"><i class="fas fa-pencil-alt"></i> Blog</a>
+            <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song:reader_view' song.pk song.slug %}" title="Print {{ song.title }}" target="_blank"><i class="fas fa-print"></i> Print</a>
         </span>
 
         <span class="h5 float-right">
-            <button class="icon-buttons">
-                <a href="" title="Star {{ song.title }}"><i class="fas fa-star"></i> Stars</a>
-            </button>
-            <button class="icon-buttons">
-                <a href="{% url 'siteuser:song_likers' song.pk song.slug %}" title="{{ song.like_count }} Love birds">{{ song.like_count }}</a>
-            </button>
+            <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:song_likers' song.pk song.slug %}" title="{{ song.like_count }} Love birds">{{ song.like_count }}</a>
+            <a class="btn btn-sm btn-primary icon-buttons" href="" title="Love {{ song.title }}"><i class="fas fa-heart"></i> Lovers</a>
         </span>
     </div>
     {% empty %}
