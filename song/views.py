@@ -269,6 +269,9 @@ def share_song_by_mail(request, pk, slug):
             context['name'] = name
 
             email_list = [email.strip() for email in receiving_emails.split(',')]
+            if len(email_list) > 5:
+                messages.error(request, "Too many emails. Please enter at most 5 email addresses.")
+                return redirect(song.get_absolute_url())
             good_emails = []
             bad_emails = []
 
@@ -280,8 +283,7 @@ def share_song_by_mail(request, pk, slug):
                     bad_emails.append(email)
 
             if good_emails:
-
-                for email in good_emails: # avoide mail address bundling in inbox.
+                for email in good_emails: # avoid mail address bundling in inbox.
                     text_email = render_to_string("song/share_song_by_mail.txt", context)
                     html_email = render_to_string("song/share_song_by_mail.html", context)
 
@@ -294,7 +296,7 @@ def share_song_by_mail(request, pk, slug):
                 error_msg = "Song was not sent to the following invalid emails: {}".format(", ".join(bad_emails))
                 messages.error(request, error_msg)
 
-            return redirect(song.get_absolute_url())
+            return redirect(song.get_absolute_url())            
 
 def share_on_facebook(request, pk, slug):
     pass
