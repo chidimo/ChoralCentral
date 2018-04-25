@@ -630,3 +630,494 @@ JavaScript error: resource://gre/components/nsUrlClassifierListManager.js, line 
 1508575793572	geckodriver	INFO	Listening on 127.0.0.1:54592
 1508575959374	geckodriver	INFO	geckodriver 0.19.0
 1508575959393	geckodriver	INFO	Listening on 127.0.0.1:54656
+1524670031168	geckodriver	INFO	geckodriver 0.19.0
+1524670031221	geckodriver	INFO	Listening on 127.0.0.1:63778
+1524670033279	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.ltEZ26d8MpB7"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524670033694	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524670034784	Marionette	INFO	Listening on port 63786
+1524670034810	Marionette	WARN	TLS certificate errors will be ignored for this session
+[Child 9160, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 9160, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chrom[Child 7476, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 7476, Chrome_ChildThread] WARNI[Child 17564, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 17564, Chrome_ChildThr[GPU 10720, Chrome_ChildThread] 
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524670099628	Marionette	INFO	Listening on port 63883
+1524670100032	Marionette	WARN	TLS certificate errors will be ignored for this session
+1524670141061	geckodriver	INFO	geckodriver 0.19.0
+1524670141066	geckodriver	INFO	Listening on 127.0.0.1:63972
+1524670143109	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.Uu5bDQU2Xxje"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524670143532	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524670144632	Marionette	INFO	Listening on port 63978
+1524670145124	Marionette	WARN	TLS certificate errors will be ignored for this session
+1524670193804	geckodriver	INFO	geckodriver 0.19.0
+1524670193809	geckodriver	INFO	Listening on 127.0.0.1:64062
+1524670195869	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.pHivA8JPZSum"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524670196282	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524670197424	Marionette	INFO	Listening on port 64071
+1524670197880	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: http://localhost:8000/, line 1125: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/, line 1125: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/song/12/abide-with-me-fast-falls-the-eventide/, line 413: TypeError: $(...).tooltip is not a function
+[Parent 14460, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 11688, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+1524670266425	geckodriver	INFO	geckodriver 0.19.0
+1524670266430	geckodriver	INFO	Listening on 127.0.0.1:64220
+1524670268481	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.5Nwd08ifVDRv"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524670268938	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+[GFX1-]: [D3D11] TextureSourceD3D11:GetShaderResourceView CreateSRV failure 0x887a0005
+[GFX1-]: GFX: D3D11 detected a device reset in Present
+[GFX1-]: D3D11 swap chain failed to present: 0x887a0005
+[GFX1-]: [D3D11] TextureSourceD3D11:GetShaderResourceView CreateSRV failure 0x887a0005
+[GFX1-]: D3D11 swap chain failed to present: 0x887a0005
+[GFX1-]: D3D11 swap chain failed to present: 0x887a0005
+[GFX1-]: [D3D11] TextureSourceD3D11:GetShaderResourceView CreateSRV failure 0x887a0005
+[GFX1-]: D3D11 swap chain failed to present: 0x887a0005
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524670271968	Marionette	INFO	Listening on port 64226
+1524670272110	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: http://localhost:8000/, line 1125: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/, line 1125: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/song/12/abide-with-me-fast-falls-the-eventide/, line 413: TypeError: $(...).tooltip is not a function
+[Child 12908, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+1524670603423	geckodriver	INFO	geckodriver 0.19.0
+1524670603429	geckodriver	INFO	Listening on 127.0.0.1:64625
+1524670605480	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.HaCjTxPWQHGN"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524670605888	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524670607070	Marionette	INFO	Listening on port 64633
+1524670607492	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: http://localhost:8000/, line 1125: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/, line 1125: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/song/12/abide-with-me-fast-falls-the-eventide/, line 413: TypeError: $(...).tooltip is not a function
+[Child 2632, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+1524670782139	geckodriver	INFO	geckodriver 0.19.0
+1524670782145	geckodriver	INFO	Listening on 127.0.0.1:64974
+1524670784243	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.HFaduqby0kkY"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524670784668	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524670785822	Marionette	INFO	Listening on port 64985
+1524670786264	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: http://localhost:8000/, line 1125: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/, line 1125: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/song/12/abide-with-me-fast-falls-the-eventide/, line 413: TypeError: $(...).tooltip is not a function
+1524670836150	geckodriver	INFO	geckodriver 0.19.0
+1524670836155	geckodriver	INFO	Listening on 127.0.0.1:65146
+1524670838217	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.GpIRBSqocRqm"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524670838700	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524670839838	Marionette	INFO	Listening on port 65156
+1524670840240	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: http://localhost:8000/, line 1125: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/, line 1125: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/song/12/abide-with-me-fast-falls-the-eventide/, line 413: TypeError: $(...).tooltip is not a function
+1524671047354	geckodriver	INFO	geckodriver 0.19.0
+1524671047359	geckodriver	INFO	Listening on 127.0.0.1:65440
+1524671049450	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.bnfTg6TeYEaQ"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524671049850	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524671051022	Marionette	INFO	Listening on port 65449
+1524671051462	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: http://localhost:8000/, line 1125: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/, line 1125: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/song/12/abide-with-me-fast-falls-the-eventide/, line 413: TypeError: $(...).tooltip is not a function
+[Parent 13664, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 12868, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+1524671181483	geckodriver	INFO	geckodriver 0.19.0
+1524671181489	geckodriver	INFO	Listening on 127.0.0.1:49260
+1524671183576	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.k9mfKcbDwiva"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524671183980	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524671185162	Marionette	INFO	Listening on port 49269
+1524671185590	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: http://localhost:8000/, line 1125: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/, line 1125: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/song/12/abide-with-me-fast-falls-the-eventide/, line 413: TypeError: $(...).tooltip is not a function
+1524671659613	geckodriver	INFO	geckodriver 0.19.0
+1524671659619	geckodriver	INFO	Listening on 127.0.0.1:49979
+1524671661718	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.IpMpTcwBkyI5"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524671662182	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524671663342	Marionette	INFO	Listening on port 49987
+1524671663740	Marionette	WARN	TLS certificate errors will be ignored for this session
+1524671696848	addons.productaddons	WARN	Failed downloading XML, status: 0, reason: error
+1524671708008	addons.productaddons	WARN	Failed downloading via XHR, status: 0, reason: error
+1524671708018	addons.productaddons	WARN	Failed downloading via XHR, status: 0, reason: error
+JavaScript error: http://localhost:8000/, line 1125: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/song/12/abide-with-me-fast-falls-the-eventide/, line 413: TypeError: $(...).tooltip is not a function
+1524672923600	geckodriver	INFO	geckodriver 0.19.0
+1524672923605	geckodriver	INFO	Listening on 127.0.0.1:51663
+1524672925656	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.ET6MENYKvKWS"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524672926122	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524672927252	Marionette	INFO	Listening on port 51669
+1524672927672	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: http://localhost:8000/, line 1127: TypeError: $(...).tooltip is not a function
+1524672943589	geckodriver	INFO	geckodriver 0.19.0
+1524672943595	geckodriver	INFO	Listening on 127.0.0.1:51761
+1524672945697	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.4476aOj92zJq"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524672946100	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524672947272	Marionette	INFO	Listening on port 51769
+1524672947712	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: http://localhost:8000/, line 1127: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/song/12/abide-with-me-fast-falls-the-eventide/, line 413: TypeError: $(...).tooltip is not a function
+[Child 18064, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+1524672989945	geckodriver	INFO	geckodriver 0.19.0
+1524672989951	geckodriver	INFO	Listening on 127.0.0.1:51891
+1524672992032	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.1Y8g9xCrNemO"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524672992532	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524672993708	Marionette	INFO	Listening on port 51899
+1524672994048	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js, line 6: TypeError: t is undefined
+JavaScript error: http://localhost:8000/, line 1127: TypeError: $(...).tooltip is not a function
+[Parent 20588, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 20664, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+1524673024299	geckodriver	INFO	geckodriver 0.19.0
+1524673024305	geckodriver	INFO	Listening on 127.0.0.1:52013
+1524673026353	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.Z6OPw857wnNM"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524673026792	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524673027900	Marionette	INFO	Listening on port 52021
+1524673028370	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: http://localhost:8000/, line 1127: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/song/12/abide-with-me-fast-falls-the-eventide/, line 413: TypeError: $(...).tooltip is not a function
+1524673067809	geckodriver	INFO	geckodriver 0.19.0
+1524673067815	geckodriver	INFO	Listening on 127.0.0.1:52136
+1524673069886	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.pxYOoVQ440IH"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524673070384	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524673071550	Marionette	INFO	Listening on port 52143
+1524673071900	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: http://localhost:8000/, line 1127: TypeError: $(...).tooltip is not a function
+1524673075407	geckodriver	INFO	geckodriver 0.19.0
+1524673075413	geckodriver	INFO	Listening on 127.0.0.1:52212
+1524673077483	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.giD3eON6Epzy"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524673077886	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524673079122	Marionette	INFO	Listening on port 52221
+1524673080044	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: http://localhost:8000/, line 1127: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/song/12/abide-with-me-fast-falls-the-eventide/, line 413: TypeError: $(...).tooltip is not a function
+1524673207349	geckodriver	INFO	geckodriver 0.19.0
+1524673207355	geckodriver	INFO	Listening on 127.0.0.1:52516
+1524673209450	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.Y0UuFG4xZthE"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524673209884	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524673211046	Marionette	INFO	Listening on port 52524
+1524673211470	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: http://localhost:8000/, line 1127: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/users/login/, line 120: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/, line 1136: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/new-song/, line 799: TypeError: $(...).tooltip is not a function
+1524673252231	geckodriver	INFO	geckodriver 0.19.0
+1524673252236	geckodriver	INFO	Listening on 127.0.0.1:52742
+1524673254329	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.DwufumnODPsk"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524673254822	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524673255962	Marionette	INFO	Listening on port 52750
+1524673256360	Marionette	WARN	TLS certificate errors will be ignored for this session
+1524673279020	addons.productaddons	WARN	Failed downloading XML, status: 0, reason: error
+1524673279024	addons.productaddons	WARN	Failed downloading via XHR, status: 0, reason: error
+1524673279026	addons.productaddons	WARN	Failed downloading via XHR, status: 0, reason: error
+JavaScript error: http://localhost:8000/static/js/choralcentral.js, line 3: TypeError: $ is not a function
+JavaScript error: http://localhost:8000/static/js/choralcentral.js, line 3: TypeError: $ is not a function
+[Parent 10960, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+1524673371842	geckodriver	INFO	geckodriver 0.19.0
+1524673371847	geckodriver	INFO	Listening on 127.0.0.1:53059
+1524673373909	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.GEI92cCSwQBQ"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524673374398	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524673375424	Marionette	INFO	Listening on port 53071
+1524673375442	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js, line 6: TypeError: t is undefined
+JavaScript error: http://localhost:8000/, line 1127: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/users/login/, line 120: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/, line 1136: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/new-song/, line 799: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/song/246/naranum-rie-repeat/, line 456: TypeError: $(...).tooltip is not a function
+[Child 11856, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+1524673551108	geckodriver	INFO	geckodriver 0.19.0
+1524673551113	geckodriver	INFO	Listening on 127.0.0.1:53673
+1524673553187	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.DYZJTqe2jCNV"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524673553610	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524673554752	Marionette	INFO	Listening on port 53685
+1524673555208	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: http://localhost:8000/, line 1127: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/users/login/, line 120: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/, line 1136: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/new-song/, line 799: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/author/new/?_popup=1, line 267: TypeError: $(...).tooltip is not a function
+1524674809648	geckodriver	INFO	geckodriver 0.19.0
+1524674809653	geckodriver	INFO	Listening on 127.0.0.1:57369
+1524674811741	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.65bbwsGEQxXx"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524674812182	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524674813308	Marionette	INFO	Listening on port 57382
+1524674813760	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: http://localhost:8000/, line 1127: TypeError: $(...).tooltip is not a function
+[Child 21396, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+1524674851548	geckodriver	INFO	geckodriver 0.19.0
+1524674851553	geckodriver	INFO	Listening on 127.0.0.1:57608
+1524674853614	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.jccCNHyc8aDD"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524674854016	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524674855148	Marionette	INFO	Listening on port 57618
+1524674855628	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: http://localhost:8000/, line 1127: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/users/login/, line 120: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/, line 1136: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/new-song/, line 799: TypeError: $(...).tooltip is not a function
+1524674889059	geckodriver	INFO	geckodriver 0.19.0
+1524674889070	geckodriver	INFO	Listening on 127.0.0.1:57854
+1524674891122	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.MRNefAUAVMBq"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524674891578	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524674892714	Marionette	INFO	Listening on port 57865
+1524674893134	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: http://localhost:8000/, line 1127: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/users/login/, line 120: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/, line 1136: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/new-song/, line 799: TypeError: $(...).tooltip is not a function
+1524675163417	geckodriver	INFO	geckodriver 0.19.0
+1524675163423	geckodriver	INFO	Listening on 127.0.0.1:58761
+1524675165503	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.3LA4p52qdep1"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524675165970	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524675167046	Marionette	INFO	Listening on port 58772
+1524675167514	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: http://localhost:8000/, line 1127: TypeError: $(...).tooltip is not a function
+1524675191396	addons.productaddons	WARN	Failed downloading XML, status: 0, reason: error
+JavaScript error: http://localhost:8000/users/login/, line 120: TypeError: $(...).tooltip is not a function
+1524675217444	addons.productaddons	WARN	Failed downloading via XHR, status: 0, reason: error
+1524675217446	addons.productaddons	WARN	Failed downloading via XHR, status: 0, reason: error
+JavaScript error: http://localhost:8000/, line 1136: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/new-song/, line 799: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/author/new/?_popup=1, line 267: TypeError: $(...).tooltip is not a function
+1524675325517	geckodriver	INFO	geckodriver 0.19.0
+1524675325523	geckodriver	INFO	Listening on 127.0.0.1:59300
+1524675327578	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.5sWtwDFGa28f"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524675328010	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524675329146	Marionette	INFO	Listening on port 59311
+1524675329596	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: http://localhost:8000/, line 1127: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/users/login/, line 120: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/, line 1136: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/new-song/, line 799: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/author/new/?_popup=1, line 267: TypeError: $(...).tooltip is not a function
+[Parent 22356, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+1524675504922	geckodriver	INFO	geckodriver 0.19.0
+1524675504933	geckodriver	INFO	Listening on 127.0.0.1:59881
+1524675506998	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.W6I0gVBG7n4B"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524675507454	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524675508622	Marionette	INFO	Listening on port 59896
+1524675509012	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: http://localhost:8000/, line 1129: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/users/login/, line 120: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/, line 1138: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/new-song/, line 801: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/author/new/?_popup=1, line 267: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/author/new/?_popup=1, line 268: TypeError: $(...).tooltip is not a function
+[Parent 22096, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 5028, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 5028, Chrome_ChildThread] WARNING: pipe error: [Child 20128, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 20128, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 20668, Chro[
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+vrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524675598682	Marionette	INFO	Listening on port 60262
+1524675598752	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: http://localhost:8000/, line 1129: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/users/login/, line 120: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/, line 1138: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/new-song/, line 801: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/author/new/?_popup=1, line 267: TypeError: $(...).tooltip is not a function
+[Parent 19436, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 12844, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 12844, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/[Child 18284, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 18284, Chrome_ChildThread] WA*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+[GPU 22264, Chrome_ChildT
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+1524675765982	geckodriver	INFO	geckodriver 0.19.0
+1524675765988	geckodriver	INFO	Listening on 127.0.0.1:60811
+1524675768039	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.38Sn1SNCwfVb"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524675768494	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524675769606	Marionette	INFO	Listening on port 60821
+1524675770052	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: http://localhost:8000/, line 1131: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/users/login/, line 120: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/, line 1140: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/new-song/, line 803: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/author/new/?_popup=1, line 267: TypeError: $(...).tooltip is not a function
+1524675826442	geckodriver	INFO	geckodriver 0.19.0
+1524675826448	geckodriver	INFO	Listening on 127.0.0.1:61103
+1524675828525	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.DlSzQEmiwy1T"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524675829002	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524675830078	Marionette	INFO	Listening on port 61113
+1524675830540	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: http://localhost:8000/, line 1133: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/users/login/, line 120: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/, line 1142: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/new-song/, line 805: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/author/new/?_popup=1, line 267: TypeError: $(...).tooltip is not a function
+1524675880031	geckodriver	INFO	geckodriver 0.19.0
+1524675880038	geckodriver	INFO	Listening on 127.0.0.1:61374
+1524675882114	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.B4fU2qAU32p8"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524675882568	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524675883630	Marionette	INFO	Listening on port 61385
+1524675885006	addons.xpi	WARN	Exception running bootstrap method shutdown on activity-stream@mozilla.org: [Exception... "Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIObserverService.removeObserver]"  nsresult: "0x80004005 (NS_ERROR_FAILURE)"  location: "JS frame :: resource://activity-stream/lib/SnippetsFeed.jsm :: uninit :: line 125"  data: no] Stack trace: uninit()@resource://activity-stream/lib/SnippetsFeed.jsm:125 < onAction()@resource://activity-stream/lib/SnippetsFeed.jsm:141 < _middleware/</<()@resource://activity-stream/lib/Store.jsm:51 < Store/this[method]()@resource://activity-stream/lib/Store.jsm:30 < uninit()@resource://activity-stream/lib/Store.jsm:153 < uninit()@resource://activity-stream/lib/ActivityStream.jsm:274 < uninit()@resource://gre/modules/addons/XPIProvider.jsm -> jar:file:///C:/Program%20Files/Mozilla%20Firefox/browser/features/activity-stream@mozilla.org.xpi!/bootstrap.js:80 < shutdown()@resource://gre/modules/addons/XPIProvider.jsm -> jar:file:///C:/Program%20Files/Mozilla%20Firefox/browser/features/activity-stream@mozilla.org.xpi!/bootstrap.js:196 < callBootstrapMethod()@resource://gre/modules/addons/XPIProvider.jsm:4419 < observe()@resource://gre/modules/addons/XPIProvider.jsm:2279
+[Child 18668, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line [Child 13346
+316, Chrome_Child[ChildThr 18668, Chromead] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 13316, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/commo[Child 1176, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 1176, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+1524675891065	geckodriver	INFO	geckodriver 0.19.0
+1524675891071	geckodriver	INFO	Listening on 127.0.0.1:61418
+1524675893142	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-profile" "C:\\Users\\Chidimmo\\AppData\\Local\\Temp\\rust_mozprofile.swoDmbCzCma7"
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524675893576	Marionette	INFO	Enabled via --marionette
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+Unable to read VR Path Registry from C:\Users\Chidimmo\AppData\Local\openvr\openvrpaths.vrpath
+1524675894718	Marionette	INFO	Listening on port 61432
+1524675895160	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: http://localhost:8000/, line 1135: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/users/login/, line 120: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/, line 1144: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/new-song/, line 807: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/author/new/?_popup=1, line 267: TypeError: $(...).tooltip is not a function
+JavaScript error: http://localhost:8000/song/247/naranum-rie-latest/, line 463: TypeError: $(...).tooltip is not a function

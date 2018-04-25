@@ -1,137 +1,139 @@
-# """User story"""
-# # pylint: disable=W0611
+"""User story"""
+# pylint: disable=W0611
 
-# import os
-# from random import choices, randint
-# from django.test import TestCase, LiveServerTestCase
-# from selenium import webdriver
-# from selenium.webdriver.support.select import Select
-# from selenium.webdriver.common.keys import Keys
-# from selenium.webdriver.common.by import By
-# from selenium.common.exceptions import WebDriverException
-# from selenium.webdriver.support.ui import WebDriverWait
-# from selenium.webdriver.support import expected_conditions as EC
+import os
+from random import choices, randint
 
-# from pywebber import LoremPysum
-# from siteuser.models import Role
+from django.test import TestCase, LiveServerTestCase
 
-# def fast_multiselect(driver, element_id, labels=[]):
-#     """https://sqa.stackexchange.com/questions/1355/what-is-
-#     the-correct-way-to-select-an-option-using-seleniums-python-webdriver"""
-#     select = Select(driver.find_element_by_id(element_id))
+from selenium import webdriver
+from selenium.webdriver.support.select import Select
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from selenium.common.exceptions import WebDriverException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-#     if labels == []:
-#         texts = [opt.text for opt in select.options]
-#         labels = choices(texts, k=randint(1, len(texts)//2))
+from pywebber import LoremPysum
+from siteuser.models import Role
 
-#     for label in labels:
-#         select.select_by_visible_text(label)
+def fast_multiselect(driver, element_id, labels=[]):
+    """https://sqa.stackexchange.com/questions/1355/what-is-
+    the-correct-way-to-select-an-option-using-seleniums-python-webdriver"""
+    select = Select(driver.find_element_by_id(element_id))
 
-# class UsageTest(LiveServerTestCase):
-#     """This test spawns its own server.
-#     No need to have local server running while
-#     running this test."""
+    if labels == []:
+        texts = [opt.text for opt in select.options]
+        labels = choices(texts, k=randint(1, len(texts)//2))
 
-#     fixtures = ['fixtures/data.json']
+    for label in labels:
+        select.select_by_visible_text(label)
 
-#     # @classmethod
-#     # def setUpClass(cls):
-#     #     # os.system('cls')
-#     #     try:
-#     #         cls.browser = webdriver.Firefox()
-#     #     except WebDriverException:
-#     #         cls.browser = webdriver.Chrome()
-#     #     super(UsageTest, cls).setUpClass()
+class UsageTest(LiveServerTestCase):
+    """This test spawns its own server.
+    No need to have local server running while
+    running this test."""
 
-#     # @classmethod
-#     # def tearDownClass(cls):
-#     #     cls.browser.quit()
-#     #     super(UsageTest, cls).tearDownClass()
+    fixtures = ['fixtures/data.json']
 
-#     def setUp(self):
-#         try:
-#             self.browser = webdriver.Firefox()
-#         except WebDriverException:
-#             self.browser = webdriver.Chrome()
+    # @classmethod
+    # def setUpClass(cls):
+    #     # os.system('cls')
+    #     try:
+    #         cls.browser = webdriver.Firefox()
+    #     except WebDriverException:
+    #         cls.browser = webdriver.Chrome()
+    #     super(UsageTest, cls).setUpClass()
 
-#         self.address = "{}{}".format(self.live_server_url, "/chinemerem/")
-#         self.browser.get(self.address)
+    # @classmethod
+    # def tearDownClass(cls):
+    #     cls.browser.quit()
+    #     super(UsageTest, cls).tearDownClass()
 
-#     def tearDown(self):
-#         self.browser.quit()
+    def setUp(self):
+        try:
+            self.browser = webdriver.Firefox()
+        except WebDriverException:
+            self.browser = webdriver.Chrome()
 
-#     def test_can_access_home_page(self):
-#         """Test Home page loads"""
-#         print("\ntest_can_access_home_page")
-#         self.assertEqual(self.browser.title, "Chinemerem » Tonic Solfa lives here")
+        self.address = "{}{}".format(self.live_server_url, "/")
+        self.browser.get(self.address)
 
-#     def test_can_register_new_profile(self):
-#         """Test can register new profile"""
-#         print("\ntest_can_register_new_profile")
-#         tex = LoremPysum()
-#         email = tex.email()
-#         screen_name = tex.word()
-#         password = tex.word() + tex.word()
+    def tearDown(self):
+        self.browser.quit()
 
-#         self.browser.find_element_by_link_text("Join").click()
-#         self.browser.find_element_by_id("id_email").send_keys(email)
-#         self.browser.find_element_by_id("id_screen_name").send_keys(screen_name)
-#         self.browser.find_element_by_id("id_password1").send_keys(password)
-#         self.browser.find_element_by_id("id_password2").send_keys(password)
-#         self.browser.find_element_by_xpath("//input[@type='submit']").click()
+    def test_can_access_home_page(self):
+        """Test Home page loads"""
+        print("\ntest_can_access_home_page")
+        self.assertEqual(self.browser.title, "Chinemerem » Tonic Solfa lives here")
 
-#         WebDriverWait(self.browser, 60).until(EC.title_contains("Welcome"))
-#         self.assertEqual(self.browser.title, "Chinemerem » Welcome {} !!!".format(screen_name))
-#         print(self.browser.title)
-#         self.assertEqual(self.browser.find_element_by_css_selector(".section-heading").text, "Welcome {} !!!".format(screen_name))
+    def test_can_register_new_profile(self):
+        """Test can register new profile"""
+        print("\ntest_can_register_new_profile")
+        tex = LoremPysum()
+        email = tex.email()
+        screen_name = tex.word()
+        password = tex.word() + tex.word()
 
-#     def test_can_create_account_and_edit_profile(self):
-#         """Test can register new profile, login and edit profile"""
-#         print("\ntest_can_create_account_and_edit_profile")
-#         tex = LoremPysum()
-#         email = tex.email()
-#         username = tex.word()
-#         password = tex.word() + tex.word()
+        self.browser.find_element_by_link_text("Join").click()
+        self.browser.find_element_by_id("id_email").send_keys(email)
+        self.browser.find_element_by_id("id_screen_name").send_keys(screen_name)
+        self.browser.find_element_by_id("id_password1").send_keys(password)
+        self.browser.find_element_by_id("id_password2").send_keys(password)
+        self.browser.find_element_by_xpath("//input[@type='submit']").click()
 
-#         # create account
-#         self.browser.find_element_by_link_text("Join").click()
-#         self.browser.find_element_by_id("id_email").send_keys(email)
-#         self.browser.find_element_by_id("id_screen_name").send_keys(username)
-#         self.browser.find_element_by_id("id_password1").send_keys(password)
-#         self.browser.find_element_by_id("id_password2").send_keys(password)
-#         self.browser.find_element_by_xpath("//input[@type='submit']").click()
+        WebDriverWait(self.browser, 60).until(EC.title_contains("Welcome"))
+        self.assertEqual(self.browser.title, "Chinemerem » Welcome {} !!!".format(screen_name))
+        print(self.browser.title)
+        self.assertEqual(self.browser.find_element_by_css_selector(".section-heading").text, "Welcome {} !!!".format(screen_name))
 
-#         self.browser.implicitly_wait(150)
+    def test_can_create_account_and_edit_profile(self):
+        """Test can register new profile, login and edit profile"""
+        print("\ntest_can_create_account_and_edit_profile")
+        tex = LoremPysum()
+        email = tex.email()
+        username = tex.word()
+        password = tex.word() + tex.word()
 
-#         # fill out success form
-#         self.browser.find_element_by_id("id_first_name").send_keys(tex.word())
-#         self.browser.find_element_by_id("id_last_name").send_keys(tex.word())
-#         self.browser.find_element_by_id("id_location").send_keys(tex.word())
-#         fast_multiselect(self.browser, "id_roles", labels=[])
-#         self.browser.find_element_by_xpath("//input[@type='submit']").click()
+        # create account
+        self.browser.find_element_by_link_text("Join").click()
+        self.browser.find_element_by_id("id_email").send_keys(email)
+        self.browser.find_element_by_id("id_screen_name").send_keys(username)
+        self.browser.find_element_by_id("id_password1").send_keys(password)
+        self.browser.find_element_by_id("id_password2").send_keys(password)
+        self.browser.find_element_by_xpath("//input[@type='submit']").click()
 
-#         # WebDriverWait(self.browser, 60).until(EC.title_contains("Welcome"))
-#         self.assertEqual(self.browser.title, "Chinemerem » {}'s profile".format(username))
+        self.browser.implicitly_wait(150)
 
-#     def test_can_login_and_upload_song(self):
-#         print("\ntest_can_login_and_upload_song")
-#         """Test can login and upload song"""
+        # fill out success form
+        self.browser.find_element_by_id("id_first_name").send_keys(tex.word())
+        self.browser.find_element_by_id("id_last_name").send_keys(tex.word())
+        self.browser.find_element_by_id("id_location").send_keys(tex.word())
+        fast_multiselect(self.browser, "id_roles", labels=[])
+        self.browser.find_element_by_xpath("//input[@type='submit']").click()
 
-#         dropdown = self.browser.find_element_by_xpath("//a[@id='UploadDrawer']")
-#         dropdown.click()
-#         self.browser.implicitly_wait(150)
+        # WebDriverWait(self.browser, 60).until(EC.title_contains("Welcome"))
+        self.assertEqual(self.browser.title, "Chinemerem » {}'s profile".format(username))
 
-#         newsong = dropdown.find_element_by_xpath("//div[@id='DropdownMenu']/a[@id='UploadSong']")
-#         newsong.click()
-#         self.browser.implicitly_wait(150)
+    def test_can_login_and_upload_song(self):
+        print("\ntest_can_login_and_upload_song")
+        """Test can login and upload song"""
 
-#         # login
-#         self.browser.find_element_by_id("id_username").send_keys("admin@choralcentral.com")
-#         self.browser.find_element_by_id("id_password").send_keys("dwarfstar")
-#         self.browser.find_element_by_xpath("//input[@type='submit']").click()
+        dropdown = self.browser.find_element_by_xpath("//a[@id='UploadDrawer']")
+        dropdown.click()
+        self.browser.implicitly_wait(150)
 
-#         self.browser.implicitly_wait(150)
-#         self.assertEqual(self.browser.title, "Chinemerem » Create Song")
+        newsong = dropdown.find_element_by_xpath("//div[@id='DropdownMenu']/a[@id='UploadSong']")
+        newsong.click()
+        self.browser.implicitly_wait(150)
 
-# if "__name__" == "__main__":
-#     pass
+        # login
+        self.browser.find_element_by_id("id_username").send_keys("admin@choralcentral.com")
+        self.browser.find_element_by_id("id_password").send_keys("dwarfstar")
+        self.browser.find_element_by_xpath("//input[@type='submit']").click()
+
+        self.browser.implicitly_wait(150)
+        self.assertEqual(self.browser.title, "Chinemerem » Create Song")
+
+if "__name__" == "__main__":
+    unittest.main()
