@@ -15,6 +15,8 @@ from blog.api.urls import blog_api_urls
 from siteuser.api.urls import user_api_urls
 from song.api.urls import song_api_urls
 
+from .import views
+
 sitemaps = {
     "posts" : PostSiteMap,
     "requests" : RequestSiteMap,
@@ -41,6 +43,10 @@ urlpatterns = [
 urlpatterns += [
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
          name='django.contrib.sitemaps.views.sitemap')
+]
+
+urlpatterns += [
+    path('google364c8377c791cdf3.html', views.google_webmaster_verify)
 ]
 
 if settings.DEBUG:
