@@ -7,7 +7,7 @@ from .models import Post, Comment
 
 class PostShareForm(forms.Form):
     receiving_emails = forms.CharField(
-        widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Enter any number of emails, separated by commas."}),
+        widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Enter up to 5 emails, separated by commas."}),
     )
     name = forms.CharField(
         required=False,

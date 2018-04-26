@@ -133,13 +133,20 @@
 
     <div class="row text-left">
         {% for score in song.score_set.all %}
-            <div class="col-sm-6 col-md-4 col-lg-3 py-2 score-list">
 
+            <div class="col-sm-6 col-md-4 col-lg-3 py-2 score-list">
                 <div class="container score-list-pdf-container">
                     <div class="row">
                         <div class="col-sm-6">
+
                             <a href="{% url 'song-media:score_view' score.pk %}" target="_blank">
-                                <i class="fas fa-file-pdf fa-3x"></i>
+                                <embed src="{{ score.score_download_path }}?embedded=true&url={{ score.score_absolute_url }}" width="150" height="200">
+                                <!--<i class="fas fa-file-pdf fa-3x"></i>-->
+                                <!--<div id="pdf">-->
+                                <!--    <object width="150" height="200" type="application/pdf" data="{{ score.score_download_path }}?#zoom=85&scrollbar=0&toolbar=0&navpanes=0" id="pdf_content">-->
+                                <!--        <p>Score cannot be displayed.</p>-->
+                                <!--    </object>-->
+                                <!--</div>-->
                             </a>
                         </div>
                         <div class="col-sm-6">

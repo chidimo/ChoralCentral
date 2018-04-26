@@ -22,8 +22,8 @@
         </span>
 
         <span class="h5 float-right">
-            <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:song_likers' song.pk song.slug %}" title="{{ song.like_count }} Love birds">{{ song.like_count }}</a>
-            <a class="btn btn-sm btn-primary icon-buttons" href="" title="Love {{ song.title }}"><i class="fas fa-heart"></i> Lovers</a>
+            <a class="btn btn-sm btn-primary icon-buttons" href="" title="Love {{ song.title }}">{{ song.like_count }}</a>
+            <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:song_likers' song.pk song.slug %}" title="{{ song.like_count }} Love birds"><i class="fas fa-heart"></i> Lovers</a>
         </span>
     </div>
     {% empty %}

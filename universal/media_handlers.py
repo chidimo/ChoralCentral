@@ -23,4 +23,4 @@ def save_score(instance, filename):
     """
     filename, ext = os.path.splitext(filename)
     normalized_song_name = slugify(instance.song.title)
-    return "scores/{}_{}.{}".format(normalized_song_name, instance.song.pk, ext)
+    return "scores/{}_{}{}".format(normalized_song_name, instance.song.pk, ext)

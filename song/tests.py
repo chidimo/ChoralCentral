@@ -68,7 +68,7 @@ class SongIndexViewTests(TestCase):
         self.assertTrue(len(resp.context['songs']) == 1)
 
     def test_there_is_no_data_after_page_2(self):
-        """This confirms that only songs with publish=True are in the view"""
+        """Test that only songs with "publish=True" are in the view"""
         resp = self.client.get(reverse('song:index') + "?page=3")
         self.assertEqual(resp.status_code, 404)
 

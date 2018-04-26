@@ -55,6 +55,9 @@ class Score(TimeStampedModel):
     def get_absolute_url(self):
         return reverse('song:detail', kwargs={'pk' : (self.song.id), 'slug' : self.song.slug})
 
+    def score_download_path(self):
+        return "http://www.choralcentral.net" + self.media_file.url
+
     def score_absolute_url(self):
         return "http://www.choralcentral.net" + reverse('song-media:score_view', kwargs={'pk' : (self.id)})
 

@@ -29,10 +29,9 @@
             </div>
 
 
-            <span class="btn btn-sm btn-primary icon-buttons float-left" title="Love this score">
+            <span class="btn btn-sm btn-primary icon-buttons float-left" title="Comments">
                 <span>{{ post.comment_set.count }}</span> <i class="fas fa-comments"></i>
             </span>
-
 
             <span class='h5 float-right song-icons'>
                 {% if user.is_authenticated %}
@@ -44,7 +43,7 @@
                         {% include 'blog/post_like_script.html' %}
                     {% endif %}
                 {% else %}
-                    <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:login' %}">Login to star this post</a>
+                    <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:login' %}" title="Login to give a star">Login to star this post</a>
                 {% endif %}
 
                 <a class="btn btn-sm btn-primary icon-buttons" href="#" title="Share on Facebook">

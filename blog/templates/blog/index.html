@@ -23,11 +23,10 @@
                 <a class="btn btn-sm btn-primary icon-buttons" href="" title="Share {{ post.title }} on facebook"><i class="fab fa-facebook"></i> Share</a>
             </span>
             <span class="h5 float-right">
-                <a class="btn btn-sm btn-primary icon-buttons" href="" title="Love {{ post.title }}">
-                    {{ post.like_count }} <i class="fas fa-heart"></i> Loves</a>
-                <span class="btn btn-sm btn-primary icon-buttons" >
-                    {{ post.comment_set.count }} <i class="fas fa-comments"></i>
-                </span>
+                <a class="btn btn-sm btn-primary icon-buttons" href="" title="Star {{ post.title }}">{{ post.like_count }}</a>
+                <a class="btn btn-sm btn-primary icon-buttons" href="" title="{{ post.like_count }} Stars">
+                     <i class="fas fa-star"></i> Stars</a>
+                <span class="btn btn-sm btn-primary icon-buttons" title="Comments">{{ post.comment_set.count }} <i class="fas fa-comments"></i></span>
             </span>
         </div>
     </div>

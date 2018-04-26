@@ -505,6 +505,7 @@ a.upload-button {
 .register-btn {
     width: 100%;
     font-size: 1.25rem;
+    margin-bottom: 5rem;
 }
 .siteuser-index-heading {
     background: #f2f3fb;
