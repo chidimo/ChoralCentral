@@ -106,7 +106,6 @@ INSTALLED_APPS = PREREQ_APPS +  PROJECT_APPS + THIRD_PARTY_APPS
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    # guardian backend
     'guardian.backends.ObjectPermissionBackend',
     # social backends
     # 'social_core.backends.open_id.OpenIdAuth',

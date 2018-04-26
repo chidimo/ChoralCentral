@@ -5,10 +5,10 @@ from .models import Post
 
 class PostSiteMap(Sitemap):
     changefreq = "weekly"
-    priority = 0.8
+    priority = 0.7
 
     def items(self):
-        return Post.published_set.all()
+        return Post.objects.filter(publish=True)
 
-    def last_mod(self, obj):
+    def lastmod(self, obj):
         return obj.modified

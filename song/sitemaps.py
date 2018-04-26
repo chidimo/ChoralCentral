@@ -4,7 +4,7 @@ from django.contrib.sitemaps import Sitemap
 from .models import Song
 
 class SongSiteMap(Sitemap):
-    changefreq = "weekly"
+    changefreq = "daily"
     priority = 1.0
 
     def items(self):
