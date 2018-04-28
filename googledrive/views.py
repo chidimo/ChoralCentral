@@ -3,22 +3,17 @@ import json
 
 from django.shortcuts import render, redirect, reverse
 import google_auth_oauthlib.flow
-# from django.conf import settings
-# import google.oauth2.credentials
-# from googleapiclient.discovery import build
-# from googleapiclient.errors import HttpError
 
-YOUTUBE_CLIENT_SECRETS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'credentials/client_secret.json')
-SCOPES = ['https://www.googleapis.com/auth/youtube.force-ssl']
+DRIVE_SECRETS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'credentials/client_secret.json')
+SCOPES = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.file ', 'https://www.googleapis.com/auth/drive.appdata']
 
 try:
-    FLOW = google_auth_oauthlib.flow.Flow.from_client_secrets_file(YOUTUBE_CLIENT_SECRETS_FILE, SCOPES)
+    FLOW = google_auth_oauthlib.flow.Flow.from_client_secrets_file(DRIVE_SECRETS_FILE, SCOPES)
 except FileNotFoundError:
     FLOW = ''
-# flow = google_auth_oauthlib.flow.Flow.from_client_config(YOUTUBE_CLIENT_SECRETS_FILE, SCOPES)
 
-def authorize_youtube(request, flow=FLOW):
-    redirect_uri = request.build_absolute_uri(reverse('youtube:callback_url'))
+def authorize_drive(request, flow=FLOW):
+    redirect_uri = request.build_absolute_uri(reverse('googledrive:drive_callback_url'))
     flow.redirect_uri = redirect_uri
     authorization_url, state = flow.authorization_url(
         access_type='offline',
@@ -32,7 +27,7 @@ def callback(request, flow=FLOW):
     # Disable https
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
-    template = 'youtube_authorized.html'
+    template = 'drive_authorized.html'
     context = {}
     authorization_response = request.get_full_path()
     flow.fetch_token(authorization_response=authorization_response)

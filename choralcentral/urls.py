@@ -38,6 +38,7 @@ urlpatterns = [
     path('api-songs/', include((song_api_urls, 'song-api'))),
 
     path('youtube/', include('youtube.urls')),
+    path('googledrive/', include('googledrive.urls')),
 ]
 
 urlpatterns += [

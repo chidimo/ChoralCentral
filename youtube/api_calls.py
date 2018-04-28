@@ -1,19 +1,18 @@
 """Youtube API"""
 
 import os
-import json
 
 import google.oauth2.credentials
 
 from googleapiclient.discovery import build
 # from googleapiclient.errors import HttpError
 
-AUTHORIZED_USER_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'credentials/credentials.json')
+YOUTUBE_AUTHORIZED_USER_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'credentials/credentials.json')
 API_KEY = 'AIzaSyBMNx5aAONSIqm3NCFrC_YoEoDT98bwKjE'
 
 try:
     credentials = google.oauth2.credentials.Credentials.from_authorized_user_file(
-        AUTHORIZED_USER_FILE, scopes = ['https://www.googleapis.com/auth/youtube.force-ssl'])
+        YOUTUBE_AUTHORIZED_USER_FILE, scopes = ['https://www.googleapis.com/auth/youtube.force-ssl'])
 except FileNotFoundError:
     print('Credentials not created')
     pass
