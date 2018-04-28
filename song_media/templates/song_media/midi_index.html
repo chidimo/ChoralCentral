@@ -21,6 +21,8 @@
                     <th>Format</th>
                     <th>midi uploader</th>
                     <th>Download</th>
+                    <th>Drive url</th>
+                    <th>Disk url</th>
                 </tr>
 
                 {% if midis %}
@@ -49,6 +51,8 @@
                                 </p>
                                 {% endif %}
                             </td>
+                            <td>{{ midi.drive_url }}</td>
+                            <td>{{ midi.media_file.url }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

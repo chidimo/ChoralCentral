@@ -21,6 +21,8 @@
                     <th>Uploader</th>
                     <th>Score uploader</th>
                     <th>Download</th>
+                    <th>Drive url</th>
+                    <th>Disk url</th>
                 </tr>
 
                 {% if scores %}
@@ -31,6 +33,8 @@
                             <td>{{ score.song.originator }}</td>
                             <td>{{ score.uploader }}</td>
                             <td><a href="{% url 'song-media:score_view' score.pk %}" target="_blank"><i class="fas fa-file-pdf"></i></a></td>
+                            <td>{{ score.drive_url }}</td>
+                            <td>{{ score.media_file.url }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

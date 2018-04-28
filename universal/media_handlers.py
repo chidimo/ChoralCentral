@@ -1,6 +1,8 @@
 import os
 from django.template.defaultfilters import slugify
 
+from googledrive.api_calls import upload_score_to_drive
+
 def save_avatar(instance, filename):
     _, ext = os.path.splitext(filename)
     return "avatars/{}{}".format(instance.screen_name.lower(), ext)
@@ -24,3 +26,4 @@ def save_score(instance, filename):
     filename, ext = os.path.splitext(filename)
     normalized_song_name = slugify(instance.song.title)
     return "scores/{}_{}{}".format(normalized_song_name, instance.song.pk, ext)
+

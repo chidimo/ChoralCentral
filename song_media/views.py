@@ -13,6 +13,7 @@ from django.template.defaultfilters import slugify
 
 from django_addanother.views import CreatePopupMixin
 
+from googledrive.api_calls import (upload_score_to_drive)
 from youtube.api_calls import (
     API_ONLY_YOUTUBE, AUTH_YOUTUBE, CHORAL_CENTRAL_CHANNEL_ID,
     get_youtube_video_id, get_video_information,
@@ -26,7 +27,6 @@ from .forms import (
     NewScoreForm, NewMidiForm, NewVideoLinkForm,
     NewVocalPartForm, NewScoreNotationForm
     )
-
 
 class NewVocalPart(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):
     model = VocalPart
@@ -51,10 +51,29 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
 
     def form_valid(self, form):
         form.instance.uploader = SiteUser.objects.get(user=self.request.user)
+        score_metadata = {}
+        score_metadata['name'] = form.instance.song.title
+        # score_metadata['shared'] = True
+        score_metadata['description'] = "{}, {} {}".format(
+            form.instance.song.title, form.instance.notation.name, form.instance.part.name)
+
         self.object = form.save()
+        path = os.path.abspath(settings.BASE_DIR + self.object.media_file.url)
+        file = upload_score_to_drive(score_metadata, path)
+        drive_url = "https://drive.google.com/open?id=" + file.get('id')
+        self.object.drive_url = drive_url
+        self.object.save()
+
         self.object.likes.add(SiteUser.objects.get(user=self.request.user))
         messages.success(self.request, "Score successfully added to {}".format(self.object.song.title))
         return redirect(self.get_success_url())
+
+    # def form_valid(self, form):
+    #     form.instance.uploader = SiteUser.objects.get(user=self.request.user)
+    #     self.object = form.save()
+    #     self.object.likes.add(SiteUser.objects.get(user=self.request.user))
+    #     messages.success(self.request, "Score successfully added to {}".format(self.object.song.title))
+    #     return redirect(self.get_success_url())
 
     def get_form_kwargs(self):
         """include 'user' and 'pk' in the kwargs to be sent to form"""
@@ -67,8 +86,7 @@ def show_score(request, pk):
     doc = get_object_or_404(Score, pk=pk)
     doc.downloads += 1
     doc.save()
-    fname = doc.media_file.url
-    path = os.path.abspath(settings.BASE_DIR + fname)
+    path = os.path.abspath(settings.BASE_DIR + doc.media_file.url)
     response = FileResponse(open(path, 'rb'), content_type="application/pdf")
     response["Content-Disposition"] = "filename={}.pdf".format(slugify(doc.__str__()))
     return response

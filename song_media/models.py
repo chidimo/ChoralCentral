@@ -40,6 +40,7 @@ class Score(TimeStampedModel):
     notation = models.ForeignKey(ScoreNotation, on_delete=models.CASCADE)
     likes = models.ManyToManyField(SiteUser, related_name="score_likes")
     downloads = models.IntegerField(default=0)
+    drive_url = models.URLField(default='http://www.choralcentral.net')
     media_file = models.FileField(upload_to=save_score)
 
     class Meta:
@@ -68,6 +69,7 @@ class Midi(TimeStampedModel):
     description = models.CharField(max_length=200, blank=True, null=True)
     likes = models.ManyToManyField(SiteUser, related_name="midi_likes")
     downloads = models.IntegerField(default=0)
+    drive_url = models.URLField(default='http://www.choralcentral.net')
     media_file = models.FileField(upload_to=save_midi)
 
     class Meta:

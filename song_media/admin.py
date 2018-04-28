@@ -4,7 +4,7 @@ from django.contrib import admin
 from .models import VocalPart, ScoreNotation, Score, Midi, VideoLink
 
 class ScoreAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'part', 'uploader', 'media_file', )
+    list_display = ('__str__', 'part', 'uploader', 'media_file', 'drive_url')
 
     def uploader(self, obj):
         return obj.uploader.screen_name
