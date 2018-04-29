@@ -1,5 +1,0 @@
-hasThumbnail: False
-
-thumbnailLink: None
-
-webContentLink: https://drive.google.com/uc?id=1cBnGxj3NjIiURmbTNdD6UzVLakEs-r6M&export=download

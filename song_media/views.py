@@ -14,7 +14,9 @@ from django.core.files import File
 
 from django_addanother.views import CreatePopupMixin
 
-from googledrive.api_calls import (upload_file_to_drive, share_file_permission)
+from googledrive.api_calls import (
+    upload_pdf_to_drive, upload_audio_to_drive, share_file_permission)
+    
 from youtube.api_calls import (
     API_ONLY_YOUTUBE, AUTH_YOUTUBE, CHORAL_CENTRAL_CHANNEL_ID,
     get_youtube_video_id, get_video_information,
@@ -67,7 +69,7 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         # change this path to read direct from disk, so as not to save copy in /media/
         self.object = form.save()
         path = os.path.abspath(settings.BASE_DIR + self.object.media_file.url)
-        file = upload_file_to_drive(score_metadata, path)
+        file = upload_pdf_to_drive(score_metadata, path)
 
         self.object.drive_view_link = file.get('webViewLink')
         self.object.drive_download_link = file.get('webContentLink')
@@ -139,7 +141,12 @@ class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
 
         self.object = form.save()
         path = os.path.abspath(settings.BASE_DIR + self.object.media_file.url)
-        file = upload_file_to_drive(midi_metadata, path)
+        if ".mp3" in self.object.media_file.url:
+            mimetype="audio/mpeg3"
+        else:
+            mimetype = 'audio/midi'
+
+        file = upload_audio_to_drive(midi_metadata, path, mimetype)
 
         self.object.drive_view_link = file.get('webViewLink')
         self.object.drive_download_link = file.get('webContentLink')

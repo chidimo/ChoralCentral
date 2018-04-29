@@ -24,10 +24,22 @@ try:
 except NameError:
     pass
 
-def upload_file_to_drive(score_data, file_location_on_disk):
+def upload_pdf_to_drive(score_data, file_location_on_disk):
     file_metadata = score_data
     media = MediaFileUpload(
         file_location_on_disk, mimetype='application/pdf')
+
+    file = AUTH_DRIVE.files().create(
+        body=file_metadata,
+        media_body=media,
+        fields="id,webViewLink,webContentLink,thumbnailLink,hasThumbnail"
+        ).execute()
+    return file
+
+def upload_audio_to_drive(score_data, file_location_on_disk, mimetype):
+    file_metadata = score_data
+    media = MediaFileUpload(
+        file_location_on_disk, mimetype=mimetype)
 
     file = AUTH_DRIVE.files().create(
         body=file_metadata,
