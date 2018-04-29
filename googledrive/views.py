@@ -5,7 +5,10 @@ from django.shortcuts import render, redirect, reverse
 import google_auth_oauthlib.flow
 
 DRIVE_SECRETS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'credentials/client_secret.json')
-SCOPES = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.file ', 'https://www.googleapis.com/auth/drive.appdata']
+SCOPES = [
+    'https://www.googleapis.com/auth/drive',
+    'https://www.googleapis.com/auth/drive.file ',
+    'https://www.googleapis.com/auth/drive.appdata',]
 
 try:
     FLOW = google_auth_oauthlib.flow.Flow.from_client_secrets_file(DRIVE_SECRETS_FILE, SCOPES)

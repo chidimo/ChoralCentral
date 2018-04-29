@@ -496,6 +496,15 @@ a.upload-button {
     background: blanchedalmond;
 }
 
+/*STYLE EMBEDDED PDF*/
+.drive-viewer-toolstrip {
+    display: none;
+}
+
+#pdfIframe > .drive-viewer-toolstrip {
+    display: none;
+}
+
 /*SITEUSER*/
 
 .register-forms {

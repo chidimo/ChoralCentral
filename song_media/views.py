@@ -10,10 +10,11 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.template.defaultfilters import slugify
+from django.core.files import File
 
 from django_addanother.views import CreatePopupMixin
 
-from googledrive.api_calls import (upload_score_to_drive)
+from googledrive.api_calls import (upload_score_to_drive, share_file_permission)
 from youtube.api_calls import (
     API_ONLY_YOUTUBE, AUTH_YOUTUBE, CHORAL_CENTRAL_CHANNEL_ID,
     get_youtube_video_id, get_video_information,
@@ -54,19 +55,37 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
 
     def form_valid(self, form):
         form.instance.uploader = SiteUser.objects.get(user=self.request.user)
+
+        # build drive metadata https://developers.google.com/drive/v3/reference/files#resource
         score_metadata = {}
         score_metadata['name'] = form.instance.song.title
-        # score_metadata['shared'] = True
         score_metadata['description'] = "{}, {} {}".format(
             form.instance.song.title, form.instance.notation.name, form.instance.part.name)
         score_metadata['parents'] = [CHORAL_SCORE_FOLDER_ID]
+        score_metadata['viewersCanCopyContent'] = True
 
+        # change this path to read direct from disk, so as not to save copy in /media/
         self.object = form.save()
         path = os.path.abspath(settings.BASE_DIR + self.object.media_file.url)
         file = upload_score_to_drive(score_metadata, path)
-        drive_url = "https://drive.google.com/open?id=" + file.get('id')
-        self.object.drive_url = drive_url
-        self.object.save()
+
+        self.object.drive_view_link = file.get('webViewLink')
+        self.object.drive_download_link = file.get('webContentLink')
+        self.object.pdf_embed_link = file.get('webViewLink').replace('view?usp=drivesdk', 'preview')
+        self.object.save(update_fields=['drive_view_link', 'drive_download_link', 'pdf_embed_link'])
+        share_file_permission(file.get('id')) # make shareable
+
+        with open('thumb.txt', 'w+') as fh:
+            fh.write("hasThumbnail: ")
+            fh.write(str(file.get('hasThumbnail')))
+            fh.write("\n\n")
+            fh.write("thumbnailLink: ")
+            fh.write(str(file.get('thumbnailLink')))
+            fh.write("\n\n")
+            fh.write("webContentLink: ")
+            fh.write(str(file.get('webContentLink')))
+
+        # self.object.thumbnail = File(open(file.get('thumbnailLink'), "rb"))
 
         self.object.likes.add(SiteUser.objects.get(user=self.request.user))
         messages.success(self.request, "Score successfully added to {}".format(self.object.song.title))
@@ -106,9 +125,10 @@ class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
 
     def form_valid(self, form):
         form.instance.uploader = SiteUser.objects.get(user=self.request.user)
+
+        # build drive metadata
         midi_metadata = {}
         midi_metadata['name'] = form.instance.song.title
-        # score_metadata['shared'] = True
         midi_metadata['description'] = "{}, {}".format(
             form.instance.song.title, form.instance.part.name)
         midi_metadata['parents'] = [CHORAL_MIDI_FOLDER_ID]
@@ -116,9 +136,9 @@ class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
         self.object = form.save()
         path = os.path.abspath(settings.BASE_DIR + self.object.media_file.url)
         file = upload_score_to_drive(midi_metadata, path)
-        drive_url = "https://drive.google.com/open?id=" + file.get('id')
-        self.object.drive_url = drive_url
-        self.object.save()
+        self.object.drive_view_link = file.get('webViewLink')
+        self.object.save(update_fields=['drive_view_link'])
+        share_file_permission(file.get('id')) # make shareable
 
         self.object.likes.add(SiteUser.objects.get(user=self.request.user))
         messages.success(self.request, "Midi successfully added to {}".format(self.object.song.title))

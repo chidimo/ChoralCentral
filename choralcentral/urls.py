@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.conf.urls.static import static
 
 from django.contrib.sitemaps.views import sitemap
-from django.contrib.sitemaps import views
+from django.contrib.sitemaps import views as sitemapviews
 
 from blog.sitemaps import PostSiteMap
 from request.sitemaps import RequestSiteMap
@@ -47,7 +47,8 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    path('google364c8377c791cdf3.html', views.google_webmaster_verify)
+    path('google364c8377c791cdf3.html', views.google_webmaster_verify),
+    path('credits/', views.credits),
 ]
 
 if settings.DEBUG:

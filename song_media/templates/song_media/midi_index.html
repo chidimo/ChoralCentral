@@ -17,9 +17,9 @@
                 </thead>
                 <tr>
                     <th>Song</th>
-                    <th>Uploader</th>
+                    <th>song uploader</th>
                     <th>Format</th>
-                    <th>midi uploader</th>
+                    <th>Midi uploader</th>
                     <th>Download</th>
                     <th>Drive url</th>
                     <th>Disk url</th>
@@ -51,7 +51,11 @@
                                 </p>
                                 {% endif %}
                             </td>
-                            <td>{{ midi.drive_url }}</td>
+                            <td>
+                                {% if midi.drive_view_link %}
+                                    <a href="{{ midi.drive_view_link }}"><i class="fab fa-google-drive"></i></a>
+                                {% endif %}
+                            </td>
                             <td>{{ midi.media_file.url }}</td>
                         </tr>
                     {% endfor %}

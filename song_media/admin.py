@@ -4,13 +4,13 @@ from django.contrib import admin
 from .models import VocalPart, ScoreNotation, Score, Midi, VideoLink
 
 class ScoreAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'part', 'uploader', 'media_file', 'drive_url')
+    list_display = ('__str__', 'part', 'uploader', 'media_file', 'drive_view_link', 'drive_download_link', 'pdf_embed_link', 'thumbnail')
 
     def uploader(self, obj):
         return obj.uploader.screen_name
 
 class MidiAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'part', 'uploader', 'description', 'media_file', )
+    list_display = ('__str__', 'part', 'uploader', 'description', 'media_file', 'drive_view_link', 'drive_download_link')
 
     def uploader(self, obj):
         return obj.uploader.screen_name

@@ -1,11 +1,17 @@
 import os
 from django.template.defaultfilters import slugify
 
-from googledrive.api_calls import upload_score_to_drive
-
 def save_avatar(instance, filename):
     _, ext = os.path.splitext(filename)
     return "avatars/{}{}".format(instance.screen_name.lower(), ext)
+
+def save_drive_pdf_thumbnail(instance, filename):
+    _, ext = os.path.splitext(filename)
+    return "drivethumbnail/{}_{}_{}{}".format(
+        instance.song.title.lower(),
+        instance.part.name,
+        instance.notation.name,
+        ext)
 
 def save_video_thumbnail(instance, filename):
     _, ext = os.path.splitext(filename)

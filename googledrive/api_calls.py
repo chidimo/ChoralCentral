@@ -24,17 +24,28 @@ try:
 except NameError:
     pass
 
-# https://developers.google.com/drive/v3/reference/files#resource
-# get thumbnail
 def upload_score_to_drive(score_data, file_location_on_disk):
     file_metadata = score_data
-    media = MediaFileUpload(file_location_on_disk,
-                        mimetype='application/pdf')
+    media = MediaFileUpload(
+        file_location_on_disk, mimetype='application/pdf')
 
     file = AUTH_DRIVE.files().create(
         body=file_metadata,
         media_body=media,
-        fields="id").execute()
+        fields="id,webViewLink,webContentLink,thumbnailLink,hasThumbnail"
+        ).execute()
     return file
+
+def share_file_permission(file_id):
+    """Set a file as shareable"""
+    body = {
+        'role' : 'reader',
+        'type' : 'anyone',
+        }
+    permission = AUTH_DRIVE.permissions().create(
+        fileId=file_id,
+        body=body,
+        ).execute()
+    return permission
 
 

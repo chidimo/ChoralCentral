@@ -18,10 +18,12 @@
                 </thead>
                 <tr>
                     <th>Song</th>
-                    <th>Uploader</th>
+                    <th>Song uploader</th>
                     <th>Score uploader</th>
                     <th>Download</th>
-                    <th>Drive url</th>
+                    <th>Drive view url</th>
+                    <th>Drive download url</th>
+                    <th>Drive embed url</th>
                     <th>Disk url</th>
                 </tr>
 
@@ -33,8 +35,18 @@
                             <td>{{ score.song.originator }}</td>
                             <td>{{ score.uploader }}</td>
                             <td><a href="{% url 'song-media:score_view' score.pk %}" target="_blank"><i class="fas fa-file-pdf"></i></a></td>
-                            <td>{{ score.drive_url }}</td>
-                            <td>{{ score.media_file.url }}</td>
+                            <td>
+                                {% if score.drive_view_link %}
+                                    <a href="{{ score.drive_view_link }}"><i class="fab fa-google-drive"></i></a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if score.drive_download_link %}
+                                    <a href="{{ score.drive_download_link }}"><i class="fas fa-download"></i></a>
+                                {% endif %}
+                            </td>
+                            <td><a href="{{ score.pdf_embed_link }}">Embed</a></td>
+                            <td><a href="{{ score.media_file.url }}">Site media link</a></td>
                         </tr>
                     {% endfor %}
                 </tbody>
