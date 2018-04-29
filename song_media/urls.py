@@ -20,8 +20,8 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    path('score/delete/<int:pk>/<int:song_pk>/<slug:slug>/', views.DeleteScore.as_view(), name="delete_score"),
-    path('sound/delete/<int:pk>/<int:song_pk>/<slug:slug>/', views.DeleteMidi.as_view(), name="delete_midi"),
+    path('score/delete/<int:pk>/', views.DeleteScore.as_view(), name="delete_score"),
+    path('sound/delete/<int:pk>/', views.DeleteMidi.as_view(), name="delete_midi"),
 ]
 
 urlpatterns += [

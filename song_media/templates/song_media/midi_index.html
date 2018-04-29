@@ -24,6 +24,7 @@
                     <th><i class="fas fa-hdd" title="HDD link"></i></th>
                     <th><i class="fab fa-google-drive" title="Google Drive view url"></i></i></th>
                     <th><i class="fab fa-google-drive" title="Google Drive download url"></i></th>
+                    <th>Action</th>
                 </tr>
 
                 {% if midis %}
@@ -63,6 +64,7 @@
                                     <a href="{{ midi.drive_download_link }}" target="_blank"><i class="fas fa-download"></i></a>
                                 {% endif %}
                             </td>
+                            <td><a href="{% url 'song-media:delete_midi' midi.pk %}"><i class="fas fa-trash"></i></a></td>
                         </tr>
                     {% endfor %}
                 </tbody>

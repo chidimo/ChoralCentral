@@ -112,7 +112,10 @@ class DeleteScore(LoginRequiredMixin, generic.DeleteView):
     template_name = "song_media/score_delete.html"
 
     def get_success_url(self):
-        return reverse("song:detail", kwargs={'pk' : self.kwargs['song_pk'], 'slug' : self.kwargs['slug']})
+        score_object = self.get_object()
+        song_pk = score_object.song.pk
+        song_slug = score_object.song.slug
+        return reverse("song:detail", kwargs={'pk' : song_pk, 'slug' : song_slug})
 
 class MidiIndex(LoginRequiredMixin, generic.ListView):
     model = Midi
@@ -178,9 +181,12 @@ def download_midi(self, pk):
 class DeleteMidi(LoginRequiredMixin, generic.DeleteView):
     model = Midi
     template_name = "song_media/midi_delete.html"
-
+    
     def get_success_url(self):
-        return reverse("song:detail", kwargs={'pk' : self.kwargs['song_pk'], 'slug' : self.kwargs['slug']})
+        midi_object = self.get_object()
+        song_pk = midi_object.song.pk
+        song_slug = midi_object.song.slug
+        return reverse("song:detail", kwargs={'pk' : song_pk, 'slug' : song_slug})
 
 class NewVideoLink(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):
     model = VideoLink

@@ -25,6 +25,7 @@
                     <th><i class="fab fa-google-drive" title="Google Drive view url"></i></i></th>
                     <th><i class="fab fa-google-drive" title="Google Drive download url"></i></th>
                     <th><i class="fab fa-google-drive" title="Google Drive embed url"></i></th>
+                    <th>Action</th>
                 </tr>
 
                 {% if scores %}
@@ -51,6 +52,9 @@
                             <td>{% if score.pdf_embed_link %}
                                     <a href="{{ score.pdf_embed_link }}" target="_blank"><i class="fas fa-link"></i></a>
                                 {% endif %}
+                            </td>
+                            <td>
+                                <a href="{% url 'song-media:delete_score' score.pk %}"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     {% endfor %}
