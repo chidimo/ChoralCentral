@@ -296,7 +296,7 @@ def share_song_by_mail(request, pk, slug):
                 error_msg = "Song was not sent to the following invalid emails: {}".format(", ".join(bad_emails))
                 messages.error(request, error_msg)
 
-            return redirect(song.get_absolute_url())            
+            return redirect(song.get_absolute_url())
 
 def share_on_facebook(request, pk, slug):
     pass

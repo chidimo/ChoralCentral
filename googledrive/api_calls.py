@@ -24,7 +24,7 @@ try:
 except NameError:
     pass
 
-def upload_score_to_drive(score_data, file_location_on_disk):
+def upload_file_to_drive(score_data, file_location_on_disk):
     file_metadata = score_data
     media = MediaFileUpload(
         file_location_on_disk, mimetype='application/pdf')

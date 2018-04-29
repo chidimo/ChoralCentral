@@ -14,7 +14,7 @@ from django.core.files import File
 
 from django_addanother.views import CreatePopupMixin
 
-from googledrive.api_calls import (upload_score_to_drive, share_file_permission)
+from googledrive.api_calls import (upload_file_to_drive, share_file_permission)
 from youtube.api_calls import (
     API_ONLY_YOUTUBE, AUTH_YOUTUBE, CHORAL_CENTRAL_CHANNEL_ID,
     get_youtube_video_id, get_video_information,
@@ -67,7 +67,7 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         # change this path to read direct from disk, so as not to save copy in /media/
         self.object = form.save()
         path = os.path.abspath(settings.BASE_DIR + self.object.media_file.url)
-        file = upload_score_to_drive(score_metadata, path)
+        file = upload_file_to_drive(score_metadata, path)
 
         self.object.drive_view_link = file.get('webViewLink')
         self.object.drive_download_link = file.get('webContentLink')
@@ -129,15 +129,18 @@ class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
         # build drive metadata
         midi_metadata = {}
         midi_metadata['name'] = form.instance.song.title
-        midi_metadata['description'] = "{}, {}".format(
-            form.instance.song.title, form.instance.part.name)
+        midi_metadata['description'] = "{}, {}: {}".format(
+            form.instance.song.title, form.instance.part.name, form.instance.description)
         midi_metadata['parents'] = [CHORAL_MIDI_FOLDER_ID]
+        midi_metadata['viewersCanCopyContent'] = True
 
         self.object = form.save()
         path = os.path.abspath(settings.BASE_DIR + self.object.media_file.url)
-        file = upload_score_to_drive(midi_metadata, path)
+        file = upload_file_to_drive(midi_metadata, path)
+
         self.object.drive_view_link = file.get('webViewLink')
-        self.object.save(update_fields=['drive_view_link'])
+        self.object.drive_download_link = file.get('webContentLink')
+        self.object.save(update_fields=['drive_view_link', 'drive_download_link'])
         share_file_permission(file.get('id')) # make shareable
 
         self.object.likes.add(SiteUser.objects.get(user=self.request.user))
