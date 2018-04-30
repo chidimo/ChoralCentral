@@ -1,6 +1,8 @@
 """views"""
 
 import os
+import io
+import pathlib
 from django.http import FileResponse
 from django.conf import settings
 from django.views import generic
@@ -55,6 +57,10 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     template_name = 'song_media/score_new.html'
     form_class = NewScoreForm
 
+    def handle_uploaded_file(self, f):
+        for chunk in f.chunks():
+            io.StringIO(f)
+
     def form_valid(self, form):
         form.instance.uploader = SiteUser.objects.get(user=self.request.user)
 
@@ -66,9 +72,12 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         score_metadata['parents'] = [CHORAL_SCORE_FOLDER_ID]
         score_metadata['viewersCanCopyContent'] = True
 
-        # change this path to read direct from disk, so as not to save copy in /media/
+        media_object = form.instance.media_file # more experiments
+
         self.object = form.save()
         path = os.path.abspath(settings.BASE_DIR + self.object.media_file.url)
+
+        # file = upload_pdf_to_drive(score_metadata, media_object)
         file = upload_pdf_to_drive(score_metadata, path)
 
         self.object.drive_view_link = file.get('webViewLink')
@@ -76,18 +85,6 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         self.object.pdf_embed_link = file.get('webViewLink').replace('view?usp=drivesdk', 'preview')
         self.object.save(update_fields=['drive_view_link', 'drive_download_link', 'pdf_embed_link'])
         share_file_permission(file.get('id')) # make shareable
-
-        with open('thumb.txt', 'w+') as fh:
-            fh.write("hasThumbnail: ")
-            fh.write(str(file.get('hasThumbnail')))
-            fh.write("\n\n")
-            fh.write("thumbnailLink: ")
-            fh.write(str(file.get('thumbnailLink')))
-            fh.write("\n\n")
-            fh.write("webContentLink: ")
-            fh.write(str(file.get('webContentLink')))
-
-        # self.object.thumbnail = File(open(file.get('thumbnailLink'), "rb"))
 
         self.object.likes.add(SiteUser.objects.get(user=self.request.user))
         messages.success(self.request, "Score successfully added to {}".format(self.object.song.title))
