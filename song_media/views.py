@@ -16,7 +16,7 @@ from django_addanother.views import CreatePopupMixin
 
 from googledrive.api_calls import (
     upload_pdf_to_drive, upload_audio_to_drive, share_file_permission)
-    
+
 from youtube.api_calls import (
     API_ONLY_YOUTUBE, AUTH_YOUTUBE, CHORAL_CENTRAL_CHANNEL_ID,
     get_youtube_video_id, get_video_information,
@@ -133,7 +133,7 @@ class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
 
         # build drive metadata
         midi_metadata = {}
-        midi_metadata['name'] = form.instance.song.title
+
         midi_metadata['description'] = "{}, {}: {}".format(
             form.instance.song.title, form.instance.part.name, form.instance.description)
         midi_metadata['parents'] = [CHORAL_MIDI_FOLDER_ID]
@@ -141,10 +141,13 @@ class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
 
         self.object = form.save()
         path = os.path.abspath(settings.BASE_DIR + self.object.media_file.url)
-        if ".mp3" in self.object.media_file.url:
-            mimetype="audio/mpeg3"
+        ext = os.path.splitext(path)[1]
+        if ext == ".mp3":
+            mimetype="audio/mpeg"
+            midi_metadata['name'] = form.instance.song.title + ext
         else:
-            mimetype = 'audio/midi'
+            midi_metadata['name'] = form.instance.song.title + ext
+            mimetype = 'audio/mid'
 
         file = upload_audio_to_drive(midi_metadata, path, mimetype)
 
@@ -188,7 +191,7 @@ def download_midi(self, pk):
 class DeleteMidi(LoginRequiredMixin, generic.DeleteView):
     model = Midi
     template_name = "song_media/midi_delete.html"
-    
+
     def get_success_url(self):
         midi_object = self.get_object()
         song_pk = midi_object.song.pk

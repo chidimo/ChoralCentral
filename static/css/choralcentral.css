@@ -83,6 +83,10 @@ section a {
     margin: 0.5rem 0 0.5rem 0.5rem;
 }
 
+section > div.container > a.join-campaign {
+    font-family : 'Inconsolata', monospace;
+}
+
 label {
   font-weight: bold;
 }

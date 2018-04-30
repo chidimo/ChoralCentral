@@ -108,14 +108,11 @@
                     <a href="{% url 'request:new' %}" class="btn btn-secondary">Request</a>
                     <a href="{% url 'song:instant_song' %}" class="btn btn-secondary" target="_blank">Search</a>
                     <a href="#" class="btn btn-secondary" target="_blank">Douay-Rheims bible</a>
-                    {% if not user.is_authenticated %}
-                        <a href="{% url 'siteuser:new' %}" class="btn btn-primary">JOIN</a>
-                    {% endif %}
                 </p>
                 {% if not user.is_authenticated %}
-                    <div class="container text-center">
-                        <p class="text-center text-success">Join over {{ user_count }} people celebrating over {{ song_count }} songs in {{ lang_count }} languages</p>
-                    </div>
+                <a href="{% url 'siteuser:new' %}" class="btn btn-primary join-campaign">
+                    Join {{ user_count }} plus people celebrating over {{ song_count }} songs in {{ lang_count }} languages and {{ voice_count }} voices
+                </a>
                 {% endif %}
             </div>
         </section>
