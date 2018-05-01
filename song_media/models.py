@@ -81,6 +81,9 @@ class Midi(TimeStampedModel):
     class Meta:
         ordering = ('-downloads', 'created', )
 
+    def show_pk(self):
+        return self.pk
+
     @property
     def midi_likes(self):
         return self.likes.count()

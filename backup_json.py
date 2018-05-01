@@ -1,5 +1,5 @@
 # run with `source virtualenvwrapper.sh && workon env_name && python script_name.py`
-# run with `source virtualenvwrapper.sh && workon __fun && python django_data_dump.py`
+# `source virtualenvwrapper.sh && workon __cc && python django_data_dump.py`
 
 import os
 import time
