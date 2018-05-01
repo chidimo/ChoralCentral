@@ -44,7 +44,7 @@ class Score(TimeStampedModel):
     drive_view_link = models.URLField(null=True)
     drive_download_link = models.URLField(null=True)
     pdf_embed_link = models.URLField(null=True)
-    media_file = models.FileField(upload_to=save_score)
+    media_file = models.FileField(upload_to=save_score, null=True)
 
     class Meta:
         ordering = ('-downloads', 'created', )
@@ -69,12 +69,14 @@ class Midi(TimeStampedModel):
     uploader = models.ForeignKey(SiteUser, null=True, on_delete=models.SET_NULL)
     song = models.ForeignKey(Song, null=True, on_delete=models.SET_NULL)
     part = models.ForeignKey(VocalPart, on_delete=models.CASCADE)
+    fformat = models.CharField(max_length=10, blank=True)
     description = models.CharField(max_length=200, blank=True, null=True)
     likes = models.ManyToManyField(SiteUser, related_name="midi_likes")
     downloads = models.IntegerField(default=0)
+    embed_link = models.URLField(null=True)
     drive_view_link = models.URLField(null=True)
     drive_download_link = models.URLField(null=True)
-    media_file = models.FileField(upload_to=save_midi)
+    media_file = models.FileField(upload_to=save_midi, null=True)
 
     class Meta:
         ordering = ('-downloads', 'created', )

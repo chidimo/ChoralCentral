@@ -153,16 +153,16 @@
                 <div class="row score-list-icon-container">
                     <div class="container">
                         <p>
-                            <a class="float-left" href="{{ score.drive_view_link }}" target="_blank"><i class="fab fa-google-drive"></i></a>
+                            <a class="float-left" href="{{ score.pdf_embed_link }}" target="_blank"><i class="fab fa-google-drive"></i></a>
                             <a class="float-right" href="{{ score.drive_download_link }}" target="_blank"><i class="fas fa-download"></i></a>
                         </p>
 
-                            <a class="btn btn-sm btn-primary icon-buttons float-left" href="" title="Love this score">
-                                <span>{{ score.score_likes }}</span> <i class="fas fa-heart"></i>
-                            </a>
-                            <span class="btn btn-sm btn-primary icon-buttons float-right" title="Total downloads">
-                                <span>{{ score.downloads }}</span> <i class="fas fa-eye"></i>
-                            </span>
+                        <a class="btn btn-sm btn-primary icon-buttons float-left" href="" title="Love this score">
+                            <span>{{ score.score_likes }}</span> <i class="fas fa-heart"></i>
+                        </a>
+                        <span class="btn btn-sm btn-primary icon-buttons float-right" title="Total downloads">
+                            <span>{{ score.downloads }}</span> <i class="fas fa-eye"></i>
+                        </span>
 
                     </div>
                 </div>
@@ -186,7 +186,9 @@
         {% for midi in song.midi_set.all %}
             <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 audio-list">
 
-                {% if '.mp3' in midi.media_file.url %}
+                {% if midi.media_file %}
+
+                    {% if midi.fformat == ".mp3" %}
                         <div class='container'>
                             <div class='row'>
                                 <audio controls>
@@ -196,7 +198,7 @@
                                 </audio>
                             </div>
                         </div>
-                {% else %}
+                    {% else %}
                         <div class='container'>
                             <div class='row'>
                                 <div class='midi-controls' style="height: 32px;">
@@ -206,15 +208,20 @@
                                 </div>
                             </div>
                         </div>
+                    {% endif %}
                 {% endif %}
+
 
                 <p class='text-right'>{{ midi.part }}</p>
                 <p class='text-right'><a href="{% url 'siteuser:detail' midi.uploader.pk midi.uploader.slug %}">{{ midi.uploader.screen_name }}</a></p>
 
                 <div class="row audio-list-icon-container">
+                    <div class="col-sm-6">
+                        <embed id="pdfIframe" src="{{ midi.embed_link }}#toolbar=0&navpanes=0&scrollbar=0" width="150" height="200" showcontrols="false"></embed><!--</iframe>-->
+                    </div>
                     <div class="container">
                         <p>
-                            <a class="float-left" href="{{ midi.drive_view_link }}" target="_blank"><i class="fab fa-google-drive"></i></a>
+                            <a class="float-left" href="{{ midi.embed_link }}" target="_blank"><i class="fab fa-google-drive"></i></a>
                             <a class="float-right" href="{{ midi.drive_download_link }}" target="_blank"><i class="fas fa-download"></i></a>
                         </p>
 

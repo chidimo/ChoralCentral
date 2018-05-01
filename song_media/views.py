@@ -1,7 +1,7 @@
 """views"""
 
 import os
-import io
+import shutil
 import pathlib
 from django.http import FileResponse
 from django.conf import settings
@@ -13,6 +13,8 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.template.defaultfilters import slugify
 from django.core.files import File
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 
 from django_addanother.views import CreatePopupMixin
 
@@ -57,38 +59,46 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     template_name = 'song_media/score_new.html'
     form_class = NewScoreForm
 
-    def handle_uploaded_file(self, f):
-        for chunk in f.chunks():
-            io.StringIO(f)
-
     def form_valid(self, form):
-        form.instance.uploader = SiteUser.objects.get(user=self.request.user)
+        uploader = self.request.user.siteuser
+        song = form.instance.song
+        notation = form.instance.notation
+        part = form.instance.part
+        media_object = form.instance.media_file
 
-        # build drive metadata https://developers.google.com/drive/v3/reference/files#resource
         score_metadata = {}
-        score_metadata['name'] = form.instance.song.title
-        score_metadata['description'] = "{}, {} {}".format(
-            form.instance.song.title, form.instance.notation.name, form.instance.part.name)
+        score_metadata['name'] = song.title + ".pdf"
+        score_metadata['description'] = "{}, {} {}".format(song.title, notation.name, part.name)
         score_metadata['parents'] = [CHORAL_SCORE_FOLDER_ID]
         score_metadata['viewersCanCopyContent'] = True
 
-        media_object = form.instance.media_file # more experiments
+        tmp = os.path.join(settings.BASE_DIR, 'media', 'tmp')
+        if not os.path.exists(tmp):
+            os.mkdir(tmp)
+        path = 'tmp/' + song.title + ".pdf"
 
-        self.object = form.save()
-        path = os.path.abspath(settings.BASE_DIR + self.object.media_file.url)
+        with default_storage.open(path, 'wb+') as destination:
+            for chunk in media_object.chunks():
+                destination.write(chunk)
 
-        # file = upload_pdf_to_drive(score_metadata, media_object)
-        file = upload_pdf_to_drive(score_metadata, path)
+        score = Score.objects.create(
+            uploader=uploader, song=song, notation=notation, part=part)
 
-        self.object.drive_view_link = file.get('webViewLink')
-        self.object.drive_download_link = file.get('webContentLink')
-        self.object.pdf_embed_link = file.get('webViewLink').replace('view?usp=drivesdk', 'preview')
-        self.object.save(update_fields=['drive_view_link', 'drive_download_link', 'pdf_embed_link'])
+        read_path = os.path.join(tmp, song.title + ".pdf")
+        file = upload_pdf_to_drive(score_metadata, read_path)
+
+        # remove tmp immediately or clean job to do it once a day.
+        # shutil.rmtree(tmp)
+
+        score.drive_view_link = file.get('webViewLink')
+        score.drive_download_link = file.get('webContentLink')
+        score.pdf_embed_link = file.get('webViewLink').replace('view?usp=drivesdk', 'preview')
+        score.save(update_fields=['drive_view_link', 'drive_download_link', 'pdf_embed_link'])
         share_file_permission(file.get('id')) # make shareable
 
-        self.object.likes.add(SiteUser.objects.get(user=self.request.user))
-        messages.success(self.request, "Score successfully added to {}".format(self.object.song.title))
-        return redirect(self.get_success_url())
+        score.likes.add(SiteUser.objects.get(user=self.request.user))
+        messages.success(self.request, "Score successfully added to {}".format(song.title))
+        return redirect(song.get_absolute_url())
 
     def get_form_kwargs(self):
         """include 'user' and 'pk' in the kwargs to be sent to form"""
@@ -126,36 +136,52 @@ class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
     form_class = NewMidiForm
 
     def form_valid(self, form):
-        form.instance.uploader = SiteUser.objects.get(user=self.request.user)
+        uploader = self.request.user.siteuser
+        song = form.instance.song
+        description = form.instance.description
+        part = form.instance.part
+        media_object = form.instance.media_file
+        extension = os.path.splitext(media_object.name)[1]
 
         # build drive metadata
         midi_metadata = {}
-
         midi_metadata['description'] = "{}, {}: {}".format(
             form.instance.song.title, form.instance.part.name, form.instance.description)
         midi_metadata['parents'] = [CHORAL_MIDI_FOLDER_ID]
         midi_metadata['viewersCanCopyContent'] = True
 
-        self.object = form.save()
-        path = os.path.abspath(settings.BASE_DIR + self.object.media_file.url)
-        ext = os.path.splitext(path)[1]
-        if ext == ".mp3":
+        tmp = os.path.join(settings.BASE_DIR, 'media', 'tmp')
+        if not os.path.exists(tmp):
+            os.mkdir(tmp)
+        path = 'tmp/' + song.title + extension
+
+        with default_storage.open(path, 'wb+') as destination:
+            for chunk in media_object.chunks():
+                destination.write(chunk)
+
+        midi = Midi.objects.create(
+            uploader=uploader, song=song, part=part, description=description)
+
+        if extension == ".mp3":
             mimetype="audio/mpeg"
-            midi_metadata['name'] = form.instance.song.title + ext
+            midi_metadata['name'] = song.title + extension
         else:
-            midi_metadata['name'] = form.instance.song.title + ext
+            midi_metadata['name'] = song.title + extension
             mimetype = 'audio/mid'
 
-        file = upload_audio_to_drive(midi_metadata, path, mimetype)
+        read_path = os.path.join(tmp, song.title + extension)
+        file = upload_audio_to_drive(midi_metadata, read_path, mimetype)
 
-        self.object.drive_view_link = file.get('webViewLink')
-        self.object.drive_download_link = file.get('webContentLink')
-        self.object.save(update_fields=['drive_view_link', 'drive_download_link'])
+        midi.fformat = extension
+        midi.drive_view_link = file.get('webViewLink')
+        midi.drive_download_link = file.get('webContentLink')
+        midi.embed_link = file.get('webViewLink').replace('view?usp=drivesdk', 'preview')
+        midi.save(update_fields=['drive_view_link', 'drive_download_link', 'fformat', 'embed_link'])
         share_file_permission(file.get('id')) # make shareable
 
-        self.object.likes.add(SiteUser.objects.get(user=self.request.user))
-        messages.success(self.request, "Midi successfully added to {}".format(self.object.song.title))
-        return redirect(self.get_success_url())
+        midi.likes.add(SiteUser.objects.get(user=self.request.user))
+        messages.success(self.request, "Midi successfully added to {}".format(song.title))
+        return redirect(song.get_absolute_url())
 
     def get_form_kwargs(self):
         kwargs = super(NewMidi, self).get_form_kwargs()
