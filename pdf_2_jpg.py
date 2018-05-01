@@ -8,10 +8,10 @@ params = ['convert', ' -density 300 -resize 220x205', ' abc.pdf', ' thumb.jpg']
 cmd = "convert  -verbose -density 150 abc.pdf -quality 100 -sharpen 0x1.0 thumb.jpg"
 # cmd = "convert  -verbose -density 150 -trim abc.pdf -quality 100 -flatten -sharpen 0x1.0 thumb.jpg"
 # subprocess.check_call(params)
-os.system(cmd)
-print(cmd)
+ppm = "pdftoppm -png -f 1 -singlefile abc.pdf abcp pm"
+os.system(ppm)
+print("\n\n", ppm, "\n\n")
 print("Done converting")
-
 
 
 # import PythonMagick

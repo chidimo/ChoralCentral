@@ -7,7 +7,7 @@ from song.models import Song
 from siteuser.models import SiteUser
 
 from universal.models import TimeStampedModel
-from universal.media_handlers import save_score, save_drive_pdf_thumbnail, save_midi, save_video_thumbnail
+from universal.media_handlers import save_score, save_score_thumbnail, save_midi, save_video_thumbnail
 
 class VocalPart(TimeStampedModel):
     name = models.CharField(max_length=30, default='Choir', unique=True)
@@ -39,7 +39,7 @@ class Score(TimeStampedModel):
     part = models.ForeignKey(VocalPart, on_delete=models.CASCADE)
     notation = models.ForeignKey(ScoreNotation, on_delete=models.CASCADE)
     likes = models.ManyToManyField(SiteUser, related_name="score_likes")
-    thumbnail = models.ImageField(upload_to=save_drive_pdf_thumbnail, null=True)
+    thumbnail = models.ImageField(upload_to=save_score_thumbnail, null=True)
     downloads = models.IntegerField(default=0)
     drive_view_link = models.URLField(null=True)
     drive_download_link = models.URLField(null=True)

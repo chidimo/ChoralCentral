@@ -1,8 +1,7 @@
 """views"""
 
 import os
-import shutil
-import pathlib
+import uuid
 from django.http import FileResponse
 from django.conf import settings
 from django.views import generic
@@ -72,23 +71,38 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         score_metadata['parents'] = [CHORAL_SCORE_FOLDER_ID]
         score_metadata['viewersCanCopyContent'] = True
 
+        # create a unique temporary pdf id to avoid race conditions
+        pdf_id = str(uuid.uuid4())
+
+        # make a temporary folder in '/media/' directory
         tmp = os.path.join(settings.BASE_DIR, 'media', 'tmp')
         if not os.path.exists(tmp):
             os.mkdir(tmp)
-        path = 'tmp/' + song.title + ".pdf"
+        temp_save_name = 'tmp/' + pdf_id + ".pdf"
 
-        with default_storage.open(path, 'wb+') as destination:
+        # temporarily write file to disk
+        with default_storage.open(temp_save_name, 'wb+') as fh:
             for chunk in media_object.chunks():
-                destination.write(chunk)
+                fh.write(chunk)
+
+        temp_pdf_name = str(os.path.join(tmp, pdf_id))
+        temp_pdf_path = temp_pdf_name + ".pdf"
+
+        # generate thumbnail
+        cmd = "pdftoppm -png -f 1 -singlefile {} {}".format(temp_pdf_path, temp_pdf_name)
+        with open("cmd.txt", "w+") as fh:
+            fh.write(cmd)
+            fh.write("\n\n")
+            fh.write(pdf_id)
+        os.system(cmd)
 
         score = Score.objects.create(
-            uploader=uploader, song=song, notation=notation, part=part)
+            uploader=uploader, song=song, notation=notation,
+            part=part, thumbnail=File(open(temp_pdf_name + ".png", "rb")))
 
-        read_path = os.path.join(tmp, song.title + ".pdf")
-        file = upload_pdf_to_drive(score_metadata, read_path)
+        file = upload_pdf_to_drive(score_metadata, temp_pdf_path)
 
-        # remove tmp immediately or clean job to do it once a day.
-        # shutil.rmtree(tmp)
+        # tmp folder is cleaned up once a day by scheduled task.
 
         score.drive_view_link = file.get('webViewLink')
         score.drive_download_link = file.get('webContentLink')
@@ -169,8 +183,8 @@ class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
             midi_metadata['name'] = song.title + extension
             mimetype = 'audio/mid'
 
-        read_path = os.path.join(tmp, song.title + extension)
-        file = upload_audio_to_drive(midi_metadata, read_path, mimetype)
+        temp_pdf_path = os.path.join(tmp, song.title + extension)
+        file = upload_audio_to_drive(midi_metadata, temp_pdf_path, mimetype)
 
         midi.fformat = extension
         midi.drive_view_link = file.get('webViewLink')

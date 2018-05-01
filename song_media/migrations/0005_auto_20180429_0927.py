@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='score',
             name='thumbnail',
-            field=models.ImageField(null=True, upload_to=universal.media_handlers.save_drive_pdf_thumbnail),
+            field=models.ImageField(null=True, upload_to=universal.media_handlers.save_score_thumbnail),
         ),
         migrations.AlterField(
             model_name='midi',

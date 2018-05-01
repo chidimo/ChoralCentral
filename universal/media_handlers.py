@@ -5,9 +5,9 @@ def save_avatar(instance, filename):
     _, ext = os.path.splitext(filename)
     return "avatars/{}{}".format(instance.screen_name.lower(), ext)
 
-def save_drive_pdf_thumbnail(instance, filename):
+def save_score_thumbnail(instance, filename):
     _, ext = os.path.splitext(filename)
-    return "drivethumbnail/{}_{}_{}{}".format(
+    return "scorethumbnail/{}_{}_{}{}".format(
         instance.song.title.lower(),
         instance.part.name,
         instance.notation.name,
