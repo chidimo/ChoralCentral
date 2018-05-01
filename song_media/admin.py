@@ -4,7 +4,7 @@ from django.contrib import admin
 from .models import VocalPart, ScoreNotation, Score, Midi, VideoLink
 
 class ScoreAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'part', 'uploader', 'media_file', 'drive_view_link', 'drive_download_link', 'pdf_embed_link', 'thumbnail')
+    list_display = ('__str__', 'part', 'uploader', 'media_file', 'drive_view_link', 'drive_download_link', 'embed_link', 'thumbnail')
 
     def uploader(self, obj):
         return obj.uploader.screen_name
@@ -26,3 +26,4 @@ admin.site.register(ScoreNotation)
 admin.site.register(Score, ScoreAdmin)
 admin.site.register(VideoLink, VideoLinkAdmin)
 admin.site.register(Midi, MidiAdmin)
+# python manage.py migrate

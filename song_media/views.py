@@ -106,8 +106,8 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
 
         score.drive_view_link = file.get('webViewLink')
         score.drive_download_link = file.get('webContentLink')
-        score.pdf_embed_link = file.get('webViewLink').replace('view?usp=drivesdk', 'preview')
-        score.save(update_fields=['drive_view_link', 'drive_download_link', 'pdf_embed_link'])
+        score.embed_link = file.get('webViewLink').replace('view?usp=drivesdk', 'preview')
+        score.save(update_fields=['drive_view_link', 'drive_download_link', 'embed_link'])
         share_file_permission(file.get('id')) # make shareable
 
         score.likes.add(SiteUser.objects.get(user=self.request.user))

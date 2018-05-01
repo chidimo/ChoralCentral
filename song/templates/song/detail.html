@@ -138,8 +138,8 @@
                 <div class="container score-list-pdf-container">
                     <div class="row">
                         <div class="col-sm-6">
-                            <a href="{{ score.pdf_embed_link }}"><img src="{{ score.thumbnail.url }}" width="150" height="200"></a>
-                            <!--<embed id="pdfIframe" src="{{ score.pdf_embed_link }}#toolbar=0&navpanes=0&scrollbar=0" width="150" height="200" showcontrols="false"></embed>-->
+                            <a href="{{ score.embed_link }}"><img src="{{ score.thumbnail.url }}" width="150" height="200"></a>
+                            <!--<embed id="pdfIframe" src="{{ score.embed_link }}#toolbar=0&navpanes=0&scrollbar=0" width="150" height="200" showcontrols="false"></embed>-->
                         </div>
                         <div class="col-sm-6">
                             <p class="text-right">{{ score.part|title }}</p>
@@ -154,7 +154,7 @@
                 <div class="row score-list-icon-container">
                     <div class="container">
                         <p>
-                            <a class="float-left" href="{{ score.pdf_embed_link }}" target="_blank"><i class="fab fa-google-drive"></i></a>
+                            <a class="float-left" href="{{ score.embed_link }}" target="_blank"><i class="fab fa-google-drive"></i></a>
                             <a class="float-right" href="{{ score.drive_download_link }}" target="_blank"><i class="fas fa-download"></i></a>
                         </p>
 

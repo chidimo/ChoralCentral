@@ -43,7 +43,7 @@ class Score(TimeStampedModel):
     downloads = models.IntegerField(default=0)
     drive_view_link = models.URLField(null=True)
     drive_download_link = models.URLField(null=True)
-    pdf_embed_link = models.URLField(null=True)
+    embed_link = models.URLField(null=True)
     media_file = models.FileField(upload_to=save_score, null=True)
 
     class Meta:

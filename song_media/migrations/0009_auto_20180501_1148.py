@@ -7,7 +7,7 @@ import universal.media_handlers
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('song_media', '0008_score_pdf_embed_link'),
+        ('song_media', '0008_score_embed_link'),
     ]
 
     operations = [

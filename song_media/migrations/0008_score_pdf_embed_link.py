@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='score',
-            name='pdf_embed_link',
+            name='embed_link',
             field=models.URLField(null=True),
         ),
     ]
