@@ -34,13 +34,13 @@ def get_youtube_video_id(video_url):
     """Return a youtube video ID"""
     return video_url.split('v=')[-1].strip()
 
-def get_video_information(youtube, video_ids, part='snippet,contentDetails,statistics'):
+def get_video_information(video_ids, part='snippet,contentDetails,statistics'):
     """Get information about a single youtube video"""
     response = API_ONLY_YOUTUBE.videos().list(
     part=part, id=video_ids).execute()
     return response
 
-def get_or_create_playlist(youtube, playlist_id, title, part='snippet,status'):
+def get_or_create_playlist(playlist_id, title, part='snippet,status'):
     """Get a playlist if given playlist_id exists or create new one with the given title"""
     response = AUTH_YOUTUBE.playlists().list(part=part, id=playlist_id).execute()
 
@@ -56,9 +56,9 @@ def get_or_create_playlist(youtube, playlist_id, title, part='snippet,status'):
         response = new_playlist_response
     return response
 
-def get_playlist_id(youtube, playlist_id, title):
+def get_playlist_id(playlist_id, title):
     """Return the id of a playlist whether it exists (using playlist_id) or not (user title)"""
-    response = get_or_create_playlist(youtube, playlist_id, title, part='snippet,status')
+    response = get_or_create_playlist(AUTH_YOUTUBE, playlist_id, title, part='snippet,status')
     if playlist_id is None:
         playlist_id = ''
     try:
@@ -66,7 +66,7 @@ def get_playlist_id(youtube, playlist_id, title):
     except KeyError:
         return response['id']# create a new playlist and return its ID
 
-def add_video_to_playlist(youtube, video_id, playlist_id):
+def add_video_to_playlist(video_id, playlist_id):
     """Add a youtube video to a youtube playlist"""
     resource = {}
 
@@ -74,7 +74,7 @@ def add_video_to_playlist(youtube, video_id, playlist_id):
         'playlistId': playlist_id,
         'resourceId': {'kind' : 'youtube#video', 'videoId': video_id}
     }
-    response = youtube.playlistItems().insert(
+    response = AUTH_YOUTUBE.playlistItems().insert(
         body=resource,
         part='snippet',).execute()
     return response

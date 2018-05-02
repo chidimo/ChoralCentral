@@ -123,6 +123,7 @@ class Song(TimeStampedModel):
     mass_parts      = models.ManyToManyField(MassPart)
 
     youtube_playlist_id = models.CharField(max_length=100, null=True, blank=True)
+    drive_folder_id = models.CharField(max_length=100, null=True, blank=True)
 
     class Meta:
         ordering = ("-like_count", "title", "-created", "publish", 'tempo_text')
@@ -140,9 +141,3 @@ class Song(TimeStampedModel):
     def save(self, *args, **kwargs):
         self.tempo_text = get_tempo_text(self.tempo)
         return super(Song, self).save(*args, **kwargs)
-
-
-
-
-
-

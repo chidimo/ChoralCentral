@@ -1,3 +1,4 @@
+-f /usr/share/pip-wheels
 algoliasearch==1.13.0
 algoliasearch-django==1.5.0
 asn1crypto==0.23.0
@@ -66,10 +67,12 @@ pandocfilters==1.4.2
 parso==0.1.1
 pdfrw==0.4
 pefile==2017.9.3
+pexpect==4.4.0
 pickleshare==0.7.4
 Pillow==4.3.0
 prompt-toolkit==1.0.15
 psycopg2==2.7.3.2
+ptyprocess==0.5.2
 pyasn1==0.4.2
 pyasn1-modules==0.2.1
 pycparser==2.18

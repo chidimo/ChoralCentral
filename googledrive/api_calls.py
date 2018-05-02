@@ -24,6 +24,22 @@ try:
 except NameError:
     pass
 
+def create_song_folder(folder_name):
+    """
+    Return folder id
+    """
+
+    file_metadata = {
+        'name': folder_name,
+        'mimeType': 'application/vnd.google-apps.folder'
+    }
+
+    folder = AUTH_DRIVE.files().create(
+        body=file_metadata,
+        fields="id"
+        ).execute()
+    return folder.get("id")
+
 def upload_pdf_to_drive(score_data, file_location_on_disk):
     file_metadata = score_data
     media = MediaFileUpload(

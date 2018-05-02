@@ -18,12 +18,10 @@ from django.core.files.storage import default_storage
 from django_addanother.views import CreatePopupMixin
 
 from googledrive.api_calls import (
-    upload_pdf_to_drive, upload_audio_to_drive, share_file_permission)
+    create_song_folder, upload_pdf_to_drive, upload_audio_to_drive, share_file_permission)
 
 from youtube.api_calls import (
-    API_ONLY_YOUTUBE, AUTH_YOUTUBE, CHORAL_CENTRAL_CHANNEL_ID,
-    get_youtube_video_id, get_video_information,
-    get_playlist_id, add_video_to_playlist
+    get_youtube_video_id, get_video_information, get_playlist_id, add_video_to_playlist
 )
 
 from siteuser.models import SiteUser
@@ -33,9 +31,6 @@ from .forms import (
     NewScoreForm, NewMidiForm, NewVideoLinkForm,
     NewVocalPartForm, NewScoreNotationForm
     )
-
-CHORAL_SCORE_FOLDER_ID = '138lziNQEspOyyDxObWxtYt8SURDeiVor'
-CHORAL_MIDI_FOLDER_ID = '1WYFzgY1Z4l7b39J2pcnq9_m0tY55NBbJ'
 
 class NewVocalPart(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):
     model = VocalPart
@@ -65,10 +60,18 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         part = form.instance.part
         media_object = form.instance.media_file
 
+        # get of create drive folder
+        folder_id = song.drive_folder_id
+        if (folder_id is None) or (folder_id == ""):
+            folder_name = "{}-{}".format(song.pk, slugify(song.title))
+            folder_id = create_song_folder(folder_name)
+            song.drive_folder_id = folder_id
+            song.save(update_fields=['drive_folder_id'])
+
         score_metadata = {}
+        score_metadata['parents'] = [folder_id]
         score_metadata['name'] = song.title + ".pdf"
         score_metadata['description'] = "{}, {} {}".format(song.title, notation.name, part.name)
-        score_metadata['parents'] = [CHORAL_SCORE_FOLDER_ID]
         score_metadata['viewersCanCopyContent'] = True
 
         # create a unique temporary pdf id to avoid race conditions
@@ -157,11 +160,19 @@ class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
         media_object = form.instance.media_file
         extension = os.path.splitext(media_object.name)[1]
 
+        # get of create drive folder
+        folder_id = song.drive_folder_id
+        if (folder_id is None) or (folder_id == ""):
+            folder_name = "{}-{}".format(song.pk, slugify(song.title))
+            folder_id = create_song_folder(folder_name)
+            song.drive_folder_id = folder_id
+            song.save(update_fields=['drive_folder_id'])
+
         # build drive metadata
         midi_metadata = {}
+        midi_metadata['parents'] = [folder_id]
         midi_metadata['description'] = "{}, {}: {}".format(
             form.instance.song.title, form.instance.part.name, form.instance.description)
-        midi_metadata['parents'] = [CHORAL_MIDI_FOLDER_ID]
         midi_metadata['viewersCanCopyContent'] = True
 
         tmp = os.path.join(settings.BASE_DIR, 'media', 'tmp')
@@ -249,14 +260,14 @@ class NewVideoLink(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, ge
         playlist_id = song.youtube_playlist_id
         song_title = song.title.strip()
         if (playlist_id is None) or (playlist_id == ''):
-            playlist_id = get_playlist_id(AUTH_YOUTUBE, playlist_id, song_title)
+            playlist_id = get_playlist_id(playlist_id, song_title)
             song.youtube_playlist_id = playlist_id
             song.save(update_fields=['youtube_playlist_id'])
 
         video_id = get_youtube_video_id(self.object.video_link)
-        add_video_to_playlist(AUTH_YOUTUBE, video_id, playlist_id)
+        add_video_to_playlist(video_id, playlist_id)
 
-        video = get_video_information(API_ONLY_YOUTUBE, video_id)
+        video = get_video_information(video_id)
         title = video['items'][0]['snippet']['title']
         youtube_views = video['items'][0]['statistics']['viewCount']
         youtube_likes = video['items'][0]['statistics']['likeCount']
@@ -270,7 +281,6 @@ class NewVideoLink(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, ge
         self.object.youtube_views = youtube_views
         self.object.thumbnail_url = default_thumbnail_url
         self.object.save()
-
         return super(NewVideoLink, self).form_valid(form)
 
     def get_form_kwargs(self):

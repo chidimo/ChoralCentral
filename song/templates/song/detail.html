@@ -16,7 +16,7 @@
             <span class='float-right song-icons'>
                 {% if user.is_authenticated %}
                     {% if request.user.siteuser in song.likes.all %}
-                        <a class="btn btn-sm btn-primary icon-buttons" href="" id="like" name="{{ song.pk }}" value="Like" title="unlove this song"><i class="fas fa-heart"></i> Unstar</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" href="" id="like" name="{{ song.pk }}" value="Like" title="unlove this song"><i class="fas fa-heart"></i> Unlove</a>
                         {% include 'song/song_like_script.html' %}
                     {% else %}
                         <a class="btn btn-sm btn-primary icon-buttons" href="" id="like" name="{{ song.pk }}" value="Like" title="love this song"><i class="fas fa-heart"></i> Lovers</a>
