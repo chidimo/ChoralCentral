@@ -428,6 +428,10 @@ a.upload-button {
     margin-top: .5rem;
 }
 
+.audio-list-container > img {
+    margin: auto;
+}
+
 .audio-list-meta-container {
     padding: 0.3rem .5rem 0 .5rem;
     margin-bottom: .5rem;
