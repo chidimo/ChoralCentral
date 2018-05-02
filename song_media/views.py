@@ -17,10 +17,8 @@ from django.core.files.storage import default_storage
 
 from django_addanother.views import CreatePopupMixin
 
-from googledrive.api_calls import (
-    create_song_folder, upload_pdf_to_drive, upload_audio_to_drive, share_file_permission)
-
-from youtube.api_calls import (
+from google_api.api_calls import (
+    create_song_folder, upload_pdf_to_drive, upload_audio_to_drive, share_file_permission,
     get_youtube_video_id, get_video_information, get_playlist_id, add_video_to_playlist
 )
 

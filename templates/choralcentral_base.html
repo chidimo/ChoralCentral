@@ -69,8 +69,8 @@
 				<ul class="nav navbar-nav ml-auto">
 					{% if user.is_authenticated %}
 						{% if user.is_admin %}
-							<li class="nav-item"><a class="nav-link" href="{% url 'googledrive:authorize_drive' %}" target="_blank">Drive</a></li>
-							<li class="nav-item"><a class="nav-link" href="{% url 'youtube:authorize_youtube' %}" target="_blank">YouTube</a></li>
+							<li class="nav-item"><a class="nav-link" href="{% url 'google-api:drive_authorize' %}" target="_blank">Drive</a></li>
+							<li class="nav-item"><a class="nav-link" href="{% url 'google-api:youtube_authorize' %}" target="_blank">YouTube</a></li>
 							<li class="nav-item"><a class="nav-link" href="/admin/"><i class='fas fa-cog fa-spin'></i></a></li>
 							<li><a class="nav-link" href="{% url 'song-media:midi_index' %}"><i class="fas fa-music"></i></a></li>
 							<li><a class="nav-link" href="{% url 'song-media:score_index' %}"><i class="fas fa-file-pdf"></i></a></li>
