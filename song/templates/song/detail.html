@@ -131,40 +131,44 @@
         </h5>
         <hr>
 
-    <div class="row text-left">
+    <div class="row">
         {% for score in song.score_set.all %}
 
-            <div class="col-sm-6 col-md-4 col-lg-3 py-2 score-list">
-                <div class="container score-list-pdf-container">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <a href="{{ score.embed_link }}"><img src="{{ score.thumbnail.url }}" width="150" height="200"></a>
-                            <!--<embed id="pdfIframe" src="{{ score.embed_link }}#toolbar=0&navpanes=0&scrollbar=0" width="150" height="200" showcontrols="false"></embed>-->
-                        </div>
-                        <div class="col-sm-6">
-                            <p class="text-right">{{ score.part|title }}</p>
-                            <p class="text-right">{{ score.notation|title }}</p>
-                            <p class="text-right">
-                                <a href="{% url 'siteuser:detail' score.uploader.pk score.uploader.slug %}"> {{ score.uploader.screen_name }}</a>
-                            </p>
-                        </div>
+            <div class="col-sm-6 col-md-4 col-lg-3 py-2 px-0 score-list">
+                <div class="row score-list-pdf-container">
+                    <!--<div class="row">-->
+                        <img src="{{ score.thumbnail.url }}" class="card center" width="120" height="160">
+                        <!--<embed id="pdfIframe" src="{{ score.embed_link }}#toolbar=0&navpanes=0&scrollbar=0" width="150" height="200" showcontrols="false"></embed>-->
+                    <!--</div>-->
+                </div>
+
+                <div class="row score-list-meta-container">
+                    <div class="container">
+
+                    <span title="{{ score.part|title }}">{{ score.part|title }}</span> |
+                    <span title="{{ score.notation|title }}">{{ score.notation|title }}</span> |
+                    <a href="{% url 'siteuser:detail' score.uploader.pk score.uploader.slug %}" title="{{ score.uploader.screen_name }}"> {{ score.uploader.screen_name }}</a>
                     </div>
                 </div>
 
-                <div class="row score-list-icon-container">
+                <div class="row score-list-drive-container">
                     <div class="container">
-                        <p>
-                            <a class="float-left" href="{{ score.embed_link }}" target="_blank"><i class="fab fa-google-drive"></i></a>
-                            <a class="float-right" href="{{ score.drive_download_link }}" target="_blank"><i class="fas fa-download"></i></a>
-                        </p>
 
-                        <a class="btn btn-sm btn-primary icon-buttons float-left" href="" title="Love this score">
-                            <span>{{ score.score_likes }}</span> <i class="fas fa-heart"></i>
-                        </a>
-                        <span class="btn btn-sm btn-primary icon-buttons float-right" title="Total downloads">
-                            <span>{{ score.downloads }}</span> <i class="fas fa-eye"></i>
-                        </span>
+                    <a class="btn btn-sm btn-primary icon-buttons" href="{{ score.embed_link }}" target="_blank">
+                        <i class="fab fa-google-drive" title="preview"></i></a>
+                    <a class="btn btn-sm btn-primary icon-buttons float-right" href="{{ score.drive_download_link }}" target="_blank" title="download">
+                        <i class="fas fa-download"></i></a>
+                    </div>
+                </div>
 
+                <div class="row score-list-stats-container">
+                    <div class="container">
+
+                    <a class="btn btn-sm btn-primary icon-buttons" href="" title="Love this score">
+                        <span>{{ score.score_likes }}</span> <i class="fas fa-heart"></i></a>
+                    <span class="btn btn-sm btn-primary icon-buttons float-right" title="Total downloads">
+                        <span>{{ score.downloads }}</span> <i class="fas fa-eye"></i>
+                    </span>
                     </div>
                 </div>
             </div>

@@ -393,32 +393,31 @@ a.upload-button {
     margin-top: .5rem;
 }
 
-.score-list-pdf-container {
-    padding-left: .5rem;
-    padding-right: .5rem;
+.score-list-pdf-container > img {
+    margin: auto;
 }
 
-.score-list-pdf-container > .row > .col-sm-6 {
-    padding-left: .1rem;
-    padding-right: .1rem;
-}
-
-.score-list-pdf-container > .row > .col-sm-6 > p.text-right {
-    margin-bottom: 0;
-    font-size: 14px;
-    word-wrap: break-word;
-}
-
-.score-list-icon-container > .container {
+.score-list-meta-container {
     padding: 0.3rem .5rem 0 .5rem;
+    margin-bottom: .5rem;
 }
 
-.score-list-icon-container > .container > button {
+.score-list-drive-container {
+    padding: 0.3rem .5rem 0 .5rem;
+    margin-bottom: .5rem;
+}
+
+.score-list-stats-container {
+    padding: 0.3rem .5rem 0 .5rem;
+    margin-bottom: .5rem;
+}
+
+.score-list-meta-container > button {
     padding-left: 3.5px;
     padding-right: 3.5px;
 }
 
-.score-list-icon-container > .container > button > span {
+.score-list-meta-container > button > span {
     background: blanchedalmond;
 }
 
