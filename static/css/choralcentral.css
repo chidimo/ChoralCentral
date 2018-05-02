@@ -428,22 +428,23 @@ a.upload-button {
     margin-top: .5rem;
 }
 
-.audio-list > p.text-right {
-    margin-bottom: 0;
-    font-size: 14px;
+.audio-list-container > img {
+    margin: auto;
 }
 
-.audio-list-icon-container > .container {
+.audio-list-meta-container {
     padding: 0.3rem .5rem 0 .5rem;
+    margin-bottom: .5rem;
 }
 
-.audio-list-icon-container > .container > button {
-    padding-left: 3.5px;
-    padding-right: 3.5px;
+.audio-list-drive-container {
+    padding: 0.3rem .5rem 0 .5rem;
+    margin-bottom: .5rem;
 }
 
-.audio-list-icon-container > .container > button > span {
-    background: blanchedalmond;
+.audio-list-stats-container {
+    padding: 0.3rem .5rem 0 .5rem;
+    margin-bottom: .5rem;
 }
 
 .search-input-box {

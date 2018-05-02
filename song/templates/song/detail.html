@@ -136,39 +136,34 @@
 
             <div class="col-sm-6 col-md-4 col-lg-3 py-2 px-0 score-list">
                 <div class="row score-list-pdf-container">
-                    <!--<div class="row">-->
-                        <img src="{{ score.thumbnail.url }}" class="card center" width="120" height="160">
+                    <img src="{{ score.thumbnail.url }}" class="card center" width="120" height="160">
                         <!--<embed id="pdfIframe" src="{{ score.embed_link }}#toolbar=0&navpanes=0&scrollbar=0" width="150" height="200" showcontrols="false"></embed>-->
-                    <!--</div>-->
                 </div>
 
                 <div class="row score-list-meta-container">
                     <div class="container">
-
-                    <span title="{{ score.part|title }}">{{ score.part|title }}</span> |
-                    <span title="{{ score.notation|title }}">{{ score.notation|title }}</span> |
-                    <a href="{% url 'siteuser:detail' score.uploader.pk score.uploader.slug %}" title="{{ score.uploader.screen_name }}"> {{ score.uploader.screen_name }}</a>
+                        <span title="{{ score.part|title }}">{{ score.part|truncatechars:5 }}</span> |
+                        <span title="{{ score.notation|title }}">{{ score.notation|truncatechars:5 }}</span> |
+                        <a href="{% url 'siteuser:detail' score.uploader.pk score.uploader.slug %}" title="{{ score.uploader.screen_name }}"> {{ score.uploader.screen_name|truncatechars:5 }}</a>
                     </div>
                 </div>
 
                 <div class="row score-list-drive-container">
                     <div class="container">
-
-                    <a class="btn btn-sm btn-primary icon-buttons" href="{{ score.embed_link }}" target="_blank">
-                        <i class="fab fa-google-drive" title="preview"></i></a>
-                    <a class="btn btn-sm btn-primary icon-buttons float-right" href="{{ score.drive_download_link }}" target="_blank" title="download">
-                        <i class="fas fa-download"></i></a>
+                        <a class="btn btn-sm btn-primary icon-buttons" href="{{ score.embed_link }}" target="_blank">
+                            <i class="fab fa-google-drive" title="Preview"></i></a>
+                        <a class="btn btn-sm btn-primary icon-buttons float-right" href="{{ score.drive_download_link }}" target="_blank" title="Download">
+                            <i class="fas fa-download"></i></a>
                     </div>
                 </div>
 
                 <div class="row score-list-stats-container">
                     <div class="container">
-
-                    <a class="btn btn-sm btn-primary icon-buttons" href="" title="Love this score">
-                        <span>{{ score.score_likes }}</span> <i class="fas fa-heart"></i></a>
-                    <span class="btn btn-sm btn-primary icon-buttons float-right" title="Total downloads">
-                        <span>{{ score.downloads }}</span> <i class="fas fa-eye"></i>
-                    </span>
+                        <a class="btn btn-sm btn-primary icon-buttons" href="" title="Love this score">
+                            <span>{{ score.score_likes }}</span> <i class="fas fa-heart"></i></a>
+                        <span class="btn btn-sm btn-primary icon-buttons float-right" title="Total downloads">
+                            <span>{{ score.downloads }}</span> <i class="fas fa-eye"></i>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -189,47 +184,29 @@
 
     <div class="row text-left">
         {% for midi in song.midi_set.all %}
-            <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 audio-list">
-
-                {% if midi.media_file %}
-
-                    {% if midi.fformat == ".mp3" %}
-                        <div class='container'>
-                            <div class='row'>
-                                <audio controls>
-                                  <source src="{{ midi.media_file.url }}" type="audio/mpeg">
-                                  <source src="{{ midi.media_file.url }}" type="audio/ogg">
-                                  Your browser does not support the sound element.
-                                </audio>
-                            </div>
-                        </div>
-                    {% else %}
-                        <div class='container'>
-                            <div class='row'>
-                                <div class='midi-controls' style="height: 32px;">
-                                    <a href="#" onClick="MIDIjs.play('{{ midi.media_file.url }}');" title='{{ midi.description }}'><i class='fas fa-play'></i></a> &emsp;
-                                    <a href="#" onClick="MIDIjs.stop();"><i class='fas fa-stop'></i></a> &emsp;
-                                    <a href="{% url 'song-media:download_midi' midi.pk %}"><i class="fas fa-download"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endif %}
-
-
-                <p class='text-right'>{{ midi.part }}</p>
-                <p class='text-right'><a href="{% url 'siteuser:detail' midi.uploader.pk midi.uploader.slug %}">{{ midi.uploader.screen_name }}</a></p>
-
-                <div class="row audio-list-icon-container">
-                    <div class="col-sm-6">
-                        <embed id="pdfIframe" src="{{ midi.embed_link }}#toolbar=0&navpanes=0&scrollbar=0" width="150" height="200" showcontrols="false"></embed><!--</iframe>-->
-                    </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 px-0 audio-list">
+                <div class="row audio-list-container">
+                    <img src="" class="card" width="120" height="160">
+                    <!--<embed id="pdfIframe" src="{{ midi.embed_link }}#toolbar=0&navpanes=0&scrollbar=0" width="150" height="200" showcontrols="false"></embed><!--</iframe>-->
+                </div>
+                <div class="row audio-list-meta-container">
                     <div class="container">
-                        <p>
-                            <a class="float-left" href="{{ midi.embed_link }}" target="_blank"><i class="fab fa-google-drive"></i></a>
-                            <a class="float-right" href="{{ midi.drive_download_link }}" target="_blank"><i class="fas fa-download"></i></a>
-                        </p>
+                        <span title="{{ midi.part }}">{{ midi.part|truncatechars:5 }}</span> |
+                        <a href="{% url 'siteuser:detail' midi.uploader.pk midi.uploader.slug %}">{{ midi.uploader.screen_name|truncatechars:5 }}</a>
+                    </div>
+                </div>
 
+                <div class="row audio-list-drive-container">
+                    <div class="container">
+                        <a class="btn btn-sm btn-primary icon-buttons" href="{{ midi.embed_link }}" target="_blank" title="Preview">
+                            <i class="fab fa-google-drive"></i></a>
+                        <a class="btn btn-sm btn-primary icon-buttons float-right" href="{{ midi.drive_download_link }}" target="_blank" title="Download">
+                            <i class="fas fa-download"></i></a>
+                    </div>
+                </div>
+
+                <div class="row audio-list-stats-container">
+                    <div class="container">
                         <a class="btn btn-sm btn-primary icon-buttons float-left" href="" title="Love this music">
                             <span>{{ midi.midi_likes }}</span> <i class="fas fa-heart"></i>
                         </a>
