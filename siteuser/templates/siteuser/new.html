@@ -15,9 +15,13 @@
             {% csrf_token %}
 
                 <p>{{ form.email }}</p>
+                <p>{{ form.email.errors }}</p>
                 <p>{{ form.screen_name }}</p>
+                <p>{{ form.screen_name.errors }}</p>
                 <p>{{ form.password1 }}</p>
+                <p>{{ form.password1.errors }}</p>
                 <p>{{ form.password2 }}</p>
+                <p>{{ form.password2.errors }}</p>
 
             <button class="btn btn-primary btn-sm register-btn" type="submit" value="Join">Join</button>
         </form>

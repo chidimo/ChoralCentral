@@ -184,49 +184,61 @@ class FilterSongs(PaginationMixin, SuccessMessageMixin, generic.ListView):
         context['form'] = SongFilterForm()
         return context
 
+    def _build_query(self, **kwargs):
+        queries = []
+        msg = []
+
+        for key, value in kwargs.items():
+            if key == "combinator":
+                continue
+            if value == None:
+                continue
+            query_string = ("('{}__id__exact', {})".format(key, value.id))
+            messages.success(self.request, "query_string {}".format(query_string))
+            queries.append(query_string)
+            msg.append('{}={}'.format(key, value))
+
+        if kwargs.get("combinator") == 'OR':
+            # if query = []
+            try:
+                query = reduce(operator.or_, queries)
+                query_msg = " OR ".join(msg)
+            except TypeError:
+                query = []
+                query_msg = ""
+        else:
+            try:
+                query = reduce(operator.and_, queries)
+                query_msg = " AND ".join(msg)
+            except TypeError:
+                query = []
+                query_msg = ""
+        return query, query_msg
+
     def get_queryset(self):
         if self.request.method == 'GET':
             form = SongFilterForm(self.request.GET)
+
             if form.is_valid():
-                form = form.cleaned_data
-                combinator = form['combinator']
-                season = form['season']
-                masspart = form['masspart']
-                voicing = form["voicing"]
-                language = form["language"]
-                author = form['author']
+                data = form.cleaned_data
+                combinator = data['combinator']
+                season = data['season']
+                masspart = data['masspart']
+                voicing = data["voicing"]
+                language = data["language"]
+                author = data['author']
 
-                queries = []
-                msg = []
-                if author:
-                    queries.append(Q(authors__id__exact=author.id))
-                    msg.append('Author={}'.format(author))
-                if season:
-                    queries.append(Q(seasons__id__exact=season.id))
-                    msg.append('Season={}'.format(season))
-                if masspart:
-                    queries.append(Q(mass_parts__id__exact=masspart.id))
-                    msg.append('Masspart={}'.format(masspart))
-                if voicing:
-                    queries.append(Q(voicing__id__exact=voicing.id))
-                    msg.append('Voicing={}'.format(voicing))
-                if language:
-                    queries.append(Q(language__id__exact=language.id))
-                    msg.append('Language={}'.format(language))
+                query, msg = self._build_query(
+                    authors=author, seasons=season, mass_parts=masspart,
+                    voicing=voicing, language=language, combinator=combinator)
 
-                if queries == []:
+                if query:
+                    messages.success(self.request, "Search msg {}".format(msg))
+                    messages.success(self.request, "Search query {}".format(query))
+                    return Song.objects.filter(query)
+                else:
                     messages.success(self.request, "You did not make any selection.")
                     return Song.objects.filter(publish=True)
-
-                if combinator == 'OR':
-                    query = reduce(operator.or_, queries)
-                    query_str = " OR ".join(msg)
-                else:
-                    query = reduce(operator.and_, queries)
-                    query_str = " AND ".join(msg)
-                messages.success(self.request, "Search message {}".format(query_str))
-                # messages.success(self.request, "Search query {}".format(query))
-                return Song.objects.filter(query)
 
 def reader_view(request, pk, slug):
     template = 'song/reader_view.html'

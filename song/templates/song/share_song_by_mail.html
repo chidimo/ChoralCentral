@@ -12,10 +12,10 @@
         <hr>
 
         <p>Hello, <br>
-            {% if name %}{{ name|title }}{% else %}Someone{% endif %} would like you to see <a href="{{ song_link }}">{{ song.title|title }}</a> over on
+            {% if name %}{{ name|title }}{% else %}Someone{% endif %} would like you to see <a href="{{ song_link }}">{{ song.title|title }}</a> over at
             <a href="http://www.choralcentral.net">ChoralCentral</a>
         </p>
-        <p>Be sure to check out the uploaded sheet music and midis as well. The most recent ones are listed just below the lyrics. Happy Choralling !!!</p>
+        <p>Be sure to check out the uploaded sheet music and midis as well. Happy Choralling !!!</p>
 
         <hr>
         <div class='about'>
@@ -53,12 +53,5 @@
             {{ song.lyrics|markdown_format }}
         </div>
         <hr>
-
-        {% for score in song.score_set.all %}
-            <p><a href="{{ score.score_absolute_url }}" target="_blank">{{ score }}</a></p>
-        {% empty %}
-            <div class="container"><p>Be the first to add a music sheet</p></div>
-        {% endfor %}
-
     </body>
 </html>

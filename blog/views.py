@@ -234,7 +234,7 @@ def share_post_by_mail(request, pk, slug):
             context['name'] = name
 
             email_list = [each.strip() for each in receiving_emails.split(',')]
-            if len(email_list) > 5:
+            if len(email_list) > 3:
                 messages.error(request, "Too many emails. Please enter at most 5 email addresses.")
                 return redirect(post.get_absolute_url())
 
