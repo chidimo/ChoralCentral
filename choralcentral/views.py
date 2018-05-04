@@ -7,3 +7,7 @@ def google_webmaster_verify(request):
 def credits(request):
     template = "credits.html"
     return render(request, template, {})
+
+def api(request):
+    template = "api.html"
+    return render(request, template, {})

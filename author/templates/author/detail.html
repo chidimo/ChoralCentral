@@ -8,8 +8,7 @@
 <div class='container author-heading'>
     <div class='row'>
         <div class='col-sm-12'>
-            <span class='h5 float-left'>{{ author }} - {{ author.author_type|title}}</span>
-            <span class='h5 float-right'><a href="{% url 'song-api:published_author_api' author.pk author.slug %}">API</a></span>
+            <h5>{{ author }} - {{ author.author_type|title}}</h5>
         </div>
     </div>
 </div>

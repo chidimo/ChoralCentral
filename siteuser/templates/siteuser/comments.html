@@ -10,12 +10,6 @@
             <span class='h5 float-left'>
                 Comments by <a href="{% url 'siteuser:detail' siteuser.pk siteuser.slug %}">{{ siteuser.screen_name }}</a>
             </span>
-
-            <span class='float-right song-icons'>
-                <button class="icon-buttons">
-                    <a href="{% url 'blog-api:user_comments_api' siteuser.pk %}" title="Download {{ siteuser.screen_name }}'s comments "><i class="fas fa-download"></i> Download</a>
-                </button>
-            </span>
         </div>
     </div>
 </div>

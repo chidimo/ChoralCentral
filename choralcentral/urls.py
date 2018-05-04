@@ -50,6 +50,7 @@ urlpatterns += [
 urlpatterns += [
     path('google364c8377c791cdf3.html', views.google_webmaster_verify),
     path('credits/', views.credits),
+    path('api/', views.api),
 ]
 
 if settings.DEBUG:
