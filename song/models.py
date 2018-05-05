@@ -131,6 +131,9 @@ class Song(TimeStampedModel):
     def get_absolute_url(self):
         return reverse('song:detail', args=[str(self.id), str(self.slug)])
 
+    def get_absolute_uri(self):
+        return "http://www.choralcentral.net" + reverse('song:detail', args=[str(self.id), str(self.slug)])
+
     def __str__(self):
         return self.title
 

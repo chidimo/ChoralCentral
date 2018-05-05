@@ -122,6 +122,18 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         kwargs['pk'] = self.kwargs.get('pk', None)
         return kwargs
 
+def preview_score(request, pk):
+    score = Score.objects.get(pk=pk)
+    score.views += 1
+    score.save(update_fields=['views'])
+    return redirect(score.embed_link)
+
+def download_score_from_drive(request, pk):
+    score = Score.objects.get(pk=pk)
+    score.downloads += 1
+    score.save(update_fields=['downloads'])
+    return redirect(score.drive_download_link)
+
 def show_score(request, pk):
     doc = get_object_or_404(Score, pk=pk)
     doc.downloads += 1

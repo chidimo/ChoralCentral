@@ -5,10 +5,12 @@ from . import views
 
 app_name = 'song-media'
 urlpatterns = [
-    path('score/index/', views.ScoreIndex.as_view(), name='score_index'),
-    path('new/score/', views.NewScore.as_view(), name='new_score'),
-    path('new/score/<int:pk>/', views.NewScore.as_view(), name='score_add_song'),
-    path('view/score/<int:pk>/', views.show_score, name='score_view'),
+    path('score-index/', views.ScoreIndex.as_view(), name='score_index'),
+    path('new-score/', views.NewScore.as_view(), name='new_score'),
+    path('new-score-<int:pk>/', views.NewScore.as_view(), name='score_add_song'),
+    path('view-/score/<int:pk>/', views.show_score, name='score_view'),
+    path('download-score-drive-<int:pk>/', views.download_score_from_drive, name='download_score_from_drive'),
+    path('preview-score-drive-<int:pk>/', views.preview_score, name='preview_score_drive'),
 ]
 
 urlpatterns += [

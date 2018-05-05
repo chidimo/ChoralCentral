@@ -150,10 +150,8 @@
 
                 <div class="row score-list-drive-container">
                     <div class="container">
-                        <a class="btn btn-sm btn-primary icon-buttons" href="{{ score.embed_link }}" target="_blank">
-                            <i class="fab fa-google-drive" title="Preview"></i></a>
-                        <a class="btn btn-sm btn-primary icon-buttons float-right" href="{{ score.drive_download_link }}" target="_blank" title="Download">
-                            <i class="fas fa-download"></i></a>
+                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song-media:preview_score_drive' score.pk %}" target="_blank">
+                            {{ score.views }}<i class="fas fa-eye" title="Preview"></i></a>
                     </div>
                 </div>
 
@@ -161,8 +159,8 @@
                     <div class="container">
                         <a class="btn btn-sm btn-primary icon-buttons" href="" title="Love this score">
                             <span>{{ score.score_likes }}</span> <i class="fas fa-heart"></i></a>
-                        <span class="btn btn-sm btn-primary icon-buttons float-right" title="Total downloads">
-                            <span>{{ score.downloads }}</span> <i class="fas fa-eye"></i>
+                        <a class="btn btn-sm btn-primary icon-buttons float-right" href="{% url 'song-media:download_score_from_drive' score.pk %}" target="_blank" title="Download">
+                            {{ score.downloads }} <i class="fas fa-download"></i></a>
                         </span>
                     </div>
                 </div>

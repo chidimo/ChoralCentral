@@ -41,6 +41,7 @@ class Score(TimeStampedModel):
     likes = models.ManyToManyField(SiteUser, related_name="score_likes")
     thumbnail = models.ImageField(upload_to=save_score_thumbnail, null=True)
     downloads = models.IntegerField(default=0)
+    views = models.IntegerField(default=0)
     drive_view_link = models.URLField(null=True)
     drive_download_link = models.URLField(null=True)
     embed_link = models.URLField(null=True)
