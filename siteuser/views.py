@@ -1,6 +1,7 @@
 
 """Views"""
 
+from django.db import IntegrityError
 from django.core.mail import EmailMultiAlternatives
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
@@ -18,7 +19,7 @@ from django.contrib.auth import get_user_model
 
 from django_addanother.views import CreatePopupMixin
 from pure_pagination.mixins import PaginationMixin
-from .models import SiteUser, Role, SiteUserGroup, GroupMembership, GroupJoinRequest, Follow
+from .models import SiteUser, Role, SiteUserGroup, GroupMembership, GroupJoinRequest, ApiKey, Follow
 from blog.models import Comment
 from song.forms import ShareForm
 from song.models import Song
@@ -30,6 +31,17 @@ from .forms import (
 )
 
 CustomUser = get_user_model()
+
+def get_api_key(request):
+    try:
+        api_key = ApiKey.objects.create(
+            siteuser=request.user.siteuser)
+        msg = "Your API key is {}".format(api_key.key)
+    except IntegrityError:
+        msg = "You already have an API key"
+    messages.success(request, msg)
+    return redirect(
+        reverse("siteuser:detail", kwargs={"pk" : request.user.siteuser.pk, "slug" : request.user.siteuser.slug}))
 
 class SiteUserIndex(PaginationMixin, generic.ListView):
     model = SiteUser

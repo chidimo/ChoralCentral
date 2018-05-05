@@ -4,8 +4,11 @@ from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from .models import CustomUser, Role, SiteUser, SiteUserGroup, GroupMembership, GroupJoinRequest, Follow
+from .models import CustomUser, Role, SiteUser, SiteUserGroup, GroupMembership, GroupJoinRequest, ApiKey, Follow
 from .forms import UserChangeForm, UserCreationForm
+
+class ApiKeyAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'key', 'siteuser', 'quota')
 
 class SiteUserAdmin(admin.ModelAdmin):
     list_display = ("screen_name", "user", "first_name", "last_name", "slug", "location")
@@ -39,5 +42,6 @@ admin.site.register(SiteUser, SiteUserAdmin)
 admin.site.register(CustomUser, UserAdmin)
 admin.site.register(Follow, FollowAdmin)
 admin.site.register(Role)
+admin.site.register(ApiKey, ApiKeyAdmin)
 
 admin.site.unregister(Group)

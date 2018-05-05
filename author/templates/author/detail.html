@@ -40,7 +40,7 @@
     <h5><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h5>
 </div>
 {% empty %}
-    <p>Author as no song</p>
+    <p>Author has no song</p>
 {% endfor %}
 
 <p>First added by <a href="{% url 'siteuser:detail' author.originator.pk author.originator.slug %}">{{ author.originator.screen_name }}</a></p>
