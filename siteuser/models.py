@@ -83,12 +83,16 @@ class SiteUser(TimeStampedModel):
     avatar = ImageField(upload_to=save_avatar, null=True, blank=True)
 
     quota = models.IntegerField(default=100)
-    remaining = models.IntegerField(default=0)
+    used = models.IntegerField(default=0)
     key = models.CharField(max_length=50, default=uuid.uuid4, null=True, blank=True, unique=True)
 
     class Meta:
         ordering = ['screen_name']
         verbose_name_plural = 'siteusers'
+
+    @property
+    def remaining_quota(self):
+        return self.quota - self.used
 
     def __str__(self):
         return self.screen_name

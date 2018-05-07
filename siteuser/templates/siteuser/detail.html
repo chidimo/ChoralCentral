@@ -27,7 +27,7 @@
             <div class="dropdown-menu">
                 <span class="dropdown-item" href="#">API key: {{ siteuser.key }}</span>
                     <div class="dropdown-divider"></div>
-                <span class="dropdown-item" href="#">Quota: {{ siteuser.quota }} | Remaining: {{ siteuser.remaining }}</span>
+                <span class="dropdown-item" href="#">Quota: {{ siteuser.quota }} | Remaining: {{ siteuser.remaining_quota }}</span>
                     <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{% url 'siteuser:edit' siteuser.pk siteuser.slug %}">Edit profile</a>
                     <div class="dropdown-divider"></div>

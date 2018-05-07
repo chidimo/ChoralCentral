@@ -8,7 +8,7 @@ from .models import CustomUser, Role, SiteUser, SiteUserGroup, GroupMembership, 
 from .forms import UserChangeForm, UserCreationForm
 
 class SiteUserAdmin(admin.ModelAdmin):
-    list_display = ("screen_name", "user", "first_name", "last_name", "slug", "location", "key", "quota", "remaining", )
+    list_display = ("screen_name", "user", "first_name", "last_name", "slug", "location", "key", "quota", "used", "remaining_quota")
 
 class FollowAdmin(admin.ModelAdmin):
     list_display = ("from_siteuser", "to_siteuser", "created")
