@@ -35,25 +35,23 @@ from .forms import (
 CustomUser = get_user_model()
 
 def get_api_key(request):
-    user = SiteUser.objects.get(user=request.user)
-    if user.key:
+    siteuser = request.user.siteuser
+    if siteuser.key:
         msg = "You already have an API key"
     else:
-        user.key = uuid.uuid4()
-        user.save(update_fields=['key'])
-        msg = "Your API key is {}".format(user.key)
+        siteuser.key = uuid.uuid4()
+        siteuser.save(update_fields=['key'])
+        msg = "Your API key is {}".format(siteuser.key)
     messages.success(request, msg)
-    return redirect(
-        reverse("siteuser:detail", kwargs={"pk" : request.user.siteuser.pk, "slug" : request.user.siteuser.slug}))
+    return redirect(reverse("siteuser:detail", kwargs={"pk" : siteuser.pk, "slug" : siteuser.slug}))
 
 def reset_api_key(request):
-    user = SiteUser.objects.get(user=request.user)
-    user.key = uuid.uuid4()
-    user.save(update_fields=['key'])
-    msg = "Your new API key is {}. Don't forget to update your applications".format(user.key)
+    siteuser = request.user.siteuser
+    siteuser.key = uuid.uuid4()
+    siteuser.save(update_fields=['key'])
+    msg = "Your new API key is {}. Don't forget to update your applications".format(siteuser.key)
     messages.warning(request, msg)
-    return redirect(
-        reverse("siteuser:detail", kwargs={"pk" : request.user.siteuser.pk, "slug" : request.user.siteuser.slug}))
+    return redirect(reverse("siteuser:detail", kwargs={"pk" : siteuser.pk, "slug" : siteuser.slug}))
 
 class SiteUserIndex(PaginationMixin, generic.ListView):
     model = SiteUser

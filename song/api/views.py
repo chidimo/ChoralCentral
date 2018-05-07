@@ -1,10 +1,14 @@
 from django.db.models import Q
+from django.utils.decorators import method_decorator
 
 from rest_framework import viewsets
+
+from universal.view_decorators import check_user_quota
 
 from ..models import Song
 from . import serializers
 
+@method_decorator(check_user_quota, name='dispatch')
 class PublishedSongViewSet(viewsets.ModelViewSet):
     queryset = Song.objects.filter(Q(publish=True)).order_by('created')
     serializer_class = serializers.SongSerializer
@@ -13,6 +17,7 @@ class UnpublishedSongViewSet(viewsets.ModelViewSet):
     queryset = Song.objects.filter(Q(publish=False)).order_by('created')
     serializer_class = serializers.SongSerializer
 
+@method_decorator(check_user_quota, name='dispatch')
 class PublishedAuthorSongViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.SongSerializer
 
