@@ -1,0 +1,13 @@
+python manage.py makemigrations siteuser
+python manage.py makemigrations blog
+python manage.py makemigrations author
+python manage.py makemigrations song_media
+python manage.py makemigrations request
+python manage.py makemigrations song
+python manage.py migrate
+
+independents()
+superuser()
+members()
+songs_from_file()
+add_manyfields()

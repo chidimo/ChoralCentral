@@ -82,6 +82,10 @@ class SiteUser(TimeStampedModel):
     location = models.CharField(max_length=100, blank=True, null=True)
     avatar = ImageField(upload_to=save_avatar, null=True, blank=True)
 
+    quota = models.IntegerField(default=100)
+    remaining = models.IntegerField(default=0)
+    key = models.CharField(max_length=50, default=uuid.uuid4, null=True, blank=True, unique=True)
+
     class Meta:
         ordering = ['screen_name']
         verbose_name_plural = 'siteusers'
@@ -125,14 +129,6 @@ class GroupJoinRequest(TimeStampedModel):
 class Follow(TimeStampedModel):
     from_siteuser = models.ForeignKey(SiteUser, blank=True, null=True, on_delete=models.SET_NULL, related_name="from_siteuser_set")
     to_siteuser = models.ForeignKey(SiteUser, on_delete=models.CASCADE, related_name="to_siteuser_set")
-
-class ApiKey(TimeStampedModel):
-    key = models.CharField(max_length=50, default=uuid.uuid4, unique=True)
-    siteuser = models.OneToOneField(SiteUser, blank=True, null=True, on_delete=models.CASCADE)
-    quota = models.IntegerField(default=100)
-
-    def __str__(self):
-        return "{} - {}".format(self.siteuser.screen_name, self.key)
 
 # class HandShake(TimeStampedModel):
 #     from_siteuser = models.ForeignKey(

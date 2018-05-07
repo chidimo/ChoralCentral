@@ -25,9 +25,9 @@
                 My account
             </button>
             <div class="dropdown-menu">
-                <span class="dropdown-item" href="#">API key: {{ siteuser.apikey.key }}</span>
+                <span class="dropdown-item" href="#">API key: {{ siteuser.key }}</span>
                     <div class="dropdown-divider"></div>
-                <span class="dropdown-item" href="#">Quota: 100 | Remaining: {{ siteuser.apikey.quota }}</span>
+                <span class="dropdown-item" href="#">Quota: {{ siteuser.quota }} | Remaining: {{ siteuser.remaining }}</span>
                     <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{% url 'siteuser:edit' siteuser.pk siteuser.slug %}">Edit profile</a>
                     <div class="dropdown-divider"></div>
@@ -35,7 +35,11 @@
                     <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{% url 'siteuser:password_reset' %}">Reset password</a>
                     <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'siteuser:new_api_key' %}">Get API key</a>
+                {% if siteuser.key %}
+                    <a class="dropdown-item" href="{% url 'siteuser:reset_api_key' %}">Reset API key</a>
+                {% else %}
+                    <a class="dropdown-item" href="{% url 'siteuser:new_api_key' %}">Get API key</a>
+                {% endif %}
             </div>
         </div>
         <div class="btn-group">

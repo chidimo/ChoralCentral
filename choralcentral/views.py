@@ -11,3 +11,9 @@ def credits(request):
 def api(request):
     template = "api.html"
     return render(request, template, {})
+
+def api_docs(request):
+    template = "api_docs.html"
+    return render(request, template, {})
+
+

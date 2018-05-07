@@ -1,6 +1,8 @@
 
 """Views"""
 
+import uuid
+
 from django.db import IntegrityError
 from django.core.mail import EmailMultiAlternatives
 from django.shortcuts import redirect
@@ -19,7 +21,7 @@ from django.contrib.auth import get_user_model
 
 from django_addanother.views import CreatePopupMixin
 from pure_pagination.mixins import PaginationMixin
-from .models import SiteUser, Role, SiteUserGroup, GroupMembership, GroupJoinRequest, ApiKey, Follow
+from .models import SiteUser, Role, SiteUserGroup, GroupMembership, GroupJoinRequest, Follow
 from blog.models import Comment
 from song.forms import ShareForm
 from song.models import Song
@@ -33,13 +35,23 @@ from .forms import (
 CustomUser = get_user_model()
 
 def get_api_key(request):
-    try:
-        api_key = ApiKey.objects.create(
-            siteuser=request.user.siteuser)
-        msg = "Your API key is {}".format(api_key.key)
-    except IntegrityError:
+    user = SiteUser.objects.get(user=request.user)
+    if user.key:
         msg = "You already have an API key"
+    else:
+        user.key = uuid.uuid4()
+        user.save(update_fields=['key'])
+        msg = "Your API key is {}".format(user.key)
     messages.success(request, msg)
+    return redirect(
+        reverse("siteuser:detail", kwargs={"pk" : request.user.siteuser.pk, "slug" : request.user.siteuser.slug}))
+
+def reset_api_key(request):
+    user = SiteUser.objects.get(user=request.user)
+    user.key = uuid.uuid4()
+    user.save(update_fields=['key'])
+    msg = "Your new API key is {}. Don't forget to update your applications".format(user.key)
+    messages.warning(request, msg)
     return redirect(
         reverse("siteuser:detail", kwargs={"pk" : request.user.siteuser.pk, "slug" : request.user.siteuser.slug}))
 

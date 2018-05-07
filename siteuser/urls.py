@@ -32,6 +32,7 @@ urlpatterns += [
 
 urlpatterns += [
     path('new-api-key/', views.get_api_key, name='new_api_key'),
+    path('reset-api-key/', views.reset_api_key, name='reset_api_key'),
 ]
 
 urlpatterns += [

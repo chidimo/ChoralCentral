@@ -2,5 +2,5 @@
 # `source virtualenvwrapper.sh && workon __cc && python reset_api_keys.py`
 
 import os
-reset_cmd = "python manage.py reset_api_keys -quota 180"
+reset_cmd = "python manage.py reset_api_quotas -quota 180"
 os.system(reset_cmd)
