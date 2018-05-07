@@ -75,7 +75,7 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         # create a unique temporary pdf id to avoid race conditions
         pdf_id = str(uuid.uuid4())
 
-        # make a temporary folder in '/media/' directory
+        # make a temporary folder in '/media/' folder
         tmp = os.path.join(settings.BASE_DIR, 'media', 'tmp')
         if not os.path.exists(tmp):
             os.mkdir(tmp)
@@ -91,10 +91,6 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
 
         # generate thumbnail
         cmd = "pdftoppm -png -f 1 -singlefile {} {}".format(temp_pdf_path, temp_pdf_name)
-        with open("cmd.txt", "w+") as fh:
-            fh.write(cmd)
-            fh.write("\n\n")
-            fh.write(pdf_id)
         os.system(cmd)
 
         score = Score.objects.create(
