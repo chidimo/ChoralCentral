@@ -1,5 +1,6 @@
 {% extends "choralcentral_base.html" %}
 {% block title %}API documentation{% endblock title %}
+{% load song_ttags %}
 {% block introduction %}{% endblock introduction %}
 {% block content_content %}
 
@@ -7,11 +8,19 @@
 <hr>
 
 <div class="container">
-    <p>To access the API, you need to be logged in and have an API key. You can get your API key from your dashboard.</p>
+    <div class="row">
+        <div class="col-sm-12">
+            <p>To access the API, you need to be logged in and have an API key. You can get your API key from your dashboard.</p>
+            <p>This data structures of the exposed API interfaces are shown below.
+                <br>All returned data is in <code>json</code> format</p>
 
-    <p>This data structures of the exposed API interfaces are shown below.
-        <br>All returned data is in <code>json</code> format</p>
+            <p>Every API result has four keys, <code>count</code>, <code>next</code>, <code>previous</code>, and <code>results</code>.
+            The values of interest are in the <code>results</code> <code>list</code>. <code>results</code> is a list of dictionaries.
+            </p>
+
+            {% include 'structures.html' %}
+        </div>
+    </div>
 </div>
 
-{% block footer %}{% endblock footer %}
 {% endblock content_content %}
