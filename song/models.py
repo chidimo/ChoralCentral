@@ -141,6 +141,9 @@ class Song(TimeStampedModel):
         names = ["{} {}".format(author.first_name, author.last_name) for author in self.authors.all()]
         return ", ".join(names)
 
+    def should_index(self):
+        return self.publish
+
     def save(self, *args, **kwargs):
         self.tempo_text = get_tempo_text(self.tempo)
         return super(Song, self).save(*args, **kwargs)
