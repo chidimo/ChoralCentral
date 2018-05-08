@@ -12,9 +12,10 @@ class Command(BaseCommand):
         if options['quota']:
             quota = options['quota']
         else:
-            quota = 100
+            quota = 10
         siteusers = SiteUser.objects.all()
         for siteuser in siteusers:
             siteuser.quota = quota
-            siteuser.save(update_fields=['quota'])
+            siteuser.used = 0
+            siteuser.save(update_fields=['quota', 'used'])
         self.stdout.write(self.style.SUCCESS('Done resetting api siteusers'))

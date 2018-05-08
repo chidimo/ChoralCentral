@@ -7,7 +7,7 @@ def check_user_quota(func):
         siteuser = request.user.siteuser
         remaining_quota = siteuser.remaining_quota
         if remaining_quota > 0:
-            siteuser.used += 10
+            siteuser.used += 1
             siteuser.save(update_fields=['used'])
             messages.warning(request, "Remaining quota: {}".format(siteuser.remaining_quota))
             return func(request, *args, **kwargs)
