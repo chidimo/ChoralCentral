@@ -3,16 +3,22 @@
 from urllib.request import urlopen
 from io import BytesIO
 
+import requests
+
 from django.core.files import File
+from django.core.files.base import ContentFile
+
 from django.contrib.auth import login
 from django.contrib.auth import get_user_model
 from siteuser.models import SiteUser
 
 CustomUser = get_user_model()
 
-def download_avatar(url):
-    r = urlopen(url)
-    return BytesIO(r.read())
+def save_avatar(image_url, model_object):
+    response = requests.get(image_url)
+    if response.status_code == 200:
+        name = model_object.screen_name.lower()
+        model_object.avatar.save(name, ContentFile(response.content), save=True)
 
 def save_social_profile(backend, user, response, *args, **kwargs):
     request = kwargs['request']
@@ -43,8 +49,7 @@ def save_social_profile(backend, user, response, *args, **kwargs):
         su = SiteUser.objects.create(
             user=user, screen_name=screen_name, first_name=first_name, last_name=last_name,
             location=location)
-        su.avatar = File(download_avatar(image))
-        su.save()
+        save_avatar(image, su)
 
         login(request, user, backend=login_backend)
         return {'username' : screen_name}
@@ -72,9 +77,7 @@ def save_social_profile(backend, user, response, *args, **kwargs):
 
         su = SiteUser.objects.create(
             user=user, screen_name=screen_name, first_name=first_name, last_name=last_name)
-        su.avatar = File(download_avatar(image))
-        su.save()
-
+        save_avatar(image, su)
 
         login(request, user, backend=login_backend)
         return {'username' : screen_name}
