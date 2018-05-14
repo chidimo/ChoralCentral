@@ -25,26 +25,26 @@
                 About
             </button>
             <div class="dropdown-menu">
-                <span class="dropdown-item" href="#">First name: {{ siteuser.first_name }}</span>
+                <p class="dropdown-item">First name: {{ siteuser.first_name }}</p>
                     <div class="dropdown-divider"></div>
-                <span class="dropdown-item" href="#">Last name: {{ siteuser.last_name }}</span>
+                <p class="dropdown-item">Last name: {{ siteuser.last_name }}</p>
                     <div class="dropdown-divider"></div>
-                <span class="dropdown-item" href="#">Email: <a href="mailto:{{ siteuser.user.email }}">{{ siteuser.user.email }}</span>
+                <p class="dropdown-item">Email: <a href="mailto:{{ siteuser.user.email }}">{{ siteuser.user.email }}</a></p>
                     <div class="dropdown-divider"></div>
-                <span class="dropdown-item" href="#">Roles: 
+                <p class="dropdown-item">Roles: 
                     {% for role in siteuser.roles.all %}
-                        <a href='#' title='See other {{ role.role|title }}'>{{ role.role|title }}</a>
+                        <a href='#' title='See other {{ role.role|upper }}'>{{ role.role|title }}</a>
                         {% if not forloop.last %}, {% endif %}
                     {% endfor %}
-                </span>
+                </p>
                     <div class="dropdown-divider"></div>
-                <span class="dropdown-item" href="#">Location: <a href='#' title='See others from {{ siteuser.location }}'>{{ siteuser.location }}</a></span>
+                <p class="dropdown-item">Location: <a href='#' title='See others from {{ siteuser.location }}'>{{ siteuser.location }}</a></p>
                     <div class="dropdown-divider"></div>
-                <span class="dropdown-item" href="#">Member since: {{ siteuser.created }}</span>
+                <p class="dropdown-item">Member since: {{ siteuser.created }}</p>
                     <div class="dropdown-divider"></div>
-                <span class="dropdown-item" href="#">Last seen: {{ user.last_login }}</span>
+                <p class="dropdown-item">Last seen: {{ user.last_login }}</p>
                     <div class="dropdown-divider"></div>
-                <span class="dropdown-item" href="#">Comments: <a href="{% url 'siteuser:comments' siteuser.pk siteuser.slug %}">{{ siteuser.comment_set.count }}</a></span>
+                <p class="dropdown-item">Comments: <a href="{% url 'siteuser:comments' siteuser.pk siteuser.slug %}">{{ siteuser.comment_set.count }}</a></p>
             </div>
         </div>
         <div class="btn-group">
