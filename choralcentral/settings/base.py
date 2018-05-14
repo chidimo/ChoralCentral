@@ -29,10 +29,10 @@ FIXTURE_DIRS = [os.path.join(BASE_DIR, "fixtures")]
 
 SITE_ID = 1
 
-LOGIN_REDIRECT_URL = reverse_lazy('song:index')
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = reverse_lazy('siteuser:login')
 LOGOUT_URL = reverse_lazy('siteuser:logout')
-LOGOUT_REDIRECT_URL = reverse_lazy('song:index')
 
 PASSWORD_RESET_TIMEOUT_DAYS = 1
 
@@ -60,6 +60,15 @@ SHELL_PLUS_POST_IMPORTS = [
     ('fixtures', '*'),
     ('fixtures')
     ]
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '778785529263-j0gliifiledngb10gptji0514o5srjqi.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'sr9-rKSYRmdRYmLpzwslIcvf'
+
+SOCIAL_AUTH_TWITTER_KEY = 'pEmqXP2U6w8EeblGB3Eg0SvfL'
+SOCIAL_AUTH_TWITTER_SECRET = 'khl62hQETrYUgh2zB9KTx7e2SPEjra76KTI2m85V4nfYzwzBgB'
+
+# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = get_env_variable(SOCIAL_AUTH_GOOGLE_OAUTH2_KEY)
+# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = get_env_variable(SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET)
 
 REST_FRAMEWORK = {
     # 'DEFAULT_AUTHENTICATION_CLASSES' : (
@@ -93,9 +102,9 @@ PROJECT_APPS = [
 
 THIRD_PARTY_APPS = [
     'rest_framework',
-    # 'hitcount',
     'sorl.thumbnail',
     'social_django',
+    # 'social.apps.django_app.default',
     'pure_pagination',
     'django_addanother',
     'django_extensions',
@@ -106,27 +115,24 @@ INSTALLED_APPS = PREREQ_APPS +  PROJECT_APPS + THIRD_PARTY_APPS
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'guardian.backends.ObjectPermissionBackend',
-    # social backends
-    # 'social_core.backends.open_id.OpenIdAuth',
-    # 'social_core.backends.google.GoogleOpenId',
-    # 'social_core.backends.google.GoogleOAuth2',
-    # 'social_core.backends.google.GoogleOAuth',
-    # 'social_core.backends.twitter.TwitterOAuth',
-    # 'social_core.backends.yahoo.YahooOpenId',
-    # 'social.backends.facebook.FacebookOAuth2',
-
+    'social.backends.facebook.FacebookOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.yahoo.YahooOpenId',
     )
 
-GUARDIAN_RENDER_403 = True
-# GUARDIAN_TEMPLATE_403 = "403.html"
-
-# social-auth namespace setting. Override setting in project.urls
-# SOCIAL_AUTH_URL_NAMESPACE = 'social'
-
-# SOCIAL_AUTH_FACEBOOK_KEY =   # App ID
-# SOCIAL_AUTH_FACEBOOK_SECRET =   # App Secret
-
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.user.get_username',
+    'universal.save_social_profile.save_social_profile', # override create_user
+    'social_core.pipeline.social_auth.social_user',
+    # 'social_core.pipeline.user.create_user',
+    'social_core.pipeline.social_auth.associate_by_email',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+)
 
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
@@ -155,6 +161,8 @@ TEMPLATES = [
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
                 'universal.context_processors.site_stats',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },

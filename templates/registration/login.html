@@ -37,8 +37,18 @@
 
     <div class="row">
         <div class="col-sm-12">
-            <a class="btn btn-primary btn-sm join-btn" href="{% url 'siteuser:new' %}">Join</a>
-            <a class="btn btn-danger btn-sm float-right forgot-password-btn" href="{% url 'siteuser:password_reset' %}">Forgot password?</a>
+            <a class="btn btn-primary btn-sm" href="{% url 'social:begin' 'google-oauth2' %}" title="Google login"><i class="fab fa-google"></i></a>
+            <a class="btn btn-primary btn-sm mr-auto" href="{% url 'social:begin' 'facebook' %}" title="Facebook login"><i class="fab fa-facebook-f"></i></a>
+            <a class="btn btn-primary btn-sm mr-auto" href="{% url 'social:begin' 'twitter' %}" title="Twitter login"><i class="fab fa-twitter"></i></a>
+            <a class="btn btn-primary btn-sm mr-auto" href="{% url 'social:begin' 'yahoo' %}" title="Yahoo login"><i class="fab fa-yahoo"></i></a>
+        </div>
+    </div>
+    <hr>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <a class="btn btn-primary btn-sm join-btn" href="{% url 'siteuser:new' %}" title="Create new account">Join</a>
+            <a class="btn btn-danger btn-sm float-right forgot-password-btn" href="{% url 'siteuser:password_reset' %}" title="Retrieve password">Forgot password?</a>
         </div>
     </div>
 </div>

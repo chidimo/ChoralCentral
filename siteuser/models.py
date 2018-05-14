@@ -133,13 +133,3 @@ class GroupJoinRequest(TimeStampedModel):
 class Follow(TimeStampedModel):
     from_siteuser = models.ForeignKey(SiteUser, blank=True, null=True, on_delete=models.SET_NULL, related_name="from_siteuser_set")
     to_siteuser = models.ForeignKey(SiteUser, on_delete=models.CASCADE, related_name="to_siteuser_set")
-
-# class HandShake(TimeStampedModel):
-#     from_siteuser = models.ForeignKey(
-#         SiteUser,
-#         on_delete=models.CASCADE,
-#         related_name="from_siteuser_set")
-#     to_siteuser = models.ForeignKey(
-#         SiteUser,
-#         on_delete=models.CASCADE,
-#         related_name="to_siteuser_set")

@@ -528,18 +528,18 @@ a.upload-button {
     padding-bottom: .5rem;
 }
 
-.siteuser-index-heading > .row > .col-sm-12 > span {
-    margin-top: .5rem;
+.siteuser-index-heading > .container > .col-sm-12 > span {
+    margin-top: .65rem;
 }
 
-.siteuser-index-details {
+.siteuser-index-details, .love-bird-detail {
     border: 1px solid rgba(0,0,0,.125);
     border-radius: .3rem;
     background: #fff;
     color: midnightblue;
 }
 
-.siteuser-index-details > p.text-left {
+.siteuser-index-details > p.text-left, .love-bird-detail > p.text-left {
     font-size: 14px;
     margin-top: .25rem;
     margin-bottom: 0;
