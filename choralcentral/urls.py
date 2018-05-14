@@ -1,4 +1,5 @@
 """urls"""
+
 from django.urls import include, path
 from django.conf import settings
 from django.contrib import admin
@@ -31,8 +32,13 @@ urlpatterns = [
     path("request/", include('request.urls')),
     path("users/", include('siteuser.urls')),
     path("song-media/", include('song_media.urls')),
+]
+
+urlpatterns += [
     path('social/', include('social_django.urls', namespace='social')),
-    # path('api/', include('rest_framework.urls', namespace='rest_framework')),
+]
+
+urlpatterns += [
     path('api-blog/', include((blog_api_urls, 'blog-api'))),
     path('api-users/', include((user_api_urls, 'user-api'))),
     path('api-songs/', include((song_api_urls, 'song-api'))),
