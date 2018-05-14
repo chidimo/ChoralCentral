@@ -1,11 +1,8 @@
 # from django.core.files import File
 # import json
-from urllib.request import urlopen
-from io import BytesIO
 
 import requests
 
-from django.core.files import File
 from django.core.files.base import ContentFile
 
 from django.contrib.auth import login
