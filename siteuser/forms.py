@@ -91,7 +91,7 @@ class SiteUserRegistrationForm(SiteUserMixin):
 class SiteUserEditForm(forms.ModelForm):
     class Meta:
         model = SiteUser
-        fields = ["first_name", "last_name", "location", "roles"]
+        fields = ["first_name", "last_name", "location", "avatar", "roles"]
 
         widgets = {
             "first_name" : forms.TextInput(attrs={'class' : 'form-control', "placeholder" : "First name"}),

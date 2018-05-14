@@ -21,7 +21,7 @@ def save_social_profile(backend, user, response, *args, **kwargs):
     request = kwargs['request']
     login_backend = 'django.contrib.auth.backends.ModelBackend',
     if backend.name == "twitter":
-        # with open("res.json", "w+") as fh:
+        # with open("tw-res.json", "w+") as fh:
         #     json.dump(response, fh)
 
         login_backend = 'social_core.backends.twitter.TwitterOAuth'
@@ -80,5 +80,6 @@ def save_social_profile(backend, user, response, *args, **kwargs):
         return {'username' : screen_name}
 
     elif backend.name == 'facebook':
-        pass
+        with open("fb-res.json", "w+") as fh:
+            json.dump(response, fh)
 
