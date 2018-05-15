@@ -1,6 +1,7 @@
 {% extends "choralcentral_base.html" %}
 {% if song %}{% block title %}{{ song }}{% endblock title %} {% endif %}
 {% load thumbnail %}
+{% load social_share %}
 {% load static %}
 {% load song_ttags %}
 
@@ -27,13 +28,19 @@
                 {% endif %}
 
                     <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'blog:new_song' song.pk %}" title="Make a post about {{ song.title }}"><i class="fas fa-pencil-alt"></i> Blog</a>
-                    <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song:reader_view' song.pk song.slug %}" title="Print {{ song.title }} in pdf format" target="_blank"><i class="fas fa-print"></i> Print</a>
+                    <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song:reader_view' song.pk song.slug %}" title="Print {{ song.title }} in pdf format" target="_blank"><i class="fas fa-print"></i></a>
 
-                    <a class="btn btn-sm btn-primary icon-buttons" aria-hidden="true" href="{% url 'song:share_on_facebook' song.pk song.slug %}" title="Share {{ song.title }} on Facebook">
-                    <i class="fab fa-facebook"></i> Share</a>
+                    {% with song.title as link_text %}
+                        {% post_to_facebook song link_text %}
+                    {% endwith %}
 
-                    <a class="btn btn-sm btn-primary icon-buttons" href="" title="Share {{ song.title }} by email" data-toggle="modal" data-target="#emailModal">
-                    <i class="fas fa-at"></i> Email</a>
+                    {% with song.title as link_text %}
+                        {% post_to_twitter "Check out {{song.title}}" song link_text %}
+                    {% endwith %}
+
+                    <a class="btn btn-sm btn-primary icon-buttons" href="" title="Email {{ song.title }}" data-toggle="modal" data-target="#emailModal">
+                    <i class="fas fa-at"></i></a>
+
                 {% include 'song/song_share_modal.html' %}
             </span>
         </div>

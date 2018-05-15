@@ -110,11 +110,11 @@ THIRD_PARTY_APPS = [
     'rest_framework',
     'sorl.thumbnail',
     'social_django',
-    # 'social.apps.django_app.default',
     'pure_pagination',
     'django_addanother',
     'django_extensions',
     'algoliasearch_django',
+    'django_social_share',
 ]
 
 INSTALLED_APPS = PREREQ_APPS +  PROJECT_APPS + THIRD_PARTY_APPS
