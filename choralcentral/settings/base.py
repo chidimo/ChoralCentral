@@ -69,6 +69,11 @@ SOCIAL_AUTH_TWITTER_SECRET = 'khl62hQETrYUgh2zB9KTx7e2SPEjra76KTI2m85V4nfYzwzBgB
 
 SOCIAL_AUTH_FACEBOOK_KEY = '977674249054153'
 SOCIAL_AUTH_FACEBOOK_SECRET = 'be2b7177f8e39319e4d743acab365932'
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'public_profile']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+  'locale': 'en',
+  'fields': 'id,name'
+}
 
 SOCIAL_AUTH_YAHOO_OAUTH2_KEY = 'dj0yJmk9QUpmTEdZS2lLTmd5JmQ9WVdrOVdGZG5ZMmh1TldNbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD1jYg--'
 SOCIAL_AUTH_YAHOO_OAUTH2_SECRET = 'c032d7ff2a5a1af2e7276e7a8e4b0c974321d73d'
@@ -120,7 +125,7 @@ THIRD_PARTY_APPS = [
 INSTALLED_APPS = PREREQ_APPS +  PROJECT_APPS + THIRD_PARTY_APPS
 
 AUTHENTICATION_BACKENDS = (
-    'social.backends.facebook.FacebookOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.twitter.TwitterOAuth',
     'social_core.backends.yahoo.YahooOAuth2',
