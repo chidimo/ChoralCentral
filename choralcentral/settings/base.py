@@ -124,7 +124,12 @@ THIRD_PARTY_APPS = [
 
 INSTALLED_APPS = PREREQ_APPS +  PROJECT_APPS + THIRD_PARTY_APPS
 
+from social_core.backends.facebook import FacebookOAuth2
+class FacebookOAuth2Override(FacebookOAuth2):
+    REDIRECT_STATE = False
+
 AUTHENTICATION_BACKENDS = (
+    # 'FacebookOAuth2Override',
     'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.twitter.TwitterOAuth',
