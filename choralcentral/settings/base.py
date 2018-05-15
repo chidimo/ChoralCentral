@@ -67,6 +67,12 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'sr9-rKSYRmdRYmLpzwslIcvf'
 SOCIAL_AUTH_TWITTER_KEY = 'pEmqXP2U6w8EeblGB3Eg0SvfL'
 SOCIAL_AUTH_TWITTER_SECRET = 'khl62hQETrYUgh2zB9KTx7e2SPEjra76KTI2m85V4nfYzwzBgB'
 
+SOCIAL_AUTH_FACEBOOK_KEY = '977674249054153'
+SOCIAL_AUTH_FACEBOOK_SECRET = 'be2b7177f8e39319e4d743acab365932'
+
+SOCIAL_AUTH_YAHOO_OAUTH2_KEY = 'dj0yJmk9QUpmTEdZS2lLTmd5JmQ9WVdrOVdGZG5ZMmh1TldNbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD1jYg--'
+SOCIAL_AUTH_YAHOO_OAUTH2_SECRET = 'c032d7ff2a5a1af2e7276e7a8e4b0c974321d73d'
+
 # SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = get_env_variable(SOCIAL_AUTH_GOOGLE_OAUTH2_KEY)
 # SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = get_env_variable(SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET)
 
@@ -114,11 +120,12 @@ THIRD_PARTY_APPS = [
 INSTALLED_APPS = PREREQ_APPS +  PROJECT_APPS + THIRD_PARTY_APPS
 
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
     'social.backends.facebook.FacebookOAuth2',
     'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.yahoo.YahooOAuth2',
     'social_core.backends.yahoo.YahooOpenId',
+    'django.contrib.auth.backends.ModelBackend',
     )
 
 SOCIAL_AUTH_PIPELINE = (

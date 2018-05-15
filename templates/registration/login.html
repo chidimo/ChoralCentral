@@ -15,7 +15,8 @@
     {% endif %}
 
     <h2 class='text-center'>Login</h2>
-    <hr>
+
+    {% include "registration/social_logins.html" %}
 
     <form method="post" action="{% url 'siteuser:login' %}">
         {% csrf_token %}
@@ -33,15 +34,6 @@
         <button class="btn btn-primary btn-sm login-btn" type="submit" value="login">Log In</button>
         <input type="hidden" name="next" value="{{ next }}" />
     </form>
-    <hr>
-
-    <div class="row">
-        <div class="col-sm-12">
-            <a class="btn btn-primary btn-sm" href="{% url 'social:begin' 'google-oauth2' %}" title="Google login"><i class="fab fa-google"></i></a>
-            <a class="btn btn-primary btn-sm mr-auto" href="{% url 'social:begin' 'twitter' %}" title="Twitter login"><i class="fab fa-twitter"></i></a>
-            <a class="btn btn-primary btn-sm mr-auto" href="{% url 'social:begin' 'yahoo' %}" title="Yahoo login"><i class="fab fa-yahoo"></i></a>
-        </div>
-    </div>
     <hr>
 
     <div class="row">

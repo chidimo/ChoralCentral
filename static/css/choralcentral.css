@@ -607,13 +607,41 @@ input#id_password {
   padding-right: 5px;
 }
 
+/*LOGIN PAGE*/
+
+.social-logins {
+    margin-bottom: .5rem;
+}
+
+.social-logins > .col-sm-12 {
+    background: silver;
+    border: 1px solid #ccc;
+    border-radius: .3rem;
+    padding-top: .3rem;
+    padding-bottom: .3rem;
+}
+
 .login-form {
   max-width:350px;
   margin:auto;
   padding-bottom: 1rem;
 }
 
-/*LOGIN PAGE*/
+.social-logins > .col-sm-12 > a.google-login {
+    margin-right: 2rem;
+}
+
+.social-logins > .col-sm-12 > a.facebook-login {
+    margin-right: 2rem;
+}
+
+.social-logins > .col-sm-12 > a.twitter-login {
+    margin-right: 2rem;
+}
+
+.social-logins > .col-sm-12 > a.yahoo-login {
+    margin-right: 2rem;
+}
 
 .login-btn {
     width: 100%;

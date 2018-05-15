@@ -1,5 +1,5 @@
 # from django.core.files import File
-# import json
+import json
 
 import requests
 
@@ -21,7 +21,7 @@ def save_social_profile(backend, user, response, *args, **kwargs):
     request = kwargs['request']
     login_backend = 'django.contrib.auth.backends.ModelBackend',
     if backend.name == "twitter":
-        # with open("tw-res.json", "w+") as fh:
+        # with open("t-res.json", "w+") as fh:
         #     json.dump(response, fh)
 
         login_backend = 'social_core.backends.twitter.TwitterOAuth'
@@ -52,7 +52,7 @@ def save_social_profile(backend, user, response, *args, **kwargs):
         return {'username' : screen_name}
 
     elif backend.name == 'google-oauth2':
-        # with open("google-res.json", "w+") as fh:
+        # with open("g-res.json", "w+") as fh:
         #     json.dump(response, fh)
 
         login_backend = 'social_core.backends.google.GoogleOAuth2'
@@ -80,6 +80,31 @@ def save_social_profile(backend, user, response, *args, **kwargs):
         return {'username' : screen_name}
 
     elif backend.name == 'facebook':
-        with open("fb-res.json", "w+") as fh:
+        with open("f-res.json", "w+") as fh:
             json.dump(response, fh)
 
+    elif backend.name == 'yahoo-oauth2':
+        with open("y-res.json", "w+") as fh:
+            json.dump(response, fh)
+
+        login_backend = 'social_core.backends.yahoo.YahooOAuth2'
+        image = response['image']['imageUrl']
+        screen_name = response['nickname'] # not unique. check for collisions
+
+        if SiteUser.objects.filter(screen_name=screen_name).exists():
+            siteuser = SiteUser.objects.get(screen_name=screen_name)
+            user = siteuser.user
+            login(request, user, backend=login_backend)
+            return {'username' : screen_name}
+
+        email = "ab@yahoo.com"
+        user = CustomUser.objects.create_user(email=email, password=None)
+        user.is_active = True
+        user.save()
+
+        su = SiteUser.objects.create(
+            user=user, screen_name=screen_name, first_name='first_name', last_name='last_name')
+        save_avatar(image, su)
+
+        login(request, user, backend=login_backend)
+        return {'username' : screen_name}

@@ -27,6 +27,7 @@ django-haystack==2.7.dev0
 django-heroku==0.2.0
 django-hitcount==1.2.4
 django-pure-pagination==0.3.0
+django-social-share==1.1.2
 django-taggit==0.22.1
 djangorestframework==3.7.7
 entrypoints==0.2.3
