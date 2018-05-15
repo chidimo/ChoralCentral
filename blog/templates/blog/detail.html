@@ -1,6 +1,7 @@
 {% extends "choralcentral_base.html" %}
 {% block title %}{{ post }}{% endblock title %}
 {% load blog_ttags %}
+{% load social_share %}
 {% block introduction %}{% endblock introduction %}
 
 {% block content_content %}
@@ -28,7 +29,6 @@
                 </p>
             </div>
 
-
             <span class="btn btn-sm btn-primary icon-buttons float-left" title="Comments">
                 <span>{{ post.comment_set.count }}</span> <i class="fas fa-comments"></i>
             </span>
@@ -46,12 +46,16 @@
                     <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:login' %}" title="Login to give a star">Login to star this post</a>
                 {% endif %}
 
-                <a class="btn btn-sm btn-primary icon-buttons" href="#" title="Share on Facebook">
-                    <i class="fab fa-facebook"></i> Share
-                </a>
+                {% with post.title as link_text %}
+                    {% post_to_facebook post link_text %}
+                {% endwith %}
 
-                <a class="btn btn-sm btn-primary icon-buttons"href="" title="Share by email" data-toggle="modal" data-target="#postModal">
-                    <i class="fas fa-at"></i> Email
+                {% with post.title as link_text %}
+                    {% post_to_twitter "Check out {{post.title}}" post link_text %}
+                {% endwith %}
+
+                <a class="btn btn-sm btn-primary icon-buttons"href="" title="Email {{ post.title }}" data-toggle="modal" data-target="#postModal">
+                    <i class="fas fa-at"></i>
                 </a>
                 {% include 'blog/post_share_modal.html' %}
             </span>

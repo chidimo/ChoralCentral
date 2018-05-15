@@ -27,7 +27,7 @@
                     <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:login' %}">Login to love this song</a>
                 {% endif %}
 
-                    <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'blog:new_song' song.pk %}" title="Make a post about {{ song.title }}"><i class="fas fa-pencil-alt"></i> Blog</a>
+                    <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'blog:new_song' song.pk %}" title="Make a post about {{ song.title }}"><i class="fas fa-pencil-alt"></i></a>
                     <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song:reader_view' song.pk song.slug %}" title="Print {{ song.title }} in pdf format" target="_blank"><i class="fas fa-print"></i></a>
 
                     {% with song.title as link_text %}

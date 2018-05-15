@@ -2,8 +2,8 @@ from .base import *
 DEBUG = True
 
 # force https:
-# SECURE_SSL_REDIRECT = True
-# MIDDLEWARE += ['django.middleware.security.SecurityMiddleware']
+SECURE_SSL_REDIRECT = True
+MIDDLEWARE += ['django.middleware.security.SecurityMiddleware']
 
 DATABASES = {
     'default': {

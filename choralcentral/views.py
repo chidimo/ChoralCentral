@@ -8,6 +8,10 @@ def credits(request):
     template = "credits.html"
     return render(request, template, {})
 
+def coming_soon(request):
+    template = "coming_soon.html"
+    return render(request, template, {})
+
 def api(request):
     template = "api.html"
     return render(request, template, {})

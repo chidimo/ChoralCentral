@@ -58,6 +58,7 @@ urlpatterns += [
     path('credits/', views.credits),
     path('api/', views.api),
     path('api-doc/', views.api_docs),
+    path('coming-soon/', views.coming_soon),
 ]
 
 if settings.DEBUG:
