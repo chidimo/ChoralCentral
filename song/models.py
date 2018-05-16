@@ -94,7 +94,7 @@ class MassPart(TimeStampedModel):
         return self.part
 
 class Song(TimeStampedModel):
-    originator      = models.ForeignKey(SiteUser, on_delete=models.CASCADE)
+    originator      = models.ForeignKey(SiteUser, on_delete=models.SET_NULL, null=True)
     voicing         = models.ForeignKey(Voicing, on_delete=models.CASCADE)
     language        = models.ForeignKey(Language, on_delete=models.CASCADE)
     publish         = models.BooleanField(default=False)

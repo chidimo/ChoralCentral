@@ -12,7 +12,7 @@ from siteuser.models import SiteUser
 from song.models import Song
 
 class Post(TimeStampedModel):
-    creator = models.ForeignKey(SiteUser, on_delete=models.CASCADE)
+    creator = models.ForeignKey(SiteUser, on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=100)
     subtitle = models.CharField(max_length=100, blank=True, null=True)
     body = models.TextField()
