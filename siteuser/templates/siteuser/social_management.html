@@ -23,10 +23,10 @@
             {% if can_disconnect %}
              <form method="post" action="{% url 'social:disconnect' 'facebook' %}">
                 {% csrf_token %}
-                <button type="submit">Disconnect from Facebook</button>
+                <button type="submit">Disconnect</button>
              </form>
             {% else %}
-                <button type="button" disabled>Disconnect from Facebook</button>
+                <button type="button" disabled>Disconnect</button>
                 <p class="text-warning">Set a <a href="{% url 'siteuser:social_password' %}">password</a> if you wish to disconnect this account</p>
             {% endif %}
         {% else %}
@@ -43,10 +43,10 @@
             {% if can_disconnect %}
              <form method="post" action="{% url 'social:disconnect' 'google-oauth2' %}">
                 {% csrf_token %}
-                <button type="submit">Disconnect from Google</button>
+                <button type="submit">Disconnect</button>
              </form>
             {% else %}
-                <button type="button" disabled>Disconnect from Google</button>
+                <button type="button" disabled>Disconnect</button>
                 <p class="warning">Set a <a href="{% url 'siteuser:social_password' %}">password</a> if you wish to disconnect this account</p>
             {% endif %}
         {% else %}
@@ -62,10 +62,10 @@
             {% if can_disconnect %}
              <form method="post" action="{% url 'social:disconnect' 'twitter' %}">
                 {% csrf_token %}
-                <button type="submit">Disconnect from Twitter</button>
+                <button type="submit">Disconnect</button>
              </form>
             {% else %}
-                <button type="button" disabled>Disconnect from Twitter</button>
+                <button type="button" disabled>Disconnect</button>
                 <p class="text-warning">Set a <a href="{% url 'siteuser:social_password' %}">password</a> if you wish to disconnect this account</p>
             {% endif %}
         {% else %}
@@ -81,10 +81,10 @@
             {% if can_disconnect %}
              <form method="post" action="{% url 'social:disconnect' 'yahoo-oauth2' %}">
                 {% csrf_token %}
-                <button type="submit">Disconnect from Yahoo</button>
+                <button type="submit">Disconnect</button>
              </form>
             {% else %}
-                <button type="button" disabled>Disconnect from Yahoo</button>
+                <button type="button" disabled>Disconnect</button>
                 <p class="text-warning">Set a <a href="{% url 'siteuser:social_password' %}">password</a> if you wish to disconnect this account</p>
             {% endif %}
         {% else %}
