@@ -118,6 +118,7 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         kwargs['pk'] = self.kwargs.get('pk', None)
         return kwargs
 
+# delete later
 def preview_score(request, pk):
     score = Score.objects.get(pk=pk)
     score.views += 1
@@ -230,6 +231,12 @@ def play_mp3(request, pk):
     sound.save()
     context['sound'] = sound
     return render(request, template, context)
+
+def download_midi_from_drive(request, pk):
+    midi = Midi.objects.get(pk=pk)
+    midi.downloads += 1
+    midi.save(update_fields=['downloads'])
+    return redirect(midi.drive_download_link)
 
 def download_midi(self, pk):
     sound = get_object_or_404(Midi, pk=pk)

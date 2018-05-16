@@ -1,8 +1,9 @@
 
 body {
   color: midnightblue;
-  padding-top: 3.4rem;
+  padding-top: 2.4rem;
   font-family: 'IBM+Plex+Mono', serif;
+  /* font-size: 15px; */
 }
 
 /*NAVIGATION*/
@@ -12,19 +13,47 @@ nav {
 }
 
 .fixed-top {
-  padding-top: 0.1rem;
-  padding-bottom: 0.1rem;
-  font-family: 'Inconsolata', monospace;
+    font-size: 15px;
+    padding:0;
+    min-height:auto;
+    font-family: 'Inconsolata', monospace;
 }
 
-.fixed-top > .navcontent > ul > li > a.nav-link {
-    font-size: 18px;
+.fixed-top > a.navbar-brand {
+    margin-left: 1.5rem;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.fixed-top > a.navbar-brand > h3 {
+    margin-bottom: .2rem;
+}
+
+.fixed-top > .navcontent {
+    padding-right: 2.5rem;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.fixed-top > .navcontent > ul > li > a:hover {
+    background: #34348f;
 }
 
 .navbar-nav a {
    color: #BCC6CC;
-   font-size: 16px;
+   font-size: 15px;
    font-weight: bold;
+}
+
+.navbar-nav .nav-link {
+    padding-right: 0;
+    padding-left: .65rem;
+}
+
+.navbar-nav .login-logout {
+    padding-right: 0;
+    padding-left: .675rem;
+    margin-bottom: .2rem;
 }
 
 .my-toggler.navbar-toggler {
@@ -34,15 +63,40 @@ nav {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(250, 57, 57, 0.7)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
 
-ul.nav > li.logged-in-username.active {
-    margin-right: .35rem;
-    margin-top: .35rem;
-    margin-bottom: .45rem;
+ul.nav > li.social-management {
+    padding: .35rem;
 }
 
-ul.nav > li.logged-in-username.active > a.nav-link {
-    padding-bottom: .35rem;
-    padding-top: .35rem;
+ul.righthand-navigation {
+    padding: 0;
+}
+
+.logged-in-username {
+    height:auto;
+}
+
+.logged-in-username > a {
+    padding-bottom: 2rem;
+    margin-top: .025rem;
+}
+
+.logged-in-username > a:hover{
+    background: #34348f;
+}
+
+.profile-image > img {
+    height: 25px;
+    width: 25px;
+    /* padding:0; */
+}
+
+.profile-image {
+    float: left!important;
+}
+.profile-name {
+    padding-left: .3rem;
+    float: left!important;
+    /* padding-top: .2rem; */
 }
 
 /*GENERIC ELEMENTS*/
@@ -54,15 +108,6 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
     font-family: 'IBM+Plex+Mono', serif;
-}
-
-.active {
-    background: white;
-    border-radius: .2rem;
-}
-
-.active > a.nav-link {
-    color: blue;
 }
 
 a:hover {
@@ -607,13 +652,41 @@ input#id_password {
   padding-right: 5px;
 }
 
+/*LOGIN PAGE*/
+
+.social-logins {
+    margin-bottom: .5rem;
+}
+
+.social-logins > .col-sm-12 {
+    background: silver;
+    border: 1px solid #ccc;
+    border-radius: .3rem;
+    padding-top: .3rem;
+    padding-bottom: .3rem;
+}
+
 .login-form {
   max-width:350px;
   margin:auto;
   padding-bottom: 1rem;
 }
 
-/*LOGIN PAGE*/
+.social-logins > .col-sm-12 > a.google-login {
+    margin-right: 2rem;
+}
+
+.social-logins > .col-sm-12 > a.facebook-login {
+    margin-right: 2rem;
+}
+
+.social-logins > .col-sm-12 > a.twitter-login {
+    margin-right: 2rem;
+}
+
+.social-logins > .col-sm-12 > a.yahoo-login {
+    margin-right: 2rem;
+}
 
 .login-btn {
     width: 100%;

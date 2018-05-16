@@ -46,7 +46,7 @@ except FileNotFoundError:
     pass
 
 try:
-    AUTH_YOUTUBE = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, credentials=credentials)
+    AUTH_YOUTUBE = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, credentials=youtube_credentials)
 except NameError:
     pass
 
@@ -133,7 +133,7 @@ def get_or_create_playlist(playlist_id, title, part='snippet,status'):
 
 def get_playlist_id(playlist_id, title):
     """Return the id of a playlist whether it exists (using playlist_id) or not (user title)"""
-    response = get_or_create_playlist(AUTH_YOUTUBE, playlist_id, title, part='snippet,status')
+    response = get_or_create_playlist(playlist_id, title, part='snippet,status')
     if playlist_id is None:
         playlist_id = ''
     try:

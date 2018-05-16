@@ -155,19 +155,13 @@
                     </div>
                 </div>
 
-                <div class="row score-list-drive-container">
-                    <div class="container">
-                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song-media:preview_score_drive' score.pk %}" target="_blank">
-                            {{ score.views }}<i class="fas fa-eye" title="Preview"></i></a>
-                    </div>
-                </div>
-
                 <div class="row score-list-stats-container">
                     <div class="container">
-                        <a class="btn btn-sm btn-primary icon-buttons" href="" title="Love this score">
-                            <span>{{ score.score_likes }}</span> <i class="fas fa-heart"></i></a>
-                        <a class="btn btn-sm btn-primary icon-buttons float-right" href="{% url 'song-media:download_score_from_drive' score.pk %}" target="_blank" title="Download">
-                            {{ score.downloads }} <i class="fas fa-download"></i></a>
+                        <a class="btn btn-sm btn-primary icon-buttons" href="" title="Total likes">{{ score.score_likes }}</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" href="#" title="Like this score"><i class="fas fa-heart"></i></a>
+
+                        <a class="btn btn-sm btn-primary icon-buttons float-right" href="{% url 'song-media:download_score_from_drive' score.pk %}" target="_blank" title="Download"><i class="fas fa-download"></i></a>
+                        <a class="btn btn-sm btn-primary icon-buttons float-right" href="" title="Total downloads">{{ score.downloads }}</a>
                         </span>
                     </div>
                 </div>
@@ -203,21 +197,11 @@
 
                 <div class="row audio-list-drive-container">
                     <div class="container">
-                        <a class="btn btn-sm btn-primary icon-buttons" href="{{ midi.embed_link }}" target="_blank" title="Preview">
-                            <i class="fab fa-google-drive"></i></a>
-                        <a class="btn btn-sm btn-primary icon-buttons float-right" href="{{ midi.drive_download_link }}" target="_blank" title="Download">
-                            <i class="fas fa-download"></i></a>
-                    </div>
-                </div>
+                        <a class="btn btn-sm btn-primary icon-buttons" href="" title="Like this music">{{ midi.midi_likes }}</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" href="" title="Love this music"><i class="fas fa-heart"></i>
 
-                <div class="row audio-list-stats-container">
-                    <div class="container">
-                        <a class="btn btn-sm btn-primary icon-buttons float-left" href="" title="Love this music">
-                            <span>{{ midi.midi_likes }}</span> <i class="fas fa-heart"></i>
-                        </a>
-                        <span class="btn btn-sm btn-primary icon-buttons float-right" title="Total listens">
-                            <span>{{ midi.downloads }}</span> <i class="fas fa-eye"></i>
-                        </span>
+                        <a class="btn btn-sm btn-primary icon-buttons float-right" href="{% url 'song-media:download_midi_from_drive' midi.pk %}" target="_blank" title="Download"><i class="fas fa-download"></i></a>
+                        <a class="btn btn-sm btn-primary icon-buttons float-right" href="" title="Total downloads">{{ midi.downloads }}</a>
                     </div>
                 </div>
             </div>
