@@ -4,8 +4,6 @@ import  datetime
 from django.db import models
 from django.shortcuts import reverse
 
-from taggit.managers import TaggableManager
-
 from author.models import Author
 from siteuser.models import SiteUser
 

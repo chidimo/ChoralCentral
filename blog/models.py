@@ -5,8 +5,6 @@ from django.db import models
 from django.utils import timezone
 from django.urls import reverse
 
-from taggit.managers import TaggableManager
-
 from universal.models import TimeStampedModel
 from universal.fields import AutoSlugField
 

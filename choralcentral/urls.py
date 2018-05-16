@@ -59,6 +59,8 @@ urlpatterns += [
     path('api/', views.api),
     path('api-doc/', views.api_docs),
     path('coming-soon/', views.coming_soon),
+    path('privacy-policy/', views.privacy_policy),
+    path('terms-and-conditions/', views.terms_and_conditions),
 ]
 
 if settings.DEBUG:

@@ -12,6 +12,14 @@ def coming_soon(request):
     template = "coming_soon.html"
     return render(request, template, {})
 
+def terms_and_conditions(request):
+    template = "terms_and_conditions.html"
+    return render(request, template, {})
+
+def privacy_policy(request):
+    template = "privacy_policy.html"
+    return render(request, template, {})
+
 def api(request):
     template = "api.html"
     return render(request, template, {})

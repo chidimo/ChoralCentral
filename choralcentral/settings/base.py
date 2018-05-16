@@ -68,18 +68,15 @@ SOCIAL_AUTH_TWITTER_KEY = 'pEmqXP2U6w8EeblGB3Eg0SvfL'
 SOCIAL_AUTH_TWITTER_SECRET = 'khl62hQETrYUgh2zB9KTx7e2SPEjra76KTI2m85V4nfYzwzBgB'
 
 SOCIAL_AUTH_FACEBOOK_KEY = '977674249054153'
-SOCIAL_AUTH_FACEBOOK_SECRET = 'be2b7177f8e39319e4d743acab365932'
-SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'public_profile']
+SOCIAL_AUTH_FACEBOOK_SECRET = '982efc4814c26870b5bbb382ca314432'
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email','public_profile']
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
   'locale': 'en',
-  'fields': 'id,name'
+  'fields': 'id, name, email, age_range'
 }
 
 SOCIAL_AUTH_YAHOO_OAUTH2_KEY = 'dj0yJmk9QUpmTEdZS2lLTmd5JmQ9WVdrOVdGZG5ZMmh1TldNbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD1jYg--'
 SOCIAL_AUTH_YAHOO_OAUTH2_SECRET = 'c032d7ff2a5a1af2e7276e7a8e4b0c974321d73d'
-
-# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = get_env_variable(SOCIAL_AUTH_GOOGLE_OAUTH2_KEY)
-# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = get_env_variable(SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET)
 
 REST_FRAMEWORK = {
     # 'DEFAULT_AUTHENTICATION_CLASSES' : (
@@ -124,12 +121,7 @@ THIRD_PARTY_APPS = [
 
 INSTALLED_APPS = PREREQ_APPS +  PROJECT_APPS + THIRD_PARTY_APPS
 
-from social_core.backends.facebook import FacebookOAuth2
-class FacebookOAuth2Override(FacebookOAuth2):
-    REDIRECT_STATE = False
-
 AUTHENTICATION_BACKENDS = (
-    # 'FacebookOAuth2Override',
     'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.twitter.TwitterOAuth',
@@ -142,7 +134,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',
     'social_core.pipeline.social_auth.social_uid',
     'social_core.pipeline.user.get_username',
-    'universal.save_social_profile.save_social_profile', # override create_user
+    'siteuser.save_social.save_social_profile', # override create_user
     'social_core.pipeline.social_auth.social_user',
     # 'social_core.pipeline.user.create_user',
     'social_core.pipeline.social_auth.associate_by_email',
