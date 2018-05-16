@@ -14,13 +14,18 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-# from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login
 from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 
 # from django.contrib.auth.models import Group, Permission
 
 from django_addanother.views import CreatePopupMixin
 from pure_pagination.mixins import PaginationMixin
+from social_django.models import UserSocialAuth
+
 from .models import SiteUser, Role, SiteUserGroup, GroupMembership, GroupJoinRequest, Follow
 from blog.models import Comment
 from song.forms import ShareForm
@@ -221,4 +226,59 @@ class NewSiteUserGroup(LoginRequiredMixin, generic.CreateView):
         messages.success(self.request, "Your group was created successfully.")
         return redirect(self.get_absolute_url())
 
+@login_required
+def social_management(request):
+    template = "siteuser/social_management.html"
+    context = {}
+    user = request.user
+
+    try:
+        facebook_login = user.social_auth.get(provider='facebook')
+    except UserSocialAuth.DoesNotExist:
+        facebook_login = None
+
+    try:
+        google_login = user.social_auth.get(provider='google-oauth2')
+    except UserSocialAuth.DoesNotExist:
+        google_login = None
+
+    try:
+        twitter_login = user.social_auth.get(provider='twitter')
+    except UserSocialAuth.DoesNotExist:
+        twitter_login = None
+
+    try:
+        yahoo_login = user.social_auth.get(provider='yahoo-oauth2')
+    except UserSocialAuth.DoesNotExist:
+        yahoo_login = None
+
+    can_disconnect = (user.social_auth.count() > 1 or user.has_usable_password())
+
+    context['facebook_login'] = facebook_login
+    context['google_login'] = google_login
+    context['twitter_login'] = twitter_login
+    context['yahoo_login'] = yahoo_login
+    context['can_disconnect'] = can_disconnect
+    return render(request, template, context)
+
+@login_required
+def social_password(request):
+    if request.user.has_usable_password():
+        PasswordForm = PasswordChangeForm
+    else:
+        PasswordForm = AdminPasswordChangeForm
+
+    if request.method == 'POST':
+        form = PasswordForm(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            messages.success(request, 'Your password was successfully updated!')
+            login(request, request.user, backend='django.contrib.auth.backends.ModelBackend',)
+            return redirect('/')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordForm(request.user)
+    return render(request, 'siteuser/social_password_change_form.html', {'form': form})
 

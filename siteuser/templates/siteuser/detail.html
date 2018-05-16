@@ -31,7 +31,7 @@
                     <div class="dropdown-divider"></div>
                 <p class="dropdown-item">Email: <a href="mailto:{{ siteuser.user.email }}">{{ siteuser.user.email }}</a></p>
                     <div class="dropdown-divider"></div>
-                <p class="dropdown-item">Roles: 
+                <p class="dropdown-item">Roles:
                     {% for role in siteuser.roles.all %}
                         <a href='#' title='See other {{ role.role|upper }}'>{{ role.role|title }}</a>
                         {% if not forloop.last %}, {% endif %}
@@ -61,6 +61,8 @@
                 <a class="dropdown-item" href="{% url 'siteuser:password_change' %}">Change password</a>
                     <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{% url 'siteuser:password_reset' %}">Reset password</a>
+                    <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'siteuser:social_management' %}">Manage social accounts</a>
                     <div class="dropdown-divider"></div>
                 {% if siteuser.key %}
                     <a class="dropdown-item" href="{% url 'siteuser:reset_api_key' %}">Reset API key</a>

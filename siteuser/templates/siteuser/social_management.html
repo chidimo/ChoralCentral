@@ -1,0 +1,94 @@
+{% extends "choralcentral_base.html" %}
+{% block title %}Manage your social media accounts{% endblock title %}
+{% block introduction %}{% endblock introduction %}
+
+{% block content_content %}
+
+<div class='row siteuser-index-heading'>
+    <div class='container'>
+        <div class='col-sm-12'>
+            <span class='h5 float-left'>Manage your social media accounts</span>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="row text-center text-lg-left">
+    <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
+        <h3>Facebook</h3>
+         {% if facebook_login %}
+            <p>Connected as <a href="https://facebook.com/{{ facebook_login.extra_data.id }}/" target="_blank">{{ facebook_login.extra_data.id }}</a></p>
+
+            {% if can_disconnect %}
+             <form method="post" action="{% url 'social:disconnect' 'facebook' %}">
+                {% csrf_token %}
+                <button type="submit">Disconnect from Facebook</button>
+             </form>
+            {% else %}
+                <button type="button" disabled>Disconnect from Facebook</button>
+                <p style="color: red"><a href="{% url 'siteuser:social_password' %}">set password</a> if you wish to disconnect this account</p>
+            {% endif %}
+        {% else %}
+            <a class="btn btn-sm btn-primary" href="{% url 'social:begin' 'facebook' %}">Connect to Facebook</a>
+        {% endif %}
+    </div>
+
+    <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
+        <h3>Google</h3>
+         {% if google_login %}
+            <p>Connected as <a href="https://google.com/{{ google_login.uid }}/" target="_blank">{{ google_login.uid }}</a></p>
+
+            {% if can_disconnect %}
+             <form method="post" action="{% url 'social:disconnect' 'google-oauth2' %}">
+                {% csrf_token %}
+                <button type="submit">Disconnect from Google</button>
+             </form>
+            {% else %}
+                <button type="button" disabled>Disconnect from Google</button>
+                <p style="color: red"><a href="{% url 'siteuser:social_password' %}">set password</a> if you wish to disconnect this account</p>
+            {% endif %}
+        {% else %}
+            <a class="btn btn-sm btn-primary" href="{% url 'social:begin' 'google-oauth2' %}">Connect to Google</a>
+        {% endif %}
+    </div>
+
+    <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
+        <h3>Twitter</h3>
+         {% if twitter_login %}
+            <p>Connected as <a href="https://twitter.com/{{ twitter_login.extra_data.access_token.screen_name }}/" target="_blank">{{ twitter_login.extra_data.access_token.screen_name }}</a></p>
+
+            {% if can_disconnect %}
+             <form method="post" action="{% url 'social:disconnect' 'twitter' %}">
+                {% csrf_token %}
+                <button type="submit">Disconnect from Twitter</button>
+             </form>
+            {% else %}
+                <button type="button" disabled>Disconnect from Twitter</button>
+                <p style="color: red"><a href="{% url 'siteuser:social_password' %}">set password</a> if you wish to disconnect this account</p>
+            {% endif %}
+        {% else %}
+            <a class="btn btn-sm btn-primary" href="{% url 'social:begin' 'twitter' %}">Connect to Twitter</a>
+        {% endif %}
+    </div>
+
+    <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
+        <h3>Yahoo</h3>
+         {% if yahoo_login %}
+            <p>Connected as <a href="https://yahoo.com/{{ yahoo_login.extra_data.login }}/" target="_blank">{{ yahoo_login.extra_data.login }}</a></p>
+
+            {% if can_disconnect %}
+             <form method="post" action="{% url 'social:disconnect' 'yahoo-oauth2' %}">
+                {% csrf_token %}
+                <button type="submit">Disconnect from Yahoo</button>
+             </form>
+            {% else %}
+                <button type="button" disabled>Disconnect from Yahoo</button>
+                <p style="color: red"><a href="{% url 'siteuser:social_password' %}">set password</a> if you wish to disconnect this account</p>
+            {% endif %}
+        {% else %}
+            <a class="btn btn-sm btn-primary" href="{% url 'social:begin' 'yahoo-oauth2' %}">Connect to Yahoo</a>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock content_content %}

@@ -78,6 +78,9 @@
 						<li class="nav-item logged-in-username">
 							<a class="nav-link" href="{% url 'siteuser:detail' user.siteuser.pk user.siteuser.slug %}">{{ user.siteuser.screen_name }}</a>
 						</li>
+						<li class="nav-item logged-in-username">
+							<a class="nav-link" href="{% url 'siteuser:social_management' %}"><i class="fas fa-desktop"></i></a>
+						</li>
 						<li class="nav-item">
 							<a class="btn btn-info btn-sm upload-button" href="{% url 'siteuser:logout' %}">Logout</a>
 						</li>
@@ -171,6 +174,11 @@
 				$("#id_new_password1").attr('placeholder', '{{ form.new_password1.label }}');
 				$("#id_new_password2").attr('class', 'form-control');
 				$("#id_new_password2").attr('placeholder', '{{ form.new_password2.label }}');
+
+				$("#id_password1").attr('class', 'form-control');
+				$("#id_password1").attr('placeholder', '{{ form.password1.label }}');
+				$("#id_password2").attr('class', 'form-control');
+				$("#id_password2").attr('placeholder', '{{ form.password2.label }}');
 			});
 		</script>
 

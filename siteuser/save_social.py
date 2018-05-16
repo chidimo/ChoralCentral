@@ -41,24 +41,24 @@ def save_social_profile(backend, user, response, *args, **kwargs):
         email = response.get('email', None)
         if email is None:
             msg = """It appears you have no email set in your twitter account.
-            We have created a dummy email {} for your for purpose of registration.
+            We have created a dummy email {} for you for purpose of registration.
             Please be sure to change it to a real email.""".format(email)
             messages.success(request, msg)
 
         if CustomUser.objects.filter(email=email).exists():
-            user = CustomUser.objects.get(email=email)
+            social_user = CustomUser.objects.get(email=email)
         else:
-            user = CustomUser.objects.create_user(email=email, password=None)
-            user.is_active = True
-            user.save()
+            social_user = CustomUser.objects.create_user(email=email, password=None)
+            social_user.is_active = True
+            social_user.save()
         try:
             su = SiteUser.objects.get(user__email=email)
         except ObjectDoesNotExist:
             su = SiteUser.objects.create(
-                user=user, screen_name=screen_name, first_name=first_name, last_name=last_name,
+                social_user=social_user, screen_name=screen_name, first_name=first_name, last_name=last_name,
                 location=location)
             save_avatar(image, su)
-        login(request, user, backend=login_backends['django'])
+        login(request, social_user, backend=login_backends['django'])
         return {'username' : screen_name}
 
     elif backend.name == 'google-oauth2':
@@ -71,18 +71,18 @@ def save_social_profile(backend, user, response, *args, **kwargs):
         image = response['image']['url'].split('?')[0]
 
         if CustomUser.objects.filter(email=email).exists():
-            user = CustomUser.objects.get(email=email)
+            social_user = CustomUser.objects.get(email=email)
         else:
-            user = CustomUser.objects.create_user(email=email, password=None)
-            user.is_active = True
-            user.save()
+            social_user = CustomUser.objects.create_user(email=email, password=None)
+            social_user.is_active = True
+            social_user.save()
         try:
             su = SiteUser.objects.get(user__email=email)
         except ObjectDoesNotExist:
             su = SiteUser.objects.create(
-                user=user, screen_name=screen_name, first_name=first_name, last_name=last_name)
+                social_user=social_user, screen_name=screen_name, first_name=first_name, last_name=last_name)
             save_avatar(image, su)
-        login(request, user, backend=login_backends['django'])
+        login(request, social_user, backend=login_backends['django'])
         return {'username' : screen_name}
 
     elif backend.name == 'facebook':
@@ -96,18 +96,18 @@ def save_social_profile(backend, user, response, *args, **kwargs):
         image = 'https://graph.facebook.com/{}/picture?type=large'.format(response['id'])
 
         if CustomUser.objects.filter(email=email).exists():
-            user = CustomUser.objects.get(email=email)
+            social_user = CustomUser.objects.get(email=email)
         else:
-            user = CustomUser.objects.create_user(email=email, password=None)
-            user.is_active = True
-            user.save()
+            social_user = CustomUser.objects.create_user(email=email, password=None)
+            social_user.is_active = True
+            social_user.save()
         try:
             su = SiteUser.objects.get(user__email=email)
         except ObjectDoesNotExist:
             su = SiteUser.objects.create(
-                user=user, screen_name=screen_name, first_name=first_name, last_name=last_name)
+                social_user=social_user, screen_name=screen_name, first_name=first_name, last_name=last_name)
             save_avatar(image, su)
-        login(request, user, backend=login_backends['django'])
+        login(request, social_user, backend=login_backends['django'])
         return {'username' : screen_name}
 
     elif backend.name == 'yahoo-oauth2':
@@ -115,21 +115,23 @@ def save_social_profile(backend, user, response, *args, **kwargs):
         #     json.dump(response, fh)
         image = response['image']['imageUrl']
         screen_name = response['nickname'] # not unique. check for collisions
+        email = "{}@yahoo.com".format(response['guid'].lower()) # make email from guid
+        msg = """We couldn't find your yahoo mail address so
+        We have created a dummy email {} for you for purpose of registration.
+        Please be sure to change it to a real email.""".format(email)
+        messages.success(request, msg)
 
-        if SiteUser.objects.filter(screen_name=screen_name).exists():
-            siteuser = SiteUser.objects.get(screen_name=screen_name)
-            user = siteuser.user
-            login(request, user, backend=login_backends['django'])
-            return {'username' : screen_name}
-
-        email = "ab@yahoo.com"
-        user = CustomUser.objects.create_user(email=email, password=None)
-        user.is_active = True
-        user.save()
-
-        su = SiteUser.objects.create(
-            user=user, screen_name=screen_name, first_name='first_name', last_name='last_name')
-        save_avatar(image, su)
-
-        login(request, user, backend=login_backends['django'])
+        if CustomUser.objects.filter(email=email).exists():
+            social_user = CustomUser.objects.get(email=email)
+        else:
+            social_user = CustomUser.objects.create_user(email=email, password=None)
+            social_user.is_active = True
+            social_user.save()
+        try:
+            su = SiteUser.objects.get(user__email=email)
+        except ObjectDoesNotExist:
+            su = SiteUser.objects.create(
+                social_user=social_user, screen_name=screen_name, first_name='', last_name='')
+            save_avatar(image, su)
+        login(request, social_user, backend=login_backends['django'])
         return {'username' : screen_name}
