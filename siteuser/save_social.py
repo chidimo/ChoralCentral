@@ -41,7 +41,10 @@ def save_social_profile(backend, user, response, *args, **kwargs):
         location = response['location']
         name = response['name'].split()
         first_name = name[0]
-        last_name = name[1]
+        try:
+            last_name = name[1]
+        except IndexError:
+            last_name = ''
         email = response.get('email', None)
         if email is None:
             msg = """It appears you have no email set in your twitter account.
@@ -114,8 +117,10 @@ def save_social_profile(backend, user, response, *args, **kwargs):
         # with open("response-facebook.json", "w+") as fh:
         #     json.dump(response, fh)
         name = response['name'].split()
-        first_name = name[0]
-        last_name = name[1]
+        try:
+            last_name = name[1]
+        except IndexError:
+            last_name = ''
         screen_name = slugify("{}-{}".format(first_name, last_name))
         email = response.get('email', None)
         image = 'https://graph.facebook.com/{}/picture?type=large'.format(response['id'])
