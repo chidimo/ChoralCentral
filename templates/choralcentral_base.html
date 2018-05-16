@@ -57,7 +57,7 @@
 			</button>
 
 			<div class="collapse navbar-collapse navcontent">
-				<ul class="nav navbar-nav">
+				<ul class="nav navbar-nav lefthand-navigation">
 					<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
 					<li class="nav-item"><a class="nav-link" href="{% url 'author:index' %}" title="Lyricists and composers">Authors</a></li>
 					<li class="nav-item"><a class="nav-link" href="{% url 'request:index' %}" title="Song requests">Requests</a></li>
@@ -66,7 +66,7 @@
 					<li class="nav-item"><a class="nav-link" href="{% url 'song:instant_song' %}" title="Search ChoralCentral"><i class="fas fa-search"></i></a></li>
 				</ul>
 
-				<ul class="nav navbar-nav ml-auto">
+				<ul class="navbar-nav ml-auto righthand-navigation">
 					{% if user.is_authenticated %}
 						{% if user.is_admin %}
 							<li class="nav-item"><a class="nav-link" href="{% url 'google-api:drive_authorize' %}" target="_blank">Drive</a></li>
@@ -76,29 +76,39 @@
 							<li><a class="nav-link" href="{% url 'song-media:score_index' %}"><i class="fas fa-file-pdf"></i></a></li>
 						{% endif %}
 						<li class="nav-item logged-in-username">
-							<a class="nav-link" href="{% url 'siteuser:detail' user.siteuser.pk user.siteuser.slug %}">
-							    {% if user.siteuser.avatar %}
-							        <img class="card" src="{{ user.siteuser.avatar.url }}" height="40" width="40"> {{ user.siteuser.screen_name }}
-							    {% else %}
-							        <img class="card" src="{% static 'img/django_logo.png' %}" height="40" width="40"> {{ user.siteuser.screen_name }}
-							    {% endif %}
-							 </a>
+								<a class="nav-link" href="{% url 'siteuser:detail' user.siteuser.pk user.siteuser.slug %}">
+									{% if user.siteuser.avatar %}
+										<div class="profile-image">
+											<img class="card" src="{{ user.siteuser.avatar.url }}">
+										</div>
+										<div class="profile-name">
+											{{ user.siteuser.screen_name }}
+										</div>
+									{% else %}
+									<div class="profile-image">
+										<img class="card" src="{% static 'img/django-logo.png' %}">
+									</div>
+									<div class="profile-name">
+										{{ user.siteuser.screen_name }}
+									</div>
+									{% endif %}
+								 </a>
 						</li>
-						<li class="nav-item logged-in-username">
+						<li class="nav-item social-management">
 							<a class="nav-link" href="{% url 'siteuser:social_management' %}"><i class="fas fa-desktop"></i></a>
 						</li>
-						<li class="nav-item">
+						<li class="nav-item login-logout">
 							<a class="btn btn-info btn-sm upload-button" href="{% url 'siteuser:logout' %}">Logout</a>
 						</li>
 					{% else %}
-						<li class="nav-item">
+						<li class="nav-item login-logout">
 							<a class="btn btn-info btn-sm upload-button" href="{% url 'siteuser:login' %}">Login</a>
 						</li>
-						<li class="nav-item">
+						<li class="nav-item login-logout">
 							<a class="btn btn-primary btn-sm upload-button" href="{% url 'siteuser:new' %}">Join</a>
 						</li>
 					{% endif %}
-					<li class="nav-item" id=uploadButtonNav>
+					<li class="nav-item login-logout" id=uploadButtonNav>
 						<a href="{% url 'song:new' %}" class="btn btn-primary btn-sm upload-button">UPLOAD</a>
 					</li>
 
@@ -189,6 +199,7 @@
 		</script>
 
 		<script>
+			/*
         // Add .active class to navigation menu item.
             $(document).ready(function() {
             //   $('li.active').removeClass('active');
@@ -196,7 +207,10 @@
 
             //   Remove the class from the big upload button
               $('#uploadButtonNav').removeClass('active');
-            });
+              $('.logged-in-username').removeClass('active');
+              $('.social-management').removeClass('active');
+			});
+			*/
 		</script>
 
 		<script>

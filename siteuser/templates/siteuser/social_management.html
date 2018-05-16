@@ -1,5 +1,6 @@
 {% extends "choralcentral_base.html" %}
 {% block title %}Manage your social media accounts{% endblock title %}
+{% load siteuser_tags %}
 {% block introduction %}{% endblock introduction %}
 
 {% block content_content %}
@@ -26,17 +27,18 @@
              </form>
             {% else %}
                 <button type="button" disabled>Disconnect from Facebook</button>
-                <p style="color: red"><a href="{% url 'siteuser:social_password' %}">set password</a> if you wish to disconnect this account</p>
+                <p class="text-warning">Set a <a href="{% url 'siteuser:social_password' %}">password</a> if you wish to disconnect this account</p>
             {% endif %}
         {% else %}
-            <a class="btn btn-sm btn-primary" href="{% url 'social:begin' 'facebook' %}">Connect to Facebook</a>
+            <a class="btn btn-sm btn-primary" href="{% url 'social:begin' 'facebook' %}">Connect</a>
         {% endif %}
     </div>
 
     <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
         <h3>Google</h3>
          {% if google_login %}
-            <p>Connected as <a href="https://google.com/{{ google_login.uid }}/" target="_blank">{{ google_login.uid }}</a></p>
+         
+            <p>Connected as <a href="https://plus.google.com/u/0/+{{ google_login.uid }}/" target="_blank">{{ google_login.uid }}</a></p>
 
             {% if can_disconnect %}
              <form method="post" action="{% url 'social:disconnect' 'google-oauth2' %}">
@@ -45,10 +47,10 @@
              </form>
             {% else %}
                 <button type="button" disabled>Disconnect from Google</button>
-                <p style="color: red"><a href="{% url 'siteuser:social_password' %}">set password</a> if you wish to disconnect this account</p>
+                <p class="warning">Set a <a href="{% url 'siteuser:social_password' %}">password</a> if you wish to disconnect this account</p>
             {% endif %}
         {% else %}
-            <a class="btn btn-sm btn-primary" href="{% url 'social:begin' 'google-oauth2' %}">Connect to Google</a>
+            <a class="btn btn-sm btn-primary" href="{% url 'social:begin' 'google-oauth2' %}">Connect</a>
         {% endif %}
     </div>
 
@@ -64,10 +66,10 @@
              </form>
             {% else %}
                 <button type="button" disabled>Disconnect from Twitter</button>
-                <p style="color: red"><a href="{% url 'siteuser:social_password' %}">set password</a> if you wish to disconnect this account</p>
+                <p class="text-warning">Set a <a href="{% url 'siteuser:social_password' %}">password</a> if you wish to disconnect this account</p>
             {% endif %}
         {% else %}
-            <a class="btn btn-sm btn-primary" href="{% url 'social:begin' 'twitter' %}">Connect to Twitter</a>
+            <a class="btn btn-sm btn-primary" href="{% url 'social:begin' 'twitter' %}">Connect</a>
         {% endif %}
     </div>
 
@@ -83,10 +85,10 @@
              </form>
             {% else %}
                 <button type="button" disabled>Disconnect from Yahoo</button>
-                <p style="color: red"><a href="{% url 'siteuser:social_password' %}">set password</a> if you wish to disconnect this account</p>
+                <p class="text-warning">Set a <a href="{% url 'siteuser:social_password' %}">password</a> if you wish to disconnect this account</p>
             {% endif %}
         {% else %}
-            <a class="btn btn-sm btn-primary" href="{% url 'social:begin' 'yahoo-oauth2' %}">Connect to Yahoo</a>
+            <a class="btn btn-sm btn-primary" href="{% url 'social:begin' 'yahoo-oauth2' %}">Connect</a>
         {% endif %}
     </div>
 </div>

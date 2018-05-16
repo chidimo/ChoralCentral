@@ -1,8 +1,12 @@
 # from django.core.files import File
 import json
+from random import randint
 
 import requests
 
+from django.template.defaultfilters import slugify
+
+from django.db import IntegrityError
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import ContentFile
 from django.contrib.auth import login
@@ -32,7 +36,7 @@ def save_social_profile(backend, user, response, *args, **kwargs):
     if backend.name == "twitter":
         # with open("response-twitter.json", "w+") as fh:
         #     json.dump(response, fh)
-        screen_name = response['screen_name'] # twitter response contains a screen_name
+        screen_name = slugify(response['screen_name']) # twitter response contains a screen_name
         image = response['profile_image_url']
         location = response['location']
         name = response['name'].split()
@@ -51,20 +55,26 @@ def save_social_profile(backend, user, response, *args, **kwargs):
             social_user = CustomUser.objects.create_user(email=email, password=None)
             social_user.is_active = True
             social_user.save()
-        try:
-            su = SiteUser.objects.get(user__email=email)
-        except ObjectDoesNotExist:
-            su = SiteUser.objects.create(
-                social_user=social_user, screen_name=screen_name, first_name=first_name, last_name=last_name,
-                location=location)
-            save_avatar(image, su)
+        if SiteUser.objects.filter(screen_name=screen_name).exists():
+            su =SiteUser.objects.get(screen_name=screen_name) # This screen_name may have already been taken by someone else
+            if su.user.email != email:
+                while True: # keep looping until a SiteUser is successfully created
+                    screen_name = "{}{}".format(screen_name, randint(10, 1000)) # append a random string
+                    try:
+                        su = SiteUser.objects.create(
+                            user=social_user, screen_name=screen_name, first_name=first_name, last_name=last_name,
+                            location=location)
+                        save_avatar(image, su)
+                        break
+                    except IntegrityError:
+                        continue
         login(request, social_user, backend=login_backends['django'])
         return {'username' : screen_name}
 
     elif backend.name == 'google-oauth2':
         # with open("response-google.json", "w+") as fh:
         #     json.dump(response, fh)
-        screen_name = response['displayName'].strip()
+        screen_name = slugify(response['displayName'].strip())
         email = response['emails'][0]['value']
         first_name = response['name']['givenName']
         last_name = response['name']['familyName']
@@ -76,12 +86,19 @@ def save_social_profile(backend, user, response, *args, **kwargs):
             social_user = CustomUser.objects.create_user(email=email, password=None)
             social_user.is_active = True
             social_user.save()
-        try:
-            su = SiteUser.objects.get(user__email=email)
-        except ObjectDoesNotExist:
-            su = SiteUser.objects.create(
-                social_user=social_user, screen_name=screen_name, first_name=first_name, last_name=last_name)
-            save_avatar(image, su)
+
+        if SiteUser.objects.filter(screen_name=screen_name).exists():
+            su =SiteUser.objects.get(screen_name=screen_name) # This screen_name may have already been taken by someone else
+            if su.user.email != email:
+                while True: # keep looping until a SiteUser is successfully created
+                    screen_name = "{}{}".format(screen_name, randint(10, 1000)) # append a random string
+                    try:
+                        su = SiteUser.objects.create(
+                            user=social_user, screen_name=screen_name, first_name=first_name, last_name=last_name)
+                        save_avatar(image, su)
+                        break
+                    except IntegrityError:
+                        continue
         login(request, social_user, backend=login_backends['django'])
         return {'username' : screen_name}
 
@@ -91,7 +108,7 @@ def save_social_profile(backend, user, response, *args, **kwargs):
         name = response['name'].split()
         first_name = name[0]
         last_name = name[1]
-        screen_name = "{}-{}".format(first_name, last_name)
+        screen_name = slugify("{}-{}".format(first_name, last_name))
         email = response.get('email', None)
         image = 'https://graph.facebook.com/{}/picture?type=large'.format(response['id'])
 
@@ -101,12 +118,19 @@ def save_social_profile(backend, user, response, *args, **kwargs):
             social_user = CustomUser.objects.create_user(email=email, password=None)
             social_user.is_active = True
             social_user.save()
-        try:
-            su = SiteUser.objects.get(user__email=email)
-        except ObjectDoesNotExist:
-            su = SiteUser.objects.create(
-                social_user=social_user, screen_name=screen_name, first_name=first_name, last_name=last_name)
-            save_avatar(image, su)
+
+        if SiteUser.objects.filter(screen_name=screen_name).exists():
+            su =SiteUser.objects.get(screen_name=screen_name) # This screen_name may have already been taken by someone else
+            if su.user.email != email:
+                while True: # keep looping until a SiteUser is successfully created
+                    screen_name = "{}{}".format(screen_name, randint(10, 1000)) # append a random string
+                    try:
+                        su = SiteUser.objects.create(
+                            user=social_user, screen_name=screen_name, first_name=first_name, last_name=last_name)
+                        save_avatar(image, su)
+                        break
+                    except IntegrityError:
+                        continue
         login(request, social_user, backend=login_backends['django'])
         return {'username' : screen_name}
 
@@ -114,7 +138,7 @@ def save_social_profile(backend, user, response, *args, **kwargs):
         # with open("response-yahoo.json", "w+") as fh:
         #     json.dump(response, fh)
         image = response['image']['imageUrl']
-        screen_name = response['nickname'] # not unique. check for collisions
+        screen_name = slugify(response['nickname']) # not unique. check for collisions
         email = "{}@yahoo.com".format(response['guid'].lower()) # make email from guid
         msg = """We couldn't find your yahoo mail address so
         We have created a dummy email {} for you for purpose of registration.
@@ -127,11 +151,18 @@ def save_social_profile(backend, user, response, *args, **kwargs):
             social_user = CustomUser.objects.create_user(email=email, password=None)
             social_user.is_active = True
             social_user.save()
-        try:
-            su = SiteUser.objects.get(user__email=email)
-        except ObjectDoesNotExist:
-            su = SiteUser.objects.create(
-                social_user=social_user, screen_name=screen_name, first_name='', last_name='')
-            save_avatar(image, su)
+
+        if SiteUser.objects.filter(screen_name=screen_name).exists():
+            su =SiteUser.objects.get(screen_name=screen_name) # This screen_name may have already been taken by someone else
+            if su.user.email != email:
+                while True: # keep looping until a SiteUser is successfully created
+                    screen_name = "{}{}".format(screen_name, randint(10, 1000)) # append a random string
+                    try:
+                        su = SiteUser.objects.create(
+                            user=social_user, screen_name=screen_name, first_name='', last_name='')
+                        save_avatar(image, su)
+                        break
+                    except IntegrityError:
+                        continue
         login(request, social_user, backend=login_backends['django'])
         return {'username' : screen_name}
