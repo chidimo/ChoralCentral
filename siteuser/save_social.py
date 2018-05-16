@@ -68,6 +68,10 @@ def save_social_profile(backend, user, response, *args, **kwargs):
                         break
                     except IntegrityError:
                         continue
+        else:
+            su = SiteUser.objects.create(
+                user=social_user, screen_name=screen_name, first_name=first_name, last_name=last_name, location=location)
+            save_avatar(image, su)
         login(request, social_user, backend=login_backends['django'])
         return {'username' : screen_name}
 
@@ -87,9 +91,9 @@ def save_social_profile(backend, user, response, *args, **kwargs):
             social_user.is_active = True
             social_user.save()
 
-        if SiteUser.objects.filter(screen_name=screen_name).exists():
-            su =SiteUser.objects.get(screen_name=screen_name) # This screen_name may have already been taken by someone else
-            if su.user.email != email:
+        if SiteUser.objects.filter(screen_name=screen_name).exists(): # check if we already have SiteUser with same screen_name
+            su = SiteUser.objects.get(screen_name=screen_name)
+            if su.user.email != email: # if the email of existing SiteUser is different from the one we're processing
                 while True: # keep looping until a SiteUser is successfully created
                     screen_name = "{}{}".format(screen_name, randint(10, 1000)) # append a random string
                     try:
@@ -99,6 +103,10 @@ def save_social_profile(backend, user, response, *args, **kwargs):
                         break
                     except IntegrityError:
                         continue
+        else:
+            su = SiteUser.objects.create(
+                user=social_user, screen_name=screen_name, first_name=first_name, last_name=last_name)
+            save_avatar(image, su)
         login(request, social_user, backend=login_backends['django'])
         return {'username' : screen_name}
 
@@ -131,6 +139,10 @@ def save_social_profile(backend, user, response, *args, **kwargs):
                         break
                     except IntegrityError:
                         continue
+        else:
+            su = SiteUser.objects.create(
+                user=social_user, screen_name=screen_name, first_name=first_name, last_name=last_name)
+            save_avatar(image, su)
         login(request, social_user, backend=login_backends['django'])
         return {'username' : screen_name}
 
@@ -164,5 +176,9 @@ def save_social_profile(backend, user, response, *args, **kwargs):
                         break
                     except IntegrityError:
                         continue
+        else:
+            su = SiteUser.objects.create(
+                user=social_user, screen_name=screen_name, first_name='', last_name='')
+            save_avatar(image, su)
         login(request, social_user, backend=login_backends['django'])
         return {'username' : screen_name}
