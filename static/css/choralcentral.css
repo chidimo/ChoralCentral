@@ -1,7 +1,7 @@
 
 body {
   color: midnightblue;
-  padding-top: 2.6rem;
+  padding-top: 2.4rem;
   font-family: 'IBM+Plex+Mono', serif;
   /* font-size: 15px; */
 }
@@ -23,6 +23,10 @@ nav {
     margin-left: 1.5rem;
     padding-top: 0;
     padding-bottom: 0;
+}
+
+.fixed-top > a.navbar-brand > h3 {
+    margin-bottom: .2rem;
 }
 
 .fixed-top > .navcontent {
@@ -49,6 +53,7 @@ nav {
 .navbar-nav .login-logout {
     padding-right: 0;
     padding-left: .675rem;
+    margin-bottom: .2rem;
 }
 
 .my-toggler.navbar-toggler {
