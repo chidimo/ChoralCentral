@@ -117,6 +117,7 @@ def save_social_profile(backend, user, response, *args, **kwargs):
         # with open("response-facebook.json", "w+") as fh:
         #     json.dump(response, fh)
         name = response['name'].split()
+        first_name = name[0]
         try:
             last_name = name[1]
         except IndexError:
