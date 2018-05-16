@@ -57,7 +57,7 @@ def save_social_profile(backend, user, response, *args, **kwargs):
             
             if SiteUser.objects.filter(user=social_user).exists():
                 login(request, social_user, backend=login_backends['django'])
-                return {'username' : screen_name}
+                # return {'username' : screen_name}
             else:
                 while True: # keep looping until a SiteUser is successfully created
                     screen_name = "{}{}".format(screen_name, randint(10, 1000)) # append a random string
@@ -67,7 +67,7 @@ def save_social_profile(backend, user, response, *args, **kwargs):
                     except IntegrityError:
                         continue
                 login(request, social_user, backend=login_backends['django'])
-                return {'username' : screen_name}
+                # return {'username' : screen_name}
 
         else:
             social_user = CustomUser.objects.create_user(email=email, password=None)
@@ -76,7 +76,7 @@ def save_social_profile(backend, user, response, *args, **kwargs):
 
             if SiteUser.objects.filter(user=social_user).exists():
                 login(request, social_user, backend=login_backends['django'])
-                return {'username' : screen_name}
+                # return {'username' : screen_name}
             else:
                 while True: # keep looping until a SiteUser is successfully created
                     screen_name = "{}{}".format(screen_name, randint(10, 1000)) # append a random string
@@ -87,7 +87,7 @@ def save_social_profile(backend, user, response, *args, **kwargs):
                     except IntegrityError:
                         continue
                 login(request, social_user, backend=login_backends['django'])
-                return {'username' : screen_name}
+                # return {'username' : screen_name}
 
     elif backend.name == 'google-oauth2':
         # with open("response-google.json", "w+") as fh:
@@ -103,7 +103,7 @@ def save_social_profile(backend, user, response, *args, **kwargs):
             
             if SiteUser.objects.filter(user=social_user).exists():
                 login(request, social_user, backend=login_backends['django'])
-                return {'username' : screen_name}
+                # return {'username' : screen_name}
             else:
                 while True: # keep looping until a SiteUser is successfully created
                     screen_name = "{}{}".format(screen_name, randint(10, 1000)) # append a random string
@@ -113,7 +113,7 @@ def save_social_profile(backend, user, response, *args, **kwargs):
                     except IntegrityError:
                         continue
                 login(request, social_user, backend=login_backends['django'])
-                return {'username' : screen_name}
+                # return {'username' : screen_name}
 
         else:
             social_user = CustomUser.objects.create_user(email=email, password=None)
@@ -122,7 +122,7 @@ def save_social_profile(backend, user, response, *args, **kwargs):
 
             if SiteUser.objects.filter(user=social_user).exists():
                 login(request, social_user, backend=login_backends['django'])
-                return {'username' : screen_name}
+                # return {'username' : screen_name}
             else:
                 while True: # keep looping until a SiteUser is successfully created
                     screen_name = "{}{}".format(screen_name, randint(10, 1000)) # append a random string
@@ -133,7 +133,7 @@ def save_social_profile(backend, user, response, *args, **kwargs):
                     except IntegrityError:
                         continue
                 login(request, social_user, backend=login_backends['django'])
-                return {'username' : screen_name}
+                # return {'username' : screen_name}
 
     elif backend.name == 'facebook':
         # with open("response-facebook.json", "w+") as fh:
@@ -153,7 +153,7 @@ def save_social_profile(backend, user, response, *args, **kwargs):
             
             if SiteUser.objects.filter(user=social_user).exists():
                 login(request, social_user, backend=login_backends['django'])
-                return {'username' : screen_name}
+                # return {'username' : screen_name}
             else:
                 while True: # keep looping until a SiteUser is successfully created
                     screen_name = "{}{}".format(screen_name, randint(10, 1000)) # append a random string
@@ -164,7 +164,7 @@ def save_social_profile(backend, user, response, *args, **kwargs):
                     except IntegrityError:
                         continue
                 login(request, social_user, backend=login_backends['django'])
-                return {'username' : screen_name}
+                # return {'username' : screen_name}
 
         else:
             social_user = CustomUser.objects.create_user(email=email, password=None)
@@ -173,7 +173,7 @@ def save_social_profile(backend, user, response, *args, **kwargs):
 
             if SiteUser.objects.filter(user=social_user).exists():
                 login(request, social_user, backend=login_backends['django'])
-                return {'username' : screen_name}
+                # return {'username' : screen_name}
             else:
                 while True: # keep looping until a SiteUser is successfully created
                     screen_name = "{}{}".format(screen_name, randint(10, 1000)) # append a random string
@@ -184,7 +184,7 @@ def save_social_profile(backend, user, response, *args, **kwargs):
                     except IntegrityError:
                         continue
                 login(request, social_user, backend=login_backends['django'])
-                return {'username' : screen_name}
+                # return {'username' : screen_name}
 
     elif backend.name == 'yahoo-oauth2':
         # with open("response-yahoo.json", "w+") as fh:
@@ -202,7 +202,7 @@ def save_social_profile(backend, user, response, *args, **kwargs):
             
             if SiteUser.objects.filter(user=social_user).exists():
                 login(request, social_user, backend=login_backends['django'])
-                return {'username' : screen_name}
+                # return {'username' : screen_name}
             else:
                 while True: # keep looping until a SiteUser is successfully created
                     screen_name = "{}{}".format(screen_name, randint(10, 1000)) # append a random string
@@ -212,7 +212,7 @@ def save_social_profile(backend, user, response, *args, **kwargs):
                     except IntegrityError:
                         continue
                 login(request, social_user, backend=login_backends['django'])
-                return {'username' : screen_name}
+                # return {'username' : screen_name}
 
         else:
             social_user = CustomUser.objects.create_user(email=email, password=None)
@@ -221,7 +221,7 @@ def save_social_profile(backend, user, response, *args, **kwargs):
 
             if SiteUser.objects.filter(user=social_user).exists():
                 login(request, social_user, backend=login_backends['django'])
-                return {'username' : screen_name}
+                # return {'username' : screen_name}
             else:
                 while True: # keep looping until a SiteUser is successfully created
                     screen_name = "{}{}".format(screen_name, randint(10, 1000)) # append a random string
@@ -232,4 +232,4 @@ def save_social_profile(backend, user, response, *args, **kwargs):
                     except IntegrityError:
                         continue
                 login(request, social_user, backend=login_backends['django'])
-                return {'username' : screen_name}
+                # return {'username' : screen_name}
