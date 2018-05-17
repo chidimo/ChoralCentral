@@ -1,0 +1,36 @@
+{% extends "choralcentral_base.html" %}
+{% block title %}Groups{% endblock title %}
+{% load thumbnail %}
+{% load static %}
+{% block introduction %}{% endblock introduction %}
+
+{% block content_content %}
+
+<div class='row siteuser-index-heading'>
+    <div class='container'>
+        <div class='col-sm-12'>
+            <span class='h5 float-left'>Groups</span>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    {% for group in groups %}
+        <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 siteuser-index-details">
+            {% thumbnail groups.avatar "150x150" crop="center" as im %}
+               <a href="{{ groups.avatar.url }}" target="_blank"><img alt="" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="img-fluid card"></a>
+            {% empty %}
+               <img alt="" src="{% static 'img/django-logo.png' %}" width="150" height="150" class="img-fluid card">
+            {% endthumbnail %}
+            <p class="text-left"><a href="" title="Request to join this group">Join</a></p>
+            <p class="text-left"><a href="{% url 'siteuser:group_detail' group.pk %}">{{ group.name }}</a></p>
+            <p class="text-left">{{ group.about_group }}</p>
+        </div>
+    {% empty %}
+        <p>No groups added yet.</p>
+    {% endfor %}
+</div>
+
+{% endblock content_content %}
+

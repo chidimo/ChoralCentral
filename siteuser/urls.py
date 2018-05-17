@@ -27,7 +27,9 @@ urlpatterns += [
 ]
 
 urlpatterns += [
+    path('groups/', views.GroupIndex.as_view(), name='siteuser_groups'),
     path('new-group/', views.NewSiteUserGroup.as_view(), name='new_group'),
+    path('group-detail/<int:pk>/', views.GroupDetail.as_view(), name='group_detail'),
 ]
 
 urlpatterns += [

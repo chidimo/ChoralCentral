@@ -6,7 +6,7 @@ from functools import reduce
 import json
 from django.conf import settings
 from django.db.models import Q
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.shortcuts import get_object_or_404, render, redirect
@@ -97,25 +97,24 @@ def auto_song(request):
     context['indexName'] = get_adapter(Song).index_name
     return render(request, 'song/autocomplete_song.html', context)
 
+# @require_POST
 @login_required
-@require_POST
 def song_like_view(request):
     if request.method == 'POST':
-        user = SiteUser.objects.get(user=request.user)
+        siteuser = request.user.siteuser
         pk = request.POST.get('pk', None)
-        song = get_object_or_404(Song, pk=pk)
+        song = Song.objects.get(pk=int(pk))
 
-        if song.likes.filter(pk=user.pk).exists():
-            song.likes.remove(user)
-            song.like_count = song.likes.count()
-            song.save(update_fields=['like_count'])
-            message = "You unstarred this song.\n {} now has {} stars".format(song.title, song.like_count)
+        if song.likes.filter(pk=siteuser.pk).exists():
+            song.likes.remove(siteuser)
+            msg = "You unstarred this song.\n"
         else:
-            song.likes.add(user)
-            song.like_count = song.likes.count()
-            song.save(update_fields=['like_count'])
-            message = "You starred this song.\n {} now has {} stars".format(song.title, song.like_count)
-    context = {'message' : message}
+            song.likes.add(siteuser)
+            msg = "You starred this song.\n"
+
+    song.like_count = song.likes.count()
+    song.save(update_fields=['like_count'])
+    context = {'msg' : msg, 'like_count' : song.like_count, 'title' : song.title}
     return HttpResponse(json.dumps(context), content_type='application/json')
 
 class SongIndex(PaginationMixin, generic.ListView):

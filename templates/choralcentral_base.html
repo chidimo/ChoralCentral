@@ -48,7 +48,7 @@
 		{% block navigation %}
 		<nav class="navbar fixed-top navbar-expand-lg">
 			<a class="navbar-brand" href="{% url 'song:index' %}">
-				<h3 style="color:blanchedalmond">ChoralCentral</h3>
+				<h3 style="color:blanchedalmond" title="https://www.choralcentral.net/">ChoralCentral</h3>
 			</a>
 
 			<button type="button" class="navbar-toggler my-toggler" data-toggle="collapse" data-target=".navcontent">
@@ -58,11 +58,16 @@
 
 			<div class="collapse navbar-collapse navcontent">
 				<ul class="nav navbar-nav lefthand-navigation">
-					<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+					<li class="nav-item"><a class="nav-link" href="/" title="Home">Home</a></li>
 					<li class="nav-item"><a class="nav-link" href="{% url 'author:index' %}" title="Lyricists and composers">Authors</a></li>
 					<li class="nav-item"><a class="nav-link" href="{% url 'request:index' %}" title="Song requests">Requests</a></li>
-					<li class="nav-item"><a class="nav-link" href="{% url 'blog:index' %}" title="Blog posts">Blog</a></li>
-					<li class="nav-item"><a class="nav-link" href="{% url 'siteuser:index' %}" title="Meet the choir">Choir</a></li>
+					<li class="nav-item"><a class="nav-link" href="{% url 'blog:index' %}" title="Blog entries">Blog</a></li>
+					<li class="nav-item"><a class="nav-link" href="{% url 'siteuser:index' %}" title="Users">Users</a></li>
+					{% if user.is_admin %}
+					    <li class="nav-item"><a class="nav-link" href="{% url 'siteuser:siteuser_groups' %}" title="Choirs">Choirs</a></li>
+					{% else %}
+					    <li class="nav-item"><a class="nav-link" href="/coming-soon/" title="Choirs">Choirs</a></li>
+					{% endif %}
 					<li class="nav-item"><a class="nav-link" href="{% url 'song:instant_song' %}" title="Search ChoralCentral"><i class="fas fa-search"></i></a></li>
 				</ul>
 

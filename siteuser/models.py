@@ -119,12 +119,18 @@ class SiteUserGroup(TimeStampedModel):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('song:index')
+        return reverse('siteuser:group_detail', kwargs={'pk' : self.pk})
 
 class GroupMembership(TimeStampedModel):
     siteuser = models.ForeignKey(SiteUser, blank=True, null=True, on_delete=models.SET_NULL)
     group = models.ForeignKey(SiteUserGroup, blank=True, null=True, on_delete=models.SET_NULL)
     is_group_admin = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.group.name + " membership"
+
+    def get_absolute_url(self):
+        return reverse('siteuser:group_detail', kwargs={'pk' : self.group.pk})
 
 class GroupJoinRequest(TimeStampedModel):
     requesting_user = models.ForeignKey(SiteUser, null=True, blank=True, on_delete=models.SET_NULL)

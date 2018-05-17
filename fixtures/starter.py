@@ -210,6 +210,8 @@ def songs_from_file():
             for each in authors:
                 song.authors.add(author)
             song.likes.add(originator)
+            song.save()
+    add_manyfields()
 
 def songs():
     users = SiteUser.objects.all()

@@ -15,6 +15,8 @@
             <span class='h5 float-left'>{{ song.title }}</span>
 
             <span class='float-right song-icons'>
+                <a class="btn btn-sm btn-primary icon-buttons" title="Loves">{{ song.like_count }}</a>
+
                 {% if user.is_authenticated %}
                     {% if request.user.siteuser in song.likes.all %}
                         <a class="btn btn-sm btn-primary icon-buttons" href="" id="like" name="{{ song.pk }}" value="Like" title="unlove this song"><i class="fas fa-heart"></i> Unlove</a>
@@ -27,19 +29,19 @@
                     <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:login' %}">Login to love this song</a>
                 {% endif %}
 
-                    <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'blog:new_song' song.pk %}" title="Make a post about {{ song.title }}"><i class="fas fa-pencil-alt"></i></a>
-                    <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song:reader_view' song.pk song.slug %}" title="Print {{ song.title }} in pdf format" target="_blank"><i class="fas fa-print"></i></a>
+                <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'blog:new_song' song.pk %}" title="Make a post about {{ song.title }}"><i class="fas fa-pencil-alt"></i></a>
+                <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song:reader_view' song.pk song.slug %}" title="Print {{ song.title }} in pdf format" target="_blank"><i class="fas fa-print"></i></a>
 
-                    {% with song.title as link_text %}
-                        {% post_to_facebook song link_text %}
-                    {% endwith %}
+                {% with song.title as link_text %}
+                    {% post_to_facebook song link_text %}
+                {% endwith %}
 
-                    {% with song.title as link_text %}
-                        {% post_to_twitter "Check out {{song.title}}" song link_text %}
-                    {% endwith %}
+                {% with song.title as link_text %}
+                    {% post_to_twitter "Check out {{song.title}}" song link_text %}
+                {% endwith %}
 
-                    <a class="btn btn-sm btn-primary icon-buttons" href="" title="Email {{ song.title }}" data-toggle="modal" data-target="#emailModal">
-                    <i class="fas fa-at"></i></a>
+                <a class="btn btn-sm btn-primary icon-buttons" href="" title="Email {{ song.title }}" data-toggle="modal" data-target="#emailModal">
+                <i class="fas fa-at"></i></a>
 
                 {% include 'song/song_share_modal.html' %}
             </span>
@@ -157,11 +159,11 @@
 
                 <div class="row score-list-stats-container">
                     <div class="container">
-                        <a class="btn btn-sm btn-primary icon-buttons" href="" title="Total likes">{{ score.score_likes }}</a>
-                        <a class="btn btn-sm btn-primary icon-buttons" href="#" title="Like this score"><i class="fas fa-heart"></i></a>
+                        <a class="btn btn-sm btn-primary icon-buttons" title="Total likes">{{ score.score_likes }}</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" href="" title="Like this score"><i class="fas fa-heart"></i></a>
 
                         <a class="btn btn-sm btn-primary icon-buttons float-right" href="{% url 'song-media:download_score_from_drive' score.pk %}" target="_blank" title="Download"><i class="fas fa-download"></i></a>
-                        <a class="btn btn-sm btn-primary icon-buttons float-right" href="" title="Total downloads">{{ score.downloads }}</a>
+                        <a class="btn btn-sm btn-primary icon-buttons float-right" title="Total downloads">{{ score.downloads }}</a>
                         </span>
                     </div>
                 </div>
@@ -197,11 +199,11 @@
 
                 <div class="row audio-list-drive-container">
                     <div class="container">
-                        <a class="btn btn-sm btn-primary icon-buttons" href="" title="Like this music">{{ midi.midi_likes }}</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" title="Like this music">{{ midi.midi_likes }}</a>
                         <a class="btn btn-sm btn-primary icon-buttons" href="" title="Love this music"><i class="fas fa-heart"></i>
 
                         <a class="btn btn-sm btn-primary icon-buttons float-right" href="{% url 'song-media:download_midi_from_drive' midi.pk %}" target="_blank" title="Download"><i class="fas fa-download"></i></a>
-                        <a class="btn btn-sm btn-primary icon-buttons float-right" href="" title="Total downloads">{{ midi.downloads }}</a>
+                        <a class="btn btn-sm btn-primary icon-buttons float-right" title="Total downloads">{{ midi.downloads }}</a>
                     </div>
                 </div>
             </div>
@@ -243,12 +245,12 @@
 
                 <div class="row video-list-icon-container">
                     <div class="container">
-                        <a class="btn btn-sm btn-primary icon-buttons float-left" href="" title="Total youtube likes">
-                            <span>{{ link.youtube_likes }}</span> <i class="fas fa-heart"></i>
-                        </a>
-                        <span class="btn btn-sm btn-primary icon-buttons float-right" title="Total youtube views">
-                            <span>{{ link.youtube_views }}</span> <i class="fas fa-eye"></i>
-                        </span>
+                        <span class="btn btn-sm btn-primary icon-buttons" title="{{ link.youtube_likes }}">{{ link.youtube_likes }}</span>
+                        <span class="btn btn-sm btn-primary icon-buttons float-left" title="Total youtube likes"><i class="fas fa-heart"></i></span>
+
+
+                        <span class="btn btn-sm btn-primary icon-buttons float-right" title="Total youtube views"><i class="fas fa-eye"></i></span>
+                        <span class="btn btn-sm btn-primary icon-buttons float-right" title="{{ link.youtube_views }}">{{ link.youtube_views }}</span>
                     </div>
                 </div>
             </div>
