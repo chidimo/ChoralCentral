@@ -40,7 +40,7 @@ except NameError:
 
 try:
     youtube_credentials = google.oauth2.credentials.Credentials.from_authorized_user_file(
-        YOUTUBE_AUTHORIZED_USER_FILE, scopes = ['https://www.googleapis.com/auth/youtube.force-ssl'])
+        YOUTUBE_AUTHORIZED_USER_FILE, scopes = ['https://www.googleapis.com/auth/youtube.forcessl'])
 except FileNotFoundError:
     print('Credentials not created')
     pass
@@ -115,31 +115,31 @@ def get_video_information(video_ids, part='snippet,contentDetails,statistics'):
     part=part, id=video_ids).execute()
     return response
 
-def get_or_create_playlist(playlist_id, title, part='snippet,status'):
-    """Get a playlist if given playlist_id exists or create new one with the given title"""
+def get_playlist_using_id(playlist_id, part='snippet,status'):
+    """Return a playlist id if such a playlist exists. Else return None"""
     response = AUTH_YOUTUBE.playlists().list(part=part, id=playlist_id).execute()
+    try:
+        return response['items'][0]['id']
+    except KeyError:
+        return None
 
-    if response['items'] == []:
-        # create new playlist
-        title = title.strip()
-        resource = {}
-        resource['snippet'] = {'title' : title, 'description' : 'playlist for {}'.format(title)}
-        resource['status'] = {'privacyStatus' : 'public'}
-
-        new_playlist_response = AUTH_YOUTUBE.playlists().insert(
-            part=part, body=resource).execute()
-        response = new_playlist_response
-    return response
+def create_playlist(title, part='snippet,status'):
+    """Create a new playlist and return its ID"""
+    title = title.strip()
+    resource = {}
+    resource['snippet'] = {'title' : title, 'description' : 'playlist for {}'.format(title)}
+    resource['status'] = {'privacyStatus' : 'public'}
+    response = AUTH_YOUTUBE.playlists().insert(part=part, body=resource).execute()
+    return response['id']
 
 def get_playlist_id(playlist_id, title):
-    """Return the id of a playlist whether it exists (using playlist_id) or not (user title)"""
-    response = get_or_create_playlist(playlist_id, title, part='snippet,status')
-    if playlist_id is None:
-        playlist_id = ''
+    """Get the id of a playlist, whether it exists or not"""
+    if (playlist_id is None) or (playlist_id == ""):
+        playlist_id = ""
     try:
-        return response['items'][0]['id']# return an existing playlist id
-    except KeyError:
-        return response['id']# create a new playlist and return its ID
+        return get_playlist_using_id(playlist_id, part='snippet,status') is None
+    except IndexError:
+        return create_playlist(title, part='snippet,status')
 
 def add_video_to_playlist(video_id, playlist_id):
     """Add a youtube video to a youtube playlist"""
@@ -149,7 +149,5 @@ def add_video_to_playlist(video_id, playlist_id):
         'playlistId': playlist_id,
         'resourceId': {'kind' : 'youtube#video', 'videoId': video_id}
     }
-    response = AUTH_YOUTUBE.playlistItems().insert(
-        body=resource,
-        part='snippet',).execute()
+    response = AUTH_YOUTUBE.playlistItems().insert(body=resource,part='snippet').execute()
     return response

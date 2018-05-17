@@ -271,9 +271,8 @@ class NewVideoLink(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, ge
 
         song = self.object.song
         playlist_id = song.youtube_playlist_id
-        song_title = song.title.strip()
         if (playlist_id is None) or (playlist_id == ''):
-            playlist_id = get_playlist_id(playlist_id, song_title)
+            playlist_id = get_playlist_id(playlist_id, song.title.strip())
             song.youtube_playlist_id = playlist_id
             song.save(update_fields=['youtube_playlist_id'])
 
