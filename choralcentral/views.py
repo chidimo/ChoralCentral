@@ -12,8 +12,8 @@ def coming_soon(request):
     template = "coming_soon.html"
     return render(request, template, {})
 
-def terms_and_conditions(request):
-    template = "terms_and_conditions.html"
+def terms_of_use(request):
+    template = "terms_of_use.html"
     return render(request, template, {})
 
 def privacy_policy(request):
@@ -28,4 +28,6 @@ def api_docs(request):
     template = "api_docs.html"
     return render(request, template, {})
 
-
+def to_fix(request):
+    template = "to_fix.html"
+    return render(request, template, {})

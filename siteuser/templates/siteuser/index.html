@@ -24,11 +24,11 @@
                <img alt="" src="{% static 'img/django-logo.png' %}" width="150" height="150" class="img-fluid card">
             {% endthumbnail %}
             <p class="text-left"><a href="">Follow</a></p>
-            <p class="text-left"><a href="{% url 'siteuser:detail' siteuser.pk siteuser.slug %}">{{ siteuser.screen_name }}</a></p>
+            <p class="text-left"><a href="{% url 'siteuser:library' siteuser.pk siteuser.slug %}">{{ siteuser.screen_name }}</a></p>
             <p class="text-left">{{ siteuser.song_set.count }} uploads</p>
             <p class="text-left">{{ siteuser.post_set.count }} blog posts</p>
             <p class="text-left">{{ siteuser.comment_set.count }} comments</p>
-            <p class="text-left">{% for role in siteuser.roles.all %}{{ role }}{% endfor %}</p>
+            <p class="text-left">{% for role in siteuser.roles.all %}{{ role }}{% if not forloop.last%}<br>{% endif %}{% endfor %}</p>
         </div>
     {% empty %}
         <p>No profiles added yet.</p>

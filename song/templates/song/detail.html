@@ -58,7 +58,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <span class="h6 float-left">Uploader</span>
-                    <span class="h6 float-right"><a href="{% url 'siteuser:detail' song.originator.pk song.originator.slug %}">{{ song.originator.screen_name }}</a></span>
+                    <span class="h6 float-right"><a href="{% url 'siteuser:library' song.originator.pk song.originator.slug %}">{{ song.originator.screen_name }}</a></span>
                 </div>
 
                 <div class="col-sm-12">
@@ -153,7 +153,7 @@
                     <div class="container">
                         <span title="{{ score.part|title }}">{{ score.part|truncatechars:5 }}</span> |
                         <span title="{{ score.notation|title }}">{{ score.notation|truncatechars:5 }}</span> |
-                        <a href="{% url 'siteuser:detail' score.uploader.pk score.uploader.slug %}" title="{{ score.uploader.screen_name }}"> {{ score.uploader.screen_name|truncatechars:5 }}</a>
+                        <a href="{% url 'siteuser:library' score.uploader.pk score.uploader.slug %}" title="{{ score.uploader.screen_name }}"> {{ score.uploader.screen_name|truncatechars:5 }}</a>
                     </div>
                 </div>
 
@@ -193,7 +193,7 @@
                 <div class="row audio-list-meta-container">
                     <div class="container">
                         <span title="{{ midi.part }}">{{ midi.part|truncatechars:5 }}</span> |
-                        <a href="{% url 'siteuser:detail' midi.uploader.pk midi.uploader.slug %}">{{ midi.uploader.screen_name|truncatechars:5 }}</a>
+                        <a href="{% url 'siteuser:library' midi.uploader.pk midi.uploader.slug %}">{{ midi.uploader.screen_name|truncatechars:5 }}</a>
                     </div>
                 </div>
 
@@ -238,7 +238,7 @@
                             <p class="text-right">
                                 <a href="{{ link.channel_link }}" target="_blank" title='Watch it on our channel'>{{ link.title }}</a></p>
                             <p class="text-right">
-                                <a href="{% url 'siteuser:detail' link.uploader.pk link.uploader.slug %}">{{ link.uploader.screen_name }}</a></p>
+                                <a href="{% url 'siteuser:library' link.uploader.pk link.uploader.slug %}">{{ link.uploader.screen_name }}</a></p>
                         </div>
                     </div>
                 </div>

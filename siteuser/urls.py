@@ -14,7 +14,7 @@ urlpatterns = [
     path("edit/<int:pk>/<slug:slug>/", views.SiteUserEdit.as_view(), name="edit"),
     path("welcome/<str:screen_name>/", views.welcome_siteuser, name="new_success"),
     path("activate/<int:pk>/<str:screen_name>/", views.activate_siteuser, name="new_activation"),
-    path("<int:pk>/<slug:slug>/", views.UserDetail.as_view(), name="detail"),
+    path("library/<int:pk>/<slug:slug>/", views.UserLibrary.as_view(), name="library"),
     path("comments/<int:pk>/<slug:slug>/", views.UserComments.as_view(), name="comments"),
 ]
 
@@ -38,7 +38,7 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    path(r'social-management/', views.social_management, name='social_management'),
+    path(r'manage-account/', views.account_management, name='account_management'),
     path(r'social-password/', views.social_password, name='social_password'),
 ]
 

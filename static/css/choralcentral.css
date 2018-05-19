@@ -69,6 +69,7 @@ ul.nav > li.social-management {
 
 ul.righthand-navigation {
     padding: 0;
+    margin-right: 8rem;
 }
 
 .logged-in-username {
@@ -655,37 +656,32 @@ input#id_password {
 /*LOGIN PAGE*/
 
 .social-logins {
-    margin-bottom: .5rem;
-}
-
-.social-logins > .col-sm-12 {
-    background: silver;
-    border: 1px solid #ccc;
     border-radius: .3rem;
     padding-top: .3rem;
     padding-bottom: .3rem;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+}
+.social-logins > a {
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    text-align: center;
+    color: midnightblue;
+    width: 36px;
+    height: 36px;
+    padding: 8px;
+}
+
+.social-logins > a:hover {
+    color: blue;
 }
 
 .login-form {
   max-width:350px;
   margin:auto;
   padding-bottom: 1rem;
-}
-
-.social-logins > .col-sm-12 > a.google-login {
-    margin-right: 2rem;
-}
-
-.social-logins > .col-sm-12 > a.facebook-login {
-    margin-right: 2rem;
-}
-
-.social-logins > .col-sm-12 > a.twitter-login {
-    margin-right: 2rem;
-}
-
-.social-logins > .col-sm-12 > a.yahoo-login {
-    margin-right: 2rem;
 }
 
 .login-btn {

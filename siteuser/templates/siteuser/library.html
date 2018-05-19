@@ -1,0 +1,208 @@
+{% extends "choralcentral_base.html" %}
+{% block title %}{{ siteuser.screen_name }}'s library{% endblock title %}
+{% block introduction %}{% endblock introduction %}
+
+{% block content_content %}
+
+<div class='container siteuser-detail-heading'>
+    <div class='row'>
+        <div class='col-sm-12'>
+            <span class='h5 float-left'>
+                {% if user == siteuser.user %}My{% else %}{{ siteuser.screen_name }}'s {% endif %} library
+            </span>
+        </div>
+    </div>
+</div>
+
+<ul class="nav nav-tabs">
+  <li class="nav-item"><a class="nav-link" href="#">Songs</a></li>
+  <li class="nav-item"><a class="nav-link" href="#">Blog posts</a></li>
+  <li class="nav-item"><a class="nav-link" href="#">Request</a></li>
+  <li class="nav-item"><a class="nav-link" href="#">Scores</a></li>
+  <li class="nav-item"><a class="nav-link" href="#">Midi</a></li>
+  <li class="nav-item"><a class="nav-link" href="#">Videos</a></li>
+</ul>
+
+<div class='col-sm-12 about-accordion'>
+<div id="accordion">
+    <h5>
+        <a href="#" data-toggle="collapse" data-target="#Songs" aria-expanded="false" aria-controls="#Songs">
+            Songs
+        </a>
+    </h5>
+    <div id="Songs" class="collapse" data-parent="accordion">
+        <div class="table-responsive">
+        <table class="table">
+            <thead class="thead-dark">
+                <caption>Songs</caption>
+                <tr>
+                    <th>Title</th>
+                    <th>Popularity</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+                <tbody>
+                {% for song in siteuser.song_set.all %}
+                    {% if song.publish %}
+                        <tr>
+                    {% else %}
+                        {% if user == siteuser.user %}
+                            <tr class='text-danger'>
+                        {% else %}
+                            <tr class='d-none'>
+                        {% endif %}
+                    {% endif %}
+                            <td><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></td>
+                            <td>{{ song.like_count }}</td>
+                            <td>{% if song.publish %}Public{% else %}Private{% endif %}</td>
+                            <td>
+                                {% if request.user == siteuser.user %}
+                                    <a href="{% url 'song:edit' song.pk song.slug %}" title='Edit'><i class="fas fa-edit"></i></a> |
+                                    <a href="{% url 'song:delete' song.pk %}" title='Delete {{ song.title }}'><i class="fas fa-trash"></i></a> |
+                                {% endif %}
+                            </td>
+                        </tr>
+                {% empty %}
+                    <p>No song to display</p>
+                {% endfor %}
+                </tbody>
+        </table>
+    </div>
+    </div>
+</div>
+
+</div>
+
+<div class='col-sm-12 about-accordion'>
+<div id="accordion">
+    <h5>
+        <a href="#" data-toggle="collapse" data-target="#blogPosts" aria-expanded="false" aria-controls="#blogPosts">
+            Blog posts
+        </a>
+    </h5>
+    <div id="blogPosts" class="collapse" data-parent="accordion">
+        <div class="table-responsive">
+        <table class="table">
+            <thead class="thead-dark">
+                <caption>Blog posts</caption>
+                <tr>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+                <tbody>
+                {% for post in siteuser.post_set.all %}
+                    {% if post.publish %}
+                        <tr>
+                    {% else %}
+                        {% if user == siteuser.user %}
+                            <tr class='text-danger'>
+                        {% else %}
+                            <tr class='d-none'>
+                        {% endif %}
+                    {% endif %}
+                        <td><a href="{% url 'blog:detail' post.pk post.slug %}">{{ post.title }}</a></td>
+                        <td>{% if post.publish %}Public{% else %}Private{% endif %}</td>
+
+                        <td>
+                            {% if user == siteuser.user %}
+                                <a href="{% url 'blog:edit' post.pk %}"><i class="fas fa-edit"></i></a> |
+                                <a href="#"><i class="fas fa-trash"></i></a>
+                            {% endif %}
+                        </td>
+
+                    </td>
+                {% empty %}
+                    <p>No posts to display</p>
+                {% endfor %}
+                </tbody>
+        </table>
+    </div>
+    </div>
+</div>
+
+</div>
+
+<div class='col-sm-12 about-accordion'>
+<div id="accordion">
+    <h5>
+        <a href="#" data-toggle="collapse" data-target="#Requests" aria-expanded="false" aria-controls="#Requests">
+            Requests
+        </a>
+    </h5>
+    <div id="Requests" class="collapse" data-parent="accordion">
+        <div class="table-responsive">
+        <table class="table">
+            <thead class="thead-dark">
+                <caption>My blog posts</caption>
+                <tr>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+                <tbody>
+                {% for request in siteuser.request_set.all %}
+                    <tr>
+                        {% if request.status == True %}
+                            <td><a href="{% url 'request:detail' request.pk request.slug %}">{{ request }}</a></td>
+                            <td>{{ request.status }}</td>
+                        {% else %}
+                            <td><a "text-danger" href="{% url 'request:detail' request.pk request.slug %}">{{ request }}</a></td>
+                            <td class="text-danger">{{ request.status }}</td>
+                        {% endif %}
+                        <td>
+                            <a href="{% url 'request:edit' request.pk %}"><i class="fas fa-edit"></i></a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <p>No request to display</p>
+                {% endfor %}
+                </tbody>
+        </table>
+    </div>
+    </div>
+</div>
+
+</div>
+
+<div class='col-sm-12 about-accordion'>
+    <div id="accordion">
+        <h5>
+            <a href="#" data-toggle="collapse" data-target="#Authors" aria-expanded="false" aria-controls="#Authors">
+                Authors
+            </a>
+        </h5>
+        <div id="Authors" class="collapse" data-parent="accordion">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <caption>My authors</caption>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                        <tbody>
+                        {% for author in siteuser.author_set.all %}
+                            <tr>
+                                <td><a href="{% url 'author:detail' author.pk author.slug %}">{{ author }}</a></td>
+                                <td>{{ author.author_type|title }}</td>
+                                <td><a href="#"><i class="fas fa-edit"></i></a> |
+                                <a href="#"><i class="fas fa-trash"></i></a></td>
+                            </tr>
+                        {% empty %}
+                            <p>No author to display</p>
+                        {% endfor %}
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content_content %}
+

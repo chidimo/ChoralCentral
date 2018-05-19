@@ -8,12 +8,33 @@
 <div class='row siteuser-index-heading'>
     <div class='container'>
         <div class='col-sm-12'>
-            <span class='h5 float-left'>Manage your social media accounts</span>
+            <span class='h5 float-left'>My account</span>
             </span>
         </div>
     </div>
 </div>
 
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <p class="text-secondary">First name: {{ user.siteuser.first_name }}</p>
+            <p class="text-secondary">Last name: {{ user.siteuser.last_name }}</p>
+            <p class="text-secondary">Email: <a href="mailto:{{ user.siteuser.user.email }}">{{ user.siteuser.user.email }}</a></p>
+            <p class="text-secondary">Roles:
+                {% for role in user.siteuser.roles.all %}
+                    <a href='#' title='See other {{ role.role|upper }}'>{{ role.role|title }}</a>
+                    {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+            <p class="text-secondary">Location: <a href='#' title='See others from {{ user.siteuser.location }}'>{{ user.siteuser.location }}</a></p>
+            <p class="text-secondary">Member since: {{ user.siteuser.created }}</p>
+            <p class="text-secondary">Last seen: {{ user.last_login }}</p>
+            <p class="text-secondary">Comments: <a href="{% url 'siteuser:comments' user.siteuser.pk user.siteuser.slug %}">{{ user.siteuser.comment_set.count }}</a></p>
+        </div>
+    </div>
+</div>
+<hr>
+<h3>Social media accounts</h3>
 <div class="row text-center text-lg-left">
     <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
         <h3>Facebook</h3>
@@ -37,7 +58,7 @@
     <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
         <h3>Google</h3>
          {% if google_login %}
-         
+
             <p>Connected as <a href="https://plus.google.com/u/0/+{{ google_login.uid }}/" target="_blank">{{ google_login.uid }}</a></p>
 
             {% if can_disconnect %}

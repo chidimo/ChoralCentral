@@ -75,8 +75,8 @@
                     <strong>
                         <a href="{% url 'siteuser:detail' comment.creator.pk comment.creator.slug %}">{{ comment.creator.screen_name }}</a>
                         <span class="float-right">
-                            {{ comment.created|date }} |
-                            Edited {{ comment.modified|date }}
+                            <span title="Comment date">{{ comment.created|date }}</span> |
+                            <span title="Modified">{{ comment.modified|date }}</span>
                         </span>
                     </strong>
                 </div>

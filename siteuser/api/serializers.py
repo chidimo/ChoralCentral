@@ -4,7 +4,7 @@ from ..models import CustomUser, SiteUser, Role
 class CustomUserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ('is_active', 'last_login') # no email, for privacy purpose
+        fields = ('email', 'is_active', 'last_login') # no email, for privacy purpose
         # fields = ('email', 'is_active', 'last_login')
 
 class SiteUserSerializer(serializers.HyperlinkedModelSerializer):

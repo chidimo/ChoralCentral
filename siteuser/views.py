@@ -42,13 +42,13 @@ CustomUser = get_user_model()
 def get_api_key(request):
     siteuser = request.user.siteuser
     if siteuser.key:
-        msg = "You already have an API key"
+        msg = "You already have an API key. Maybe you want to reset it."
     else:
         siteuser.key = uuid.uuid4()
         siteuser.save(update_fields=['key'])
         msg = "Your API key is {}".format(siteuser.key)
     messages.success(request, msg)
-    return redirect(reverse("siteuser:detail", kwargs={"pk" : siteuser.pk, "slug" : siteuser.slug}))
+    return redirect(reverse("siteuser:account_management"))
 
 def reset_api_key(request):
     siteuser = request.user.siteuser
@@ -56,23 +56,13 @@ def reset_api_key(request):
     siteuser.save(update_fields=['key'])
     msg = "Your new API key is {}. Don't forget to update your applications".format(siteuser.key)
     messages.warning(request, msg)
-    return redirect(reverse("siteuser:detail", kwargs={"pk" : siteuser.pk, "slug" : siteuser.slug}))
+    return redirect(reverse("siteuser:account_management"))
 
 class SiteUserIndex(PaginationMixin, generic.ListView):
     model = SiteUser
     context_object_name = 'siteuser_list'
     template_name = "siteuser/index.html"
     paginate_by = 20
-
-class UserDetail(generic.DetailView):
-    model = SiteUser
-    context_object_name = 'siteuser'
-    template_name = "siteuser/detail.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(UserDetail, self).get_context_data(**kwargs)
-        context["share_form"] = ShareForm()
-        return context
 
 class SongLoveBirds(PaginationMixin, generic.ListView):
     model = SiteUser
@@ -199,6 +189,9 @@ class SiteUserEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     template_name = 'siteuser/edit.html'
     success_message = "Profile updated successfully."
 
+    def get_success_url(self):
+        return reverse('siteuser:account_management')
+
 class NewRole(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):
     form_class = NewRoleForm
     template_name = 'siteuser/role_new.html'
@@ -230,9 +223,14 @@ class GroupDetail(LoginRequiredMixin, generic.DetailView):
     template_name = 'siteuser/group_detail.html'
     context_object_name = 'group'
 
+class UserLibrary(LoginRequiredMixin, generic.DetailView):
+    model = SiteUser
+    context_object_name = 'siteuser'
+    template_name = "siteuser/library.html"
+
 @login_required
-def social_management(request):
-    template = "siteuser/social_management.html"
+def account_management(request):
+    template = "siteuser/account_management.html"
     context = {}
     user = request.user
 

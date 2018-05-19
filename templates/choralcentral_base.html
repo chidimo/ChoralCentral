@@ -64,58 +64,76 @@
 					<li class="nav-item"><a class="nav-link" href="{% url 'blog:index' %}" title="Blog entries">Blog</a></li>
 					<li class="nav-item"><a class="nav-link" href="{% url 'siteuser:index' %}" title="Users">Users</a></li>
 					{% if user.is_admin %}
-					    <li class="nav-item"><a class="nav-link" href="{% url 'siteuser:siteuser_groups' %}" title="Choirs">Choirs</a></li>
+					    <li class="nav-item"><a class="nav-link" href="{% url 'siteuser:siteuser_groups' %}" title="Choirs aka groups">Choirs</a></li>
 					{% else %}
-					    <li class="nav-item"><a class="nav-link" href="/coming-soon/" title="Choirs">Choirs</a></li>
+					    <li class="nav-item"><a class="nav-link" href="/coming-soon/" title="Choirs aka groups">Choirs</a></li>
 					{% endif %}
 					<li class="nav-item"><a class="nav-link" href="{% url 'song:instant_song' %}" title="Search ChoralCentral"><i class="fas fa-search"></i></a></li>
 				</ul>
 
 				<ul class="navbar-nav ml-auto righthand-navigation">
 					{% if user.is_authenticated %}
-						{% if user.is_admin %}
-							<li class="nav-item"><a class="nav-link" href="{% url 'google-api:drive_authorize' %}" target="_blank">Drive</a></li>
-							<li class="nav-item"><a class="nav-link" href="{% url 'google-api:youtube_authorize' %}" target="_blank">YouTube</a></li>
-							<li class="nav-item"><a class="nav-link" href="/admin/"><i class='fas fa-cog fa-spin'></i></a></li>
-							<li><a class="nav-link" href="{% url 'song-media:midi_index' %}"><i class="fas fa-music"></i></a></li>
-							<li><a class="nav-link" href="{% url 'song-media:score_index' %}"><i class="fas fa-file-pdf"></i></a></li>
-						{% endif %}
+
 						<li class="nav-item logged-in-username">
-								<a class="nav-link" href="{% url 'siteuser:detail' user.siteuser.pk user.siteuser.slug %}">
-									{% if user.siteuser.avatar %}
-										<div class="profile-image">
-											<img class="card" src="{{ user.siteuser.avatar.url }}">
-										</div>
-										<div class="profile-name">
-											{{ user.siteuser.screen_name }}
-										</div>
-									{% else %}
-									<div class="profile-image">
-										<img class="card" src="{% static 'img/django-logo.png' %}">
-									</div>
-									<div class="profile-name">
-										{{ user.siteuser.screen_name }}
-									</div>
-									{% endif %}
-								 </a>
+							<a class="nav-link" href="{% url 'siteuser:account_management' %}">
+								{% if user.siteuser.avatar %}
+									<div class="profile-image"><img class="card" src="{{ user.siteuser.avatar.url }}"></div>
+									<div class="profile-name">{{ user.siteuser.screen_name }}</div>
+								{% else %}
+    								<div class="profile-image"><img class="card" src="{% static 'img/django-logo.png' %}"></div>
+    								<div class="profile-name">{{ user.siteuser.screen_name }}</div>
+								{% endif %}
+							 </a>
 						</li>
-						<li class="nav-item social-management">
-							<a class="nav-link" href="{% url 'siteuser:social_management' %}"><i class="fas fa-desktop"></i></a>
+
+						<li class="nav-item dropdown">
+						    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Create</a>
+							<div class="dropdown-menu">
+							    <a class="dropdown-item" href="{% url 'song:new' %}">New song</a>
+							    <a class="dropdown-item" href="{% url 'blog:new' %}">New blog post</a>
+							    <a class="dropdown-item" href="{% url 'request:new' %}">New request</a>
+							    <a class="dropdown-item" href="{% url 'siteuser:new_group' %}">New group</a>
+							</div>
 						</li>
-						<li class="nav-item login-logout">
-							<a class="btn btn-info btn-sm upload-button" href="{% url 'siteuser:logout' %}">Logout</a>
+
+						<li class="nav-item dropdown">
+						    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-cog"></i></a>
+						    <div class="dropdown-menu">
+						        <a class="dropdown-item" href="{% url 'siteuser:account_management' %}"><i class="fas fa-desktop"></i> Account</a>
+						        <a class="dropdown-item" href="{% url 'siteuser:edit' request.user.siteuser.pk request.user.siteuser.slug %}">Edit profile</a>
+							    <a class="dropdown-item" href="{% url 'siteuser:password_change' %}">Change password</a>
+							    <a class="dropdown-item" href="{% url 'siteuser:password_reset' %}">Reset password</a>
+							    <div class="dropdown-divider"></div>
+						        <a class="dropdown-item" href="{% url 'siteuser:library' user.siteuser.pk user.siteuser.slug %}">Library</a>
+						        <div class="dropdown-divider"></div>
+							    {% if user.siteuser.key %}
+							        <a class="dropdown-item" href="{% url 'siteuser:reset_api_key' %}">Reset API key</a>
+							    {% else %}
+							        <a class="dropdown-item" href="{% url 'siteuser:new_api_key' %}">Get API key</a>
+							    {% endif %}
+							    <div class="dropdown-divider"></div>
+							    <a class="dropdown-item" href="{% url 'siteuser:logout' %}">Logout</a>
+							</div>
 						</li>
+
+						{% if user.is_admin %}
+						<li class="nav-item dropdown">
+						    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
+							<div class="dropdown-menu">
+    							<a class="dropdown-item" href="{% url 'google-api:drive_authorize' %}" target="_blank">Drive</a>
+    							<a class="dropdown-item" href="{% url 'google-api:youtube_authorize' %}" target="_blank">YouTube</a>
+							    <div class="dropdown-divider"></div>
+    							<a class="dropdown-item" href="/admin/"><i class='fas fa-cog fa-spin'></i></a>
+    							<a class="dropdown-item" href="{% url 'song-media:midi_index' %}"><i class="fas fa-music"></i></a>
+    							<a class="dropdown-item" href="{% url 'song-media:score_index' %}"><i class="fas fa-file-pdf"></i></a>
+							</div>
+						</li>
+						{% endif %}
 					{% else %}
-						<li class="nav-item login-logout">
-							<a class="btn btn-info btn-sm upload-button" href="{% url 'siteuser:login' %}">Login</a>
-						</li>
-						<li class="nav-item login-logout">
-							<a class="btn btn-primary btn-sm upload-button" href="{% url 'siteuser:new' %}">Join</a>
-						</li>
+						<li class="nav-item login-logout"><a class="btn btn-info btn-sm upload-button" href="{% url 'siteuser:login' %}">Login</a></li>
+						<li class="nav-item login-logout"><a class="btn btn-primary btn-sm upload-button" href="{% url 'siteuser:new' %}">Join</a></li>
+					    <li class="nav-item login-logout" id=uploadButtonNav><a href="{% url 'song:new' %}" class="btn btn-primary btn-sm upload-button">UPLOAD</a></li>
 					{% endif %}
-					<li class="nav-item login-logout" id=uploadButtonNav>
-						<a href="{% url 'song:new' %}" class="btn btn-primary btn-sm upload-button">UPLOAD</a>
-					</li>
 
 				</ul>
 			</div>
@@ -187,7 +205,6 @@
 
 				$("#id_email").attr('class', 'form-control');
 				$("#id_email").attr('placeholder', '{{ form.email.label }}');
-
 
 				$("#id_old_password").attr('class', 'form-control');
 				$("#id_old_password").attr('placeholder', '{{ form.old_password.label }}');
