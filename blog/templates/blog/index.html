@@ -13,7 +13,7 @@
         {% endif %}
 
         <h6><em>
-            by <a href="{% url 'siteuser:detail' post.creator.pk post.creator.slug %}">{{ post.creator.screen_name }}</a>
+            by <a href="{% url 'siteuser:library' post.creator.pk post.creator.slug %}">{{ post.creator.screen_name }}</a>
             | {{ post.created }}
             </em>
         </h6>
