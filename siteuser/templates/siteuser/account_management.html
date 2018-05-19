@@ -33,11 +33,23 @@
         </div>
     </div>
 </div>
+
 <hr>
+<h3>My groups</h3>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <p>Groups here</p>
+        </div>
+    </div>
+</div>
+<hr>
+
 <h3>Social media accounts</h3>
 <div class="row text-center text-lg-left">
     <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
-        <h3>Facebook</h3>
+        <h4>Facebook</h4>
          {% if facebook_login %}
             <p>Connected as <a href="https://facebook.com/{{ facebook_login.extra_data.id }}/" target="_blank">{{ facebook_login.extra_data.id }}</a></p>
 
@@ -56,7 +68,7 @@
     </div>
 
     <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
-        <h3>Google</h3>
+        <h4>Google</h4>
          {% if google_login %}
 
             <p>Connected as <a href="https://plus.google.com/u/0/+{{ google_login.uid }}/" target="_blank">{{ google_login.uid }}</a></p>
@@ -76,7 +88,7 @@
     </div>
 
     <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
-        <h3>Twitter</h3>
+        <h4>Twitter</h4>
          {% if twitter_login %}
             <p>Connected as <a href="https://twitter.com/{{ twitter_login.extra_data.access_token.screen_name }}/" target="_blank">{{ twitter_login.extra_data.access_token.screen_name }}</a></p>
 
@@ -95,7 +107,7 @@
     </div>
 
     <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
-        <h3>Yahoo</h3>
+        <h4>Yahoo</h4>
          {% if yahoo_login %}
             <p>Connected as <a href="https://yahoo.com/{{ yahoo_login.extra_data.login }}/" target="_blank">{{ yahoo_login.extra_data.login }}</a></p>
 

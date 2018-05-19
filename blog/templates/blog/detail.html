@@ -24,7 +24,7 @@
             {% endif %}
 
             <div class='col-sm-12 post-subtitle'>
-                <p><em><a href="{% url 'siteuser:detail' post.creator.pk post.creator.slug %}">
+                <p><em><a href="{% url 'siteuser:library' post.creator.pk post.creator.slug %}">
                         {{ post.creator.screen_name }}</a> | Posted {{ post.created|date }} | Modified {{ post.modified|date }}</em>
                 </p>
             </div>

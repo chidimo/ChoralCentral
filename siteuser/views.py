@@ -27,10 +27,11 @@ from pure_pagination.mixins import PaginationMixin
 from social_django.models import UserSocialAuth
 
 from .models import SiteUser, Role, SiteUserGroup, GroupMembership, GroupJoinRequest, Follow
-from blog.models import Comment
-from song.forms import ShareForm
 from song.models import Song
 from blog.models import Post, Comment
+from request.models import Request
+from author.models import Author
+from song_media.models import Score, Midi, VideoLink
 
 from .forms import (
     SiteUserRegistrationForm, SiteUserEditForm, NewRoleForm, RoleEditForm,
@@ -227,6 +228,17 @@ class UserLibrary(LoginRequiredMixin, generic.DetailView):
     model = SiteUser
     context_object_name = 'siteuser'
     template_name = "siteuser/library.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(UserLibrary, self).get_context_data(**kwargs)
+        context['user_songs'] = Song.objects.filter(originator__user=self.request.user)
+        context['user_posts'] = Post.objects.filter(creator__user=self.request.user)
+        context['user_requests'] = Request.objects.filter(originator__user=self.request.user)
+        context['user_authors'] = Author.objects.filter(originator__user=self.request.user)
+        context['user_scores'] = Score.objects.filter(uploader__user=self.request.user)
+        context['user_midis'] = Midi.objects.filter(uploader__user=self.request.user)
+        context['user_videos'] = VideoLink.objects.filter(uploader__user=self.request.user)
+        return context
 
 @login_required
 def account_management(request):

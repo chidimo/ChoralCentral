@@ -31,12 +31,6 @@ class NewPostForm(forms.ModelForm):
                        attrs={'class' : 'form-control', "placeholder" : "Body"}),
                   }
 
-    def __init__(self, *args, **kwargs):
-        """How to do query in forms"""
-        user = kwargs.pop("user")
-        super(NewPostForm, self).__init__(*args, **kwargs)
-        self.fields['song'].queryset = Song.objects.filter(originator__user=user)
-
 class PostEditForm(forms.ModelForm):
     class Meta:
         model = Post

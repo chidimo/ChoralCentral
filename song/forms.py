@@ -142,7 +142,6 @@ class SongEditForm(forms.ModelForm):
                   "authors", "seasons", "mass_parts",]
 
         widgets = {
-            "publish" : forms.CheckboxInput(attrs={'class' : 'form-control'}),
             "title" : forms.TextInput(
                 attrs={'class' : 'form-control', 'placeholder' : "Song title"}),
             "compose_date" : forms.DateInput(

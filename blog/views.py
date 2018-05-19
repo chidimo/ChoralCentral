@@ -70,12 +70,6 @@ class PostCreate(LoginRequiredMixin, generic.CreateView):
     template_name = 'blog/new.html'
     form_class = NewPostForm
 
-    def get_form_kwargs(self):
-        """include 'user' and 'pk' in the kwargs to be sent to form"""
-        kwargs = super(PostCreate, self).get_form_kwargs()
-        kwargs['user'] = self.request.user
-        return kwargs
-
     def form_valid(self, form):
         form.instance.creator = SiteUser.objects.get(user=self.request.user)
         self.object = form.save()

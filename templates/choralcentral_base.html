@@ -35,6 +35,7 @@
 		{% comment %} [endif] {% endcomment %}
 
 		{% load static %}
+		{% load thumbnail %}
 		<link rel="shortcut icon" type="image/png" href="{% static 'favicons/favicon.ico' %}"/>
 		<link rel="stylesheet" href="{% static 'css/choralcentral.css' %}">
 		<script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
@@ -76,23 +77,22 @@
 
 						<li class="nav-item logged-in-username">
 							<a class="nav-link" href="{% url 'siteuser:account_management' %}">
-								{% if user.siteuser.avatar %}
+								{% thumbnail user.siteuser.avatar "35x35" crop="center" as im %}
 									<div class="profile-image"><img class="card" src="{{ user.siteuser.avatar.url }}"></div>
-									<div class="profile-name">{{ user.siteuser.screen_name }}</div>
-								{% else %}
+								{% empty %}
     								<div class="profile-image"><img class="card" src="{% static 'img/django-logo.png' %}"></div>
-    								<div class="profile-name">{{ user.siteuser.screen_name }}</div>
-								{% endif %}
+								{% endthumbnail %}
+								<div class="profile-name">{{ user.siteuser.screen_name }}</div>
 							 </a>
 						</li>
 
 						<li class="nav-item dropdown">
-						    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Create</a>
+						    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">New</a>
 							<div class="dropdown-menu">
-							    <a class="dropdown-item" href="{% url 'song:new' %}">New song</a>
-							    <a class="dropdown-item" href="{% url 'blog:new' %}">New blog post</a>
-							    <a class="dropdown-item" href="{% url 'request:new' %}">New request</a>
-							    <a class="dropdown-item" href="{% url 'siteuser:new_group' %}">New group</a>
+							    <a class="dropdown-item" href="{% url 'song:new' %}">Song</a>
+							    <a class="dropdown-item" href="{% url 'blog:new' %}">Blog post</a>
+							    <a class="dropdown-item" href="{% url 'request:new' %}">Request</a>
+							    <a class="dropdown-item" href="{% url 'siteuser:new_group' %}">Group</a>
 							</div>
 						</li>
 

@@ -3,7 +3,7 @@
     <head>
         {% load song_ttags %}
         {% load static %}
-        <title>ChoralCentral | {{ song.title }}</title>
+        <title>ChoralCentral | {{ song.title }} pdf sheet</title>
         <link rel='stylesheet' type='text/css' href="{% static 'css/reader_view.css' %}">
         <link href="https://fonts.googleapis.com/css?family=Inconsolata:700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
@@ -16,7 +16,7 @@
         </h2>
         <div class='heading'>
             <p class='uploader'>
-                by <a href="{% url 'siteuser:detail' song.originator.pk song.originator.slug %}">{{ song.originator.screen_name }}</a>
+                by <a href="{% url 'siteuser:library' song.originator.pk song.originator.slug %}">{{ song.originator.screen_name }}</a>
             </h6>
             <hr>
         </div>
