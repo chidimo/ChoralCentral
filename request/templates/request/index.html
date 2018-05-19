@@ -17,7 +17,7 @@
         <h4><a href="{% url 'request:detail' request.pk request.slug %}" title="Request for {{ request }}">{{ request }}</a></h4>
 
         <h6><em>
-            <a href="{% url 'siteuser:detail' request.originator.pk request.originator.slug %}">{{request.originator.screen_name }}</a>
+            <a href="{% url 'siteuser:library' request.originator.pk request.originator.slug %}">{{request.originator.screen_name }}</a>
             | {{ request.created|date }}
             </em>
         </h6>

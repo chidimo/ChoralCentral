@@ -25,7 +25,7 @@
             {% endthumbnail %}
             <p class="text-left">{{ love_bird.song_set.count }} uploads</p>
             <p class="text-left"><a href="">Follow</a></p>
-            <p class="text-left"><a href="{% url 'siteuser:detail' love_bird.pk love_bird.slug %}">{{ love_bird.screen_name }}</a></p>
+            <p class="text-left"><a href="{% url 'siteuser:library' love_bird.pk love_bird.slug %}">{{ love_bird.screen_name }}</a></p>
             <p class="text-left">{{ love_bird.post_set.count }} blog posts</p>
             <p class="text-left">{{ love_bird.comment_set.count }} comments</p>
             <p class="text-left">{% for role in love_bird.roles.all %}{{ role }}{% endfor %}</p>

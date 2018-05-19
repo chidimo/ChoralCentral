@@ -171,7 +171,7 @@ class SongDelete(generic.DeleteView):
     template_name = "song/song_delete.html"
 
     def get_success_url(self):
-        return reverse_lazy('siteuser:detail', kwargs={'pk' : self.request.user.siteuser.pk, 'slug' : self.request.user.siteuser.slug})
+        return reverse_lazy('siteuser:library', kwargs={'pk' : self.request.user.siteuser.pk, 'slug' : self.request.user.siteuser.slug})
 
 class FilterSongs(PaginationMixin, SuccessMessageMixin, generic.ListView):
     model = Song

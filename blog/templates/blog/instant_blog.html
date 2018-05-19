@@ -26,7 +26,7 @@
                     {{ post }}</a>
                 </h5>
                 <p> by
-                    <a href="{% url 'siteuser:detail' post.creator.pk %}">
+                    <a href="{% url 'siteuser:library' post.creator.pk %}">
                     {{ post.creator.screen_name }}</a> on {{ post.created }}
                 </p>
                 

@@ -43,5 +43,5 @@
     <p>Author has no song</p>
 {% endfor %}
 
-<p>First added by <a href="{% url 'siteuser:detail' author.originator.pk author.originator.slug %}">{{ author.originator.screen_name }}</a></p>
+<p>First added by <a href="{% url 'siteuser:library' author.originator.pk author.originator.slug %}">{{ author.originator.screen_name }}</a></p>
 {% endblock content_content %}

@@ -9,7 +9,7 @@
             {% if request.status %}
                 <h4 class='text-success'>Replies to {{ request }}</h4>
                 <h6><em>
-                    <a href="{% url 'siteuser:detail' request.originator.pk request.originator.slug %}">{{request.originator.screen_name }}</a>
+                    <a href="{% url 'siteuser:library' request.originator.pk request.originator.slug %}">{{request.originator.screen_name }}</a>
                     | {{ request.created|date }}
                     </em>
                 </h6>
@@ -17,7 +17,7 @@
             {% else %}
                 <h4>Replies to {{ request }}</h4>
                 <h6><em>
-                    <a href="{% url 'siteuser:detail' request.originator.pk request.originator.slug %}">{{request.originator.screen_name }}</a>
+                    <a href="{% url 'siteuser:library' request.originator.pk request.originator.slug %}">{{request.originator.screen_name }}</a>
                     | {{ request.created|date }}
                     </em>
                 </h6>

@@ -19,7 +19,7 @@
                        <img alt="" src="{% static 'img/django-logo.png' %}" width="150" height="150" class="img-fluid card">
                     {% endthumbnail %}
                     <p class="text-left">{{ love_bird.comment_set.count }} uploads</p>
-                    <p class="text-left"><a href="{% url 'siteuser:detail' love_bird.pk love_bird.slug %}">{{ love_bird.screen_name }}</a></p>
+                    <p class="text-left"><a href="{% url 'siteuser:library' love_bird.pk love_bird.slug %}">{{ love_bird.screen_name }}</a></p>
                 </div>
             {% empty %}
                 <p>No lover for this comment.</p>

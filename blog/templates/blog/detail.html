@@ -73,7 +73,7 @@
             <div class="row commenter-stats">
                 <div class='col-sm-12'>
                     <strong>
-                        <a href="{% url 'siteuser:detail' comment.creator.pk comment.creator.slug %}">{{ comment.creator.screen_name }}</a>
+                        <a href="{% url 'siteuser:library' comment.creator.pk comment.creator.slug %}">{{ comment.creator.screen_name }}</a>
                         <span class="float-right">
                             <span title="Comment date">{{ comment.created|date }}</span> |
                             <span title="Modified">{{ comment.modified|date }}</span>
