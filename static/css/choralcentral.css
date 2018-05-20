@@ -594,14 +594,14 @@ a.upload-button {
     margin-bottom: 0;
 }
 
-.siteuser-detail-heading {
-     background: #f2f3fb;
+.account-management-heading {
+    background: #f2f3fb;
     border: .6px solid midnightblue;
     margin: .5rem 0;
     border-radius: .3rem;
 }
 
-.siteuser-detail-heading > .row > .col-sm-12 > span {
+.account-management-heading > .row > .col-sm-12 > span {
     margin-top: .5rem;
 }
 
