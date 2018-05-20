@@ -3,15 +3,47 @@
 {% block introduction %}{% endblock introduction %}
 {% block content_content %}
 
-<h2>API</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>API</h2>
+        </div>
+    </div>
+</div>
+
 <hr>
 
-<p class='text-primary'>API key is: {{ request.user.siteuser.key }}</p>
-<p class='text-primary'>API quota: {{ request.user.siteuser.quota }} | Remaining: {{ request.user.siteuser.remaining_quota }}</p>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <p class='text-primary'>API key: {{ request.user.siteuser.key }}</p>
+            <p class='text-primary'>API quota: {{ request.user.siteuser.quota }} | Remaining: {{ request.user.siteuser.remaining_quota }}</p>
+
+
+            <p>To access the API, you need to be logged in and have an API key. Your API key is shown above.</p>
+            <p>This data structures of the exposed API interfaces are shown below.
+                <br>All returned data is in <code>json</code> format</p>
+
+            <p>Every API result has four keys, <code>count</code>, <code>next</code>, <code>previous</code>, and <code>results</code>.
+            The values of interest are in the <code>results</code> <code>list</code>. <code>results</code> is a list of <code>dictionaries</code>.
+            </p>
+        </div>
+    </div>
+</div>
+<hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>Available API data</h3>
+        </div>
+    </div>
+</div>
+<hr>
 
 <div class="container">
     <ul class="list-group">
-        <li class="list-group-item"><a aria-hidden="true" href="/api-doc/">Documentation</a></li>
+        <li class="list-group-item"><a aria-hidden="true" href="#api-documentation">Documentation</a></li>
         <li class="list-group-item"><a aria-hidden="true" href="{% url 'blog-api:comments_api' %}">Comments</a></li>
         <li class="list-group-item"><a aria-hidden="true" href="{% url 'blog-api:posts_api' %}">Post</a></li>
         <li class="list-group-item"><a aria-hidden="true" href="{% url 'song-api:song_published_api' %}">Song</a></li>
@@ -24,5 +56,22 @@
         {% endif %}
     </ul>
 </div>
-{% block footer %}{% endblock footer %}
+
+<hr>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>Documentation</h3>
+        </div>
+    </div>
+</div>
+<hr>
+
+<div class="container" id="api-documentation">
+    <div class="row">
+        <div class="col-sm-12">
+            {% include 'structures.html' %}
+        </div>
+    </div>
+</div>
 {% endblock content_content %}
