@@ -235,8 +235,8 @@ class UserLibrary(LoginRequiredMixin, generic.DetailView):
         context['user_posts'] = Post.objects.filter(creator__user=self.request.user)
         context['user_requests'] = Request.objects.filter(originator__user=self.request.user)
         context['user_authors'] = Author.objects.filter(originator__user=self.request.user)
-        context['user_scores'] = Score.objects.filter(uploader__user=self.request.user)
-        context['user_midis'] = Midi.objects.filter(uploader__user=self.request.user)
+        context['scores'] = Score.objects.filter(uploader__user=self.request.user)
+        context['midis'] = Midi.objects.filter(uploader__user=self.request.user)
         context['user_videos'] = VideoLink.objects.filter(uploader__user=self.request.user)
         return context
 

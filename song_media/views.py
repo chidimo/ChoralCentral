@@ -38,10 +38,12 @@ class NewVocalPart(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, ge
     template_name = 'song_media/part_new.html'
     success_message = "Vocal part added successfully !"
 
-class ScoreIndex(LoginRequiredMixin, generic.ListView):
-    model = Score
-    context_object_name = 'scores'
-    template_name = 'song_media/score_index.html'
+def admin_media_index(request):
+    template = "siteuser/library.html"
+    context = {}
+    context['scores'] = Score.objects.all()
+    context['midis'] = Midi.objects.all()
+    return render(request, template, context)
 
 class NewScoreNotation(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):
     model = ScoreNotation
@@ -152,11 +154,6 @@ class DeleteScore(LoginRequiredMixin, generic.DeleteView):
         song_pk = score_object.song.pk
         song_slug = score_object.song.slug
         return reverse("song:detail", kwargs={'pk' : song_pk, 'slug' : song_slug})
-
-class MidiIndex(LoginRequiredMixin, generic.ListView):
-    model = Midi
-    context_object_name = 'midis'
-    template_name = 'song_media/midi_index.html'
 
 class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):
     template_name = 'song_media/midi_new.html'
