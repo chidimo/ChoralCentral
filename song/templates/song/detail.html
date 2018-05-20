@@ -186,14 +186,12 @@
     <div class="row text-left">
         {% for midi in song.midi_set.all %}
             <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 px-0 audio-list">
-                <div class="row audio-list-container">
-                    <img src="" class="card" width="120" height="160">
-                    <!--<embed id="pdfIframe" src="{{ midi.embed_link }}#toolbar=0&navpanes=0&scrollbar=0" width="150" height="200" showcontrols="false"></embed><!--</iframe>-->
-                </div>
                 <div class="row audio-list-meta-container">
                     <div class="container">
-                        <span title="{{ midi.part }}">{{ midi.part|truncatechars:5 }}</span> |
-                        <a href="{% url 'siteuser:library' midi.uploader.pk midi.uploader.slug %}">{{ midi.uploader.screen_name|truncatechars:5 }}</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" title="{{ midi.part }}">{{ midi.part }}</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" title="File format: {{ midi.fformat }}">{{ midi.fformat }}</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" title="Filesize: {{ midi.fsize|filesizeformat }}">{{ midi.fsize|filesizeformat }}</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:library' midi.uploader.pk midi.uploader.slug %}" title="{{ midi.uploader.screen_name }}">{{ midi.uploader.screen_name }}</a>
                     </div>
                 </div>
 
@@ -201,9 +199,8 @@
                     <div class="container">
                         <a class="btn btn-sm btn-primary icon-buttons" title="Like this music">{{ midi.midi_likes }}</a>
                         <a class="btn btn-sm btn-primary icon-buttons" href="" title="Love this music"><i class="fas fa-heart"></i>
-
-                        <a class="btn btn-sm btn-primary icon-buttons float-right" href="{% url 'song-media:download_midi_from_drive' midi.pk %}" target="_blank" title="Download"><i class="fas fa-download"></i></a>
-                        <a class="btn btn-sm btn-primary icon-buttons float-right" title="Total downloads">{{ midi.downloads }}</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song-media:download_midi_from_drive' midi.pk %}" target="_blank" title="Download"><i class="fas fa-download"></i></a>
+                        <a class="btn btn-sm btn-primary icon-buttons" title="Total downloads">{{ midi.downloads }}</a>
                     </div>
                 </div>
             </div>

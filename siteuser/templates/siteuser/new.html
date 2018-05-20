@@ -11,10 +11,10 @@
         <h2 class='text-center'>Register</h2>
 
         {% include "registration/social_logins.html" %}
+        <p>Using social registration implies you agree to our <a href="/terms-of-user/" target="_blank">terms</a></p>
 
         <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-
                 <p>{{ form.email }}</p>
                 <p>{{ form.email.errors }}</p>
                 <p>{{ form.screen_name }}</p>
@@ -23,6 +23,8 @@
                 <p>{{ form.password1.errors }}</p>
                 <p>{{ form.password2 }}</p>
                 <p>{{ form.password2.errors }}</p>
+                <p>Please agree to the <a href="/terms-of-user/" target="_blank">terms</a>. Privacy <a href="/policy/" target="_blank">policy</a></p>
+                <p>{{ form.agreement }}</p>
 
             <button class="btn btn-primary btn-sm register-btn" type="submit" value="Join">Join</button>
         </form>

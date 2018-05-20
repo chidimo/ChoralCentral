@@ -2,6 +2,8 @@
 
 import os
 import uuid
+import json
+
 from django.http import FileResponse
 from django.conf import settings
 from django.views import generic
@@ -132,6 +134,7 @@ def download_score_from_drive(request, pk):
     return redirect(score.drive_download_link)
 
 def show_score(request, pk):
+    """Display pdf score stored locally by django"""
     doc = get_object_or_404(Score, pk=pk)
     doc.downloads += 1
     doc.save()
@@ -203,12 +206,19 @@ class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
 
         temp_pdf_path = os.path.join(tmp, song.title + extension)
         file = upload_audio_to_drive(midi_metadata, temp_pdf_path, mimetype)
+        with open("f.json", "w+") as fh:
+            json.dump(file, fh)
 
-        midi.fformat = extension
+        if extension.startswith(".mp3"):
+            midi.fformat = "mp3"
+        if extension.startswith(".mid"):
+            midi.fformat = "midi"
+
+        midi.fsize = file.get('size')
         midi.drive_view_link = file.get('webViewLink')
         midi.drive_download_link = file.get('webContentLink')
         midi.embed_link = file.get('webViewLink').replace('view?usp=drivesdk', 'preview')
-        midi.save(update_fields=['drive_view_link', 'drive_download_link', 'fformat', 'embed_link'])
+        midi.save(update_fields=['drive_view_link', 'drive_download_link', 'fformat', 'fsize', 'embed_link'])
         share_file_permission(file.get('id')) # make shareable
 
         midi.likes.add(SiteUser.objects.get(user=self.request.user))

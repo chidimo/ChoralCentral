@@ -20,6 +20,7 @@
                     <th>Song owner</th>
                     <th>Midi owner</th>
                     <th>Format</th>
+                    <th><i class="fas fa-music" title="File size"></i></th>
                     <th><i class="fas fa-hdd" title="HDD download url"></i></th>
                     <th><i class="fas fa-hdd" title="HDD link"></i></th>
                     <th><i class="fab fa-google-drive" title="Google Drive view url"></i></i></th>
@@ -34,22 +35,9 @@
                             <td><a href="{% url 'song:detail' midi.song.pk midi.song.slug %}">{{ midi.song.title }}</a></td>
                             <td>{{ midi.song.originator }}</td>
                             <td>{{ midi.uploader }}</td>
-                            <td>{{ midi.fformat }}
-                            </td>
-                            <td>
-                                {% if midi.media_file %}
-                                   {% if midi.fformat == ".mp3" %}
-                                    <p class='text-left'>
-                                        <a href="{% url 'song-media:play_midiview' midi.pk %}" target="_blank"><i class="fas fa-play"></i></a>
-                                    </p>
-                                    {% else %}
-                                    <p class='text-left'>
-                                        <a class='text-success' href="" onClick="MIDIjs.play('{{ midi.media_file.url }}');"><i class='fas fa-play'></i></a> |
-                                        <a href="" onClick="MIDIjs.stop();"><i class='fas fa-stop'></i></a>
-                                    </p>
-                                    {% endif %}
-                                {% endif %}
-                            </td>
+                            <td>{{ midi.fformat }}</td>
+                            <td>{{ midi.fsize }}</td>
+
                             <td>
                                 {% if midi.media_file %}
                                     <a href="{{ midi.media_file.url }}" target="_blank"><i class="fas fa-link"></i></a>

@@ -27,6 +27,8 @@
             <p>Every API result has four keys, <code>count</code>, <code>next</code>, <code>previous</code>, and <code>results</code>.
             The values of interest are in the <code>results</code> <code>list</code>. <code>results</code> is a list of <code>dictionaries</code>.
             </p>
+
+            <p><a aria-hidden="true" href="#api-documentation">Documentation</a> below</p>
         </div>
     </div>
 </div>
@@ -43,7 +45,6 @@
 
 <div class="container">
     <ul class="list-group">
-        <li class="list-group-item"><a aria-hidden="true" href="#api-documentation">Documentation</a></li>
         <li class="list-group-item"><a aria-hidden="true" href="{% url 'blog-api:comments_api' %}">Comments</a></li>
         <li class="list-group-item"><a aria-hidden="true" href="{% url 'blog-api:posts_api' %}">Post</a></li>
         <li class="list-group-item"><a aria-hidden="true" href="{% url 'song-api:song_published_api' %}">Song</a></li>
@@ -58,7 +59,7 @@
 </div>
 
 <hr>
-<div class="container">
+<div class="container" id="api-documentation">
     <div class="row">
         <div class="col-sm-12">
             <h3>Documentation</h3>
@@ -67,7 +68,7 @@
 </div>
 <hr>
 
-<div class="container" id="api-documentation">
+<div class="container">
     <div class="row">
         <div class="col-sm-12">
             {% include 'structures.html' %}

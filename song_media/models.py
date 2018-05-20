@@ -71,6 +71,7 @@ class Midi(TimeStampedModel):
     song = models.ForeignKey(Song, null=True, on_delete=models.SET_NULL)
     part = models.ForeignKey(VocalPart, on_delete=models.CASCADE)
     fformat = models.CharField(max_length=10, blank=True)
+    fsize = models.FloatField(null=True)
     description = models.CharField(max_length=200, blank=True, null=True)
     likes = models.ManyToManyField(SiteUser, related_name="midi_likes")
     downloads = models.IntegerField(default=0)

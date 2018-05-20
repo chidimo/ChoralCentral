@@ -131,10 +131,9 @@ def new_siteuser(request):
         form = SiteUserRegistrationForm(request.POST)
         if form.is_valid():
             form = form.cleaned_data
-            email = form['email'].strip()
-            screen_name = form['screen_name'].strip()
-            password1 = form['password1'].strip()
-            # password2 = form['password2']
+            email = form['email']
+            screen_name = form['screen_name']
+            password1 = form['password1']
 
             user = CustomUser(email=email)
             user.set_password(password1)
@@ -154,14 +153,15 @@ def new_siteuser(request):
             text_email = render_to_string("welcome_email_template.txt", context)
             html_email = render_to_string("welcome_email_template.html", context)
 
-            msg = EmailMultiAlternatives(subject, text_email, from_email, [email, "choralcentral@gmail.com"])
-            msg.attach_alternative(html_email, "text/html")
-            msg.send()
+            for each in [email, "choralcentral@gmail.com"]:
+                msg = EmailMultiAlternatives(subject, text_email, from_email, [each])
+                msg.attach_alternative(html_email, "text/html")
+                msg.send()
 
             return redirect(reverse('siteuser:new_success', args=[screen_name]))
-    else:
-        form = SiteUserRegistrationForm()
-    return render(request, template, {'form' : form})
+        else:
+            return render(request, template, {'form' : form})
+    return render(request, template, {'form' : SiteUserRegistrationForm()})
 
 def welcome_siteuser(request, screen_name):
     template = 'siteuser/new_success.html'

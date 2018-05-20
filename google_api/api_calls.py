@@ -81,15 +81,15 @@ def upload_pdf_to_drive(score_data, file_location_on_disk):
 
 def upload_audio_to_drive(score_data, file_location_on_disk, mimetype):
     file_metadata = score_data
-    media = MediaFileUpload(
+    media_body = MediaFileUpload(
         file_location_on_disk, mimetype=mimetype)
 
-    file = AUTH_DRIVE.files().create(
+    response = AUTH_DRIVE.files().create(
         body=file_metadata,
-        media_body=media,
-        fields="id,webViewLink,webContentLink,thumbnailLink,hasThumbnail"
+        media_body=media_body,
+        fields="id,size,webViewLink,webContentLink,thumbnailLink,hasThumbnail"
         ).execute()
-    return file
+    return response
 
 def share_file_permission(file_id):
     """Set a file as shareable"""
