@@ -4,6 +4,7 @@ from django import forms
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import get_user_model
+from django.contrib.auth.hashers import check_password
 from django_addanother.widgets import AddAnotherWidgetWrapper
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
@@ -94,27 +95,6 @@ class SiteUserRegistrationForm(forms.Form):
         if SiteUser.objects.filter(screen_name=screen_name).exists():
             self.add_error('screen_name', 'Display name already taken.')
 
-
-    # def clean_email(self):
-    #     User = get_user_model()
-    #     email = self.cleaned_data["email"]
-    #     if User.objects.filter(email=email).exists():
-    #         raise forms.ValidationError("Email already exists")
-    #     return email
-
-    # def clean_password2(self):
-    #     password1 = self.cleaned_data.get('password1')
-    #     password2 = self.cleaned_data.get('password2')
-    #     if password1 and password2 and password1 != password2:
-    #         raise forms.ValidationError("Passwords do not match")
-    #     return password2
-
-    # def clean_screen_name(self):
-    #     screen_name = self.cleaned_data["screen_name"]
-    #     if SiteUser.objects.filter(screen_name=screen_name).exists():
-    #         raise forms.ValidationError("Display name already taken.")
-    #     return screen_name
-
 class SiteUserEditForm(forms.ModelForm):
     class Meta:
         model = SiteUser
@@ -128,29 +108,42 @@ class SiteUserEditForm(forms.ModelForm):
                 forms.SelectMultiple(attrs={'class' : 'form-control'}),
                 reverse_lazy('siteuser:role_create')),}
 
+class DeleteAccountForm(forms.Form):
+    password = forms.CharField(
+        required=True,
+        widget=forms.PasswordInput(attrs={'class':'form-control', 'type':'password', "placeholder" : "Enter password"}))
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        super(DeleteAccountForm, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        password = self.cleaned_data['password']
+        if check_password(password, self.user.password) is False:
+            self.add_error('password', 'You entered a wrong password')
+
 class NewRoleForm(forms.ModelForm):
     class Meta:
         model = Role
-        fields = ("role", )
+        fields = ("name", )
 
         widgets = {
-            "role" : forms.TextInput(
+            "name" : forms.TextInput(
                 attrs={'class' : 'form-control', "placeholder" : "Role"})
         }
 
-    def clean_role(self):
-        role = self.cleaned_data.get("role", None).upper()
-        if Role.objects.filter(role=role):
-            raise forms.ValidationError(_("{} already exists".format(role)))
-        return role
+    def clean_name(self):
+        name = self.cleaned_data.get("name", None).upper().strip()
+        if Role.objects.filter(name=name):
+            self.add_error('name', "Role with this name already exists")
+        return name.strip()
 
 class RoleEditForm(forms.ModelForm):
     class Meta:
         model = Role
-        fields = ("role", )
+        fields = ("name", )
 
         widgets = {
-            "role" : forms.TextInput(
+            "name" : forms.TextInput(
                 attrs={'class' : 'form-control', "placeholder" : "Role"})
         }
 

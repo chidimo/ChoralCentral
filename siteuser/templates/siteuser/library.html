@@ -14,6 +14,29 @@
     </div>
 </div>
 
+<div class="container song-about">
+    <div class="row">
+        <div class="col-sm-6">
+            <p class="text-secondary">First name: {{ siteuser.first_name }}</p>
+            <p class="text-secondary">Last name: {{ siteuser.last_name }}</p>
+            <p class="text-secondary">Email: <a href="mailto:{{ user.siteuser.user.email }}">{{ siteuser.user.email }}</a></p>
+            <p class="text-secondary">Location: <a href='#' title='See others from {{ user.siteuser.location }}'>{{ siteuser.location }}</a></p>
+        </div>
+
+        <div class="col-sm-6">
+            <p class="text-secondary">Roles:
+                {% for role in siteuser.roles.all %}
+                    <a href="{% url 'siteuser:users_common_roles' role %}" title='See other {{ role.name|upper }}s'>{{ role.name|title }}</a>
+                    {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+            <p class="text-secondary">Member since: {{ siteuser.created }}</p>
+            <p class="text-secondary">Last seen: {{ siteuser.user.last_login }}</p>
+            <p class="text-secondary">Comments: <a href="{% url 'siteuser:comments' siteuser.pk siteuser.slug %}">{{ siteuser.comment_set.count }}</a></p>
+        </div>
+    </div>
+</div>
+
 <div class="library-tabs">
     <ul class="nav nav-tabs">
         <li class="nav-item"><a class="nav-link" href="#songs" aria-controls="songs" role="tab" data-toggle="tab">Songs</a></li>

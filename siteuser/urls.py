@@ -10,8 +10,10 @@ app_name = "siteuser"
 
 urlpatterns = [
     path('', views.SiteUserIndex.as_view(), name="index"),
+    path('roles-<str:role>/', views.SiteUserCommonRoles.as_view(), name="users_common_roles"),
     path("new/", views.new_siteuser, name="new"),
-    path("edit/<int:pk>/<slug:slug>/", views.SiteUserEdit.as_view(), name="edit"),
+    path("delete-account/", views.delete_account, name="delete_account"),
+    path("edit-profile/", views.SiteUserEdit.as_view(), name="edit_profile"),
     path("welcome/<str:screen_name>/", views.welcome_siteuser, name="new_success"),
     path("activate/<int:pk>/<str:screen_name>/", views.activate_siteuser, name="new_activation"),
     path("library/<int:pk>/<slug:slug>/", views.UserLibrary.as_view(), name="library"),

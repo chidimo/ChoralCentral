@@ -61,13 +61,13 @@ class CustomUser(AbstractBaseUser):
         return self.siteuser.screen_name
 
 class Role(TimeStampedModel):
-    role = models.CharField(max_length=20, unique=True)
+    name = models.CharField(max_length=20, unique=True)
 
     class Meta:
-        ordering = ['role']
+        ordering = ['name']
 
     def __str__(self):
-        return self.role
+        return self.name
 
     def get_absolute_url(self):
         return reverse('siteuser:role_index')

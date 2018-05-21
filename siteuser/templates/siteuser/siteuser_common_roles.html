@@ -1,5 +1,5 @@
 {% extends "choralcentral_base.html" %}
-{% block title %}Users{% endblock title %}
+{% block title %}Meet the {{ role|title }}s{% endblock title %}
 {% load thumbnail %}
 {% load static %}
 {% block introduction %}{% endblock introduction %}
@@ -9,7 +9,7 @@
 <div class='row siteuser-index-heading'>
     <div class='container'>
         <div class='col-sm-12'>
-            <span class='h5 float-left'>Meet the choir</span>
+            <span class='h5 float-left'>Meet the {{ role|title }}s</span>
             </span>
         </div>
     </div>

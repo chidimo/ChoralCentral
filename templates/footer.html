@@ -61,11 +61,14 @@
                     &#124;
                     <a href="/credits/" title="Credits">Credits</a>
                     &#124;
-                    <a href="/api/" title="Data api">API</a>
-
+                    <a href="/help-page/" title="Help page">Help</a>
+                    {% if user.is_authenticated %}
+                        &#124;
+                        <a href="/api/" title="Data api">API</a>
+                    {% endif %}
                     {% if user.is_admin %}
-                    &#124;
-                    <a href="/to-fix/" title="To fix">To fix</a>
+                        &#124;
+                        <a href="/to-fix/" title="To fix">To fix</a>
                     {% endif %}
                 </p>
                 <p class="copyright">&#169; Copyright 2018 choralcentral.net <a href="#"><i class='fas fa-arrow-up'></i></a></p>

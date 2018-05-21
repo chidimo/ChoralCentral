@@ -58,6 +58,7 @@ urlpatterns += [
     path('credits/', views.credits),
     path('to-fix/', views.to_fix),
     path('api/', views.api),
+    path('help-page/', views.help_page),
     path('coming-soon/', views.coming_soon),
     path('privacy-policy/', views.privacy_policy),
     path('terms-of-use/', views.terms_of_use),

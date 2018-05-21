@@ -100,7 +100,7 @@
 						    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-cog"></i></a>
 						    <div class="dropdown-menu">
 						        <a class="dropdown-item" href="{% url 'siteuser:account_management' %}">My account</a>
-						        <a class="dropdown-item" href="{% url 'siteuser:edit' request.user.siteuser.pk request.user.siteuser.slug %}">Edit profile</a>
+						        <a class="dropdown-item" href="{% url 'siteuser:edit_profile' %}">Edit profile</a>
 							    <a class="dropdown-item" href="{% url 'siteuser:password_change' %}">Change password</a>
 							    <a class="dropdown-item" href="{% url 'siteuser:password_reset' %}">Reset password</a>
 							    <div class="dropdown-divider"></div>

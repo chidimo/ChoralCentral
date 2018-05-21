@@ -33,7 +33,7 @@ from request.models import Request
 from author.models import Author
 from song_media.models import Score, Midi, VideoLink
 
-from .forms import (
+from .forms import (DeleteAccountForm,
     SiteUserRegistrationForm, SiteUserEditForm, NewRoleForm, RoleEditForm,
     NewSiteUserGroupForm
 )
@@ -64,6 +64,21 @@ class SiteUserIndex(PaginationMixin, generic.ListView):
     context_object_name = 'siteuser_list'
     template_name = "siteuser/index.html"
     paginate_by = 20
+
+class SiteUserCommonRoles(PaginationMixin, generic.ListView):
+    model = SiteUser
+    context_object_name = 'siteuser_list'
+    template_name = "siteuser/siteuser_common_roles.html"
+    paginate_by = 20
+
+    def get_queryset(self):
+        role = self.kwargs['role']
+        return SiteUser.objects.filter(roles__name__in=[role])
+
+    def get_context_data(self, *args):
+        context = super(SiteUserCommonRoles, self).get_context_data(*args)
+        context['role'] = self.kwargs['role']
+        return context
 
 class SongLoveBirds(PaginationMixin, generic.ListView):
     model = SiteUser
@@ -157,7 +172,6 @@ def new_siteuser(request):
                 msg = EmailMultiAlternatives(subject, text_email, from_email, [each])
                 msg.attach_alternative(html_email, "text/html")
                 msg.send()
-
             return redirect(reverse('siteuser:new_success', args=[screen_name]))
         else:
             return render(request, template, {'form' : form})
@@ -190,8 +204,31 @@ class SiteUserEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     template_name = 'siteuser/edit.html'
     success_message = "Profile updated successfully."
 
+    def get_object(self):
+        user = self.request.user
+        return SiteUser.objects.get(pk=user.pk)
+
     def get_success_url(self):
         return reverse('siteuser:account_management')
+
+def delete_account(request):
+    template = 'siteuser/delete_account.html'
+    user = request.user
+    siteuser = user.siteuser
+    if request.method == 'POST':
+        form = DeleteAccountForm(request.POST, user=user)
+        if form.is_valid():
+            siteuser.delete()
+            user.delete()
+            msg = "Your account has been permanently deleted"
+            messages.success(request, msg)
+            return redirect('/')
+        else:
+            # return render(request, template, {'form' : form })
+            msg = "You entered a wrong password"
+            messages.error(request, msg)
+            return redirect('/')
+    return render(request, template, {'form' : DeleteAccountForm(user=user) })
 
 class NewRole(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):
     form_class = NewRoleForm
@@ -230,14 +267,16 @@ class UserLibrary(LoginRequiredMixin, generic.DetailView):
     template_name = "siteuser/library.html"
 
     def get_context_data(self, **kwargs):
+        pk = self.kwargs.get('pk', None)
+        slug = self.kwargs.get('slug', None)
         context = super(UserLibrary, self).get_context_data(**kwargs)
-        context['user_songs'] = Song.objects.filter(originator__user=self.request.user)
+        context['user_songs'] = Song.objects.filter(originator__pk=pk, originator__slug=slug)
         context['user_posts'] = Post.objects.filter(creator__user=self.request.user)
-        context['user_requests'] = Request.objects.filter(originator__user=self.request.user)
-        context['user_authors'] = Author.objects.filter(originator__user=self.request.user)
-        context['scores'] = Score.objects.filter(uploader__user=self.request.user)
-        context['midis'] = Midi.objects.filter(uploader__user=self.request.user)
-        context['user_videos'] = VideoLink.objects.filter(uploader__user=self.request.user)
+        context['user_requests'] = Request.objects.filter(originator__pk=pk, originator__slug=slug)
+        context['user_authors'] = Author.objects.filter(originator__pk=pk, originator__slug=slug)
+        context['scores'] = Score.objects.filter(uploader__pk=pk, uploader__slug=slug)
+        context['midis'] = Midi.objects.filter(uploader__pk=pk, uploader__slug=slug)
+        context['user_videos'] = VideoLink.objects.filter(uploader__pk=pk, uploader__slug=slug)
         return context
 
 @login_required
