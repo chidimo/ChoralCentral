@@ -92,7 +92,7 @@ class MassPart(TimeStampedModel):
 
     def __str__(self):
         return self.part
-
+        
 class Song(TimeStampedModel):
     originator      = models.ForeignKey(SiteUser, on_delete=models.SET_NULL, null=True)
     voicing         = models.ForeignKey(Voicing, on_delete=models.CASCADE)

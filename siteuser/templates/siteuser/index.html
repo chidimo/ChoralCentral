@@ -2,6 +2,7 @@
 {% block title %}Users{% endblock title %}
 {% load thumbnail %}
 {% load static %}
+{% load siteuser_tags %}
 {% block introduction %}{% endblock introduction %}
 
 {% block content_content %}
@@ -26,13 +27,13 @@
             <p class="text-left"><a href="{% url 'siteuser:library' siteuser.pk siteuser.slug %}">{{ siteuser.screen_name }}</a></p>
             <p class="text-left">Roles:
                 {% for role in siteuser.roles.all %}
-                    <a href="{% url 'siteuser:users_common_roles' role %}" title='See other {{ role.name|title }}s'>{{ role.name|title }}</a>{% if not forloop.last %}, {% endif %}
+                    <a href="{% url 'siteuser:siteusers_common_roles' role %}" title='See all {{ role.name|title }}s ({{ role.siteuser_set.count }})'>{{ role.name|title }}</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
             </p>
             <p class="text-left">Location: <a href="" title="See others in this {{ siteuser.location }}">{{ siteuser.location }}</a></p>
-            <p class="text-left">{{ siteuser.song_set.count }} uploads</p>
-            <p class="text-left">{{ siteuser.post_set.count }} blog posts</p>
-            <p class="text-left">{{ siteuser.comment_set.count }} comments</p>
+            <p class="text-left">Activity: {{ siteuser.song_set.all|count_published }} songs, {{ siteuser.post_set.all|count_published }} blog posts, 
+                {{ siteuser.score_set.count }} scores, {{ siteuser.midi_set.count }} midis, {{ siteuser.comment_set.count }} comments
+            </p>
         </div>
     {% empty %}
         <p>No profiles added yet.</p>

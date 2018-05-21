@@ -19,7 +19,7 @@ class VocalPart(TimeStampedModel):
         return self.name
 
     # def get_absolute_url(self):
-    #     return reverse()
+    #     return reverse('song:detail', kwargs={'pk' : (self.song.id), 'slug' : self.song.slug})
 
 class ScoreNotation(TimeStampedModel):
     name = models.CharField(max_length=30, default='Solfa', unique=True)
@@ -31,7 +31,7 @@ class ScoreNotation(TimeStampedModel):
         return self.name
 
     # def get_absolute_url(self):
-    #     return reverse()
+    #     return reverse('song:detail', kwargs={'pk' : (self.song.id), 'slug' : self.song.slug})
 
 class Score(TimeStampedModel):
     uploader = models.ForeignKey(SiteUser, null=True, on_delete=models.SET_NULL)

@@ -63,7 +63,7 @@ def independents():
 
 def roles():
     for each in ROLES:
-        _, _ = Role.objects.get_or_create(role=each)
+        _, _ = Role.objects.get_or_create(name=each)
 
 def voicing_language():
     users = SiteUser.objects.all()

@@ -10,14 +10,14 @@ app_name = "siteuser"
 
 urlpatterns = [
     path('', views.SiteUserIndex.as_view(), name="index"),
-    path('roles-<str:role>/', views.SiteUserCommonRoles.as_view(), name="users_common_roles"),
+    path('roles-<str:role>/', views.SiteUserCommonRoles.as_view(), name="siteusers_common_roles"),
     path("new/", views.new_siteuser, name="new"),
     path("delete-account/", views.delete_account, name="delete_account"),
     path("edit-profile/", views.SiteUserEdit.as_view(), name="edit_profile"),
     path("welcome/<str:screen_name>/", views.welcome_siteuser, name="new_success"),
     path("activate/<int:pk>/<str:screen_name>/", views.activate_siteuser, name="new_activation"),
-    path("library/<int:pk>/<slug:slug>/", views.UserLibrary.as_view(), name="library"),
-    path("comments/<int:pk>/<slug:slug>/", views.UserComments.as_view(), name="comments"),
+    path("library/<int:pk>/<slug:slug>/", views.SiteUserLibrary.as_view(), name="library"),
+    path("comments/<int:pk>/<slug:slug>/", views.SiteUserComments.as_view(), name="siteuser_comments"),
 ]
 
 urlpatterns += [
@@ -40,8 +40,8 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    path(r'manage-account/', views.account_management, name='account_management'),
-    path(r'social-password/', views.social_password, name='social_password'),
+    path('manage-account/', views.account_management, name='account_management'),
+    path('set-social-password/', views.social_password, name='social_password'),
 ]
 
 urlpatterns += [

@@ -11,6 +11,9 @@
 {% endblock left_sidebar %}
 
 {% block content_content %}
+
+<p>{{ song.published.count }}</p>
+{{ song.published }}
     {% for song in songs %}
     <div class="list-songs">
         <h4><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h4>

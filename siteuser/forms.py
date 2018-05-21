@@ -8,7 +8,7 @@ from django.contrib.auth.hashers import check_password
 from django_addanother.widgets import AddAnotherWidgetWrapper
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from .models import SiteUser, Role, SiteUserGroup, GroupMembership, GroupJoinRequest, Follow
+from .models import SiteUser, Role, SiteUserGroup, GroupMembership, GroupJoinRequest
 
 CustomUser = get_user_model()
 

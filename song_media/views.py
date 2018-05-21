@@ -39,10 +39,11 @@ class NewVocalPart(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, ge
     success_message = "Vocal part added successfully !"
 
 def admin_media_index(request):
-    template = "siteuser/library.html"
+    template = "song_media/admin_media_index.html"
     context = {}
     context['scores'] = Score.objects.all()
     context['midis'] = Midi.objects.all()
+    context['siteuser'] = SiteUser.objects.get(user=request.user)
     return render(request, template, context)
 
 class NewScoreNotation(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):

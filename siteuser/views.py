@@ -26,7 +26,7 @@ from django_addanother.views import CreatePopupMixin
 from pure_pagination.mixins import PaginationMixin
 from social_django.models import UserSocialAuth
 
-from .models import SiteUser, Role, SiteUserGroup, GroupMembership, GroupJoinRequest, Follow
+from .models import SiteUser, Role, SiteUserGroup, GroupMembership, GroupJoinRequest
 from song.models import Song
 from blog.models import Post, Comment
 from request.models import Request
@@ -125,14 +125,14 @@ class CommentLoveBirds(PaginationMixin, generic.ListView):
         context['comment'] = Comment.objects.get(pk=self.kwargs['pk'])
         return context
 
-class UserComments(PaginationMixin, generic.ListView):
+class SiteUserComments(PaginationMixin, generic.ListView):
     model = Comment
     context_object_name = 'user_comments'
     template_name = "siteuser/comments.html"
     paginate_by = 25
 
     def get_context_data(self, **kwargs):
-        context = super(UserComments, self).get_context_data(**kwargs)
+        context = super(SiteUserComments, self).get_context_data(**kwargs)
         context["siteuser"] = SiteUser.objects.get(pk=self.kwargs.get("pk", None))
         return context
 
@@ -261,7 +261,7 @@ class GroupDetail(LoginRequiredMixin, generic.DetailView):
     template_name = 'siteuser/group_detail.html'
     context_object_name = 'group'
 
-class UserLibrary(LoginRequiredMixin, generic.DetailView):
+class SiteUserLibrary(LoginRequiredMixin, generic.DetailView):
     model = SiteUser
     context_object_name = 'siteuser'
     template_name = "siteuser/library.html"
@@ -269,9 +269,9 @@ class UserLibrary(LoginRequiredMixin, generic.DetailView):
     def get_context_data(self, **kwargs):
         pk = self.kwargs.get('pk', None)
         slug = self.kwargs.get('slug', None)
-        context = super(UserLibrary, self).get_context_data(**kwargs)
+        context = super(SiteUserLibrary, self).get_context_data(**kwargs)
         context['user_songs'] = Song.objects.filter(originator__pk=pk, originator__slug=slug)
-        context['user_posts'] = Post.objects.filter(creator__user=self.request.user)
+        context['user_posts'] = Post.objects.filter(creator__pk=pk, creator__slug=slug)
         context['user_requests'] = Request.objects.filter(originator__pk=pk, originator__slug=slug)
         context['user_authors'] = Author.objects.filter(originator__pk=pk, originator__slug=slug)
         context['scores'] = Score.objects.filter(uploader__pk=pk, uploader__slug=slug)
@@ -284,6 +284,7 @@ def account_management(request):
     template = "siteuser/account_management.html"
     context = {}
     user = request.user
+    context['siteuser'] = user.siteuser
 
     try:
         facebook_login = user.social_auth.get(provider='facebook')
