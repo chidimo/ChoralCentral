@@ -11,7 +11,8 @@
         <h2 class='text-center'>Register</h2>
 
         {% include "registration/social_logins.html" %}
-        <p>By registering via social account you agree to our <a href="/terms-of-user/" target="_blank">Terms of use</a></p>
+        <p>By registering via social account you consent with our <a href="/terms-of-use/" target="_blank">Terms of Use</a> and
+            <a href="/privacy-policy/" target="_blank">Privacy policy</a>.</p>
 
         <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
@@ -24,8 +25,8 @@
                 <p>{{ form.password2 }}</p>
                 <p>{{ form.password2.errors }}</p>
                 <p>{{ form.agreement }} I consent with ChoralCentral's
-                <a href="/terms-of-use/" target="_blank">Terms of Use</a> and
-                <a href="/privacy-policy/" target="_blank">Privacy policy</a>.</p>
+                    <a href="/terms-of-use/" target="_blank">Terms of Use</a> and
+                    <a href="/privacy-policy/" target="_blank">Privacy policy</a>.</p>
             <button class="btn btn-primary btn-sm register-btn" type="submit" value="Join">Join</button>
         </form>
     </div>
