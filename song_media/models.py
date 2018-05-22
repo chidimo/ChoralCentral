@@ -45,7 +45,7 @@ class Score(TimeStampedModel):
     drive_view_link = models.URLField(null=True)
     drive_download_link = models.URLField(null=True)
     embed_link = models.URLField(null=True)
-    media_file = models.FileField(upload_to=save_score, null=True)
+    media_file = models.FileField(upload_to=save_score, null=True, blank=True)
 
     class Meta:
         ordering = ('-downloads', 'created', )
@@ -78,7 +78,7 @@ class Midi(TimeStampedModel):
     embed_link = models.URLField(null=True)
     drive_view_link = models.URLField(null=True)
     drive_download_link = models.URLField(null=True)
-    media_file = models.FileField(upload_to=save_midi, null=True)
+    media_file = models.FileField(upload_to=save_midi, null=True, blank=True)
 
     class Meta:
         ordering = ('-downloads', 'created', )
