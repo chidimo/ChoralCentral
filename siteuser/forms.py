@@ -55,7 +55,6 @@ class SiteUserMixin(forms.ModelForm):
             "screen_name" : forms.TextInput(attrs={'class':'form-control', "placeholder" : "Display name"}),
         }
 
-# class SiteUserRegistrationForm(SiteUserMixin):
 class SiteUserRegistrationForm(forms.Form):
 
     agreement = forms.BooleanField(

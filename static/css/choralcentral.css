@@ -1,4 +1,4 @@
-
+/*https://colorswatches.info/*/
 body {
   color: midnightblue;
   padding-top: 2.4rem;
@@ -609,13 +609,54 @@ a.upload-button {
     border-radius: .3rem;
 }
 
-.leftsidebar {
-    /*border: 0.5px solid grey;*/
+/*LOGIN MODAL*/
+
+.modal-backdrop {
+    z-index: 1020;
 }
 
-.rightsidebar {
-    /*border: 0.5px solid grey;*/
+.modal-content {
+    border-radius: 0;
+    width: 400px;
 }
+
+.social-google {
+    background: #8ac2ff;
+    border-radius: .3rem;
+    height: 2.5rem;
+    margin-bottom: .5rem;
+}
+
+.social-google .login-using-icon-div {
+    color: white;
+    background: #3071d5;
+    border-top-left-radius: .2rem;
+    border-bottom-left-radius: .2rem;
+    width: 20%;
+}
+
+.social-google .login-using-icon {
+    font-size: 22px;
+    display: block;
+    width: 30%;
+    margin: auto;
+    padding-top: .25rem;
+}
+
+.social-google .login-using-text-div {
+    color: white;
+    font-family: 'Inconsolata', monospace;
+    background: #468dfa;
+    border-top-right-radius: .3rem;
+    border-bottom-right-radius: .3rem;
+    width: 80%;
+}
+
+.social-google .login-using-text {
+    display: block;
+}
+
+/*END LOGIN MODAL*/
 
 /* ADD ICONS TO LOGIN FORM FIELDS */
 
@@ -659,6 +700,7 @@ input#id_password {
 /*LOGIN PAGE*/
 
 .social-logins {
+    font-size: 22px;
     border-radius: .3rem;
     padding-top: .3rem;
     padding-bottom: .3rem;
@@ -668,17 +710,29 @@ input#id_password {
     margin-bottom: 1rem;
 }
 .social-logins > a {
+    color: white;
     border-radius: 50%;
     border: 1px solid #ccc;
     text-align: center;
-    color: midnightblue;
-    width: 36px;
-    height: 36px;
-    padding: 8px;
+    width: 40px;
+    height: 40px;
+    padding: 3px;
 }
 
-.social-logins > a:hover {
-    color: blue;
+.social-logins > a.google-login {
+    background: #dd4b39;
+}
+
+.social-logins > a.facebook-login {
+    background: #3b5998;
+}
+
+.social-logins > a.yahoo-login {
+    background: #7B0099;
+}
+
+.social-logins > a.twitter-login {
+    background: #00aced;
 }
 
 .login-form {

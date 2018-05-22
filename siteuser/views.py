@@ -3,11 +3,10 @@
 
 import uuid
 
-from django.db import IntegrityError
+# from django.db import IntegrityError
 from django.core.mail import EmailMultiAlternatives
-from django.shortcuts import redirect
 from django.template.loader import render_to_string
-from django.views.decorators.http import require_POST
+# from django.views.decorators.http import require_POST
 from django.views import generic
 from django.shortcuts import render, reverse, redirect
 from django.conf import settings
@@ -16,6 +15,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
+from django.contrib.auth.hashers import check_password
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
@@ -26,7 +26,7 @@ from django_addanother.views import CreatePopupMixin
 from pure_pagination.mixins import PaginationMixin
 from social_django.models import UserSocialAuth
 
-from .models import SiteUser, Role, SiteUserGroup, GroupMembership, GroupJoinRequest
+from .models import SiteUser, Role, SiteUserGroup, GroupMembership#, GroupJoinRequest
 from song.models import Song
 from blog.models import Post, Comment
 from request.models import Request
@@ -34,8 +34,7 @@ from author.models import Author
 from song_media.models import Score, Midi, VideoLink
 
 from .forms import (DeleteAccountForm,
-    SiteUserRegistrationForm, SiteUserEditForm, NewRoleForm, RoleEditForm,
-    NewSiteUserGroupForm
+    SiteUserRegistrationForm, SiteUserEditForm, NewRoleForm, NewSiteUserGroupForm
 )
 
 CustomUser = get_user_model()

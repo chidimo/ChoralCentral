@@ -1,6 +1,6 @@
 """urls live here"""
 
-from django.urls import reverse_lazy, path, re_path
+from django.urls import reverse_lazy, path
 from django.contrib.auth import views as auth_views
 
 from . import views
