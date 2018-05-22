@@ -151,9 +151,9 @@
 
                 <div class="row score-list-meta-container">
                     <div class="container">
-                        <span title="{{ score.part|title }}">{{ score.part|truncatechars:5 }}</span> |
-                        <span title="{{ score.notation|title }}">{{ score.notation|truncatechars:5 }}</span> |
-                        <a href="{% url 'siteuser:library' score.uploader.pk score.uploader.slug %}" title="{{ score.uploader.screen_name }}"> {{ score.uploader.screen_name|truncatechars:5 }}</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" title="{{ score.part|title }}">{{ score.part }}</a> |
+                        <a class="btn btn-sm btn-primary icon-buttons" title="{{ score.notation|title }}">{{ score.notation }}</a> |
+                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:library' score.uploader.pk score.uploader.slug %}" title="{{ score.uploader.screen_name }}"> {{ score.uploader.screen_name }}</a>
                     </div>
                 </div>
 
@@ -161,9 +161,8 @@
                     <div class="container">
                         <a class="btn btn-sm btn-primary icon-buttons" title="Total likes">{{ score.score_likes }}</a>
                         <a class="btn btn-sm btn-primary icon-buttons" href="" title="Like this score"><i class="fas fa-heart"></i></a>
-
-                        <a class="btn btn-sm btn-primary icon-buttons float-right" href="{% url 'song-media:download_score_from_drive' score.pk %}" target="_blank" title="Download"><i class="fas fa-download"></i></a>
-                        <a class="btn btn-sm btn-primary icon-buttons float-right" title="Total downloads">{{ score.downloads }}</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" title="Total downloads">{{ score.downloads }}</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song-media:download_score_from_drive' score.pk %}" target="_blank" title="Download"><i class="fas fa-download"></i></a>
                         </span>
                     </div>
                 </div>
@@ -199,8 +198,8 @@
                     <div class="container">
                         <a class="btn btn-sm btn-primary icon-buttons" title="Like this music">{{ midi.midi_likes }}</a>
                         <a class="btn btn-sm btn-primary icon-buttons" href="" title="Love this music"><i class="fas fa-heart"></i>
+                            <a class="btn btn-sm btn-primary icon-buttons" title="Total downloads">{{ midi.downloads }}</a>
                         <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song-media:download_midi_from_drive' midi.pk %}" target="_blank" title="Download"><i class="fas fa-download"></i></a>
-                        <a class="btn btn-sm btn-primary icon-buttons" title="Total downloads">{{ midi.downloads }}</a>
                     </div>
                 </div>
             </div>
