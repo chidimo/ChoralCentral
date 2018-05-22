@@ -151,8 +151,8 @@
 
                 <div class="row score-list-meta-container">
                     <div class="container">
-                        <a class="btn btn-sm btn-primary icon-buttons" title="{{ score.part|title }}">{{ score.part }}</a> |
-                        <a class="btn btn-sm btn-primary icon-buttons" title="{{ score.notation|title }}">{{ score.notation }}</a> |
+                        <a class="btn btn-sm btn-primary icon-buttons" title="{{ score.part|title }}">{{ score.part }}</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" title="{{ score.notation|title }}">{{ score.notation }}</a>
                         <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:library' score.uploader.pk score.uploader.slug %}" title="{{ score.uploader.screen_name }}"> {{ score.uploader.screen_name }}</a>
                     </div>
                 </div>
