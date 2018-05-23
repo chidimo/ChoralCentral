@@ -204,8 +204,6 @@ class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
 
         temp_pdf_path = os.path.join(tmp, song.title + extension)
         file_resource = upload_audio_to_drive(midi_metadata, temp_pdf_path, mimetype)
-        with open("f.json", "w+") as fh:
-            json.dump(file, fh)
 
         if extension.startswith(".mp3"):
             midi.fformat = "mp3"
