@@ -91,9 +91,9 @@ $(document).ready(function() {
         $noHits.addClass('d-none');
     }
 
-    $hitsStat.html('<p class="text-right">Found <b>' +
+    $hitsStat.html('<div class="container"><div class="row"><div class="result-count col-sm-6">Found <b>' +
         content.nbHits + '</b> results in <b>' + content.processingTimeMS + '</b>ms ' +
-        '<br>Search powered by <a href="http://www.algolia.com" target="_blank"><img src="{% static "img/logo-algolia.png" %}" /></a></p>'
+        '</div> <div class="algolia col-sm-6 text-right"><a href="http://www.algolia.com" target="_blank">by Algolia <i class="fab fa-algolia fa-2x"></i></a></div></div></div>'
     );
     }
 });

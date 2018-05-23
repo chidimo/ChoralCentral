@@ -7,17 +7,13 @@
 
 <div class='container author-heading'>
     <div class='row'>
-        <div class='col-sm-12'>
-            <h5>{{ author }} - {{ author.author_type|title}}</h5>
-        </div>
+        <h3 class="float-left">{{ author }} - {{ author.author_type|title}}</h3>
     </div>
 </div>
 
-<div class='container author-heading'>
+<div class='container author-bio-heading'>
     <div class='row'>
-        <div class='col-sm-12 head-title'>
-            <span class='h5 float-left'>Biography</span>
-        </div>
+        <h5 class='float-left'>Biography</h5>
     </div>
 </div>
 
@@ -25,11 +21,9 @@
     {{ author.bio|markdown_format }}
 </div>
 
-<div class='container author-heading'>
+<div class='container author-songs-heading'>
     <div class='row'>
-        <div class='col-sm-12 head-title'>
-            <span class='h5 float-left'>Songs</span>
-        </div>
+        <h5 class='h5 float-left'>Songs</h5>
     </div>
 </div>
 

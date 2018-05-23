@@ -140,6 +140,7 @@
 		{% endblock navigation %}
 
 		{% block introduction %}
+		{% if not user.is_authenticated %}
 		<section class="jumbotron text-center d-none d-sm-block">
             <div class="container">
                 <h1 class="jumbotron-heading">ChoralCentral</h1>
@@ -150,13 +151,13 @@
                     <a href="{% url 'song:instant_song' %}" class="btn btn-secondary" target="_blank">Search</a>
                     <a href="#" class="btn btn-secondary" target="_blank">Douay-Rheims bible</a>
                 </p>
-                {% if not user.is_authenticated %}
+
                 <a href="{% url 'siteuser:new' %}" class="btn btn-primary join-campaign">
                     Join {{ user_count }} plus people celebrating over {{ song_count }} songs in {{ lang_count }} languages and {{ voice_count }} voices
                 </a>
-                {% endif %}
             </div>
         </section>
+        {% endif %}
 		{% endblock introduction %}
 
 		<div class="container-fluid">
