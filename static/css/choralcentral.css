@@ -114,7 +114,7 @@ a {
     color: #0062cc;
 }
 
-p {
+p, ol.terms-of-use li, ol.privacy-policy li {
     font-family: 'Sunflower', sans-serif;
 }
 

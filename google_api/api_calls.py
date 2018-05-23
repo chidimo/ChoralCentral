@@ -75,7 +75,7 @@ def upload_pdf_to_drive(score_data, file_location_on_disk):
     file = AUTH_DRIVE.files().create(
         body=file_metadata,
         media_body=media,
-        fields="id,webViewLink,webContentLink,thumbnailLink,hasThumbnail"
+        fields="id,size,webViewLink,webContentLink,thumbnailLink,hasThumbnail"
         ).execute()
     return file
 

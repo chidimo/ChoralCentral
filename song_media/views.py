@@ -102,15 +102,16 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
             uploader=uploader, song=song, notation=notation,
             part=part, thumbnail=File(open(temp_pdf_name + ".png", "rb")))
 
-        file = upload_pdf_to_drive(score_metadata, temp_pdf_path)
+        file_resource = upload_pdf_to_drive(score_metadata, temp_pdf_path)
 
         # tmp folder is cleaned up once a day by scheduled task.
 
-        score.drive_view_link = file.get('webViewLink')
-        score.drive_download_link = file.get('webContentLink')
-        score.embed_link = file.get('webViewLink').replace('view?usp=drivesdk', 'preview')
-        score.save(update_fields=['drive_view_link', 'drive_download_link', 'embed_link'])
-        share_file_permission(file.get('id')) # make shareable
+        score.fsize = file_resource.get('size')
+        score.drive_view_link = file_resource.get('webViewLink')
+        score.drive_download_link = file_resource.get('webContentLink')
+        score.embed_link = file_resource.get('webViewLink').replace('view?usp=drivesdk', 'preview')
+        score.save(update_fields=['drive_view_link', 'drive_download_link', 'fsize', 'embed_link'])
+        share_file_permission(file_resource.get('id')) # make shareable
 
         score.likes.add(SiteUser.objects.get(user=self.request.user))
         messages.success(self.request, "Score successfully added to {}".format(song.title))
@@ -203,7 +204,7 @@ class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
             mimetype = 'audio/mid'
 
         temp_pdf_path = os.path.join(tmp, song.title + extension)
-        file = upload_audio_to_drive(midi_metadata, temp_pdf_path, mimetype)
+        file_resource = upload_audio_to_drive(midi_metadata, temp_pdf_path, mimetype)
         with open("f.json", "w+") as fh:
             json.dump(file, fh)
 
@@ -212,12 +213,12 @@ class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
         if extension.startswith(".mid"):
             midi.fformat = "midi"
 
-        midi.fsize = file.get('size')
-        midi.drive_view_link = file.get('webViewLink')
-        midi.drive_download_link = file.get('webContentLink')
-        midi.embed_link = file.get('webViewLink').replace('view?usp=drivesdk', 'preview')
+        midi.fsize = file_resource.get('size')
+        midi.drive_view_link = file_resource.get('webViewLink')
+        midi.drive_download_link = file_resource.get('webContentLink')
+        midi.embed_link = file_resource.get('webViewLink').replace('view?usp=drivesdk', 'preview')
         midi.save(update_fields=['drive_view_link', 'drive_download_link', 'fformat', 'fsize', 'embed_link'])
-        share_file_permission(file.get('id')) # make shareable
+        share_file_permission(file_resource.get('id')) # make shareable
 
         midi.likes.add(SiteUser.objects.get(user=self.request.user))
         messages.success(self.request, "Midi successfully added to {}".format(song.title))
