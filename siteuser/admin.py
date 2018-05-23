@@ -9,6 +9,7 @@ from .forms import UserChangeForm, UserCreationForm
 
 class SiteUserAdmin(admin.ModelAdmin):
     list_display = ("screen_name", "user", "first_name", "last_name", "slug", "location", "key", "quota", "used", "remaining_quota")
+    list_editable = ('location', )
 
 class FollowAdmin(admin.ModelAdmin):
     list_display = ("from_siteuser", "to_siteuser", "created")

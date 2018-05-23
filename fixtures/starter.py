@@ -27,6 +27,7 @@ LANGUAGE = ["english", "igbo", "bini", "ibibio", "hausa", "chinese", "yoruba"]
 VOICING = ["SATB", "SSAB", "SAB", "SSABTT", "ATB", "SATTB"]
 SCRIPTURE = ["Psalm 91", "Proverbs 23", "Matthew 11"]
 
+LOCATIONS = ['lagos', 'abuja', 'benin', 'benin city', 'abu dhabi', 'dubai']
 PARTS = ["ENTRANCE", "KYRIE", "GLORIA", "ACCLAMATION", "OFFERTORY",
          "COMMUNION", "SANCTUS", "AGNUS DEI", "RECESSION", "GENERAL",
          "CAROL", "NA"]
@@ -130,7 +131,7 @@ def members():
 
             first_name = lorem.word()
             last_name = lorem.word()
-            location = lorem.word()
+            location = choice(LOCATIONS)
             screen_name = LoremPysum().word()
 
             try:
@@ -211,6 +212,7 @@ def songs_from_file():
                 song.authors.add(author)
             song.likes.add(originator)
             song.save()
+        song.save()
     add_manyfields()
 
 def songs():

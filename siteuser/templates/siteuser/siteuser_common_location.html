@@ -1,23 +1,24 @@
 {% extends "choralcentral_base.html" %}
-{% block title %}Users{% endblock title %}
+{% block title %}Members in {{ location|title }}s{% endblock title %}
 {% load thumbnail %}
 {% load static %}
+{% load siteuser_tags %}
 {% block introduction %}{% endblock introduction %}
 
 {% block content_content %}
 
 <div class='container siteuser-index-heading'>
     <div class='row'>
-        <h3 class='float-left'>Love birds of {{ post.title }}</h3>
+        <h3 class='float-left'>Members in {{ location|title }}</h3>
     </div>
 </div>
 
 <div class="container">
     <div class="row">
         {% for siteuser in siteuser_list %}
-            <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
+            <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 siteuser-index-details">
                 {% thumbnail siteuser.avatar "150x150" crop="center" as im %}
-                   <img alt="" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="img-fluid card">
+                   <a href="{{ siteuser.avatar.url }}" target="_blank"><img alt="" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="img-fluid card"></a>
                 {% empty %}
                    <img alt="" src="{% static 'img/django-logo.png' %}" width="150" height="150" class="img-fluid card">
                 {% endthumbnail %}
@@ -29,13 +30,12 @@
                 </p>
                 <p class="text-left">Location: <a href="{% url 'siteuser:siteusers_common_location' siteuser.location %}" title="See others in {{ siteuser.location }}">{{ siteuser.location }}</a></p>
                 <p class="text-left">Activity: {{ siteuser.song_set.all|count_published }} songs, {{ siteuser.post_set.all|count_published }} blog posts,
-                    {{ siteuser.score_set.count }} scores, {{ siteuser.midi_set.count }} midis, {{ siteuser.comment_set.count }} comments
-                </p>
+                        {{ siteuser.score_set.count }} scores, {{ siteuser.midi_set.count }} midis, {{ siteuser.comment_set.count }} comments
             </div>
         {% empty %}
-            <p>No lover for {{ post.title }}.</p>
+            <p>No member in this area.</p>
         {% endfor %}
     </div>
 </div>
-
 {% endblock content_content %}
+

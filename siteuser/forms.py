@@ -105,6 +105,11 @@ class SiteUserEditForm(forms.ModelForm):
             "roles" : AddAnotherWidgetWrapper(
                 forms.SelectMultiple(attrs={'class' : 'form-control'}),
                 reverse_lazy('siteuser:role_create')),}
+    def clean_location(self):
+        location = self.cleaned_data['location']
+        if location:
+            location = location.lower()
+        return location
 
 class PassWordGetterForm(forms.Form):
     password = forms.CharField(

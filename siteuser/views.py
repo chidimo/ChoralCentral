@@ -2,7 +2,10 @@
 """Views"""
 
 import uuid
+import operator
+from functools import reduce
 
+from django.db.models import Q
 # from django.db import IntegrityError
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
@@ -79,9 +82,28 @@ class SiteUserCommonRoles(PaginationMixin, generic.ListView):
         context['role'] = self.kwargs['role']
         return context
 
+class SiteUserCommonLocation(PaginationMixin, generic.ListView):
+    model = SiteUser
+    context_object_name = 'siteuser_list'
+    template_name = "siteuser/siteuser_common_location.html"
+    paginate_by = 20
+
+    def get_queryset(self):
+        locations = self.kwargs['location'].split(" ")
+        query = []
+        for each in locations:
+            query.append(Q(location__contains=each))
+        query = reduce(operator.or_, query)
+        return SiteUser.objects.filter(query)
+
+    def get_context_data(self, *args):
+        context = super(SiteUserCommonLocation, self).get_context_data(*args)
+        context['location'] = self.kwargs['location']
+        return context
+
 class SongLoveBirds(PaginationMixin, generic.ListView):
     model = SiteUser
-    context_object_name = 'song_love_birds'
+    context_object_name = 'siteuser_list'
     template_name = 'siteuser/love_birds_song.html'
     paginate_by = 24
 
@@ -96,7 +118,7 @@ class SongLoveBirds(PaginationMixin, generic.ListView):
 
 class PostLoveBirds(PaginationMixin, generic.ListView):
     model = SiteUser
-    context_object_name = 'post_love_birds'
+    context_object_name = 'siteuser_list'
     template_name = 'siteuser/love_birds_post.html'
     paginate_by = 24
 
