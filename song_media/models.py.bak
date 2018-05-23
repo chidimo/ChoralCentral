@@ -38,9 +38,11 @@ class Score(TimeStampedModel):
     song = models.ForeignKey(Song, on_delete=models.CASCADE)
     part = models.ForeignKey(VocalPart, on_delete=models.CASCADE)
     notation = models.ForeignKey(ScoreNotation, on_delete=models.CASCADE)
+    likes = models.ManyToManyField(SiteUser, related_name="score_likes")
     fsize = models.FloatField(null=True,blank=True)
     thumbnail = models.ImageField(upload_to=save_score_thumbnail, null=True)
     downloads = models.IntegerField(default=0)
+    views = models.IntegerField(default=0)
     drive_view_link = models.URLField(null=True)
     drive_download_link = models.URLField(null=True)
     embed_link = models.URLField(null=True)
@@ -48,6 +50,10 @@ class Score(TimeStampedModel):
 
     class Meta:
         ordering = ('-downloads', 'created', )
+
+    @property
+    def score_likes(self):
+        return self.likes.count()
 
     def __str__(self):
         return "{}-{}-{}".format(self.song.title, self.part, self.notation)
@@ -68,6 +74,7 @@ class Midi(TimeStampedModel):
     fformat = models.CharField(max_length=10, blank=True)
     fsize = models.FloatField(null=True, blank=True)
     description = models.CharField(max_length=200, blank=True, null=True)
+    likes = models.ManyToManyField(SiteUser, related_name="midi_likes")
     downloads = models.IntegerField(default=0)
     embed_link = models.URLField(null=True)
     drive_view_link = models.URLField(null=True)
@@ -76,6 +83,13 @@ class Midi(TimeStampedModel):
 
     class Meta:
         ordering = ('-downloads', 'created', )
+
+    def show_pk(self):
+        return self.pk
+
+    @property
+    def midi_likes(self):
+        return self.likes.count()
 
     def __str__(self):
         return "{}-{}".format(self.song.title, self.part)

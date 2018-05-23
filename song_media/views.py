@@ -113,7 +113,6 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         score.save(update_fields=['drive_view_link', 'drive_download_link', 'fsize', 'embed_link'])
         share_file_permission(file_resource.get('id')) # make shareable
 
-        score.likes.add(SiteUser.objects.get(user=self.request.user))
         messages.success(self.request, "Score successfully added to {}".format(song.title))
         return redirect(song.get_absolute_url())
 
@@ -220,7 +219,6 @@ class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
         midi.save(update_fields=['drive_view_link', 'drive_download_link', 'fformat', 'fsize', 'embed_link'])
         share_file_permission(file_resource.get('id')) # make shareable
 
-        midi.likes.add(SiteUser.objects.get(user=self.request.user))
         messages.success(self.request, "Midi successfully added to {}".format(song.title))
         return redirect(song.get_absolute_url())
 

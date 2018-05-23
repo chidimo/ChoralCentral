@@ -159,8 +159,6 @@
 
                 <div class="row score-list-stats-container">
                     <div class="container">
-                        <a class="btn btn-sm btn-primary icon-buttons" title="Total likes">{{ score.score_likes }}</a>
-                        <a class="btn btn-sm btn-primary icon-buttons" href="" title="Like this score"><i class="fas fa-star"></i></a>
                         <a class="btn btn-sm btn-primary icon-buttons" title="Total downloads">{{ score.downloads }}</a>
                         <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song-media:download_score_from_drive' score.pk %}" target="_blank" title="Download"><i class="fas fa-download"></i></a>
                         </span>
@@ -196,8 +194,6 @@
 
                 <div class="row audio-list-drive-container">
                     <div class="container">
-                        <a class="btn btn-sm btn-primary icon-buttons" title="Like this music">{{ midi.midi_likes }}</a>
-                        <a class="btn btn-sm btn-primary icon-buttons" href="" title="Star this music"><i class="fas fa-star"></i>
                             <a class="btn btn-sm btn-primary icon-buttons" title="Total downloads">{{ midi.downloads }}</a>
                         <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song-media:download_midi_from_drive' midi.pk %}" target="_blank" title="Download"><i class="fas fa-download"></i></a>
                     </div>
