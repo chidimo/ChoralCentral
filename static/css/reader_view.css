@@ -10,7 +10,7 @@
 
 @page {
    @top-left {
-    content:"ChoralCentral | Where sheet music lives";
+    content:"ChoralCentral | Happy Choralling!";
    }
 }
 
@@ -22,6 +22,10 @@ h1, h2, h3, h4, h5, h6 {
     color: darkblue;
     margin: 0;
     font-family: 'Inconsolata', monospace;
+}
+
+p {
+    font-family: 'Sunflower', sans-serif;
 }
 
 h6 {
