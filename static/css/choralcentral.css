@@ -19,8 +19,8 @@ nav {
 
 /* fix nav items scrolling in small screens */
 
-@media (min-width: 576px) {
-    .navbar-collapse.collapse.show {
+@media (min-width: 300px) {
+    .navbar-collapse.navcontent.collapse.show {
     max-height:580px !important;
     overflow-y:scroll !important;
     overflow-x:hidden !important;
