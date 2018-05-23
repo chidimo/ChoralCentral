@@ -56,7 +56,7 @@ urlpatterns += [
 urlpatterns += [
     path('google364c8377c791cdf3.html', views.google_webmaster_verify),
     path('credits/', views.credits),
-    path('to-fix/', views.to_fix),
+    path('contact/', views.contact),
     path('api/', views.api),
     path('help-page/', views.help_page),
     path('coming-soon/', views.coming_soon),

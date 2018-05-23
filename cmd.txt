@@ -1,3 +1,0 @@
-pdftoppm -png -f 1 -singlefile D:\git\choralcentral\media\tmp\c022ea6d-a847-4e99-8641-45911caaad9d.pdf D:\git\choralcentral\media\tmp\c022ea6d-a847-4e99-8641-45911caaad9d
-
-c022ea6d-a847-4e99-8641-45911caaad9d

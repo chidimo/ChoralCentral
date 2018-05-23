@@ -55,7 +55,7 @@
                     &#124;
                     <a href="/privacy-policy/" title="Privacy policy">Privacy</a>
                     &#124;
-                    <a target="_blank" href="https://immensity.github.io/" title="Contact the developer">Contact</a>
+                    <a href="/contact/" title="Contact owner/developer">Contact</a>
                     &#124;
                     <a href="/sitemap.xml" title="Sitemap">Sitemap</a>
                     &#124;
@@ -63,12 +63,12 @@
                     &#124;
                     <a href="/help-page/" title="Help page">Help</a>
                     {% if user.is_authenticated %}
-                        &#124;
-                        <a href="/api/" title="Data api">API</a>
+                    &#124;
+                    <a href="/api/" title="Data api">API</a>
                     {% endif %}
                     {% if user.is_admin %}
                         &#124;
-                        <a href="/to-fix/" title="To fix">To fix</a>
+                        <a target="_blank" href="https://immensity.github.io/" title="Contact the developer">Contact blog</a>
                     {% endif %}
                 </p>
                 <p class="copyright">&#169; Copyright 2018 choralcentral.net <a href="#"><i class='fas fa-arrow-up'></i></a></p>

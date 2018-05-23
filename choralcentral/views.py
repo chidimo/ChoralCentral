@@ -28,6 +28,6 @@ def api(request):
     template = "api.html"
     return render(request, template, {})
 
-def to_fix(request):
-    template = "to_fix.html"
+def contact(request):
+    template = "contact.html"
     return render(request, template, {})
