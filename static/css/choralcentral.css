@@ -448,6 +448,13 @@ a.upload-button {
     margin-top: .5rem;
 }
 
+span.download-count {
+    background: #f2f3fb;
+    color: #017bff;
+    border-radius: 100%;
+    padding: 2px 7px;
+}
+
 .score-list-pdf-container > img {
     margin: auto;
 }
@@ -458,11 +465,6 @@ a.upload-button {
 }
 
 .score-list-drive-container {
-    padding: 0.3rem .5rem 0 .5rem;
-    margin-bottom: .5rem;
-}
-
-.score-list-stats-container {
     padding: 0.3rem .5rem 0 .5rem;
     margin-bottom: .5rem;
 }

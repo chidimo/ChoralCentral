@@ -20,10 +20,8 @@
             <div class='col-sm-12'>
                 <strong>
                     <a href="{% url 'blog:detail' comment.post.pk comment.post.slug %}">{{ comment.post }}</a>
-                    <span class="float-right">
-                        Posted {{ comment.created|date }} |
-                        Modified {{ comment.modified|date }}
-                    </span>
+                    <span title="Comment date">{{ comment.created|date }}</span> |
+                    <span title="Modified">{{ comment.modified|date }}</span>
                 </strong>
             </div>
         </div>

@@ -1,8 +1,8 @@
-
+/*https://colorswatches.info/*/
 body {
   color: midnightblue;
   padding-top: 2.4rem;
-  font-family: 'IBM+Plex+Mono', serif;
+  font-family: 'Inconsolata', monospace;
   /* font-size: 15px; */
 }
 
@@ -110,8 +110,12 @@ h1, h2, h3, h4, h5, h6 {
 	font-family: 'Inconsolata', monospace;
 }
 
-p {
-    font-family: 'IBM+Plex+Mono', serif;
+a {
+    color: #0062cc;
+}
+
+p, ol.terms-of-use li, ol.privacy-policy li {
+    font-family: 'Sunflower', sans-serif;
 }
 
 a:hover {
@@ -154,7 +158,7 @@ hr {
   max-width: 1000px;
   margin: auto;
   box-shadow: 1px 3px 7px 3px #c4c7ce inset;
-  border-radius: .3rem;
+  border-radius: .15rem;
   padding-bottom: 10px;
 }
 
@@ -170,7 +174,7 @@ th, td {
   background: #e9ecef;
   margin-top: 0.5rem;
   padding: .5rem 1rem 3rem 1rem;
-  border-radius: .3rem;
+  border-radius: .15rem;
   border: 1px solid mintcream;
 }
 
@@ -187,7 +191,7 @@ th, td {
   padding: 0 1rem 2.75rem 1rem;
   background: #f0eeee;
   border: 1px solid #d7d7d7;
-  border-radius: .3rem;
+  border-radius: .15rem;
 }
 
 a.upload-button {
@@ -205,43 +209,44 @@ a.upload-button {
     padding: .1rem 1rem .5rem 1rem;
     margin: .75rem 0;
     background: #e9ecef;
-    border-radius: .3rem;
+    border-radius: .15rem;
     border: 1px solid rgba(0,0,0,.125);
 }
 
-.list-authors > p {
+.list-authors p {
     margin-bottom: 0;
 }
 
-.list-authors > h5 {
+.list-authors h5 {
     margin-bottom: .5rem;
     margin-top: .5rem;
+    margin-left: 0;
 }
 
-.author-heading {
+.author-heading, .author-bio-heading, .author-songs-heading {
   background: #f2f3fb;
   border: .6px solid midnightblue;
   margin: .5rem 0;
-  border-radius: .3rem;
+  border-radius: .15rem;
 }
 
-.author-heading > .row > .col-sm-12 > span {
+.author-heading h3 {
   margin-top: .5rem;
+  margin-left: .6rem;
 }
 
 .author-bio-text {
     padding: .5rem 1rem .5rem 1rem;
     margin: .75rem 0;
     background: #e9ecef;
-    border-radius: .3rem;
+    border-radius: .15rem;
     border: 1px solid rgba(0,0,0,.125);
 }
 
 .list-author-songs {
-    padding: .5rem 1rem .5rem 1rem;
     margin: .75rem 0;
     background: #e9ecef;
-    border-radius: .3rem;
+    border-radius: .15rem;
     border: 1px solid rgba(0,0,0,.125);
 }
 
@@ -251,7 +256,7 @@ a.upload-button {
     padding: .1rem 1rem 2.2rem 1rem;
     margin: .75rem 0;
     background: #e9ecef;
-    border-radius: .3rem;
+    border-radius: .15rem;
     border: .6px solid midnightblue;
 }
 
@@ -259,7 +264,7 @@ a.upload-button {
     background: #f2f3fb;
     border: .6px solid midnightblue;
     margin: .5rem 0;
-    border-radius: .3rem;
+    border-radius: .15rem;
 }
 
 .post-detail-heading > .row > .col-sm-12 > h5 {
@@ -270,21 +275,21 @@ a.upload-button {
     background: #f2f3fb;
     border: .6px solid midnightblue;
     margin: .5rem 0;
-    border-radius: .3rem;
+    border-radius: .15rem;
 }
 
 .post-body {
     background: #f2f3fb;
     border: 1px solid rgba(0,0,0,.125);
     margin: .5rem 0;
-    border-radius: .3rem;
+    border-radius: .15rem;
 }
 
 .list-comments {
     padding: .1rem 1rem 2.2rem 1rem;
     margin: .75rem 0;
     background: #e9ecef;
-    border-radius: .3rem;
+    border-radius: .15rem;
     border: 1px solid rgba(0,0,0,.125);
     border-top: none;
 }
@@ -301,7 +306,7 @@ a.upload-button {
 .commenter-stats {
   background: white;
   border: .5px solid midnightblue;
-  border-radius: .3rem;
+  border-radius: .15rem;
   margin-top: -2px;
   margin-left: -16px;
   margin-right: -16px;
@@ -323,7 +328,7 @@ a.upload-button {
     background: #f2f3fb;
     border: .6px solid midnightblue;
     margin: .5rem 0;
-    border-radius: .3rem;
+    border-radius: .15rem;
 }
 
 .comment-detail-header > .row > .col-sm-12 > span.float-left {
@@ -340,7 +345,7 @@ a.upload-button {
     background: #f2f3fb;
     border: .6px solid midnightblue;
     margin: .5rem 0;
-    border-radius: .3rem;
+    border-radius: .15rem;
 }
 
 .request-index-heading > .row > .col-sm-12 > span {
@@ -351,7 +356,7 @@ a.upload-button {
     padding: .1rem 1rem 2.2rem 1rem;
     margin: .75rem 0;
     background: #e9ecef;
-    border-radius: .3rem;
+    border-radius: .15rem;
     border: .6px solid midnightblue;
 }
 
@@ -359,7 +364,7 @@ a.upload-button {
     padding: .1rem 1rem 2.2rem 1rem;
     margin: .75rem 0;
     background: #e9ecef;
-    border-radius: .3rem;
+    border-radius: .15rem;
     border: .6px solid midnightblue;
 }
 
@@ -367,7 +372,7 @@ a.upload-button {
     background: #f2f3fb;
     border: .6px solid midnightblue;
     margin: .5rem 0;
-    border-radius: .3rem;
+    border-radius: .15rem;
 }
 
 .request-detail-heading > .row > .col-sm-12 > span.float-left {
@@ -381,10 +386,10 @@ a.upload-button {
 /*SONG*/
 
 .list-songs {
-    padding: .1rem 1rem 2.2rem 1rem;
+    padding: .1rem 1rem .1rem 1rem;
     margin: .75rem 0;
     background: #e9ecef;
-    border-radius: .3rem;
+    border-radius: .15rem;
     border: .6px solid midnightblue;
 }
 
@@ -392,16 +397,17 @@ a.upload-button {
     background: #f2f3fb;
     border: .6px solid midnightblue;
     margin: .5rem 0;
-    border-radius: .3rem;
+    border-radius: .15rem;
 }
 
-.song-detail-header > .row > .col-sm-12 > span.float-left {
+.song-detail-header span.float-left {
     font-size: 22px;
     padding-top: .6rem;
     padding-bottom: .5rem;
+    font-weight: bold;
 }
 
-.song-detail-header > .row > .col-sm-12 > span.float-right {
+.song-detail-header span.float-right {
     padding-top: .6rem;
     padding-bottom: .5rem;
 }
@@ -410,21 +416,21 @@ a.upload-button {
     background: #f2f3fb;
     border: 1px solid rgba(0,0,0,.125);
     margin: .5rem 0;
-    border-radius: .3rem;
+    border-radius: .15rem;
 }
 
 .song-scores {
     background: #f2f3fb;
     border: 1px solid rgba(0,0,0,.125);
     margin: .5rem 0;
-    border-radius: .3rem;
+    border-radius: .15rem;
 }
 
 .song-music {
     background: #f2f3fb;
     border: 1px solid rgba(0,0,0,.125);
     margin: .5rem 0;
-    border-radius: .3rem;
+    border-radius: .15rem;
 }
 
 /*.song-lyrical, .post-body, .author-bio {*/
@@ -432,13 +438,13 @@ a.upload-button {
     background: #f2f3fb;
     border: 1px solid rgba(0,0,0,.125);
     margin: .5rem 0;
-    border-radius: .3rem;
+    border-radius: .15rem;
 }
 
 .score-list {
     border: 1px solid rgba(0,0,0,.125);
     background-color: #fff;
-    border-radius: .3rem;
+    border-radius: .15rem;
     margin-top: .5rem;
 }
 
@@ -473,7 +479,7 @@ a.upload-button {
 .audio-list {
     border: 1px solid rgba(0,0,0,.125);
     background-color: #fff;
-    border-radius: .3rem;
+    border-radius: .15rem;
     margin-top: .5rem;
 }
 
@@ -508,13 +514,13 @@ a.upload-button {
     background: #f2f3fb;
     border: 1px solid rgba(0,0,0,.125);
     margin: .5rem 0;
-    border-radius: .3rem;
+    border-radius: .15rem;
 }
 
 .video-list {
     border: 1px solid rgba(0,0,0,.125);
     background-color: #fff;
-    border-radius: .3rem;
+    border-radius: .15rem;
     margin-top: .5rem;
 }
 
@@ -569,21 +575,23 @@ a.upload-button {
     font-size: 1.25rem;
     margin-bottom: 5rem;
 }
+
 .siteuser-index-heading {
     background: #f2f3fb;
     border: .6px solid midnightblue;
-    margin-top: .5rem;
-    border-radius: .3rem;
+    margin: .5rem 0;
+    border-radius: .15rem;
     padding-bottom: .5rem;
 }
 
-.siteuser-index-heading > .container > .col-sm-12 > span {
-    margin-top: .65rem;
+.siteuser-index-heading h3, h5 {
+    margin-top: .6rem;
+    margin-left: .6rem;
 }
 
 .siteuser-index-details, .love-bird-detail {
     border: 1px solid rgba(0,0,0,.125);
-    border-radius: .3rem;
+    border-radius: .15rem;
     background: #fff;
     color: midnightblue;
 }
@@ -598,7 +606,7 @@ a.upload-button {
     background: #f2f3fb;
     border: .6px solid midnightblue;
     margin: .5rem 0;
-    border-radius: .3rem;
+    border-radius: .15rem;
 }
 
 .account-management-heading > .row > .col-sm-12 > span {
@@ -606,16 +614,57 @@ a.upload-button {
 }
 
 .administer-account {
-    border-radius: .3rem;
+    border-radius: .15rem;
 }
 
-.leftsidebar {
-    /*border: 0.5px solid grey;*/
+/*LOGIN MODAL*/
+
+.modal-backdrop {
+    z-index: 1020;
 }
 
-.rightsidebar {
-    /*border: 0.5px solid grey;*/
+.modal-content {
+    border-radius: 0;
+    width: 400px;
 }
+
+.social-google {
+    background: #8ac2ff;
+    border-radius: .15rem;
+    height: 2.5rem;
+    margin-bottom: .5rem;
+}
+
+.social-google .login-using-icon-div {
+    color: white;
+    background: #3071d5;
+    border-top-left-radius: .2rem;
+    border-bottom-left-radius: .2rem;
+    width: 20%;
+}
+
+.social-google .login-using-icon {
+    font-size: 22px;
+    display: block;
+    width: 30%;
+    margin: auto;
+    padding-top: .25rem;
+}
+
+.social-google .login-using-text-div {
+    color: white;
+    font-family: 'Inconsolata', monospace;
+    background: #468dfa;
+    border-top-right-radius: .15rem;
+    border-bottom-right-radius: .15rem;
+    width: 80%;
+}
+
+.social-google .login-using-text {
+    display: block;
+}
+
+/*END LOGIN MODAL*/
 
 /* ADD ICONS TO LOGIN FORM FIELDS */
 
@@ -659,7 +708,8 @@ input#id_password {
 /*LOGIN PAGE*/
 
 .social-logins {
-    border-radius: .3rem;
+    font-size: 22px;
+    border-radius: .15rem;
     padding-top: .3rem;
     padding-bottom: .3rem;
     display: flex;
@@ -668,17 +718,29 @@ input#id_password {
     margin-bottom: 1rem;
 }
 .social-logins > a {
+    color: white;
     border-radius: 50%;
     border: 1px solid #ccc;
     text-align: center;
-    color: midnightblue;
-    width: 36px;
-    height: 36px;
-    padding: 8px;
+    width: 40px;
+    height: 40px;
+    padding: 3px;
 }
 
-.social-logins > a:hover {
-    color: blue;
+.social-logins > a.google-login {
+    background: #dd4b39;
+}
+
+.social-logins > a.facebook-login {
+    background: #3b5998;
+}
+
+.social-logins > a.yahoo-login {
+    background: #7B0099;
+}
+
+.social-logins > a.twitter-login {
+    background: #00aced;
 }
 
 .login-form {
@@ -712,7 +774,7 @@ input#id_password {
     border: 1px solid midnightblue;
     text-align: left;
     color: red;
-    border-radius: .3rem;
+    border-radius: .15rem;
 }
 
 
@@ -787,7 +849,7 @@ tbody tr:nth-child(odd) {
     padding: 1rem 1rem;
     margin: .75rem 0;
     background: #e9ecef;
-    border-radius: .3rem;
+    border-radius: .15rem;
     border: .6px solid;
 }
 
@@ -832,6 +894,6 @@ ul.errorlist {
 .form-control {
     background: #fcfcfc;
     border: 1px solid #aaa;
-    border-radius: .3rem;
+    border-radius: .15rem;
     box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
 }

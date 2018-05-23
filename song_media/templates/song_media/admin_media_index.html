@@ -201,6 +201,9 @@
                     <th>Song</th>
                     <th>Song owner</th>
                     <th>Score owner</th>
+                    <th>Part</th>
+                    <th>Notation</th>
+                    <th>Size</th>
                     <th><i class="fas fa-hdd" title="HDD download url"></i></th>
                     <th><i class="fas fa-hdd" title="HDD link"></i></th>
                     <th><i class="fab fa-google-drive" title="Google Drive view url"></i></i></th>
@@ -216,6 +219,9 @@
                         <td><a href="{% url 'song:detail' score.song.pk score.song.slug %}">{{ score.song.title }}</a></td>
                         <td>{{ score.song.originator }}</td>
                         <td>{{ score.uploader }}</td>
+                        <td>{{ score.part }}</td>
+                        <td>{{ score.notation }}</td>
+                        <td>{{ score.fsize|filesizeformat }}</td>
                         <td>
                             <a href="{% url 'song-media:score_view' score.pk %}" target="_blank"><i class="fas fa-download"></i></a>
                         </td>
@@ -262,7 +268,7 @@
                     <th>Song owner</th>
                     <th>Midi owner</th>
                     <th>Format</th>
-                    <th><i class="fas fa-hdd" title="Size (MB)"></i></th>
+                    <th>Size</th>
                     <th><i class="fas fa-hdd" title="HDD download url"></i></th>
                     <th><i class="fas fa-hdd" title="HDD link"></i></th>
                     <th><i class="fab fa-google-drive" title="Google Drive view url"></i></i></th>

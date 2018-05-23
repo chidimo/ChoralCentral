@@ -154,8 +154,9 @@
                         <a class="btn btn-sm btn-primary icon-buttons" title="{{ score.notation|title }}">{{ score.notation }}</a>
                         <a class="btn btn-sm btn-primary icon-buttons" title="Filesize: {{ score.fsize|filesizeformat }}">{{ score.fsize|filesizeformat }}</a>
                         <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:library' score.uploader.pk score.uploader.slug %}" title="{{ score.uploader.screen_name }}"> {{ score.uploader.screen_name }}</a>
-                        <a class="btn btn-sm btn-primary icon-buttons" title="Total downloads">{{ score.downloads }}</a>
-                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song-media:download_score_from_drive' score.pk %}" target="_blank" title="Download"><i class="fas fa-download"></i></a>
+
+                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song-media:download_score_from_drive' score.pk %}" target="_blank" title="Click to Download: {{ score.downloads }} total downloads">
+                            <span class="download-count">{{ score.downloads }}</span> <i class="fas fa-download"></i></a>
                     </div>
                 </div>
             </div>
@@ -183,8 +184,8 @@
                         <a class="btn btn-sm btn-primary icon-buttons" title="File format: {{ midi.fformat }}">{{ midi.fformat }}</a>
                         <a class="btn btn-sm btn-primary icon-buttons" title="Filesize: {{ midi.fsize|filesizeformat }}">{{ midi.fsize|filesizeformat }}</a>
                         <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:library' midi.uploader.pk midi.uploader.slug %}" title="{{ midi.uploader.screen_name }}">{{ midi.uploader.screen_name }}</a>
-                        <a class="btn btn-sm btn-primary icon-buttons" title="Total downloads">{{ midi.downloads }}</a>
-                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song-media:download_midi_from_drive' midi.pk %}" target="_blank" title="Download"><i class="fas fa-download"></i></a>
+                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song-media:download_midi_from_drive' midi.pk %}" target="_blank" title="Click to Download: {{ midi.downloads }} total downloads">
+                            <span class="download-count">{{ midi.downloads }}</span> <i class="fas fa-download"></i></a>
                     </div>
                 </div>
             </div>
