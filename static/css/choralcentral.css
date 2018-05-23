@@ -3,7 +3,6 @@ body {
   color: midnightblue;
   padding-top: 2.4rem;
   font-family: 'Inconsolata', monospace;
-  /* font-size: 15px; */
 }
 
 /*NAVIGATION*/
@@ -15,8 +14,16 @@ nav {
 .fixed-top {
     font-size: 15px;
     padding:0;
-    min-height:auto;
     font-family: 'Inconsolata', monospace;
+}
+
+/* fix nav items scrolling in small screens */
+@media (min-width: 576px) {
+    .navbar-collapse.collapse.show {
+    max-height:580px !important;
+    overflow-y:scroll !important;
+    overflow-x:hidden !important;
+    }
 }
 
 .fixed-top > a.navbar-brand {
