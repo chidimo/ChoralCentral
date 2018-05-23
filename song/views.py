@@ -191,24 +191,16 @@ class FilterSongs(PaginationMixin, SuccessMessageMixin, generic.ListView):
                 combinator = form['combinator']
                 season = form['season']
                 masspart = form['masspart']
-                voicing = form["voicing"]
                 language = form["language"]
-                author = form['author']
 
                 queries = []
                 msg = []
-                if author:
-                    queries.append(Q(authors__id__exact=author.id))
-                    msg.append('Author={}'.format(author))
                 if season:
                     queries.append(Q(seasons__id__exact=season.id))
                     msg.append('Season={}'.format(season))
                 if masspart:
                     queries.append(Q(mass_parts__id__exact=masspart.id))
                     msg.append('Masspart={}'.format(masspart))
-                if voicing:
-                    queries.append(Q(voicing__id__exact=voicing.id))
-                    msg.append('Voicing={}'.format(voicing))
                 if language:
                     queries.append(Q(language__id__exact=language.id))
                     msg.append('Language={}'.format(language))
@@ -223,9 +215,9 @@ class FilterSongs(PaginationMixin, SuccessMessageMixin, generic.ListView):
                 else:
                     query = reduce(operator.and_, queries)
                     query_str = " AND ".join(msg)
-                messages.success(self.request, "Search message {}".format(query_str))
-                # messages.success(self.request, "Search query {}".format(query))
-                return Song.objects.filter(query)
+                results = Song.objects.filter(query)
+                messages.success(self.request, "found {} results for {}".format(results.count(), query_str))
+                return results
 
 def reader_view(request, pk, slug):
     template = 'song/reader_view.html'

@@ -71,11 +71,6 @@ class SongFilterForm(forms.Form):
         initial = 'OR',
         widget=forms.Select(attrs={"class" : "form-control"}))
 
-    author = forms.ModelChoiceField(
-        queryset=Author.objects.all(),
-        required=False,
-        widget=forms.Select(attrs={"class" : "form-control",}))
-
     season = forms.ModelChoiceField(
         queryset=Season.objects.all(),
         required=False,
@@ -83,11 +78,6 @@ class SongFilterForm(forms.Form):
 
     masspart = forms.ModelChoiceField(
         queryset=MassPart.objects.all(),
-        required=False,
-        widget=forms.Select(attrs={"class" : "form-control",}))
-
-    voicing = forms.ModelChoiceField(
-        queryset=Voicing.objects.all(),
         required=False,
         widget=forms.Select(attrs={"class" : "form-control",}))
 

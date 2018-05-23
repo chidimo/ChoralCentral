@@ -5,25 +5,44 @@
     <div class="d-none d-md-block filter-block">
         <form action="{% url 'song:filter' %}" method="get" enctype="multipart/form-data">
             {{ form.as_p }}
-            <button class="btn btn-primary btn-sm float-right" type="submit" value="Search songs">Search songs</button>
+            <button class="btn btn-primary btn-sm float-right" type="submit" value="Search songs">Apply</button>
         </form>
     </div>
 {% endblock left_sidebar %}
 
 {% block content_content %}
 
-<p>{{ song.published.count }}</p>
-{{ song.published }}
-    {% for song in songs %}
-    <div class="list-songs">
-        <h4><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h4>
-        <span class="h5 float-right">
-            <a class="btn btn-sm btn-primary icon-buttons" title="Star {{ song.title }}">{{ song.like_count }}</a>
-            <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:song_likers' song.pk song.slug %}" title="{{ song.like_count }} Star birds"><i class="fas fa-star"></i> Stars</a>
-        </span>
+{% for song in songs %}
+<div class="list-songs container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h4><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h4>
+        
+            <div class="">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span class="song-lower float-left">
+                            <a class="btn btn-sm btn-primary icon-buttons" title="{{ song.voicing }}">{{ song.voicing }}</a>
+                            <a class="btn btn-sm btn-primary icon-buttons" title="{{ song.language }}">{{ song.language }}</a>
+                            {% for masspart in song.mass_parts.all %}
+                                <a class="btn btn-sm btn-primary icon-buttons" title="{{ masspart }}">{{ masspart }}</a>
+                            {% endfor %}
+                            {% for season in song.seasons.all %}
+                                <a class="btn btn-sm btn-primary icon-buttons" title="{{ season }}">{{ season }}</a>
+                            {% endfor %}
+                        </span>
+                        <span class="float-right">
+                            <a class="btn btn-sm btn-primary icon-buttons" title="Star {{ song.title }}">{{ song.like_count }}</a>
+                            <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:song_likers' song.pk song.slug %}" title="{{ song.like_count }} Star birds"><i class="fas fa-star"></i> Stars</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    {% empty %}
-        <p>No songs to display</p>
-    {% endfor %}
+</div>
+{% empty %}
+    <p>No songs to display</p>
+{% endfor %}
 
 {% endblock content_content %}

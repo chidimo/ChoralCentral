@@ -2,7 +2,6 @@
 body {
   color: midnightblue;
   padding-top: 2.4rem;
-  /*font-family: 'IBM+Plex+Mono', serif;*/
   font-family: 'Inconsolata', monospace;
   /* font-size: 15px; */
 }
@@ -116,7 +115,6 @@ a {
 }
 
 p {
-    /*font-family: 'IBM+Plex+Mono', serif;*/
     font-family: 'Inconsolata', monospace;
 }
 
@@ -388,7 +386,7 @@ a.upload-button {
 /*SONG*/
 
 .list-songs {
-    padding: .1rem 1rem 2.2rem 1rem;
+    padding: .1rem 1rem .1rem 1rem;
     margin: .75rem 0;
     background: #e9ecef;
     border-radius: .15rem;
