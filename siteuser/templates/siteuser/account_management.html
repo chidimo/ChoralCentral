@@ -5,35 +5,28 @@
 
 {% block content_content %}
 
-<div class='row account-management-heading'>
-    <div class='container'>
-        <div class="row">
-            <div class='col-sm-12'>
-                <span class='h5 float-left'>My account</span>
-                <span class="float-right"><a class="btn btn-sm" href="{% url 'siteuser:delete_account' %}" title="Delete this account"><i class="fas fa-trash"></i></a></span>
-                <span class="float-right"><a class="btn btn-sm" href="{% url 'siteuser:edit_profile' %}" title="Edit profile"><i class="fas fa-edit"></i></a></span>
-                <span class="float-right"><a class="btn btn-sm" href="{% url 'siteuser:library' siteuser.pk siteuser.slug %}" title="My library"><i class="fas fa-book"></i></a></span>
-            </div>
-        </div>
+<div class='container siteuser-index-heading'>
+    <div class='row'>
+        <h3 class='float-left'>My account</h3>
     </div>
 </div>
 
 <div class="container song-about">
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-md-6">
             <p class="text-secondary">First name: {{ siteuser.first_name }}</p>
             <p class="text-secondary">Last name: {{ siteuser.last_name }}</p>
             <p class="text-secondary">Email: <a href="mailto:{{ siteuser.user.email }}">{{ siteuser.user.email }}</a></p>
             <p class="text-secondary">Location: <a href='#' title='See others from {{ siteuser.location }}'>{{ siteuser.location }}</a></p>
-            <p class="text-secondary">Activity: {{ siteuser.song_set.all|count_published }} songs, {{ siteuser.post_set.all|count_published }} blog posts, 
+            <p class="text-secondary">Activity: {{ siteuser.song_set.all|count_published }} songs, {{ siteuser.post_set.all|count_published }} blog posts,
                 {{ siteuser.score_set.count }} scores, {{ siteuser.midi_set.count }} midis, {{ siteuser.comment_set.count }} comments
             </p>
         </div>
 
-        <div class="col-sm-6">
+        <div class="col-md-6">
             <p class="text-secondary">Roles:
                 {% for role in siteuser.roles.all %}
-                    <a href="{% url 'siteuser:siteusers_common_roles' role %}" title='See other {{ role.name|upper }}s'>{{ role.name|title }}</a>{% if not forloop.last %}, {% endif %}
+                    <a href="{% url 'siteuser:siteusers_common_roles' role %}" title='See all {{ role.name|title }}s ({{ role.siteuser_set.count }})'>{{ role.name|title }}</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
             </p>
             <p class="text-secondary">Member since: {{ siteuser.created }}</p>
@@ -43,96 +36,113 @@
     </div>
 </div>
 
-<hr>
-<h3>My groups</h3>
+<div class='container siteuser-index-heading'>
+    <div class='row'>
+        <h5 class='float-left'>My groups</h5>
+    </div>
+</div>
 
-<div class="container">
+<div class="container song-about">
     <div class="row">
         <div class="col-sm-12">
             <p>Groups here</p>
         </div>
     </div>
 </div>
-<hr>
 
-<h3>Social media accounts</h3>
-<div class="row text-center text-lg-left">
-    <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
-        <h4>Facebook</h4>
-         {% if facebook_login %}
-            <p>Connected as <a href="https://facebook.com/{{ facebook_login.extra_data.id }}/" target="_blank">{{ facebook_login.extra_data.id }}</a></p>
-
-            {% if can_disconnect %}
-             <form method="post" action="{% url 'social:disconnect' 'facebook' %}">
-                {% csrf_token %}
-                <button type="submit">Disconnect</button>
-             </form>
-            {% else %}
-                <button type="button" disabled>Disconnect</button>
-                <p class="text-warning">Set a <a href="{% url 'siteuser:social_password' %}">password</a> if you wish to disconnect this account</p>
-            {% endif %}
-        {% else %}
-            <a class="btn btn-sm btn-primary" href="{% url 'social:begin' 'facebook' %}">Connect</a>
-        {% endif %}
-    </div>
-
-    <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
-        <h4>Google</h4>
-         {% if google_login %}
-
-            <p>Connected as <a href="https://plus.google.com/u/0/+{{ google_login.uid }}/" target="_blank">{{ google_login.uid }}</a></p>
-
-            {% if can_disconnect %}
-             <form method="post" action="{% url 'social:disconnect' 'google-oauth2' %}">
-                {% csrf_token %}
-                <button type="submit">Disconnect</button>
-             </form>
-            {% else %}
-                <button type="button" disabled>Disconnect</button>
-                <p class="warning">Set a <a href="{% url 'siteuser:social_password' %}">password</a> if you wish to disconnect this account</p>
-            {% endif %}
-        {% else %}
-            <a class="btn btn-sm btn-primary" href="{% url 'social:begin' 'google-oauth2' %}">Connect</a>
-        {% endif %}
-    </div>
-
-    <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
-        <h4>Twitter</h4>
-         {% if twitter_login %}
-            <p>Connected as <a href="https://twitter.com/{{ twitter_login.extra_data.access_token.screen_name }}/" target="_blank">{{ twitter_login.extra_data.access_token.screen_name }}</a></p>
-
-            {% if can_disconnect %}
-             <form method="post" action="{% url 'social:disconnect' 'twitter' %}">
-                {% csrf_token %}
-                <button type="submit">Disconnect</button>
-             </form>
-            {% else %}
-                <button type="button" disabled>Disconnect</button>
-                <p class="text-warning">Set a <a href="{% url 'siteuser:social_password' %}">password</a> if you wish to disconnect this account</p>
-            {% endif %}
-        {% else %}
-            <a class="btn btn-sm btn-primary" href="{% url 'social:begin' 'twitter' %}">Connect</a>
-        {% endif %}
-    </div>
-
-    <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
-        <h4>Yahoo</h4>
-         {% if yahoo_login %}
-            <p>Connected as <a href="https://yahoo.com/{{ yahoo_login.extra_data.login }}/" target="_blank">{{ yahoo_login.extra_data.login }}</a></p>
-
-            {% if can_disconnect %}
-             <form method="post" action="{% url 'social:disconnect' 'yahoo-oauth2' %}">
-                {% csrf_token %}
-                <button type="submit">Disconnect</button>
-             </form>
-            {% else %}
-                <button type="button" disabled>Disconnect</button>
-                <p class="text-warning">Set a <a href="{% url 'siteuser:social_password' %}">password</a> if you wish to disconnect this account</p>
-            {% endif %}
-        {% else %}
-            <a class="btn btn-sm btn-primary" href="{% url 'social:begin' 'yahoo-oauth2' %}">Connect</a>
-        {% endif %}
+<div class='container siteuser-index-heading'>
+    <div class='row'>
+        <h5 class='float-left'>Social</h5>
     </div>
 </div>
 
+<div class="container">
+    <div class="row text-center text-lg-left">
+        <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
+            <h4>Facebook</h4>
+             {% if facebook_login %}
+                <p>Connected as <a href="https://facebook.com/{{ facebook_login.extra_data.id }}/" target="_blank">{{ facebook_login.extra_data.id }}</a></p>
+
+                {% if can_disconnect %}
+                 <form method="post" action="{% url 'social:disconnect' 'facebook' %}">
+                    {% csrf_token %}
+                    <button type="submit">Disconnect</button>
+                 </form>
+                {% else %}
+                    <button type="button" disabled>Disconnect</button>
+                    <p class="text-warning">Set a <a href="{% url 'siteuser:social_password' %}">password</a> if you wish to disconnect this account</p>
+                {% endif %}
+            {% else %}
+                <a class="btn btn-sm btn-primary" href="{% url 'social:begin' 'facebook' %}">Connect</a>
+            {% endif %}
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
+            <h4>Google</h4>
+             {% if google_login %}
+
+                <p>Connected as <a href="https://plus.google.com/u/0/+{{ google_login.uid }}/" target="_blank">{{ google_login.uid }}</a></p>
+
+                {% if can_disconnect %}
+                 <form method="post" action="{% url 'social:disconnect' 'google-oauth2' %}">
+                    {% csrf_token %}
+                    <button type="submit">Disconnect</button>
+                 </form>
+                {% else %}
+                    <button type="button" disabled>Disconnect</button>
+                    <p class="warning">Set a <a href="{% url 'siteuser:social_password' %}">password</a> if you wish to disconnect this account</p>
+                {% endif %}
+            {% else %}
+                <a class="btn btn-sm btn-primary" href="{% url 'social:begin' 'google-oauth2' %}">Connect</a>
+            {% endif %}
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
+            <h4>Twitter</h4>
+             {% if twitter_login %}
+                <p>Connected as <a href="https://twitter.com/{{ twitter_login.extra_data.access_token.screen_name }}/" target="_blank">{{ twitter_login.extra_data.access_token.screen_name }}</a></p>
+
+                {% if can_disconnect %}
+                 <form method="post" action="{% url 'social:disconnect' 'twitter' %}">
+                    {% csrf_token %}
+                    <button type="submit">Disconnect</button>
+                 </form>
+                {% else %}
+                    <button type="button" disabled>Disconnect</button>
+                    <p class="text-warning">Set a <a href="{% url 'siteuser:social_password' %}">password</a> if you wish to disconnect this account</p>
+                {% endif %}
+            {% else %}
+                <a class="btn btn-sm btn-primary" href="{% url 'social:begin' 'twitter' %}">Connect</a>
+            {% endif %}
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
+            <h4>Yahoo</h4>
+             {% if yahoo_login %}
+                <p>Connected as <a href="https://yahoo.com/{{ yahoo_login.extra_data.login }}/" target="_blank">{{ yahoo_login.extra_data.login }}</a></p>
+
+                {% if can_disconnect %}
+                 <form method="post" action="{% url 'social:disconnect' 'yahoo-oauth2' %}">
+                    {% csrf_token %}
+                    <button type="submit">Disconnect</button>
+                 </form>
+                {% else %}
+                    <button type="button" disabled>Disconnect</button>
+                    <p class="text-warning">Set a <a href="{% url 'siteuser:social_password' %}">password</a> if you wish to disconnect this account</p>
+                {% endif %}
+            {% else %}
+                <a class="btn btn-sm btn-primary" href="{% url 'social:begin' 'yahoo-oauth2' %}">Connect</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+<div class='container'>
+    <div class='row'>
+        <span class="float-right"><a class="btn btn-sm" href="{% url 'siteuser:delete_account' %}" title="Delete this account"><i class="fas fa-trash"></i></a></span>
+        <span class="float-right"><a class="btn btn-sm" href="{% url 'siteuser:edit_profile' %}" title="Edit profile"><i class="fas fa-edit"></i></a></span>
+        <span class="float-right"><a class="btn btn-sm" href="{% url 'siteuser:library' siteuser.pk siteuser.slug %}" title="My library"><i class="fas fa-book"></i></a></span>
+    </div>
+</div>
 {% endblock content_content %}

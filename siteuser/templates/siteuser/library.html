@@ -2,16 +2,11 @@
 {% block title %}{{ siteuser.screen_name }}'s library{% endblock title %}
 {% load siteuser_tags %}
 {% block introduction %}{% endblock introduction %}
-
 {% block content_content %}
 
-<div class='container account-management-heading'>
+<div class='container siteuser-index-heading'>
     <div class='row'>
-        <div class='col-sm-12'>
-            <span class='h5 float-left'>
-                {% if user == siteuser.user %}My{% else %}{{ siteuser.screen_name }}'s {% endif %} library
-            </span>
-        </div>
+        <h3 class='float-left'>{% if user == siteuser.user %}My{% else %}{{ siteuser.screen_name }}'s {% endif %} library</h3>
     </div>
 </div>
 
@@ -22,7 +17,7 @@
             <p class="text-secondary">Last name: {{ siteuser.last_name }}</p>
             <p class="text-secondary">Email: <a href="mailto:{{ user.siteuser.user.email }}">{{ siteuser.user.email }}</a></p>
             <p class="text-secondary">Location: <a href='#' title='See others from {{ user.siteuser.location }}'>{{ siteuser.location }}</a></p>
-            <p class="text-secondary">Activity: {{ siteuser.song_set.all|count_published }} songs, {{ siteuser.post_set.all|count_published }} blog posts, 
+            <p class="text-secondary">Activity: {{ siteuser.song_set.all|count_published }} songs, {{ siteuser.post_set.all|count_published }} blog posts,
                 {{ siteuser.score_set.count }} scores, {{ siteuser.midi_set.count }} midis, {{ siteuser.comment_set.count }} comments
             </p>
         </div>
@@ -30,7 +25,7 @@
         <div class="col-sm-6">
             <p class="text-secondary">Roles:
                 {% for role in siteuser.roles.all %}
-                    <a href="{% url 'siteuser:siteusers_common_roles' role %}" title='See other {{ role.name|upper }}s'>{{ role.name|title }}</a>
+                    <a href="{% url 'siteuser:siteusers_common_roles' role %}" title='See all {{ role.name|title }}s'>{{ role.name|title }}</a>
                     {% if not forloop.last %}, {% endif %}
                 {% endfor %}
             </p>
@@ -205,11 +200,11 @@
                     <th>Song</th>
                     <th>Song owner</th>
                     <th>Score owner</th>
-                    <th><i class="fas fa-hdd" title="HDD download url"></i></th>
-                    <th><i class="fas fa-hdd" title="HDD link"></i></th>
-                    <th><i class="fab fa-google-drive" title="Google Drive view url"></i></i></th>
-                    <th><i class="fab fa-google-drive" title="Google Drive download url"></i></th>
-                    <th><i class="fab fa-google-drive" title="Google Drive embed url"></i></th>
+                    <!--<th><i class="fas fa-hdd" title="HDD download url"></i></th>-->
+                    <!--<th><i class="fas fa-hdd" title="HDD link"></i></th>-->
+                    <!--<th><i class="fab fa-google-drive" title="Google Drive view url"></i></i></th>-->
+                    <!--<th><i class="fab fa-google-drive" title="Google Drive download url"></i></th>-->
+                    <!--<th><i class="fab fa-google-drive" title="Google Drive embed url"></i></th>-->
                     <th><i class="fas fa-cog"></i></th>
                 </tr>
 
@@ -220,31 +215,12 @@
                         <td><a href="{% url 'song:detail' score.song.pk score.song.slug %}">{{ score.song.title }}</a></td>
                         <td>{{ score.song.originator }}</td>
                         <td>{{ score.uploader }}</td>
-                        <td>
-                            <a href="{% url 'song-media:score_view' score.pk %}" target="_blank"><i class="fas fa-download"></i></a>
-                        </td>
-                        <td>
-                            {% if score.media_file %}
-                                <a href="{{ score.media_file.url }}" target="_blank"><i class="fas fa-link"></i></a>
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if score.drive_view_link %}
-                                <a href="{{ score.drive_view_link }}" target="_blank"><i class="fas fa-eye"></i></a>
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if score.drive_download_link %}
-                                <a href="{{ score.drive_download_link }}" target="_blank"><i class="fas fa-download"></i></a>
-                            {% endif %}
-                        </td>
-                        <td>{% if score.embed_link %}
-                                <a href="{{ score.embed_link }}" target="_blank"><i class="fas fa-link"></i></a>
-                            {% endif %}
-                        </td>
-                        <td>
-                            <a href="{% url 'song-media:delete_score' score.pk %}"><i class="fas fa-trash"></i></a>
-                        </td>
+                        <!--<td><a href="{% url 'song-media:score_view' score.pk %}" target="_blank"><i class="fas fa-download"></i></a></td>-->
+                        <!--<td>{% if score.media_file %}<a href="{{ score.media_file.url }}" target="_blank"><i class="fas fa-link"></i></a>{% endif %}</td>-->
+                        <!--<td>{% if score.drive_view_link %}<a href="{{ score.drive_view_link }}" target="_blank"><i class="fas fa-eye"></i></a>{% endif %}</td>-->
+                        <!--<td>{% if score.drive_download_link %}<a href="{{ score.drive_download_link }}" target="_blank"><i class="fas fa-download"></i></a>{% endif %}</td>-->
+                        <!--<td>{% if score.embed_link %}<a href="{{ score.embed_link }}" target="_blank"><i class="fas fa-link"></i></a>{% endif %}</td>-->
+                        <td>{% if user == score.uploader.user %}<a href="{% url 'song-media:delete_score' score.pk %}"><i class="fas fa-trash"></i></a>{% endif %}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -267,10 +243,9 @@
                     <th>Midi owner</th>
                     <th>Format</th>
                     <th><i class="fas fa-hdd" title="Size (MB)"></i></th>
-                    <th><i class="fas fa-hdd" title="HDD download url"></i></th>
-                    <th><i class="fas fa-hdd" title="HDD link"></i></th>
-                    <th><i class="fab fa-google-drive" title="Google Drive view url"></i></i></th>
-                    <th><i class="fab fa-google-drive" title="Google Drive download url"></i></th>
+                    <!--<th><i class="fas fa-hdd" title="HDD download url"></i></th>-->
+                    <!--<th><i class="fas fa-hdd" title="HDD link"></i></th>-->
+                    <!--<th><i class="fab fa-google-drive" title="Google Drive download url"></i></th>-->
                     <th><i class="fas fa-cog"></i></th>
                 </tr>
 
@@ -283,36 +258,10 @@
                             <td>{{ midi.uploader }}</td>
                             <td>{{ midi.fformat }}</td>
                             <td>{{ midi.fsize|filesizeformat }}</td>
-                            <td><!-- not used-->
-                                {% if midi.media_file %}
-                                   {% if midi.fformat == ".mp3" %}
-                                    <p class='text-left'>
-                                        <a href="{% url 'song-media:play_midiview' midi.pk %}" target="_blank"><i class="fas fa-play"></i></a>
-                                    </p>
-                                    {% else %}
-                                    <p class='text-left'>
-                                        <a class='text-success' href="" onClick="MIDIjs.play('{{ midi.media_file.url }}');"><i class='fas fa-play'></i></a> |
-                                        <a href="" onClick="MIDIjs.stop();"><i class='fas fa-stop'></i></a>
-                                    </p>
-                                    {% endif %}
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if midi.media_file %}
-                                    <a href="{{ midi.media_file.url }}" target="_blank"><i class="fas fa-link"></i></a>
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if midi.drive_view_link %}
-                                    <a href="{{ midi.drive_view_link }}" target="_blank"><i class="fas fa-eye"></i></a>
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if midi.drive_download_link %}
-                                    <a href="{{ midi.drive_download_link }}" target="_blank"><i class="fas fa-download"></i></a>
-                                {% endif %}
-                            </td>
-                            <td><a href="{% url 'song-media:delete_midi' midi.pk %}"><i class="fas fa-trash"></i></a></td>
+                            <!--<td>{% if midi.media_file %}<a href="{{ midi.media_file.url }}" target="_blank"><i class="fas fa-link"></i></a>{% endif %}</td>-->
+                            <!--<td>{% if midi.drive_view_link %}<a href="{{ midi.drive_view_link }}" target="_blank"><i class="fas fa-eye"></i></a>{% endif %}</td>-->
+                            <!--<td>{% if midi.drive_download_link %}<a href="{{ midi.drive_download_link }}" target="_blank"><i class="fas fa-download"></i></a>{% endif %}</td>-->
+                            <td>{% if user == score.uploader.user %}<a href="{% url 'song-media:delete_midi' midi.pk %}"><i class="fas fa-trash"></i></a>{% endif %}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -331,8 +280,8 @@
                 </thead>
                 <tr>
                     <th>Song</th>
+                    <th>Song owner</th>
                     <th>Link uploader</th>
-                    <th><i class="fab fa-google-drive" title="Google Drive download url"></i></th>
                     <th>Play url</th>
                 </tr>
 

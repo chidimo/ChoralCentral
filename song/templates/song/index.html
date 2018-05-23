@@ -18,8 +18,8 @@
     <div class="list-songs">
         <h4><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h4>
         <span class="h5 float-right">
-            <a class="btn btn-sm btn-primary icon-buttons" title="Love {{ song.title }}">{{ song.like_count }}</a>
-            <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:song_likers' song.pk song.slug %}" title="{{ song.like_count }} Love birds"><i class="fas fa-heart"></i> Lovers</a>
+            <a class="btn btn-sm btn-primary icon-buttons" title="Star {{ song.title }}">{{ song.like_count }}</a>
+            <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:song_likers' song.pk song.slug %}" title="{{ song.like_count }} Star birds"><i class="fas fa-star"></i> Starrs</a>
         </span>
     </div>
     {% empty %}

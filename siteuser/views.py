@@ -33,7 +33,7 @@ from request.models import Request
 from author.models import Author
 from song_media.models import Score, Midi, VideoLink
 
-from .forms import (DeleteAccountForm,
+from .forms import (PassWordGetterForm, EmailAndPassWordGetterForm,
     SiteUserRegistrationForm, SiteUserEditForm, NewRoleForm, NewSiteUserGroupForm
 )
 
@@ -215,7 +215,7 @@ def delete_account(request):
     user = request.user
     siteuser = user.siteuser
     if request.method == 'POST':
-        form = DeleteAccountForm(request.POST, user=user)
+        form = PassWordGetterForm(request.POST, user=user)
         if form.is_valid():
             siteuser.delete()
             user.delete()
@@ -227,7 +227,42 @@ def delete_account(request):
             msg = "You entered a wrong password"
             messages.error(request, msg)
             return redirect('/')
-    return render(request, template, {'form' : DeleteAccountForm(user=user) })
+    return render(request, template, {'form' : PassWordGetterForm(user=user) })
+
+def deactivate_account(request):
+    template = 'siteuser/deactivate_account.html'
+    user = request.user
+    if request.method == 'POST':
+        form = PassWordGetterForm(request.POST, user=user)
+        if form.is_valid():
+            user.is_active = False
+            user.save()
+            msg = "Your account has been deactivated"
+            messages.success(request, msg)
+            return redirect('/')
+        else:
+            # return render(request, template, {'form' : form })
+            msg = "You entered a wrong password"
+            messages.error(request, msg)
+            return redirect('/')
+    return render(request, template, {'form' : PassWordGetterForm(user=user) })
+
+# continue later
+def activate_account(request):
+    template = 'siteuser/activate_account.html'
+    if request.method == 'POST':
+        form = EmailAndPassWordGetterForm(request.POST)
+        if form.is_valid():
+            user.is_active = False
+            user.save()
+            msg = "Your account has been deactivated"
+            messages.success(request, msg)
+            return redirect('/')
+        else:
+            msg = "You entered a wrong password"
+            messages.error(request, msg)
+            return redirect('/')
+    return render(request, template, {'form' : PassWordGetterForm(user=user) })
 
 class NewRole(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):
     form_class = NewRoleForm

@@ -56,7 +56,6 @@ class SiteUserMixin(forms.ModelForm):
         }
 
 class SiteUserRegistrationForm(forms.Form):
-
     agreement = forms.BooleanField(
         required=True,
         widget=forms.CheckboxInput())
@@ -107,18 +106,26 @@ class SiteUserEditForm(forms.ModelForm):
                 forms.SelectMultiple(attrs={'class' : 'form-control'}),
                 reverse_lazy('siteuser:role_create')),}
 
-class DeleteAccountForm(forms.Form):
+class PassWordGetterForm(forms.Form):
     password = forms.CharField(
         required=True,
         widget=forms.PasswordInput(attrs={'class':'form-control', 'type':'password', "placeholder" : "Enter password"}))
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
-        super(DeleteAccountForm, self).__init__(*args, **kwargs)
+        super(PassWordGetterForm, self).__init__(*args, **kwargs)
 
     def clean(self):
         password = self.cleaned_data['password']
         if check_password(password, self.user.password) is False:
             self.add_error('password', 'You entered a wrong password')
+
+class EmailAndPassWordGetterForm(forms.Form):
+    password = forms.CharField(
+        required=True,
+        widget=forms.PasswordInput(attrs={'class':'form-control', 'type':'password', "placeholder" : "Enter password"}))
+    email = forms.CharField(
+        required=True,
+        widget=forms.TextInput(attrs={'class':'form-control', 'type':'password', "placeholder" : "Enter password"}))
 
 class NewRoleForm(forms.ModelForm):
     class Meta:

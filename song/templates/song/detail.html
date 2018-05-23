@@ -12,21 +12,21 @@
 <div class='container-fluid song-detail-header'>
     <div class='row'>
         <div class='col-sm-12 head-title'>
-            <span class='h5 float-left'>{{ song.title }}</span>
+            <span class='float-left'>{{ song.title }}</span>
 
             <span class='float-right song-icons'>
-                <a class="btn btn-sm btn-primary icon-buttons" title="Loves">{{ song.like_count }}</a>
+                <a class="btn btn-sm btn-primary icon-buttons" title="Stars">{{ song.like_count }}</a>
 
                 {% if user.is_authenticated %}
                     {% if request.user.siteuser in song.likes.all %}
-                        <a class="btn btn-sm btn-primary icon-buttons" href="" id="like" name="{{ song.pk }}" value="Like" title="unlove this song"><i class="fas fa-heart"></i> Unlove</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" href="" id="like" name="{{ song.pk }}" value="Like" title="unstar this song"><i class="fas fa-star"></i> Unstar</a>
                         {% include 'song/song_like_script.html' %}
                     {% else %}
-                        <a class="btn btn-sm btn-primary icon-buttons" href="" id="like" name="{{ song.pk }}" value="Like" title="love this song"><i class="fas fa-heart"></i> Love</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" href="" id="like" name="{{ song.pk }}" value="Like" title="star this song"><i class="fas fa-star"></i> Star</a>
                         {% include 'song/song_like_script.html' %}
                     {% endif %}
                 {% else %}
-                    <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:login' %}">Login to love this song</a>
+                    <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:login' %}">Login to star this song</a>
                 {% endif %}
 
                 <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'blog:new_song' song.pk %}" title="Make a post about {{ song.title }}"><i class="fas fa-pencil-alt"></i></a>
@@ -160,7 +160,7 @@
                 <div class="row score-list-stats-container">
                     <div class="container">
                         <a class="btn btn-sm btn-primary icon-buttons" title="Total likes">{{ score.score_likes }}</a>
-                        <a class="btn btn-sm btn-primary icon-buttons" href="" title="Like this score"><i class="fas fa-heart"></i></a>
+                        <a class="btn btn-sm btn-primary icon-buttons" href="" title="Like this score"><i class="fas fa-star"></i></a>
                         <a class="btn btn-sm btn-primary icon-buttons" title="Total downloads">{{ score.downloads }}</a>
                         <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song-media:download_score_from_drive' score.pk %}" target="_blank" title="Download"><i class="fas fa-download"></i></a>
                         </span>
@@ -197,7 +197,7 @@
                 <div class="row audio-list-drive-container">
                     <div class="container">
                         <a class="btn btn-sm btn-primary icon-buttons" title="Like this music">{{ midi.midi_likes }}</a>
-                        <a class="btn btn-sm btn-primary icon-buttons" href="" title="Love this music"><i class="fas fa-heart"></i>
+                        <a class="btn btn-sm btn-primary icon-buttons" href="" title="Star this music"><i class="fas fa-star"></i>
                             <a class="btn btn-sm btn-primary icon-buttons" title="Total downloads">{{ midi.downloads }}</a>
                         <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song-media:download_midi_from_drive' midi.pk %}" target="_blank" title="Download"><i class="fas fa-download"></i></a>
                     </div>
@@ -242,7 +242,7 @@
                 <div class="row video-list-icon-container">
                     <div class="container">
                         <span class="btn btn-sm btn-primary icon-buttons" title="{{ link.youtube_likes }}">{{ link.youtube_likes }}</span>
-                        <span class="btn btn-sm btn-primary icon-buttons float-left" title="Total youtube likes"><i class="fas fa-heart"></i></span>
+                        <span class="btn btn-sm btn-primary icon-buttons float-left" title="Total youtube likes"><i class="fas fa-star"></i></span>
 
 
                         <span class="btn btn-sm btn-primary icon-buttons float-right" title="Total youtube views"><i class="fas fa-eye"></i></span>
