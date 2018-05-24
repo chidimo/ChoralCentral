@@ -1,5 +1,7 @@
 # Choralcentral
 
+https://pypi.org/project/python-decouple/#why-not-just-use-environment-variables
+
 1. Send weekly summary of activities upon subscription
 1. Download user comments
 1. In siteusers index, count only published songs and posts

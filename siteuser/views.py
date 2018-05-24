@@ -39,6 +39,7 @@ from song_media.models import Score, Midi, VideoLink
 from .forms import (PassWordGetterForm, EmailAndPassWordGetterForm,
     SiteUserRegistrationForm, SiteUserEditForm, NewRoleForm, NewSiteUserGroupForm
 )
+from .utils import check_recaptcha
 
 CustomUser = get_user_model()
 
@@ -161,11 +162,12 @@ class SiteUserComments(PaginationMixin, generic.ListView):
         creator = SiteUser.objects.get(pk=self.kwargs.get("pk", None))
         return Comment.objects.filter(creator=creator)
 
+@check_recaptcha
 def new_siteuser(request):
     template = "siteuser/new.html"
     if request.method == 'POST':
         form = SiteUserRegistrationForm(request.POST)
-        if form.is_valid():
+        if form.is_valid() and request.recaptcha_is_valid:
             form = form.cleaned_data
             email = form['email']
             screen_name = form['screen_name']
