@@ -143,9 +143,13 @@
     <div class="row">
         {% for score in song.score_set.all %}
             <div class="col-sm-6 col-md-4 col-lg-3 py-2 px-0 score-list">
-                <div class="row score-list-pdf-container">
-                    <img src="{{ score.thumbnail.url }}" class="card center" width="120" height="160">
-                        <!--<embed id="pdfIframe" src="{{ score.embed_link }}#toolbar=0&navpanes=0&scrollbar=0" width="150" height="200" showcontrols="false"></embed>-->
+                <div class="container score-list-pdf-container">
+                    {% thumbnail score.thumbnail "80x80" crop="center" as im %}
+                       <a href="{{ score.thumbnail.url }}" target="_blank"><img alt="" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="card" title="Preview first page"></a>
+                    {% empty %}
+                       <img alt="" src="{% static 'img/django-logo.png' %}" width="1250" height="160" class="img-fluid card">
+                    {% endthumbnail %}
+                    <!--<img src="{{ score.thumbnail.url }}" class="card center" width="120" height="160">-->
                 </div>
 
                 <div class="row score-list-meta-container">
