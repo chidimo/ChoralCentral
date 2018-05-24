@@ -2,8 +2,7 @@
 body {
   color: midnightblue;
   padding-top: 2.4rem;
-  /*font-family: 'Inconsolata', monospace;*/
-  font-family: 'Sunflower', sans-serif;
+  font-family: 'Inconsolata', monospace;
 }
 
 /*NAVIGATION*/
@@ -19,6 +18,7 @@ nav {
 }
 
 /* fix nav items scrolling in small screens */
+
 @media (min-width: 300px) {
     .navbar-collapse.navcontent.collapse.show {
     max-height:540px !important;
@@ -96,6 +96,7 @@ ul.righthand-navigation {
 .profile-image > img {
     height: 25px;
     width: 25px;
+    /* padding:0; */
 }
 
 .profile-image {
@@ -104,12 +105,12 @@ ul.righthand-navigation {
 .profile-name {
     padding-left: .3rem;
     float: left!important;
+    /* padding-top: .2rem; */
 }
 
 .dropdown-menu > a.dropdown-item {
     color: midnightblue;
 }
-
 /*GENERIC ELEMENTS*/
 
 h1, h2, h3, h4, h5, h6 {
@@ -119,6 +120,10 @@ h1, h2, h3, h4, h5, h6 {
 
 a {
     color: #0062cc;
+}
+
+p, ol.terms-of-use li, ol.privacy-policy li, ol.help-page li {
+    font-family: 'Sunflower', sans-serif;
 }
 
 a:hover {
@@ -199,7 +204,7 @@ a.upload-button {
     margin-top: .3rem;
 }
 .related-widget-wrapper-link {
-  background: black;
+  background: blanchedalmond;
 }
 
 /*AUTHOR*/
@@ -454,7 +459,7 @@ span.download-count {
     padding: 2px 7px;
 }
 
-.score-list-pdf-container img {
+.score-list-pdf-container > img {
     margin: auto;
 }
 

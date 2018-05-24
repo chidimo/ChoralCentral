@@ -21,7 +21,7 @@ nav {
 
 @media (min-width: 300px) {
     .navbar-collapse.navcontent.collapse.show {
-    max-height:580px !important;
+    max-height:540px !important;
     overflow-y:scroll !important;
     overflow-x:hidden !important;
     }
@@ -142,10 +142,6 @@ section.jumbotron {
 
 section a {
     margin: 0.5rem 0 0.5rem 0.5rem;
-}
-
-section > div.container > a.join-campaign {
-    font-family : 'Inconsolata', monospace;
 }
 
 label {
