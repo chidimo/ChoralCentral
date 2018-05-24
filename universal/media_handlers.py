@@ -20,9 +20,7 @@ def save_video_thumbnail(instance, filename):
 def save_midi(instance, filename):
     """Take the midi instance and original filename and return appropriate name"""
     filename, ext = os.path.splitext(filename)
-    normalized_song_name = "_".join([each.lower() for each in instance.song.title.split()])
-    normalized_song_name = slugify(instance.song.title)
-    return "midis/{}_{}{}".format(normalized_song_name, instance.song.pk, ext)
+    return "midis/{}_{}{}".format(slugify(instance.__str__()), instance.song.pk, ext)
 
 def save_score(instance, filename):
     """Take the pdf instance and original filename and return appropriate name

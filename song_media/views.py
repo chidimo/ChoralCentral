@@ -116,61 +116,24 @@ class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
     form_class = NewMidiForm
 
     def form_valid(self, form):
-        uploader = self.request.user.siteuser
-        song = form.instance.song
-        description = form.instance.description
-        part = form.instance.part
-        media_object = form.instance.media_file
-        extension = os.path.splitext(media_object.name)[1]
+        form.instance.uploader = self.request.user.siteuser
+        self.object = form.save()
+        song = self.object.song
+        relative_media_path = self.object.media_file.url
+        full_media_path = settings.BASE_DIR + relative_media_path
+        self.object.fsize = os.path.getsize(full_media_path)
+        extension = os.path.splitext(relative_media_path)[1]
 
-        # get of create drive folder
-        folder_id = song.drive_folder_id
-        if (folder_id is None) or (folder_id == ""):
-            folder_name = "{}-{}".format(song.pk, slugify(song.title))
-            folder_id = create_song_folder(folder_name)
-            song.drive_folder_id = folder_id
-            song.save(update_fields=['drive_folder_id'])
-
-        # build drive metadata
-        midi_metadata = {}
-        midi_metadata['parents'] = [folder_id]
-        midi_metadata['description'] = "{}, {}: {}".format(
-            form.instance.song.title, form.instance.part.name, form.instance.description)
-        midi_metadata['viewersCanCopyContent'] = True
-
-        tmp = os.path.join(settings.BASE_DIR, 'media', 'tmp')
-        if not os.path.exists(tmp):
-            os.mkdir(tmp)
-        path = 'tmp/' + song.title + extension
-
-        with default_storage.open(path, 'wb+') as destination:
-            for chunk in media_object.chunks():
-                destination.write(chunk)
-
-        midi = Midi.objects.create(
-            uploader=uploader, song=song, part=part, description=description)
-
-        if extension == ".mp3":
-            mimetype="audio/mpeg"
-            midi_metadata['name'] = song.title + extension
-        else:
-            midi_metadata['name'] = song.title + extension
-            mimetype = 'audio/mid'
-
-        temp_pdf_path = os.path.join(tmp, song.title + extension)
-        file_resource = upload_audio_to_drive(midi_metadata, temp_pdf_path, mimetype)
+        with open("ext.txt", "w+") as fh:
+            fh.write(extension)
 
         if extension.startswith(".mp3"):
-            midi.fformat = "mp3"
+            self.object.fformat = "mp3"
         if extension.startswith(".mid"):
-            midi.fformat = "midi"
+            self.object.fformat = "midi"
 
-        midi.fsize = file_resource.get('size')
-        midi.drive_view_link = file_resource.get('webViewLink')
-        midi.drive_download_link = file_resource.get('webContentLink')
-        midi.embed_link = file_resource.get('webViewLink').replace('view?usp=drivesdk', 'preview')
-        midi.save(update_fields=['drive_view_link', 'drive_download_link', 'fformat', 'fsize', 'embed_link'])
-        share_file_permission(file_resource.get('id')) # make shareable
+        self.object.fsize = os.path.getsize(full_media_path)
+        self.object.save(update_fields=['fsize', 'fformat'])
 
         messages.success(self.request, "Midi successfully added to {}".format(song.title))
         return redirect(song.get_absolute_url())

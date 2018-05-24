@@ -1,14 +1,12 @@
 from django.conf import settings
 from django.template.defaultfilters import slugify
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 
-from song_media.models import Score, Midi
+from song_media.models import Score
 
 from google_api.api_calls import (
-    create_song_folder, upload_pdf_to_drive, upload_audio_to_drive, share_file_permission,
-    get_youtube_video_id, get_video_information, get_playlist_id, add_video_to_playlist
+    create_song_folder, upload_pdf_to_drive, share_file_permission,
 )
-
 
 class Command(BaseCommand):
     help = 'Backup scores and midis to google drive'
@@ -24,7 +22,7 @@ class Command(BaseCommand):
                 part = score.part
                 file_path = settings.BASE_DIR + score.media_file.url
 
-                # get of create drive folder
+                # get or create drive folder
                 folder_id = song.drive_folder_id
                 if (folder_id is None) or (folder_id == ""):
                     folder_name = "{}-{}".format(song.pk, slugify(song.title))
@@ -49,4 +47,3 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.SUCCESS('{} already backed up. Continue'.format(score.__str__())))
                 continue
         self.stdout.write(self.style.SUCCESS('Score backup completed successfully'))
-
