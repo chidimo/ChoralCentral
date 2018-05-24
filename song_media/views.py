@@ -12,15 +12,10 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.template.defaultfilters import slugify
 from django.core.files import File
-# from django.core.files.base import ContentFile
-from django.core.files.storage import default_storage
 
 from django_addanother.views import CreatePopupMixin
 
-from google_api.api_calls import (
-    create_song_folder, upload_pdf_to_drive, upload_audio_to_drive, share_file_permission,
-    get_youtube_video_id, get_video_information, get_playlist_id, add_video_to_playlist
-)
+from google_api.api_calls import get_youtube_video_id, get_video_information, get_playlist_id, add_video_to_playlist
 
 from siteuser.models import SiteUser
 
@@ -95,12 +90,6 @@ def show_score(request, pk):
     response["Content-Disposition"] = "filename={}.pdf".format(slugify(score.__str__()))
     return response
 
-def download_score_from_drive(request, pk):
-    score = Score.objects.get(pk=pk)
-    score.downloads += 1
-    score.save(update_fields=['downloads'])
-    return redirect(score.drive_download_link)
-
 class DeleteScore(LoginRequiredMixin, generic.DeleteView):
     model = Score
     template_name = "song_media/score_delete.html"
@@ -146,7 +135,7 @@ class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
 
 def play_mp3(request, pk):
     context = {}
-    template = 'song_media/play.html'
+    template = 'song_media/playmp3.html'
     sound = get_object_or_404(Midi, pk=pk)
 
     # check for repeat plays
@@ -155,20 +144,13 @@ def play_mp3(request, pk):
     context['sound'] = sound
     return render(request, template, context)
 
-def download_midi_from_drive(request, pk):
-    midi = Midi.objects.get(pk=pk)
-    midi.downloads += 1
-    midi.save(update_fields=['downloads'])
-    return redirect(midi.drive_download_link)
-
 def download_midi(self, pk):
     sound = get_object_or_404(Midi, pk=pk)
     sound.downloads += 1
     sound.save()
-    fname = sound.media_file.url
-    path = os.path.abspath(settings.BASE_DIR + fname)
+    path = os.path.abspath(settings.BASE_DIR + sound.media_file.url)
     response = FileResponse(open(path, 'rb'), content_type="sound/midi")
-    file_download_name = slugify("{}_{}".format(sound.part, fname))
+    file_download_name = "{}.{}".format(slugify(sound.__str__()), sound.fformat)
     response["Content-Disposition"] = "filename={}".format(file_download_name)
     return response
 
@@ -188,8 +170,14 @@ class NewVideoLink(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, ge
     form_class = NewVideoLinkForm
     success_message = "Video link added successfully"
 
+    def get_form_kwargs(self):
+        kwargs = super(NewVideoLink, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        kwargs['pk'] = self.kwargs.get('pk', None)
+        return kwargs
+
     def form_valid(self, form):
-        form.instance.uploader = SiteUser.objects.get(user=self.request.user)
+        form.instance.uploader = self.request.user.siteuser
         self.object = form.save()
 
         song = self.object.song
@@ -217,9 +205,3 @@ class NewVideoLink(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, ge
         self.object.thumbnail_url = default_thumbnail_url
         self.object.save()
         return super(NewVideoLink, self).form_valid(form)
-
-    def get_form_kwargs(self):
-        kwargs = super(NewVideoLink, self).get_form_kwargs()
-        kwargs['user'] = self.request.user
-        kwargs['pk'] = self.kwargs.get('pk', None)
-        return kwargs

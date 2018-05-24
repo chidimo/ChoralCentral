@@ -184,7 +184,7 @@
                         <a class="btn btn-sm btn-primary icon-buttons" title="File format: {{ midi.fformat }}">{{ midi.fformat }}</a>
                         <a class="btn btn-sm btn-primary icon-buttons" title="Filesize: {{ midi.fsize|filesizeformat }}">{{ midi.fsize|filesizeformat }}</a>
                         <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:library' midi.uploader.pk midi.uploader.slug %}" title="{{ midi.uploader.screen_name }}">{{ midi.uploader.screen_name }}</a>
-                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song-media:download_midi_from_drive' midi.pk %}" target="_blank" title="Click to Download: {{ midi.downloads }} total downloads">
+                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song-media:download_midi' midi.pk %}" target="_blank" title="Click to Download: {{ midi.downloads }} total downloads">
                             <span class="download-count">{{ midi.downloads }}</span> <i class="fas fa-download"></i></a>
                     </div>
                 </div>
@@ -199,7 +199,7 @@
     <h5 class="my-2 text-left">
         Video links
         <span class="float-right">
-            <a class="btn btn-primary btn-sm" href="{% url 'song-media:videolink_new_song' song.pk %}">Add a link <i class="fas fa-upload"></i></a>
+            <a class="btn btn-primary btn-sm" href="{% url 'song-media:add_videolink_to_song' song.pk %}">Add a link <i class="fas fa-upload"></i></a>
         </span>
     </h5>
     <hr>
