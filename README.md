@@ -38,3 +38,6 @@
 1. Implement notification system (for request reply)
 1. Custom authentication for all API views
 1. Posts can contain pictures
+
+
+## Management commands
