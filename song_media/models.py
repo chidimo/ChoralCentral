@@ -70,7 +70,6 @@ class Midi(TimeStampedModel):
     description = models.CharField(max_length=200, blank=True, null=True)
     media_file = models.FileField(upload_to=save_midi, null=True, blank=True)
     downloads = models.IntegerField(default=0)
-    embed_link = models.URLField(null=True, blank=True)
     drive_view_link = models.URLField(null=True, blank=True)
     drive_download_link = models.URLField(null=True, blank=True)
 

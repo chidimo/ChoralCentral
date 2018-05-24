@@ -9,7 +9,7 @@ from google_api.api_calls import (
 )
 
 class Command(BaseCommand):
-    help = 'Backup scores and midis to google drive'
+    help = 'Backup scores to google drive'
 
     def handle(self, *args, **options):
         self.stdout.write(self.style.SUCCESS('Score backup started'))
@@ -44,6 +44,6 @@ class Command(BaseCommand):
                 score.save(update_fields=['drive_view_link', 'drive_download_link', 'embed_link'])
                 share_file_permission(file_resource.get('id')) # make shareable
             else:
-                self.stdout.write(self.style.SUCCESS('{} already backed up. Continue'.format(score.__str__())))
+                self.stdout.write(self.style.NOTICE('{} already backed up. Continue'.format(score.__str__())))
                 continue
         self.stdout.write(self.style.SUCCESS('Score backup completed successfully'))
