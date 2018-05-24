@@ -1,8 +1,6 @@
 """views"""
 
 import os
-import uuid
-import json
 
 from django.http import FileResponse
 from django.conf import settings
@@ -14,7 +12,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.template.defaultfilters import slugify
 from django.core.files import File
-from django.core.files.base import ContentFile
+# from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 
 from django_addanother.views import CreatePopupMixin
@@ -57,61 +55,26 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     form_class = NewScoreForm
 
     def form_valid(self, form):
-        uploader = self.request.user.siteuser
-        song = form.instance.song
-        notation = form.instance.notation
-        part = form.instance.part
-        media_object = form.instance.media_file
+        form.instance.uploader = self.request.user.siteuser
+        self.object = form.save()
+        song = self.object.song
 
-        # get of create drive folder
-        folder_id = song.drive_folder_id
-        if (folder_id is None) or (folder_id == ""):
-            folder_name = "{}-{}".format(song.pk, slugify(song.title))
-            folder_id = create_song_folder(folder_name)
-            song.drive_folder_id = folder_id
-            song.save(update_fields=['drive_folder_id'])
-
-        score_metadata = {}
-        score_metadata['parents'] = [folder_id]
-        score_metadata['name'] = song.title + ".pdf"
-        score_metadata['description'] = "{}, {} {}".format(song.title, notation.name, part.name)
-        score_metadata['viewersCanCopyContent'] = True
-
-        # create a unique temporary pdf id to avoid race conditions
-        pdf_id = str(uuid.uuid4())
-
-        # make a temporary folder in '/media/' folder
-        tmp = os.path.join(settings.BASE_DIR, 'media', 'tmp')
-        if not os.path.exists(tmp):
-            os.mkdir(tmp)
-        temp_save_name = 'tmp/' + pdf_id + ".pdf"
-
-        # temporarily write file to disk
-        with default_storage.open(temp_save_name, 'wb+') as fh:
-            for chunk in media_object.chunks():
-                fh.write(chunk)
-
-        temp_pdf_name = str(os.path.join(tmp, pdf_id))
-        temp_pdf_path = temp_pdf_name + ".pdf"
+        relative_media_path = self.object.media_file.url
+        full_media_path = settings.BASE_DIR + relative_media_path
+        thumbnail_name = full_media_path.replace('.pdf', '')
 
         # generate thumbnail
-        cmd = "pdftoppm -png -f 1 -singlefile {} {}".format(temp_pdf_path, temp_pdf_name)
+        cmd = "pdftoppm -png -f 1 -singlefile {} {}".format(full_media_path, thumbnail_name)
         os.system(cmd)
 
-        score = Score.objects.create(
-            uploader=uploader, song=song, notation=notation,
-            part=part, thumbnail=File(open(temp_pdf_name + ".png", "rb")))
+        thumbnail_file = thumbnail_name + '.png'
 
-        file_resource = upload_pdf_to_drive(score_metadata, temp_pdf_path)
+        content = File(open(thumbnail_file, "rb"))
+        self.object.fsize = os.path.getsize(full_media_path)
+        self.object.thumbnail.save(song.title + '.png', content, save=True)
+        self.object.save()
+        os.remove(thumbnail_file)
 
-        # tmp folder is cleaned up once a day by scheduled task.
-
-        score.fsize = file_resource.get('size')
-        score.drive_view_link = file_resource.get('webViewLink')
-        score.drive_download_link = file_resource.get('webContentLink')
-        score.embed_link = file_resource.get('webViewLink').replace('view?usp=drivesdk', 'preview')
-        score.save(update_fields=['drive_view_link', 'drive_download_link', 'fsize', 'embed_link'])
-        share_file_permission(file_resource.get('id')) # make shareable
 
         messages.success(self.request, "Score successfully added to {}".format(song.title))
         return redirect(song.get_absolute_url())

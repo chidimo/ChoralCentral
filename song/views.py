@@ -147,7 +147,7 @@ class NewSong(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
     form_class = NewSongForm
 
     def form_valid(self, form):
-        form.instance.originator = SiteUser.objects.get(user=self.request.user)
+        form.instance.originator = self.request.user.siteuser
 
         if (form.instance.first_line == "") and (form.instance.lyrics != ""):
             form.instance.first_line = form.instance.lyrics.split("\n")[0]
