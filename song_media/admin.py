@@ -11,7 +11,7 @@ class ScoreAdmin(admin.ModelAdmin):
 
 class MidiAdmin(admin.ModelAdmin):
     list_display = ('__str__', "fformat", 'fsize', 'part', 'uploader', 'description', 'media_file', 'drive_view_link', 'embed_link', 'drive_download_link')
-    list_editable = ('fformat', )
+    list_editable = ('drive_view_link', 'drive_download_link', 'embed_link',)
     def uploader(self, obj):
         return obj.uploader.screen_name
 

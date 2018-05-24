@@ -30,6 +30,5 @@ def save_score(instance, filename):
     in case of multiple instance of same song title.
     """
     filename, ext = os.path.splitext(filename)
-    normalized_song_name = slugify(instance.song.title)
-    return "scores/{}_{}{}".format(normalized_song_name, instance.song.pk, ext)
+    return "scores/{}_{}{}".format(slugify(instance.__str__()), instance.song.pk, ext)
 

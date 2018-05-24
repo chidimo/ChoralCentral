@@ -39,7 +39,7 @@ class Score(TimeStampedModel):
     part = models.ForeignKey(VocalPart, on_delete=models.CASCADE)
     notation = models.ForeignKey(ScoreNotation, on_delete=models.CASCADE)
     fsize = models.FloatField(null=True,blank=True)
-    media_file = models.FileField(upload_to=save_score, null=True, blank=True)
+    media_file = models.FileField(upload_to=save_score, null=True)
     thumbnail = models.ImageField(upload_to=save_score_thumbnail, null=True)
     downloads = models.IntegerField(default=0)
     drive_view_link = models.URLField(null=True, blank=True)

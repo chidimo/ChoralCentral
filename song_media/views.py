@@ -75,7 +75,6 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         self.object.save()
         os.remove(thumbnail_file)
 
-
         messages.success(self.request, "Score successfully added to {}".format(song.title))
         return redirect(song.get_absolute_url())
 
@@ -86,12 +85,6 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         kwargs['pk'] = self.kwargs.get('pk', None)
         return kwargs
 
-def download_score_from_drive(request, pk):
-    score = Score.objects.get(pk=pk)
-    score.downloads += 1
-    score.save(update_fields=['downloads'])
-    return redirect(score.drive_download_link)
-
 def show_score(request, pk):
     """Display pdf score stored locally by django"""
     score = get_object_or_404(Score, pk=pk)
@@ -101,6 +94,12 @@ def show_score(request, pk):
     response = FileResponse(open(path, 'rb'), content_type="application/pdf")
     response["Content-Disposition"] = "filename={}.pdf".format(slugify(score.__str__()))
     return response
+
+def download_score_from_drive(request, pk):
+    score = Score.objects.get(pk=pk)
+    score.downloads += 1
+    score.save(update_fields=['downloads'])
+    return redirect(score.drive_download_link)
 
 class DeleteScore(LoginRequiredMixin, generic.DeleteView):
     model = Score
