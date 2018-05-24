@@ -5,7 +5,6 @@ from . import views
 
 app_name = 'song-media'
 urlpatterns = [
-    path('media-index/', views.admin_media_index, name='admin_media_index'),
     path('new-score/', views.NewScore.as_view(), name='new_score'),
     path('new-score-<int:pk>/', views.NewScore.as_view(), name='score_add_song'),
     path('view-score/<int:pk>/', views.show_score, name='show_score'),
@@ -14,7 +13,7 @@ urlpatterns = [
 urlpatterns += [
     path('new/sound/', views.NewMidi.as_view(), name='midi_add'),
     path('new/sound/<int:pk>/', views.NewMidi.as_view(), name='midi_add_song'),
-    path('sound/play/<int:pk>/', views.play_mp3, name='play_midiview'),
+    path('play-mp3/<int:pk>/', views.play_mp3, name='playmp3'),
     path('download-sound/<int:pk>/', views.download_midi, name='download_midi'),
 ]
 

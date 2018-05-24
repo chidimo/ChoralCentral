@@ -41,3 +41,7 @@
 
 
 ## Management commands
+
+    python manage.py backup_score
+    python manage.py backup_midi
+    python manage.py reset_api_quotas

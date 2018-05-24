@@ -31,14 +31,6 @@ class NewVocalPart(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, ge
     template_name = 'song_media/part_new.html'
     success_message = "Vocal part added successfully !"
 
-def admin_media_index(request):
-    template = "song_media/admin_media_index.html"
-    context = {}
-    context['scores'] = Score.objects.all()
-    context['midis'] = Midi.objects.all()
-    context['siteuser'] = SiteUser.objects.get(user=request.user)
-    return render(request, template, context)
-
 class NewScoreNotation(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):
     model = ScoreNotation
     form_class = NewScoreNotationForm
@@ -84,7 +76,7 @@ def show_score(request, pk):
     """Display pdf score stored locally by django"""
     score = get_object_or_404(Score, pk=pk)
     score.downloads += 1
-    score.save()
+    score.save(update_fields=['downloads'])
     path = os.path.abspath(settings.BASE_DIR + score.media_file.url)
     response = FileResponse(open(path, 'rb'), content_type="application/pdf")
     response["Content-Disposition"] = "filename={}.pdf".format(slugify(score.__str__()))
@@ -136,18 +128,16 @@ class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
 def play_mp3(request, pk):
     context = {}
     template = 'song_media/playmp3.html'
-    sound = get_object_or_404(Midi, pk=pk)
-
-    # check for repeat plays
+    sound = Midi.objects.get(pk=pk)
     sound.downloads += 1
-    sound.save()
+    sound.save(update_fields=['downloads'])
     context['sound'] = sound
     return render(request, template, context)
 
 def download_midi(self, pk):
     sound = get_object_or_404(Midi, pk=pk)
     sound.downloads += 1
-    sound.save()
+    sound.save(update_fields=['downloads'])
     path = os.path.abspath(settings.BASE_DIR + sound.media_file.url)
     response = FileResponse(open(path, 'rb'), content_type="sound/midi")
     file_download_name = "{}.{}".format(slugify(sound.__str__()), sound.fformat)

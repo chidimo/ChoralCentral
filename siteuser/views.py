@@ -317,6 +317,20 @@ class GroupDetail(LoginRequiredMixin, generic.DetailView):
     template_name = 'siteuser/group_detail.html'
     context_object_name = 'group'
 
+def admin_media_index(request):
+    user = request.user
+    try:
+        if user.is_admin is False:
+            return redirect('/')
+    except AttributeError:
+        return redirect('/')
+    template = "siteuser/admin_media_index.html"
+    context = {}
+    context['scores'] = Score.objects.all()
+    context['midis'] = Midi.objects.all()
+    context['siteuser'] = SiteUser.objects.get(user=request.user)
+    return render(request, template, context)
+
 class SiteUserLibrary(LoginRequiredMixin, generic.DetailView):
     model = SiteUser
     context_object_name = 'siteuser'

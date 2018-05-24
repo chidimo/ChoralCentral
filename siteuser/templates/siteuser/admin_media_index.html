@@ -267,6 +267,7 @@
                     <th>Song</th>
                     <th>Song owner</th>
                     <th>Midi owner</th>
+                    <th>Part</th>
                     <th>Format</th>
                     <th>Size</th>
                     <th><i class="fas fa-hdd" title="HDD download url"></i></th>
@@ -283,6 +284,7 @@
                             <td><a href="{% url 'song:detail' midi.song.pk midi.song.slug %}">{{ midi.song.title }}</a></td>
                             <td>{{ midi.song.originator }}</td>
                             <td>{{ midi.uploader }}</td>
+                            <td>{{ midi.part }}</td>
                             <td>{{ midi.fformat }}</td>
                             <td>{{ midi.fsize|filesizeformat }}</td>
                             <td><!-- not used-->

@@ -180,8 +180,12 @@
             <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 px-0 audio-list">
                 <div class="row audio-list-meta-container">
                     <div class="container">
+                        {% if midi.fformat == 'mp3' %}
+                            <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song-media:playmp3' midi.pk %}" title="Play {{ midi }}">{{ midi.fformat }}</a>
+                        {% else %}
+                            <a class="btn btn-sm btn-primary icon-buttons" title="File format: {{ midi.fformat }}">{{ midi.fformat }}</a>
+                        {% endif %}
                         <a class="btn btn-sm btn-primary icon-buttons" title="{{ midi.part }}">{{ midi.part }}</a>
-                        <a class="btn btn-sm btn-primary icon-buttons" title="File format: {{ midi.fformat }}">{{ midi.fformat }}</a>
                         <a class="btn btn-sm btn-primary icon-buttons" title="Filesize: {{ midi.fsize|filesizeformat }}">{{ midi.fsize|filesizeformat }}</a>
                         <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:library' midi.uploader.pk midi.uploader.slug %}" title="{{ midi.uploader.screen_name }}">{{ midi.uploader.screen_name }}</a>
                         <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song-media:download_midi' midi.pk %}" target="_blank" title="Click to Download: {{ midi.downloads }} total downloads">

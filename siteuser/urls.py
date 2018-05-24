@@ -19,6 +19,7 @@ urlpatterns = [
     path("edit-profile/", views.SiteUserEdit.as_view(), name="edit_profile"),
     path("welcome/<str:screen_name>/", views.welcome_siteuser, name="new_success"),
     path("activate/<int:pk>/<str:screen_name>/", views.activate_siteuser, name="new_activation"),
+    path('media-index/', views.admin_media_index, name='admin_media_index'),
     path("library/<int:pk>/<slug:slug>/", views.SiteUserLibrary.as_view(), name="library"),
     path("comments/<int:pk>/<slug:slug>/", views.SiteUserComments.as_view(), name="siteuser_comments"),
 ]

@@ -1,0 +1,22 @@
+{% extends "choralcentral_base.html" %}
+{% block title %}Now laying {{ sound.song.title }} ...{% endblock title %}
+{% block content_content %}
+{% block introduction %}{% endblock introduction %}
+
+<h2>Now playing ... {{ sound.song.title }}</h2>
+<hr>
+
+<div class='container'>
+    <div class='row'>
+        <audio controls>
+          <source src="{{ sound.media_file.url }}" type="audio/mpeg">
+          <source src="{{ sound.media_file.url }}" type="audio/ogg">
+          Your browser does not support the sound element.
+        </audio>
+    </div>
+</div>
+
+{% endblock %}
+{% block footer %}{% endblock %}
+
+
