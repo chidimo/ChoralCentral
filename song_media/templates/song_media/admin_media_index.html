@@ -223,7 +223,7 @@
                         <td>{{ score.notation }}</td>
                         <td>{{ score.fsize|filesizeformat }}</td>
                         <td>
-                            <a href="{% url 'song-media:score_view' score.pk %}" target="_blank"><i class="fas fa-download"></i></a>
+                            <a href="{% url 'song-media:show_score' score.pk %}" target="_blank"><i class="fas fa-download"></i></a>
                         </td>
                         <td>
                             {% if score.media_file %}
