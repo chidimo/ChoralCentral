@@ -47,3 +47,7 @@ https://pypi.org/project/python-decouple/#why-not-just-use-environment-variables
     python manage.py backup_score
     python manage.py backup_midi
     python manage.py reset_api_quotas
+
+## Badges
+
+1. First song, post, request
