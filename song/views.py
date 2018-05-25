@@ -215,7 +215,7 @@ class FilterSongs(PaginationMixin, SuccessMessageMixin, generic.ListView):
                 else:
                     query = reduce(operator.and_, queries)
                     query_str = " AND ".join(msg)
-                results = Song.objects.filter(query)
+                results = Song.objects.filter(query).distinct()
                 messages.success(self.request, "found {} results for {}".format(results.count(), query_str))
                 return results
 
