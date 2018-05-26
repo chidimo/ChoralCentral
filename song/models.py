@@ -31,6 +31,7 @@ class Language(TimeStampedModel):
 
 class Season(TimeStampedModel):
     SEASON_CHOICES = (
+        ("", "Select an option"),
         ("ordinary time", "Ordinary Time"),
         ("advent", "Advent"),
         ("christmas", "Christmas"),
@@ -50,6 +51,7 @@ class Season(TimeStampedModel):
 
 class MassPart(TimeStampedModel):
     PART_CHOICES = (
+        ("", "Select an option"),
         ("entrance", "Entrance"),
         ("kyrie", "Kyrie"),
         ("gloria", "Gloria"),
@@ -76,6 +78,7 @@ class Song(TimeStampedModel):
         ("secular", "Secular"),
         ("na", "na"))
     GENRE_CHOICES = (
+        ("", "Select an option"),
         ("hymn", "Hymn"),
         ("psalm", "Psalm"),
         ("gregorian chant", "Gregorian Chant"),
@@ -109,7 +112,7 @@ class Song(TimeStampedModel):
     views           = models.IntegerField(default=0)
     like_count      = models.IntegerField(default=0)
 
-    ocassion       = models.CharField(max_length=30, choices=SONG_TYPE_CHOICES, default="sacred")
+    ocassion        = models.CharField(max_length=30, choices=SONG_TYPE_CHOICES, default="sacred")
     genre           = models.CharField(max_length=30, choices=GENRE_CHOICES, default="hymn")
 
     authors         = models.ManyToManyField(Author)

@@ -149,8 +149,8 @@ class NewSong(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
     def form_valid(self, form):
         form.instance.originator = self.request.user.siteuser
         if form.instance.genre == "gregorian chant":
-            form.instance.bpm = ''
-            form.instance.divisions = ''
+            form.instance.bpm = None
+            form.instance.divisions = None
         self.object = form.save()
         self.object.likes.add(SiteUser.objects.get(user=self.request.user))
 
@@ -169,14 +169,14 @@ class SongEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
         self.object = Song.objects.get(pk=self.kwargs["pk"])
         if rules.test_rule('can_edit_song', self.request.user, self.object):
             return self.render_to_response(self.get_context_data())
-        messages.error(self.request, """Only the owner of {} may edit.""".format(self.object))
+        messages.error(self.request, "Only the owner of {} may edit.".format(self.object))
         return redirect(reverse('siteuser:library',
             kwargs={'pk' : self.request.user.siteuser.pk, 'slug' : self.request.user.siteuser.slug}))
 
     def form_valid(self, form):
         if form.instance.genre == "gregorian chant":
-            form.instance.bpm = ''
-            form.instance.divisions = ''
+            form.instance.bpm = None
+            form.instance.divisions = None
         self.object = form.save()
         messages.success(self.request, "Song was successfully updated")
         return redirect(self.get_success_url())
@@ -205,27 +205,31 @@ class FilterSongs(PaginationMixin, SuccessMessageMixin, generic.ListView):
             if form.is_valid():
                 form = form.cleaned_data
                 combinator = form['combinator']
+                genre = form['genre']
                 season = form['season']
                 masspart = form['masspart']
                 language = form["language"]
 
                 queries = []
                 msg = []
+                if genre:
+                    queries.append(Q(genre=genre))
+                    msg.append("Genre '{}'".format(genre))
                 if season:
                     queries.append(Q(seasons__id__exact=season.id))
-                    msg.append('Season={}'.format(season))
+                    msg.append("Season '{}'".format(season))
                 if masspart:
                     queries.append(Q(mass_parts__id__exact=masspart.id))
-                    msg.append('Masspart={}'.format(masspart))
+                    msg.append("Masspart '{}'".format(masspart))
                 if language:
                     queries.append(Q(language__id__exact=language.id))
-                    msg.append('Language={}'.format(language))
+                    msg.append("Language '{}'".format(language))
 
                 if queries == []:
                     messages.success(self.request, "You did not make any selection.")
                     return Song.objects.filter(publish=True)
 
-                if combinator == 'OR':
+                if (combinator == 'or') or (combinator == ''):
                     query = reduce(operator.or_, queries)
                     query_str = " OR ".join(msg)
                 else:

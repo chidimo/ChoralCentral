@@ -64,11 +64,16 @@ class ShareForm(forms.Form):
 class SongFilterForm(forms.Form):
     combinator = forms.ChoiceField(
         choices = (
-            ('OR', 'OR'),
-            ('AND', 'AND')
+            ('', 'Select query combiner'),
+            ('or', 'OR'),
+            ('and', 'AND')
         ),
-        required=True,
-        initial = 'OR',
+        required=False,
+        widget=forms.Select(attrs={"class" : "form-control"}))
+
+    genre = forms.ChoiceField(
+        choices = (Song.GENRE_CHOICES),
+        required=False,
         widget=forms.Select(attrs={"class" : "form-control"}))
 
     season = forms.ModelChoiceField(

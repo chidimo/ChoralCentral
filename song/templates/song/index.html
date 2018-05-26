@@ -34,7 +34,7 @@
                     </span>
                     <span class="float-right">
                         <a class="btn btn-sm btn-primary icon-buttons" title="Star {{ song.title }}">{{ song.like_count }}</a>
-                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:song_likers' song.pk song.slug %}" title="{{ song.like_count }} Star birds"><i class="fas fa-star"></i> Stars</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:song_likers' song.pk song.slug %}" title="{{ song.like_count }} Star"><i class="fas fa-star"></i> Star</a>
                     </span>
                 </div>
             </div>
