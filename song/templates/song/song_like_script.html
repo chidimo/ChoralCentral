@@ -6,7 +6,7 @@ $('#like').click(function(){
         data: {'pk': $(this).attr('name'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
         dataType: "json",
         success: function(response) {
-            alert(response.msg + '\n' + response.title + ' now has ' + response.like_count + ' lovers.');
+            alert(response.msg + '\n' + response.title + ' now has ' + response.like_count + ' stars.');
         },
         error: function(rs, e) {
             alert(rs.responseText);
