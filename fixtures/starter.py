@@ -23,28 +23,20 @@ from request.models import Request, Reply
 AVATAR_PATH = os.path.join(settings.BASE_DIR, 'fixtures/wallpaper/')
 IMAGES = [os.path.abspath(each) for each in glob.glob("{}/*.jpg".format(AVATAR_PATH))]
 AUTHORS = ["LYRICIST", "COMPOSER"]
-LANGUAGE = ["english", "igbo", "bini", "ibibio", "hausa", "chinese", "yoruba"]
-VOICING = ["SATB", "SSAB", "SAB", "SSABTT", "ATB", "SATTB"]
+LANGUAGE = ["english", "igbo", "bini", "ibibio", "hausa", "chinese", "yoruba", "latin"]
+VOICING = ["solo", "satb", "ssab", "sab", "ssabtt", "atb", "sattb"]
 SCRIPTURE = ["Psalm 91", "Proverbs 23", "Matthew 11"]
-
 LOCATIONS = ['lagos', 'abuja', 'benin', 'benin city', 'abu dhabi', 'dubai']
-PARTS = ["ENTRANCE", "KYRIE", "GLORIA", "ACCLAMATION", "OFFERTORY",
-         "COMMUNION", "SANCTUS", "AGNUS DEI", "RECESSION", "GENERAL",
-         "CAROL", "NA"]
+SEASONS = ["ordinary time", "advent", "christmas", "lent", "easter", "pentecost", "na"]
+NOTES = ["solfa", "staff", "other", "lead"]
+VOICE_PARTS = ['soprano', 'alto', 'tenor', 'bass']
+NOTATIONS = ['solfa', 'staff', 'solfa + staff']
 
-SEASONS = ["ORDINARY TIME", "ADVENT", "CHRISTMAS", "LENT",
-           "EASTER", "PENTECOST", "OTHER", "NA"]
+PARTS = ["entrance", "kyrie", "gloria", "acclammation", "offertory", "communion", "sanctus",
+    "agnus dei", "recession", "general", "na"]
 
-NOTES = ["SOLFA", "STAFF", "OTHER", "LEAD"]
-
-VOICE_PARTS = ['Soprano', 'Alto', 'Tenor', 'Bass']
-
-NOTATIONS = ['Solfa', 'Staff']
-
-ROLES = ["COMPOSER", "CHOIR MASTER", "CHOIR CONDUCTOR",
-         "CHOIR CHAIRMAN", "ORGANIST", "GUITARIST", "DRUMMER",
-         "MUSIC LOVER", "SOPRANO", "ALTO", "TENOR", "BASS",
-         "BARITONE", "OTHER"]
+ROLES = ['composer', 'choir master', 'conductor', 'organist', 'guitarist', 'drummer',
+    'soprano', 'alto', 'tenor', 'bass', 'enthusiast', 'baritone', 'other', 'na']
 
 django.setup()
 CustomUser = get_user_model()
@@ -326,3 +318,4 @@ def comments():
 
 if __name__ == "__main__":
     pass
+

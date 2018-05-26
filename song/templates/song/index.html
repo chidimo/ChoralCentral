@@ -17,17 +17,19 @@
     <div class="row">
         <div class="col-sm-12">
             <h4><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h4>
-        
+
             <div class="row">
                 <div class="col-sm-12">
                     <span class="song-lower float-left">
-                        <a class="btn btn-sm btn-primary icon-buttons" title="{{ song.voicing }}">{{ song.voicing }}</a>
-                        <a class="btn btn-sm btn-primary icon-buttons" title="{{ song.language }}">{{ song.language }}</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" title="Song use: {{ song.ocassion|title }}">{{ song.ocassion|title }}</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" title="Song use: {{ song.genre|title }}">{{ song.genre|title }}</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" title="Voicing: {{ song.voicing|upper }}">{{ song.voicing|upper }}</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" title="{{ song.language|title }}">{{ song.language|title }}</a>
                         {% for masspart in song.mass_parts.all %}
-                            <a class="btn btn-sm btn-primary icon-buttons" title="{{ masspart }}">{{ masspart }}</a>
+                            <a class="btn btn-sm btn-primary icon-buttons" title="Masspart: {{ masspart|title }}">{{ masspart|title }}</a>
                         {% endfor %}
                         {% for season in song.seasons.all %}
-                            <a class="btn btn-sm btn-primary icon-buttons" title="{{ season }}">{{ season }}</a>
+                            <a class="btn btn-sm btn-primary icon-buttons" title="Season: {{ season|title }}">{{ season|title }}</a>
                         {% endfor %}
                     </span>
                     <span class="float-right">

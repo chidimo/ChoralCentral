@@ -56,6 +56,15 @@
     <div class="row text-left">
         <div class="col-lg-6 my-2">
             <div class="row">
+
+                <div class="col-sm-12">
+                    <span class="h6 float-left">Ocassion</span>
+                    <span class="h6 float-right">{{ song.ocassion|title }}</span>
+                </div>
+                <div class="col-sm-12">
+                    <span class="h6 float-left">Genre</span>
+                    <span class="h6 float-right">{{ song.genre|title }}</span>
+                </div>
                 <div class="col-sm-12">
                     <span class="h6 float-left">Uploader</span>
                     <span class="h6 float-right"><a href="{% url 'siteuser:library' song.originator.pk song.originator.slug %}">{{ song.originator.screen_name }}</a></span>
@@ -63,7 +72,7 @@
 
                 <div class="col-sm-12">
                     <span class="h6 float-left">For</span>
-                    <span class="h6 float-right">{{ song.voicing }}</span>
+                    <span class="h6 float-right">{{ song.voicing|upper }}</span>
                 </div>
 
                 <div class="col-sm-12">
@@ -80,16 +89,16 @@
                     <span class="h6 float-left">Timing</span>
                     <span class="h6 float-right">{{ song.bpm }}/{{ song.divisions }}</span>
                 </div>
-
-                <div class="col-sm-12">
-                    <span class="h6 float-left">Scripture</span>
-                    <span class="h6 float-right">{{ song.scripture_reference }}</span>
-                </div>
             </div>
         </div>
 
         <div class="col-lg-6 my-2">
             <div class="row">
+
+                <div class="col-sm-12">
+                    <span class="h6 float-left">Scripture</span>
+                    <span class="h6 float-right">{{ song.scripture_reference }}</span>
+                </div>
 
                 <div class="col-sm-12">
                     <span class="h6 float-left">Language</span>

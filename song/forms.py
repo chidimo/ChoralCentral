@@ -20,9 +20,9 @@ class NewVoicingForm(forms.ModelForm):
         }
 
     def clean_voicing(self):
-        voicing = self.cleaned_data.get("voicing", None).upper()
+        voicing = self.cleaned_data["voicing"].lower()
         if Voicing.objects.filter(voicing=voicing).exists():
-            raise forms.ValidationError(_("{} already exists".format(voicing)))
+            self.add_error("voicing", _("{} already exists".format(voicing)))
         return voicing
 
 class EditVoicingForm(forms.ModelForm):
@@ -41,9 +41,9 @@ class NewLanguageForm(forms.ModelForm):
         }
 
     def clean_language(self):
-        language = self.cleaned_data.get("language", None).upper()
+        language = self.cleaned_data["language"].lower()
         if Language.objects.filter(language=language):
-            raise forms.ValidationError(_("{} already exists".format(language)))
+            self.add_error("language", _("{} already exists".format(language)))
         return language
 
 class EditLanguageForm(forms.ModelForm):
@@ -89,20 +89,18 @@ class SongFilterForm(forms.Form):
 class NewSongForm(forms.ModelForm):
     class Meta:
         model = Song
-        fields = ["publish", "title", "compose_date",
-                  "lyrics", "first_line", "scripture_reference", "language",
-                  "tempo", "bpm", "divisions", "voicing",
-                  "authors", "seasons", "mass_parts",]
+        fields = ["publish", "ocassion", "genre", "title", "compose_date", "lyrics",
+            "scripture_reference", "language", "tempo", "bpm",
+            "divisions", "voicing", "authors", "seasons", "mass_parts",]
 
         widgets = {
-            "title" : forms.TextInput(
-                attrs={'class' : 'form-control', 'placeholder' : "Song title"}),
+            "title" : forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Song title"}),
+            "genre" : forms.Select(attrs={'class' : 'form-control'}),
+            "ocassion" : forms.Select(attrs={'class' : 'form-control'}),
             "compose_date" : forms.DateInput(
-                attrs={'class' : 'form-control', 'placeholder' : "Composition date YYYY-MM-DD (optional)"}),
+                attrs={'class' : 'form-control', 'placeholder' : "Composition date YYYY-MM-DD (optional)", "title" : "YYYY-MM-DD"}),
             "lyrics" : forms.Textarea(
-                attrs={'rows' : 5, 'columns' : 10, 'class' : 'form-control', 'placeholder' : "Lyrics (optional). Supports markdown syntax"}),
-            "first_line" : forms.TextInput(
-                attrs={'class' : 'form-control', 'placeholder' : "First line (optional)"}),
+                attrs={'rows' : 5, 'columns' : 10, 'class' : 'form-control', 'placeholder' : "Optional. Supports markdown syntax"}),
             "scripture_reference" : forms.TextInput(
                 attrs={'class' : 'form-control', 'placeholder' : "Scripture reference (optional)"}),
             "seasons" : forms.SelectMultiple(attrs={'class' : 'form-control'}),
@@ -123,23 +121,34 @@ class NewSongForm(forms.ModelForm):
                 forms.Select(attrs={'class' : 'form-control'}),
                 reverse_lazy('song:new_language'))}
 
+    def __init__(self, *args, **kwargs):
+        super(NewSongForm, self).__init__(*args, **kwargs)
+        self.fields['language'].initial = Language.objects.get(language='english')
+        self.fields['voicing'].initial = Voicing.objects.get(voicing='satb')
+        self.fields['ocassion'].initial = "na"
+        self.fields['genre'].initial = "hymn"
+        self.fields['compose_date'].initial = "1685-02-23"
+        self.fields['tempo'].initial = 100
+        self.fields['bpm'].initial = 4
+        self.fields['divisions'].initial = 4
+        self.fields['seasons'].initial = Season.objects.get(season='na')
+        self.fields['mass_parts'].initial = MassPart.objects.get(part='na')
+
 class SongEditForm(forms.ModelForm):
     class Meta:
         model = Song
-        fields = ["publish", "title", "compose_date",
-                  "lyrics", "first_line", "scripture_reference", "language",
-                  "tempo", "bpm", "divisions", "voicing",
-                  "authors", "seasons", "mass_parts",]
+        fields = ["publish", "genre", "ocassion", "title", "compose_date", "lyrics",
+            "scripture_reference", "language", "tempo", "bpm",
+            "divisions", "voicing", "authors", "seasons", "mass_parts",]
 
         widgets = {
-            "title" : forms.TextInput(
-                attrs={'class' : 'form-control', 'placeholder' : "Song title"}),
+            "title" : forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Song title"}),
+            "genre" : forms.Select(attrs={'class' : 'form-control'}),
+            "ocassion" : forms.Select(attrs={'class' : 'form-control'}),
             "compose_date" : forms.DateInput(
                 attrs={'class' : 'form-control', 'placeholder' : "Composition date YYYY-MM-DD (optional)"}),
             "lyrics" : forms.Textarea(
                 attrs={'rows' : 5, 'columns' : 10, 'class' : 'form-control', 'placeholder' : "Lyrics (optional). Supports markdown syntax"}),
-            "first_line" : forms.TextInput(
-                attrs={'class' : 'form-control', 'placeholder' : "First line (optional)"}),
             "scripture_reference" : forms.TextInput(
                 attrs={'class' : 'form-control', 'placeholder' : "Scripture reference (optional)"}),
             "seasons" : forms.SelectMultiple(attrs={'class' : 'form-control'}),

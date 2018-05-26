@@ -30,22 +30,14 @@ class Language(TimeStampedModel):
         return reverse('song:index')
 
 class Season(TimeStampedModel):
-    OT = "ORDINARY TIME"
-    AD = "ADVENT"
-    CM = "CHRISTMAS"
-    LT = "LENT"
-    ER = "EASTER"
-    PT = "PENTECOST"
-    NA = "NA"
     SEASON_CHOICES = (
-        ("", "Select Season"),
-        (OT, "Ordinary Time"),
-        (AD, "Advent"),
-        (CM, "Christmas"),
-        (LT, "Lent"),
-        (ER, "Easter"),
-        (PT, "Pentecost"),
-        (NA, "NA")
+        ("ordinary time", "Ordinary Time"),
+        ("advent", "Advent"),
+        ("christmas", "Christmas"),
+        ("lent", "Lent"),
+        ("Easter", "Easter"),
+        ("pentecost", "Pentecost"),
+        ("na", "NA")
     )
     season = models.CharField(max_length=15, choices=SEASON_CHOICES, unique=True)
     about = models.TextField()
@@ -57,32 +49,17 @@ class Season(TimeStampedModel):
         return self.season
 
 class MassPart(TimeStampedModel):
-    EN = "ENTRANCE"
-    KY = "KYRIE"
-    GL = "GLORIA"
-    AC = "ACCLAMATION"
-    OF = "OFFERTORY"
-    CM = "COMMUNION"
-    SS = "SANCTUS"
-    AD = "AGNUS DEI"
-    RC = "RECESSION"
-    GN = "GENERAL"
-    CR = "CAROL"
-    NA = "NA"
     PART_CHOICES = (
-        ("", "Select Mass part"),
-        (EN, "Entrance"),
-        (KY, "Kyrie"),
-        (GL, "Gloria"),
-        (AC, "Acclamation"),
-        (OF, "Offertory"),
-        (CM, "Communion"),
-        (SS, "Sanctus"),
-        (AD, "Agnus Dei"),
-        (RC, "Recesssion"),
-        (CR, "Carol"),
-        (GN, "General"),
-        (NA, "NA")
+        ("entrance", "Entrance"),
+        ("kyrie", "Kyrie"),
+        ("gloria", "Gloria"),
+        ("acclamation", "Acclamation"),
+        ("offertory", "Offertory"),
+        ("communion", "Communion"),
+        ("sanctus", "Sanctus"),
+        ("agnus dei", "Agnus Dei"),
+        ("recesssion", "Recesssion"),
+        ("na", "NA")
     )
     part = models.CharField(max_length=15, choices=PART_CHOICES, unique=True)
     about = models.TextField()
@@ -92,8 +69,25 @@ class MassPart(TimeStampedModel):
 
     def __str__(self):
         return self.part
-        
+
 class Song(TimeStampedModel):
+    SONG_TYPE_CHOICES = (
+        ("sacred", "Sacred/Liturgical"),
+        ("secular", "Secular"),
+        ("na", "na"))
+    GENRE_CHOICES = (
+        ("hymn", "Hymn"),
+        ("psalm", "Psalm"),
+        ("gregorian chant", "Gregorian Chant"),
+        ("sequence", "Sequence"),
+        ("chorus", "Chorus"),
+        ("carol", "Carol"),
+        ("requiem", "Requiem"),
+        ("mass", "Mass"),
+        ("anthem", "Anthem"),
+        ("popular music", "Popular music"),
+        ("folk music", "Folk music"),
+    )
     originator      = models.ForeignKey(SiteUser, on_delete=models.SET_NULL, null=True)
     voicing         = models.ForeignKey(Voicing, on_delete=models.CASCADE)
     language        = models.ForeignKey(Language, on_delete=models.CASCADE)
@@ -105,7 +99,6 @@ class Song(TimeStampedModel):
     slug            = AutoSlugField(set_using="title", max_length=255)
 
     lyrics          = models.TextField(blank=True)
-    first_line      = models.CharField(max_length=100, blank=True)
 
     scripture_reference   = models.CharField(max_length=25, blank=True)
 
@@ -115,6 +108,9 @@ class Song(TimeStampedModel):
     divisions       = models.IntegerField(null=True, blank=True)
     views           = models.IntegerField(default=0)
     like_count      = models.IntegerField(default=0)
+
+    ocassion       = models.CharField(max_length=30, choices=SONG_TYPE_CHOICES, default="sacred")
+    genre           = models.CharField(max_length=30, choices=GENRE_CHOICES, default="hymn")
 
     authors         = models.ManyToManyField(Author)
     seasons         = models.ManyToManyField(Season)
