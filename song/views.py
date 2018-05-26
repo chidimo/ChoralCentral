@@ -129,18 +129,24 @@ class SongIndex(PaginationMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        return Song.objects.filter(publish=True)
+        return Song.objects.\
+        select_related('voicing', 'language', 'originator').\
+        prefetch_related('seasons', 'mass_parts', 'authors').filter(publish=True)
 
 class SongDetail(generic.DetailView):
     model = Song
     context_object_name = 'song'
     template_name = 'song/detail.html'
 
+    def get_object(self, *args, **kwargs):
+        pk = self.kwargs['pk']
+        slug = self.kwargs['slug']
+        return Song.objects.select_related('voicing', 'language', 'originator').get(pk=pk)
+
     def get_context_data(self, **kwargs):
         context = super(SongDetail, self).get_context_data(**kwargs)
         context['share_form'] = ShareForm()
         return context
-    # add view counter here
 
 class NewSong(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):
     template_name = 'song/new.html'
@@ -210,6 +216,11 @@ class FilterSongs(PaginationMixin, SuccessMessageMixin, generic.ListView):
                 masspart = form['masspart']
                 language = form["language"]
 
+                if (genre == '') and (season == None) and (masspart == None) and (language == None):
+                    messages.success(self.request, "You did not make any selection.")
+                    return Song.objects.select_related('voicing', 'language', 'originator').\
+                    prefetch_related('seasons', 'mass_parts', 'authors').filter(publish=True)
+
                 queries = []
                 msg = []
                 if genre:
@@ -225,17 +236,15 @@ class FilterSongs(PaginationMixin, SuccessMessageMixin, generic.ListView):
                     queries.append(Q(language__id__exact=language.id))
                     msg.append("Language '{}'".format(language))
 
-                if queries == []:
-                    messages.success(self.request, "You did not make any selection.")
-                    return Song.objects.filter(publish=True)
-
-                if (combinator == 'or') or (combinator == ''):
-                    query = reduce(operator.or_, queries)
-                    query_str = " OR ".join(msg)
-                else:
+                if combinator == 'and':
                     query = reduce(operator.and_, queries)
                     query_str = " AND ".join(msg)
-                results = Song.objects.filter(query).distinct()
+                else:
+                    query = reduce(operator.or_, queries)
+                    query_str = " OR ".join(msg)
+
+                results = Song.objects.select_related('voicing', 'language', 'originator').\
+                prefetch_related('seasons', 'mass_parts', 'authors').filter(query).filter(publish=True).distinct()
                 messages.success(self.request, "found {} results for {}".format(results.count(), query_str))
                 return results
 

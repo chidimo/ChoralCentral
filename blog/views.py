@@ -104,7 +104,7 @@ class PostIndex(PaginationMixin, generic.ListView):
     paginate_by = 25
 
     def get_queryset(self):
-        return Post.objects.filter(publish=True)
+        return Post.objects.select_related('song', 'creator').filter(publish=True)
 
     def get_context_data(self):
         context = super(PostIndex, self).get_context_data()

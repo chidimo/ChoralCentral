@@ -16,7 +16,11 @@
 <div class="list-songs container">
     <div class="row">
         <div class="col-sm-12">
+            {% if not song.publish %}
+            <h4><a class="text-danger" href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h4>
+            {% else %}
             <h4><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h4>
+            {% endif %}
 
             <div class="row">
                 <div class="col-sm-12">
