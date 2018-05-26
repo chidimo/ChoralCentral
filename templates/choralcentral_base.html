@@ -67,10 +67,11 @@
 					<li class="nav-item"><a class="nav-link" href="{% url 'blog:index' %}" title="Blog entries">Blog</a></li>
 					<li class="nav-item"><a class="nav-link" href="{% url 'siteuser:index' %}" title="Users">Users</a></li>
 					{% if user.is_admin %}
-					    <li class="nav-item"><a class="nav-link" href="{% url 'siteuser:siteuser_groups' %}" title="Choirs aka groups">Choirs</a></li>
+					    <li class="nav-item"><a class="nav-link" href="{% url 'siteuser:siteuser_groups' %}" title="Groups">Groups</a></li>
 					{% else %}
-					    <li class="nav-item"><a class="nav-link" href="/coming-soon/" title="Choirs aka groups">Choirs</a></li>
+					    <li class="nav-item"><a class="nav-link" href="/coming-soon/" title="Groups">Groups</a></li>
 					{% endif %}
+					<li class="nav-item"><a class="nav-link" href="{% url 'douay-rheims:bible_index' %}" class="btn btn-secondary">DRB</a></li>
 					<li class="nav-item"><a class="nav-link" href="{% url 'song:instant_song' %}" title="Search ChoralCentral"><i class="fas fa-search"></i></a></li>
 				</ul>
 

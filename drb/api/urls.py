@@ -10,7 +10,7 @@ router.register(r'songs', views.CommentaryTextListView, 'Commentary text')
 
 drb_api_urls = [
     path('verse/', views.VerseListView.as_view(), name="verses"),
-    path('verse-detail/<int:pk>/', views.VerseDetailView.as_view(), name="verse_detail"),
+    path('verse_detail/<int:pk>/', views.VerseDetailView.as_view(), name="verse_detail"),
     path('chapters/', views.ChapterListView.as_view(), name="chapters"),
     path('commentary/', views.CommentaryTextListView.as_view(), name="commentaries"),
 ]

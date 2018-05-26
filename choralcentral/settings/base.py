@@ -58,7 +58,9 @@ SHELL_PLUS_PYGMENTS_FORMATTER_KWARGS = {}
 IPYTHON_KERNEL_DISPLAY_NAME = "Django Shell-Plus"
 SHELL_PLUS_POST_IMPORTS = [
     ('fixtures', '*'),
-    ('fixtures')
+    ('fixtures'),
+    ('drb_fixtures', '*'),
+    ('drb_fixtures'),
     ]
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '778785529263-j0gliifiledngb10gptji0514o5srjqi.apps.googleusercontent.com'
