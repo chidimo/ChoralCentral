@@ -103,6 +103,7 @@ PREREQ_APPS = [
 PROJECT_APPS = [
     'author',
     'blog',
+    'drb',
     'request',
     'siteuser',
     'song',

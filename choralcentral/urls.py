@@ -15,6 +15,7 @@ from song.sitemaps import SongSiteMap
 from blog.api.urls import blog_api_urls
 from siteuser.api.urls import user_api_urls
 from song.api.urls import song_api_urls
+from drb.api.urls import drb_api_urls
 
 from .import views
 
@@ -29,6 +30,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("author/", include('author.urls')),
     path("blog/", include('blog.urls')),
+    path("douay-rheims/", include('drb.urls')),
     path("request/", include('request.urls')),
     path("users/", include('siteuser.urls')),
     path("song-media/", include('song_media.urls')),
@@ -42,6 +44,7 @@ urlpatterns += [
     path('api-blog/', include((blog_api_urls, 'blog-api'))),
     path('api-users/', include((user_api_urls, 'user-api'))),
     path('api-songs/', include((song_api_urls, 'song-api'))),
+    path('api-drb/', include((drb_api_urls, 'drb-api'))),
 ]
 
 urlpatterns += [

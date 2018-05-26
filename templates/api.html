@@ -45,11 +45,14 @@
 
 <div class="container">
     <ol>
-        <li><a aria-hidden="true" href="{% url 'blog-api:comments_api' %}">Comments</a></li>
-        <li><a aria-hidden="true" href="{% url 'blog-api:posts_api' %}">Post</a></li>
-        <li><a aria-hidden="true" href="{% url 'song-api:song_published_api' %}">Song</a></li>
-        <li><a aria-hidden="true" href="">Author</a></li>
-        <li><a aria-hidden="true" href="">User comments</a></li>
+        <li><a href="{% url 'blog-api:comments_api' %}">Comments</a></li>
+        <li><a href="{% url 'blog-api:posts_api' %}">Post</a></li>
+        <li><a href="{% url 'song-api:song_published_api' %}">Song</a></li>
+        <li><a href="">Author</a></li>
+        <li><a href="">User comments</a></li>
+        <li><a href="{% url 'drb-api:chapters' %}">Chapters</a></li>
+        <li><a href="{% url 'drb-api:verses' %}">Verses</a></li>
+        <li><a href="{% url 'drb-api:commentaries' %}">Commentaries</a></li>
         {% if user.is_admin %}
             <li><a aria-hidden="true" href="{% url 'user-api:customuser_api' %}">Users</a></li>
             <li><a aria-hidden="true" href="{% url 'user-api:siteuser_api' %}">Members</a></li>
