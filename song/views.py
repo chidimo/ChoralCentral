@@ -6,14 +6,14 @@ from functools import reduce
 import json
 from django.conf import settings
 from django.db.models import Q
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse#, HttpResponseRedirect
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_POST
+# from django.views.decorators.http import require_POST
 from django.views import generic
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -24,15 +24,15 @@ from django_addanother.views import CreatePopupMixin
 from pure_pagination.mixins import PaginationMixin
 from algoliasearch_django import get_adapter
 
+import rules
+
 from universal.utils import render_to_pdf
 
-from author.models import Author
 from siteuser.models import SiteUser
 
-from .models import Voicing, Language, Season, MassPart, Song
+from .models import Song, Language#, Voicing, Season, MassPart, Song
 from .forms import (
-    NewVoicingForm, EditVoicingForm,
-    NewLanguageForm, EditLanguageForm,
+    NewVoicingForm, EditVoicingForm, NewLanguageForm,
     ShareForm, NewSongForm, SongEditForm, SongFilterForm
 )
 
@@ -148,6 +148,9 @@ class NewSong(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
 
     def form_valid(self, form):
         form.instance.originator = self.request.user.siteuser
+        if form.instance.genre == "gregorian chant":
+            form.instance.bpm = ''
+            form.instance.divisions = ''
         self.object = form.save()
         self.object.likes.add(SiteUser.objects.get(user=self.request.user))
 
@@ -161,6 +164,22 @@ class SongEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     form_class = SongEditForm
     template_name = 'song/edit.html'
     success_message = "Song updated successfully"
+
+    def get(self, request, *args, **kwargs):
+        self.object = Song.objects.get(pk=self.kwargs["pk"])
+        if rules.test_rule('can_edit_song', self.request.user, self.object):
+            return self.render_to_response(self.get_context_data())
+        messages.error(self.request, """Only the owner of {} may edit.""".format(self.object))
+        return redirect(reverse('siteuser:library',
+            kwargs={'pk' : self.request.user.siteuser.pk, 'slug' : self.request.user.siteuser.slug}))
+
+    def form_valid(self, form):
+        if form.instance.genre == "gregorian chant":
+            form.instance.bpm = ''
+            form.instance.divisions = ''
+        self.object = form.save()
+        messages.success(self.request, "Song was successfully updated")
+        return redirect(self.get_success_url())
 
 class SongDelete(generic.DeleteView):
     model = Song

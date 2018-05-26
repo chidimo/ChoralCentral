@@ -118,6 +118,7 @@ THIRD_PARTY_APPS = [
     'django_extensions',
     'algoliasearch_django',
     'django_social_share',
+    'rules.apps.AutodiscoverRulesConfig',
 ]
 
 INSTALLED_APPS = PREREQ_APPS +  PROJECT_APPS + THIRD_PARTY_APPS
@@ -129,6 +130,7 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.yahoo.YahooOAuth2',
     'social_core.backends.yahoo.YahooOpenId',
     'django.contrib.auth.backends.ModelBackend',
+    'rules.permissions.ObjectPermissionBackend',
     )
 
 SOCIAL_AUTH_PIPELINE = (

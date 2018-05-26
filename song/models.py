@@ -103,9 +103,9 @@ class Song(TimeStampedModel):
     scripture_reference   = models.CharField(max_length=25, blank=True)
 
     tempo           = models.IntegerField(null=True, blank=True)
-    tempo_text      = models.CharField(max_length=30, blank=True)
     bpm             = models.IntegerField(null=True, blank=True)
     divisions       = models.IntegerField(null=True, blank=True)
+    tempo_text      = models.CharField(max_length=30, blank=True)
     views           = models.IntegerField(default=0)
     like_count      = models.IntegerField(default=0)
 
