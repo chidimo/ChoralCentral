@@ -24,6 +24,10 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Inconsolata', monospace;
 }
 
+.lyric p {
+    font-family: 'Sunflower', sans-serif;
+}
+
 p {
     font-family: 'Sunflower', sans-serif;
 }
