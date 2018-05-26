@@ -51,3 +51,12 @@ https://pypi.org/project/python-decouple/#why-not-just-use-environment-variables
 ## Badges
 
 1. First song, post, request
+
+
+## Going live
+
+1. Reset all app keys (facebook, twitter, google, yahoo)
+1. Turn off debug
+1. Reset db and have 5 songs ready to upload.
+1. Optimize for search engine
+

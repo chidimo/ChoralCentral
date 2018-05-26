@@ -65,10 +65,6 @@
                     <span class="h6 float-left">Genre</span>
                     <span class="h6 float-right">{{ song.genre|title }}</span>
                 </div>
-                <div class="col-sm-12">
-                    <span class="h6 float-left">Uploader</span>
-                    <span class="h6 float-right"><a href="{% url 'siteuser:library' song.originator.pk song.originator.slug %}">{{ song.originator.screen_name }}</a></span>
-                </div>
 
                 <div class="col-sm-12">
                     <span class="h6 float-left">For</span>
@@ -94,12 +90,10 @@
 
         <div class="col-lg-6 my-2">
             <div class="row">
-
                 <div class="col-sm-12">
-                    <span class="h6 float-left">Scripture</span>
-                    <span class="h6 float-right">{{ song.scripture_reference }}</span>
+                    <span class="h6 float-left">Uploader</span>
+                    <span class="h6 float-right"><a href="{% url 'siteuser:library' song.originator.pk song.originator.slug %}">{{ song.originator.screen_name }}</a></span>
                 </div>
-
                 <div class="col-sm-12">
                     <span class="h6 float-left">Language</span>
                     <span class="h6 float-right">{{ song.language|upper }}</span>
@@ -126,7 +120,7 @@
                     <span class="h6 float-left">Authors</span>
                     <span class="h6 float-right">
                         {% for author in song.authors.all %}
-                        {{ author }}{% if not forloop.last %},{% endif %}
+                        <a href="{% url 'author:detail' author.pk author.slug %}">{{ author }}</a>{% if not forloop.last %},{% endif %}
                         {% endfor %}
                     </span>
                 </div>

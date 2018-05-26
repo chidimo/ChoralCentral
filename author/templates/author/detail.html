@@ -18,7 +18,11 @@
 </div>
 
 <div class='container author-bio-text'>
-    {{ author.bio|markdown_format }}
+    {% if author.bio %}
+        {{ author.bio|markdown_format }}
+    {% else %}
+        <p>Unavailable</p>
+    {% endif %}
 </div>
 
 <div class='container author-songs-heading'>
@@ -27,12 +31,10 @@
     </div>
 </div>
 
-
 {% for song in author.song_set.all|published_author_songs %}
-
-<div class="list-author-songs">
-    <h5><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h5>
-</div>
+    <div class="list-author-songs">
+        <h5><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h5>
+    </div>
 {% empty %}
     <p>Author has no song</p>
 {% endfor %}
