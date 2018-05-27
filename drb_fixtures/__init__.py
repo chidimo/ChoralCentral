@@ -1,10 +1,10 @@
-from .starter import (
+from .starter import (run_all,
     create_version, create_old_testament_books, create_new_testament_books,
     create_all_books_all_chapters, create_all_books_all_verses,
     create_all_books_all_alt_verses, create_all_commentaries,
 )
 
-__all__ = ['create_version', 'create_old_testament_books', 'create_new_testament_books',
+__all__ = ['run_all', 'create_version', 'create_old_testament_books', 'create_new_testament_books',
     'create_all_books_all_chapters', 'create_all_books_all_verses', 'create_all_books_all_alt_verses',
     'create_all_commentaries']
 

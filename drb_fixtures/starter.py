@@ -17,6 +17,7 @@ OT = (os.path.join(data_store, "old_test.json"))
 CHAPS = glob.glob("{}/*.json".format(chapter_store))
 VERSES = glob.glob("{}/*.json".format(verse_store))
 COMMENTARIES = glob.glob("{}/*.json".format(challoner_store))
+
 # print(CHAPS)
 # print(VERSES)
 # print(COMMENTARIES)
@@ -158,6 +159,15 @@ def create_all_commentaries():
                     verse=verse,
                     text=text)
                 commtext.save()
+
+def run_all():
+    create_version()
+    create_old_testament_books()
+    create_new_testament_books()
+    create_all_books_all_chapters()
+    create_all_books_all_verses()
+    create_all_books_all_alt_verses()
+    create_all_commentaries()
 
 if __name__ == "__main__":
     pass

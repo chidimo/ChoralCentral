@@ -316,6 +316,11 @@ def comments():
                 post=post,
                 comment=lorem.sentence())
 
+def run_all():
+    independents()
+    superuser()
+    members()
+
 if __name__ == "__main__":
     pass
 
