@@ -2,7 +2,7 @@
 
 from django.db.models import Count
 from django.views import generic
-from django.contrib import messages
+# from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django_addanother.views import CreatePopupMixin
@@ -24,10 +24,21 @@ class AuthorIndex(PaginationMixin, generic.ListView):
     def get_queryset(self):
         return Author.objects.all().annotate(Count("song__publish")).order_by("-song__publish__count")
 
-class AuthorDetail(generic.DetailView):
+class AuthorDetail(generic.ListView):
     model = Author
-    context_object_name = 'author'
+    context_object_name = 'author_songs'
     template_name = 'author/detail.html'
+
+    def author(self):
+        return Author.objects.get(pk=self.kwargs['pk'], slug=self.kwargs['slug'])
+
+    def get_context_data(self, **kwargs):
+        context = super(AuthorDetail, self).get_context_data(**kwargs)
+        context['author'] = self.author()
+        return context
+
+    def get_queryset(self):
+        return self.author().song_set.all().filter(publish=True)
 
 class NewAuthor(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):
     form_class = NewAuthorForm

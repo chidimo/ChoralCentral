@@ -31,9 +31,13 @@
     </div>
 </div>
 
-{% for song in author.song_set.all|published_author_songs %}
+{% for song in author_songs %}
     <div class="list-author-songs">
-        <h5><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h5>
+        {% if song.publish %}
+            <h5><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h5>
+        {% else %}
+            <h5><a class="text-danger" href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h5>
+        {% endif %}
     </div>
 {% empty %}
     <p>Author has no song</p>
