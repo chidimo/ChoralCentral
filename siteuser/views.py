@@ -18,7 +18,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
-from django.contrib.auth.hashers import check_password
+# from django.contrib.auth.hashers import check_password
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
@@ -271,7 +271,7 @@ def deactivate_account(request):
             return redirect('/')
     return render(request, template, {'form' : PassWordGetterForm(user=user) })
 
-# continue later
+# complete later
 def activate_account(request):
     template = 'siteuser/activate_account.html'
     if request.method == 'POST':
