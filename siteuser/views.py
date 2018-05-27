@@ -339,16 +339,29 @@ class SiteUserLibrary(LoginRequiredMixin, generic.DetailView):
     template_name = "siteuser/library.html"
 
     def get_context_data(self, **kwargs):
+        context = super(SiteUserLibrary, self).get_context_data(**kwargs)
         pk = self.kwargs.get('pk', None)
         slug = self.kwargs.get('slug', None)
-        context = super(SiteUserLibrary, self).get_context_data(**kwargs)
-        context['user_songs'] = Song.objects.filter(originator__pk=pk, originator__slug=slug)
-        context['user_posts'] = Post.objects.filter(creator__pk=pk, creator__slug=slug)
-        context['user_requests'] = Request.objects.filter(originator__pk=pk, originator__slug=slug)
-        context['user_authors'] = Author.objects.filter(originator__pk=pk, originator__slug=slug)
-        context['scores'] = Score.objects.filter(uploader__pk=pk, uploader__slug=slug)
-        context['midis'] = Midi.objects.filter(uploader__pk=pk, uploader__slug=slug)
-        context['user_videos'] = VideoLink.objects.filter(uploader__pk=pk, uploader__slug=slug)
+        siteuser = SiteUser.objects.get(pk=pk, slug=slug)
+
+        if self.request.user == siteuser.user: # requester is user of interest
+            context['user_songs'] = Song.objects.filter(originator=siteuser).order_by('publish')
+            context['is_song_owner'] = True
+        else:
+            q = Q(publish=True) and Q(originator=siteuser)
+            context['user_songs'] = Song.objects.filter(originator=siteuser).filter(publish=True)
+
+        if self.request.user == siteuser.user:
+            context['user_posts'] = Post.objects.filter(creator=siteuser).order_by('publish')
+            context['is_post_owner'] = True
+        else:
+            context['user_posts'] = Post.objects.filter(creator=siteuser).filter(publish=True)
+
+        context['user_requests'] = Request.objects.filter(originator=siteuser)
+        context['user_authors'] = Author.objects.filter(originator=siteuser)
+        context['scores'] = Score.objects.filter(uploader=siteuser)
+        context['midis'] = Midi.objects.filter(uploader=siteuser)
+        context['user_videos'] = VideoLink.objects.filter(uploader=siteuser)
         return context
 
 @login_required

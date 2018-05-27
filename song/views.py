@@ -1,5 +1,5 @@
-
 """Views"""
+
 import operator
 from functools import reduce
 
@@ -141,7 +141,7 @@ class SongDetail(generic.DetailView):
     def get_object(self, *args, **kwargs):
         pk = self.kwargs['pk']
         slug = self.kwargs['slug']
-        return Song.objects.select_related('voicing', 'language', 'originator').get(pk=pk)
+        return Song.objects.select_related('voicing', 'language', 'originator').get(pk=pk, slug=slug)
 
     def get_context_data(self, **kwargs):
         context = super(SongDetail, self).get_context_data(**kwargs)
@@ -192,7 +192,8 @@ class SongDelete(generic.DeleteView):
     template_name = "song/song_delete.html"
 
     def get_success_url(self):
-        return reverse_lazy('siteuser:library', kwargs={'pk' : self.request.user.siteuser.pk, 'slug' : self.request.user.siteuser.slug})
+        return reverse('siteuser:library',
+        kwargs={'pk' : self.request.user.siteuser.pk, 'slug' : self.request.user.siteuser.slug})
 
 class FilterSongs(PaginationMixin, SuccessMessageMixin, generic.ListView):
     model = Song
@@ -203,6 +204,7 @@ class FilterSongs(PaginationMixin, SuccessMessageMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(FilterSongs, self).get_context_data(**kwargs)
         context['form'] = SongFilterForm()
+        context['is_filter'] = "yes"
         return context
 
     def get_queryset(self):
@@ -236,15 +238,16 @@ class FilterSongs(PaginationMixin, SuccessMessageMixin, generic.ListView):
                     queries.append(Q(language__id__exact=language.id))
                     msg.append("Language '{}'".format(language))
 
-                if combinator == 'and':
-                    query = reduce(operator.and_, queries)
-                    query_str = " AND ".join(msg)
-                else:
+                if combinator == 'or':
                     query = reduce(operator.or_, queries)
                     query_str = " OR ".join(msg)
+                else:
+                    query = reduce(operator.and_, queries)
+                    query_str = " AND ".join(msg)
 
+                query = operator.and_(query, Q(publish=True)) # filter out unpublished songs and remove duplicates
                 results = Song.objects.select_related('voicing', 'language', 'originator').\
-                prefetch_related('seasons', 'mass_parts', 'authors').filter(query).filter(publish=True).distinct()
+                prefetch_related('seasons', 'mass_parts', 'authors').filter(query).distinct()
                 messages.success(self.request, "found {} results for {}".format(results.count(), query_str))
                 return results
 

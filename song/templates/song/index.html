@@ -1,11 +1,12 @@
 {% extends "choralcentral_base.html" %}
 {% load static %}
 
+
 {% block left_sidebar %}
     <div class="d-none d-md-block filter-block">
         <form action="{% url 'song:filter' %}" method="get" enctype="multipart/form-data">
             {{ form.as_p }}
-            <button class="btn btn-primary btn-sm float-right" type="submit" value="Search songs">Apply</button>
+            <button class="btn btn-primary btn-sm float-right" type="submit" value="Filter songs">Apply</button>
         </form>
     </div>
 {% endblock left_sidebar %}
@@ -25,10 +26,10 @@
             <div class="row">
                 <div class="col-sm-12">
                     <span class="song-lower float-left">
-                        <a class="btn btn-sm btn-primary icon-buttons" title="Song use: {{ song.ocassion|title }}">{{ song.ocassion|title }}</a>
-                        <a class="btn btn-sm btn-primary icon-buttons" title="Song use: {{ song.genre|title }}">{{ song.genre|title }}</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" title="Ocassion: {{ song.ocassion|title }}">{{ song.ocassion|title }}</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" title="Genre: {{ song.genre|title }}">{{ song.genre|title }}</a>
                         <a class="btn btn-sm btn-primary icon-buttons" title="Voicing: {{ song.voicing|upper }}">{{ song.voicing|upper }}</a>
-                        <a class="btn btn-sm btn-primary icon-buttons" title="{{ song.language|title }}">{{ song.language|title }}</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" title="Language: {{ song.language|title }}">{{ song.language|title }}</a>
                         {% for masspart in song.mass_parts.all %}
                             <a class="btn btn-sm btn-primary icon-buttons" title="Masspart: {{ masspart|title }}">{{ masspart|title }}</a>
                         {% endfor %}

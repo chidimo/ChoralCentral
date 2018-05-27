@@ -69,6 +69,7 @@ class SongFilterForm(forms.Form):
             ('and', 'AND')
         ),
         required=False,
+        initial="and",
         widget=forms.Select(attrs={"class" : "form-control"}))
 
     genre = forms.ChoiceField(

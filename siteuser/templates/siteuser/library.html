@@ -57,33 +57,27 @@
                 <thead class="thead-dark">
                     <caption>Songs</caption>
                     <tr>
+                        <th>S/No.</th>
+                        <th>Status</th>
                         <th>Title</th>
                         <th>Popularity</th>
-                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                 {% for song in user_songs %}
-                    {% if song.publish %}
-                        <tr>
-                    {% else %}
-                        {% if user == siteuser.user %}
-                            <tr class='text-danger'>
-                        {% else %}
-                            <tr class='d-none'>
-                        {% endif %}
-                    {% endif %}
-                            <td><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></td>
-                            <td>{{ song.like_count }}</td>
-                            <td>{% if song.publish %}Public{% else %}Private{% endif %}</td>
-                            <td>
-                                {% if request.user == siteuser.user %}
-                                    <a href="{% url 'song:edit' song.pk song.slug %}" title='Edit'><i class="fas fa-edit"></i></a> |
-                                    <a href="{% url 'song:delete' song.pk %}" title='Delete {{ song.title }}'><i class="fas fa-trash"></i></a> |
-                                {% endif %}
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{% if song.publish %}Public{% else %}Private{% endif %}</td>
+                        <td><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></td>
+                        <td>{{ song.like_count }}</td>
+                        <td>
+                            {% if is_song_owner == True %}
+                                <a href="{% url 'song:edit' song.pk song.slug %}" title='Edit'><i class="fas fa-edit"></i></a> |
+                                <a href="{% url 'song:delete' song.pk %}" title='Delete {{ song.title }}'><i class="fas fa-trash"></i></a> |
+                            {% endif %}
+                        </td>
+                    </tr>
                 {% empty %}
                     <p>No song to display</p>
                 {% endfor %}
@@ -97,32 +91,25 @@
                 <thead class="thead-dark">
                     <caption>Blog posts</caption>
                     <tr>
-                        <th>Title</th>
+                        <th>S/No.</th>
                         <th>Status</th>
+                        <th>Title</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                 {% for post in user_posts %}
-                    {% if post.publish %}
-                        <tr>
-                    {% else %}
-                        {% if user == siteuser.user %}
-                            <tr class='text-danger'>
-                        {% else %}
-                            <tr class='d-none'>
-                        {% endif %}
-                    {% endif %}
-                        <td><a href="{% url 'blog:detail' post.pk post.slug %}">{{ post.title }}</a></td>
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
                         <td>{% if post.publish %}Public{% else %}Private{% endif %}</td>
+                        <td><a href="{% url 'blog:detail' post.pk post.slug %}">{{ post.title }}</a></td>
 
                         <td>
-                            {% if user == siteuser.user %}
+                            {% if is_post_owner is True %}
                                 <a href="{% url 'blog:edit' post.pk %}"><i class="fas fa-edit"></i></a> |
                                 <a href="#"><i class="fas fa-trash"></i></a>
                             {% endif %}
                         </td>
-
                     </td>
                 {% empty %}
                     <p>No posts to display</p>
@@ -137,6 +124,7 @@
                 <thead class="thead-dark">
                     <caption>My requests</caption>
                     <tr>
+                        <th>S/No.</th>
                         <th>Title</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -145,6 +133,7 @@
                 <tbody>
                 {% for request in user_requests %}
                     <tr>
+                        <td>{{ forloop.counter }}</td>
                         {% if request.status == True %}
                             <td><a href="{% url 'request:detail' request.pk request.slug %}">{{ request }}</a></td>
                             <td>{{ request.status }}</td>
@@ -169,6 +158,7 @@
                 <thead class="thead-dark">
                     <caption>My authors</caption>
                     <tr>
+                        <th>S/No.</th>
                         <th>Name</th>
                         <th>Type</th>
                         <th>Action</th>
@@ -177,6 +167,7 @@
                     <tbody>
                     {% for author in user_authors %}
                         <tr>
+                            <td>{{ forloop.counter }}</td>
                             <td><a href="{% url 'author:detail' author.pk author.slug %}">{{ author }}</a></td>
                             <td>{{ author.author_type|title }}</td>
                             <td><a href="#"><i class="fas fa-edit"></i></a> |
@@ -197,6 +188,7 @@
                     <caption>scores</caption>
                 </thead>
                 <tr>
+                    <th>S/No.</th>
                     <th>Song</th>
                     <th>Song owner</th>
                     <th>Score owner</th>
@@ -210,6 +202,7 @@
                 <tbody>
                 {% for score in scores %}
                     <tr>
+                        <td>{{ forloop.counter }}</td>
                         <td><a href="{% url 'song:detail' score.song.pk score.song.slug %}">{{ score.song.title }}</a></td>
                         <td>{{ score.song.originator }}</td>
                         <td>{{ score.uploader }}</td>
@@ -234,6 +227,7 @@
                     <caption>midis</caption>
                 </thead>
                 <tr>
+                    <th>S/No.</th>
                     <th>Song</th>
                     <th>Song owner</th>
                     <th>Midi owner</th>
@@ -247,6 +241,7 @@
                 <tbody>
                     {% for midi in midis %}
                         <tr>
+                            <td>{{ forloop.counter }}</td>
                             <td><a href="{% url 'song:detail' midi.song.pk midi.song.slug %}">{{ midi.song.title }}</a></td>
                             <td>{{ midi.song.originator }}</td>
                             <td>{{ midi.uploader }}</td>
@@ -268,9 +263,10 @@
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead class="thead-light">
-                    <caption>midis</caption>
+                    <caption>Videos</caption>
                 </thead>
                 <tr>
+                    <th>S/No.</th>
                     <th>Song</th>
                     <th>Song owner</th>
                     <th>Link uploader</th>
@@ -281,6 +277,7 @@
                 <tbody>
                 {% for video in user_videos %}
                     <tr>
+                        <td>{{ forloop.counter }}</td>
                         <td><a href="{% url 'song:detail' video.song.pk video.song.slug %}">{{ video.song.title }}</a></td>
                         <td>{{ video.song.originator }}</td>
                         <td>{{ video.uploader }}</td>
