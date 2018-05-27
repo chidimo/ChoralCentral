@@ -6,10 +6,8 @@ import operator
 from functools import reduce
 
 from django.db.models import Q
-# from django.db import IntegrityError
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
-# from django.views.decorators.http import require_POST
 from django.views import generic
 from django.shortcuts import render, reverse, redirect
 from django.conf import settings
@@ -18,12 +16,9 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
-# from django.contrib.auth.hashers import check_password
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
-
-# from django.contrib.auth.models import Group, Permission
 
 from django_addanother.views import CreatePopupMixin
 from pure_pagination.mixins import PaginationMixin
@@ -369,7 +364,7 @@ def account_management(request):
     template = "siteuser/account_management.html"
     context = {}
     user = request.user
-    context['siteuser'] = user.siteuser
+    siteuser = user.siteuser
 
     try:
         facebook_login = user.social_auth.get(provider='facebook')
@@ -392,6 +387,10 @@ def account_management(request):
         yahoo_login = None
 
     can_disconnect = (user.social_auth.count() > 1 or user.has_usable_password())
+
+    context['siteuser'] = siteuser
+    context['user_songs'] = Song.objects.filter(originator=siteuser)
+    context['user_posts'] = Post.objects.filter(creator=siteuser)
 
     context['facebook_login'] = facebook_login
     context['google_login'] = google_login

@@ -1,9 +1,14 @@
 {% extends "choralcentral_base.html" %}
 {% block title %}{{ siteuser.screen_name }}'s library{% endblock title %}
-{% load siteuser_tags %}
 {% block introduction %}{% endblock introduction %}
 
 {% block content_content %}
+
+<div class='container siteuser-index-heading'>
+    <div class='row'>
+        <h3 class='float-left'>{% if user == siteuser.user %}My{% else %}{{ siteuser.screen_name }}'s {% endif %} library</h3>
+    </div>
+</div>
 
 {% include 'siteuser/account_user_details.html' %}
 
