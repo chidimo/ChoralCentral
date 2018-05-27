@@ -107,7 +107,7 @@ class SiteUser(TimeStampedModel):
         return reverse('siteuser:new_activation', args=[str(self.user.id), str(self.screen_name)])
 
     def get_all_roles(self):
-        return ", ".join([role.role for role in self.roles.all()])
+        return ", ".join([role.name for role in self.roles.all()])
 
 class SiteUserGroup(TimeStampedModel):
     name = models.CharField(max_length=30, blank=True, null=True)

@@ -19,4 +19,4 @@ class SiteUserSerializer(serializers.HyperlinkedModelSerializer):
 class RolesSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Role
-        fields = ('role', )
+        fields = ('name', )
