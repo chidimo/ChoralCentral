@@ -104,6 +104,7 @@ PREREQ_APPS = [
 
 PROJECT_APPS = [
     'author',
+    'blockchain',
     'blog',
     'drb',
     'request',

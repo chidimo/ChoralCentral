@@ -1,6 +1,6 @@
 """urls"""
 
-from django.urls import include, path
+from django.urls import path
 from . import views
 from .feeds import LatestPostSFeed
 
