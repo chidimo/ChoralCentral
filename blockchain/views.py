@@ -2,6 +2,7 @@ import json
 
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
+from django.conf import settings
 from django.contrib import messages
 from django.views.decorators.http import require_POST
 
@@ -13,10 +14,7 @@ from Crypto.PublicKey import RSA
 from .blockchain_client import Transaction
 from .forms import TransactionGeneratorForm
 
-def view_chain(request):
-    pass
-
-def index(request):
+def transaction_home(request):
     template = 'blockchain/index.html'
     context = {}
     return render(request, template, context)
@@ -67,3 +65,10 @@ def generate_transaction(request):
         else:
             return render(request, template, {'form' : form})
     return render(request, template, {'form' : TransactionGeneratorForm()})
+
+def index(request):
+    template = 'blockchain/index.html'
+    context = {}
+    context['chain'] = settings.blockchain
+    context['base_dir'] = settings.BASE_DIR
+    return render(request, template, context)
