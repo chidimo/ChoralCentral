@@ -629,11 +629,6 @@ span.download-count {
     z-index: 1020;
 }
 
-.modal-content {
-    border-radius: 0;
-    width: 400px;
-}
-
 .social-google {
     background: #8ac2ff;
     border-radius: .15rem;

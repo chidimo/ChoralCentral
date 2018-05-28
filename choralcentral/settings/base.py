@@ -8,10 +8,6 @@ from django.urls import reverse_lazy
 from django.core.exceptions import ImproperlyConfigured
 from django.contrib.messages import constants as messages
 
-# Instantiate a blockchain
-from blockchain.blockchain_client import Blockchain
-blockchain = Blockchain()
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -28,8 +24,6 @@ ROOT_URLCONF = 'choralcentral.urls'
 SECRET_KEY = get_env_variable("SECRET_KEY")
 WSGI_APPLICATION = 'choralcentral.wsgi.application'
 INTERNAL_IPS = ('127.0.0.1', 'localhost')
-
-FIXTURE_DIRS = [os.path.join(BASE_DIR, "fixtures")]
 
 SITE_ID = 1
 
@@ -108,7 +102,6 @@ PREREQ_APPS = [
 
 PROJECT_APPS = [
     'author',
-    'blockchain',
     'blog',
     'drb',
     'request',
@@ -155,7 +148,6 @@ SOCIAL_AUTH_PIPELINE = (
 )
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
