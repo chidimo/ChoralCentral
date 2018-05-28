@@ -8,6 +8,8 @@ from Crypto.Hash import SHA
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
 
+MINING_DIFFICULTY = 1
+
 import requests
 
 class Transaction:
@@ -33,7 +35,6 @@ class Transaction:
         h = SHA.new(str(self.to_dict()).encode('utf-8'))
         return binascii.hexlify(signer.sign(h)).decode('ascii')
 
-
 class Blockchain:
     def __init__(self):
         self.transactions = []
@@ -42,7 +43,7 @@ class Blockchain:
         # Random number to use as node id
         self.node_id = str(uuid4()).replace('-', '')
         # Genesis block
-        self.create_block(0, '00')
+        self.create_block_and_add_to_chain(0, '00')
 
     def register_node(self, node_url):
         """
@@ -63,7 +64,7 @@ class Blockchain:
         """
         pass
 
-    def add_block_to_chain(self, nonce, previous_hash):
+    def create_block_and_add_to_chain(self, nonce, previous_hash):
         """
         Add a block of transactions to the blockchain
         """

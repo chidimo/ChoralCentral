@@ -10,7 +10,7 @@ import Crypto.Random
 from Crypto.Hash import SHA
 from Crypto.PublicKey import RSA
 
-from .client import Transaction
+from .blockchain_client import Transaction
 from .forms import TransactionGeneratorForm
 
 def view_chain(request):
