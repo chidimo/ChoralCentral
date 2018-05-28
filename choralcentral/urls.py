@@ -29,7 +29,6 @@ urlpatterns = [
     path("", include('song.urls')),
     path("admin/", admin.site.urls),
     path("author/", include('author.urls')),
-    path("blockchain/", include('blockchain.urls')),
     path("blog/", include('blog.urls')),
     path("douay-rheims/", include('drb.urls')),
     path("request/", include('request.urls')),
