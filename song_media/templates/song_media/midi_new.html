@@ -6,12 +6,13 @@
 
 <div class="container upload-forms">
     <h2>New midi file</h2>
-    <hr class='broad'>
+    <hr>
+    <p>Return to <a href="{% url 'song:detail' song.pk song.slug %}">{{ song }}</a></p>
 
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button  class="btn btn-primary btn-sm float-right" type="submit" value="Save">Save</button>
+        <button class="btn btn-primary btn-sm float-right" type="submit" value="Save">Save</button>
     </form>
 </div>
 {% endblock %}

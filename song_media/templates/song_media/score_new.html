@@ -6,7 +6,9 @@
 
 <div class="container upload-forms">
     <h2>New music sheet</h2>
-    <hr class='broad'>
+    <hr>
+
+    <p>Return to <a href="{% url 'song:detail' song.pk song.slug %}">{{ song }}</a></p>
 
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}

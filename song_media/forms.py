@@ -9,7 +9,6 @@ from django_addanother.widgets import AddAnotherWidgetWrapper
 
 from .models import VocalPart, ScoreNotation, Score, Midi, VideoLink
 
-# from siteuser.models import SiteUser
 from song.models import Song
 
 class NewVocalPartForm(forms.ModelForm):
@@ -64,16 +63,18 @@ class NewScoreForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         """Query in forms"""
-        user = kwargs.pop('user')
         pk = kwargs.pop('pk')
-
         super(NewScoreForm, self).__init__(*args, **kwargs)
-        # originator = SiteUser.objects.get(user=user)
-        if pk:
-            self.fields['song'].queryset = Song.objects.filter(pk=pk)
-            self.fields['song'].initial = Song.objects.get(pk=pk)
-        else:
-            self.fields['song'].queryset = Song.objects.filter(originator__user=user)
+        self.fields['song'].queryset = Song.objects.filter(pk=pk)
+        self.fields['song'].initial = Song.objects.get(pk=pk)
+
+    def clean(self):
+        media_file = self.cleaned_data['media_file']
+        fsize = media_file.size/1048576
+        max_size = 5242880/1048576# limit size to 5MB
+        if fsize > max_size:
+            msg = "Attempting to upload {:.2f}MB file. Size must not exceed {:.2f}MB".format(fsize, max_size)
+            self.add_error("media_file", msg)
 
 class NewMidiForm(forms.ModelForm):
     class Meta:
@@ -95,16 +96,11 @@ class NewMidiForm(forms.ModelForm):
                   }
 
     def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user')
         pk = kwargs.pop('pk')
 
         super(NewMidiForm, self).__init__(*args, **kwargs)
-        # originator = SiteUser.objects.get(user=user)
-        if pk:
-            self.fields['song'].queryset = Song.objects.filter(pk=pk)
-            self.fields['song'].initial = Song.objects.get(pk=pk)
-        else:
-            self.fields['song'].queryset = Song.objects.filter(originator__user=user)
+        self.fields['song'].queryset = Song.objects.filter(pk=pk)
+        self.fields['song'].initial = Song.objects.get(pk=pk)
 
 class NewVideoLinkForm(forms.ModelForm):
     class Meta:
@@ -117,14 +113,16 @@ class NewVideoLinkForm(forms.ModelForm):
                 attrs={'class' : 'form-control', 'placeholder' : 'Video Url'})
         }
 
-    def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user')
-        pk = kwargs.pop('pk')
+    def clean(self):
+        media_file = self.cleaned_data['media_file']
+        fsize = media_file.size/1048576
+        max_size = 2097152/1048576# limit size to 5MB
+        if fsize > max_size:
+            msg = "File is {:.2f}MB. Maximum allowed file size is {:.2f}MB".format(fsize, max_size)
+            self.add_error("media_file", msg)
 
+    def __init__(self, *args, **kwargs):
+        pk = kwargs.pop('pk')
         super(NewVideoLinkForm, self).__init__(*args, **kwargs)
-        # originator = SiteUser.objects.get(user=user)
-        if pk:
-            self.fields['song'].queryset = Song.objects.filter(pk=pk)
-            self.fields['song'].initial = Song.objects.get(pk=pk)
-        else:
-            self.fields['song'].queryset = Song.objects.filter(originator__user=user)
+        self.fields['song'].queryset = Song.objects.filter(pk=pk)
+        self.fields['song'].initial = Song.objects.get(pk=pk)

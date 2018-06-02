@@ -18,6 +18,7 @@ from django_addanother.views import CreatePopupMixin
 from google_api.api_calls import get_youtube_video_id, get_video_information, get_playlist_id, add_video_to_playlist
 
 from siteuser.models import SiteUser
+from song.models import Song
 
 from .models import VocalPart, ScoreNotation, Score, Midi, VideoLink
 from .forms import (
@@ -40,6 +41,19 @@ class NewScoreNotation(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin
 class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     template_name = 'song_media/score_new.html'
     form_class = NewScoreForm
+
+    def _pk(self):
+        return self.kwargs.get('pk', None)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(NewScore, self).get_context_data(*args, **kwargs)
+        context['song'] = Song.objects.get(pk=self._pk())
+        return context
+
+    def get_form_kwargs(self):
+        kwargs = super(NewScore, self).get_form_kwargs()
+        kwargs['pk'] = self._pk()
+        return kwargs
 
     def form_valid(self, form):
         form.instance.uploader = self.request.user.siteuser
@@ -65,13 +79,6 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         messages.success(self.request, "Score successfully added to {}".format(song.title))
         return redirect(song.get_absolute_url())
 
-    def get_form_kwargs(self):
-        """include 'user' and 'pk' in the kwargs to be sent to form"""
-        kwargs = super(NewScore, self).get_form_kwargs()
-        kwargs['user'] = self.request.user
-        kwargs['pk'] = self.kwargs.get('pk', None)
-        return kwargs
-
 def show_score(request, pk):
     """Display pdf score stored locally by django"""
     score = get_object_or_404(Score, pk=pk)
@@ -96,6 +103,19 @@ class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
     template_name = 'song_media/midi_new.html'
     form_class = NewMidiForm
 
+    def _pk(self):
+        return self.kwargs.get('pk', None)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(NewMidi, self).get_context_data(*args, **kwargs)
+        context['song'] = Song.objects.get(pk=self._pk())
+        return context
+
+    def get_form_kwargs(self):
+        kwargs = super(NewMidi, self).get_form_kwargs()
+        kwargs['pk'] = self._pk()
+        return kwargs
+
     def form_valid(self, form):
         form.instance.uploader = self.request.user.siteuser
         self.object = form.save()
@@ -119,12 +139,6 @@ class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
         messages.success(self.request, "Midi successfully added to {}".format(song.title))
         return redirect(song.get_absolute_url())
 
-    def get_form_kwargs(self):
-        kwargs = super(NewMidi, self).get_form_kwargs()
-        kwargs['user'] = self.request.user
-        kwargs['pk'] = self.kwargs.get('pk', None)
-        return kwargs
-
 def play_mp3(request, pk):
     context = {}
     template = 'song_media/playmp3.html'
@@ -132,6 +146,7 @@ def play_mp3(request, pk):
     sound.downloads += 1
     sound.save(update_fields=['downloads'])
     context['sound'] = sound
+    context['song'] = sound.song
     return render(request, template, context)
 
 def download_midi(self, pk):
@@ -160,10 +175,17 @@ class NewVideoLink(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, ge
     form_class = NewVideoLinkForm
     success_message = "Video link added successfully"
 
+    def _pk(self):
+        return self.kwargs.get('pk', None)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(NewVideoLink, self).get_context_data(*args, **kwargs)
+        context['song'] = Song.objects.get(pk=self._pk())
+        return context
+
     def get_form_kwargs(self):
         kwargs = super(NewVideoLink, self).get_form_kwargs()
-        kwargs['user'] = self.request.user
-        kwargs['pk'] = self.kwargs.get('pk', None)
+        kwargs['pk'] = self._pk()
         return kwargs
 
     def form_valid(self, form):
