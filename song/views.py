@@ -6,14 +6,14 @@ from functools import reduce
 import json
 from django.conf import settings
 from django.db.models import Q
-from django.http import HttpResponse#, HttpResponseRedirect
+from django.http import JsonResponse, HttpResponse#, HttpResponseRedirect
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required
-# from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST
 from django.views import generic
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -97,7 +97,7 @@ def auto_song(request):
     context['indexName'] = get_adapter(Song).index_name
     return render(request, 'song/autocomplete_song.html', context)
 
-# @require_POST
+@require_POST
 @login_required
 def song_like_view(request):
     if request.method == 'POST':
@@ -111,11 +111,10 @@ def song_like_view(request):
         else:
             song.likes.add(siteuser)
             msg = "You starred this song.\n"
-
     song.like_count = song.likes.count()
     song.save(update_fields=['like_count'])
     context = {'msg' : msg, 'like_count' : song.like_count, 'title' : song.title}
-    return HttpResponse(json.dumps(context), content_type='application/json')
+    return JsonResponse(context)
 
 class SongIndex(PaginationMixin, generic.ListView):
     model = Song

@@ -38,8 +38,18 @@
                         {% endfor %}
                     </span>
                     <span class="float-right">
-                        <a class="btn btn-sm btn-primary icon-buttons" title="Star {{ song.title }}">{{ song.like_count }}</a>
-                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:song_likers' song.pk song.slug %}" title="{{ song.like_count }} Star"><i class="fas fa-star"></i> Star</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:song_likers' song.pk song.slug %}" title="{{ song.like_count }} Star givers">{{ song.like_count }}</a>
+                        {% if user.is_authenticated %}
+                            {% if request.user.siteuser in song.likes.all %}
+                                <a class="btn btn-sm btn-primary icon-buttons" href="" id="like" name="{{ song.pk }}" value="Like" title="unstar this song"><i class="fas fa-star"></i> Unstar</a>
+                                {% include 'song/song_like_script.html' %}
+                            {% else %}
+                                <a class="btn btn-sm btn-primary icon-buttons" href="" id="like" name="{{ song.pk }}" value="Like" title="star this song"><i class="fas fa-star"></i> Star</a>
+                                {% include 'song/song_like_script.html' %}
+                            {% endif %}
+                        {% else %}
+                            <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:login' %}">Login to give a star</a>
+                        {% endif %}
                     </span>
                 </div>
             </div>
