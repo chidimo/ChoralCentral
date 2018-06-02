@@ -22,7 +22,7 @@ class AuthorIndex(PaginationMixin, generic.ListView):
     paginate_by = 25
 
     def get_queryset(self):
-        return Author.objects.all().annotate(Count("song__publish")).order_by("-song__publish__count")
+        return Author.objects.annotate(Count("song__publish")).order_by("-song__publish__count")
 
 class AuthorDetail(generic.ListView):
     model = Author

@@ -343,7 +343,7 @@ class SiteUserLibrary(LoginRequiredMixin, generic.DetailView):
             context['user_songs'] = Song.objects.filter(originator=siteuser).order_by('publish')
             context['is_song_owner'] = True
         else:
-            q = Q(publish=True) and Q(originator=siteuser)
+            # q = Q(publish=True) and Q(originator=siteuser)
             context['user_songs'] = Song.objects.filter(originator=siteuser).filter(publish=True)
 
         if self.request.user == siteuser.user:
