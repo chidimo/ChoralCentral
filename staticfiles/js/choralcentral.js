@@ -12,7 +12,27 @@ $(document).ready(function() {
             error: function(rs, e) {
                     alert(rs.responseText);
             }
-        }); 
+        });
         })
-    
+
     });
+
+var $imgpreview = $('#scorePngPreview');
+
+$('img').on('mouseenter', function() {
+    var img = this,
+        $img = $(img),
+        offset = $img.offset();
+
+    $imgpreview
+    .css({
+        'top': offset.top,
+        'left': offset.left
+    })
+    .append($img.clone())
+    .removeClass('hidden');
+});
+
+$imgpreview.on('mouseleave', function() {
+    $imgpreview.empty().addClass('hidden');
+});

@@ -146,19 +146,20 @@
     <div class="row">
         {% for score in song.score_set.all %}
             <div class="col-sm-6 col-md-4 col-lg-3 py-2 px-0 score-list">
-                <!--<div class="container score-list-pdf-container">-->
-
-                <!--    {% thumbnail score.thumbnail "80x80" crop="center" as im %}-->
-                <!--       <a href="{{ score.thumbnail.url }}" target="_blank"><img alt="" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="card" title="Preview first page"></a>-->
+                <!--<div class="container score-pdf-container">-->
+                <!--    {% thumbnail score.thumbnail "40x40" crop="center" as im %}-->
+                <!--        <img src="{{ im.url }}" class="card score-png-preview" title="Preview first page">-->
+                <!--        <div id="scorePngPreview"></div>-->
                 <!--    {% empty %}-->
-                <!--       <img alt="" src="{% static 'img/django-logo.png' %}" width="1250" height="160" class="img-fluid card">-->
+                <!--        <img src="{% static 'img/django-logo.png' %}" class="card score-png-preview">-->
+                <!--        <div id="scorePngPreview"></div>-->
                 <!--    {% endthumbnail %}-->
-                    <!--<img src="{{ score.thumbnail.url }}" class="card center" width="120" height="160">-->
                 <!--</div>-->
 
                 <div class="row score-list-meta-container">
                     <div class="container">
                         <a class="btn btn-sm btn-primary icon-buttons" href="{{ score.thumbnail.url }}" title="Preview first page">Preview first page</a>
+
                         <a class="btn btn-sm btn-primary icon-buttons" title="{{ score.part|title }}">{{ score.part }}</a>
                         <a class="btn btn-sm btn-primary icon-buttons" title="{{ score.notation|title }}">{{ score.notation }}</a>
                         <a class="btn btn-sm btn-primary icon-buttons" title="Filesize: {{ score.fsize|filesizeformat }}">{{ score.fsize|filesizeformat }}</a>

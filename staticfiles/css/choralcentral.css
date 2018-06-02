@@ -629,11 +629,6 @@ span.download-count {
     z-index: 1020;
 }
 
-.modal-content {
-    border-radius: 0;
-    width: 400px;
-}
-
 .social-google {
     background: #8ac2ff;
     border-radius: .15rem;
@@ -820,11 +815,11 @@ input#id_password {
 
 /*stripe table*/
 tbody tr:nth-child(even) {
-  background-color: #e3e3e3;
+    background-color: #e3e3e3;
 }
 
 tbody tr:nth-child(odd) {
-  background-color: #efefef;
+    background-color: #efefef;
 }
 
 .table td {
@@ -902,4 +897,18 @@ ul.errorlist {
     border: 1px solid #aaa;
     border-radius: .15rem;
     box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
+}
+
+
+/*SCORE PNG PREVIEW*/
+.score-list-pdf-container > img.score-png-preview {
+    width: 50px;
+    height: 50px;
+    display: block;
+}
+#scorePngPreview {
+    position: absolute;
+}
+#scorePngPreview.hidden {
+    display: none;
 }

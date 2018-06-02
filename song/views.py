@@ -3,10 +3,9 @@
 import operator
 from functools import reduce
 
-import json
 from django.conf import settings
 from django.db.models import Q
-from django.http import JsonResponse, HttpResponse#, HttpResponseRedirect
+from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.shortcuts import render, redirect, reverse
@@ -295,7 +294,6 @@ def share_song_by_mail(request, pk, slug):
                 for email in good_emails: # avoid mail address bundling in inbox.
                     text_email = render_to_string("song/share_song_by_mail.txt", context)
                     html_email = render_to_string("song/share_song_by_mail.html", context)
-
                     msg = EmailMultiAlternatives(subject, text_email, from_email, [email])
                     msg.attach_alternative(html_email, "text/html")
                     msg.send()
@@ -306,7 +304,3 @@ def share_song_by_mail(request, pk, slug):
                 messages.error(request, error_msg)
 
             return redirect(song.get_absolute_url())
-
-def share_on_facebook(request, pk, slug):
-    pass
-

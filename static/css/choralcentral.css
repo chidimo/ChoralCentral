@@ -459,8 +459,14 @@ span.download-count {
     padding: 2px 7px;
 }
 
-.score-list-pdf-container > img {
+.score-pdf-container > img {
     margin: auto;
+}
+
+.score-pdf-container > img.score-png-preview {
+    width: 40px;
+    height: 40px;
+    display: block;
 }
 
 .score-list-meta-container {

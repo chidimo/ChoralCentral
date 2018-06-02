@@ -12,7 +12,7 @@ $(document).ready(function() {
             error: function(rs, e) {
                     alert(rs.responseText);
             }
-        }); 
+        });
         })
-    
+
     });
