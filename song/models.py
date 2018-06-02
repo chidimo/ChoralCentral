@@ -79,17 +79,21 @@ class Song(TimeStampedModel):
         ("na", "na"))
     GENRE_CHOICES = (
         ("", "Select an option"),
-        ("hymn", "Hymn"),
-        ("psalm", "Psalm"),
-        ("gregorian chant", "Gregorian Chant"),
-        ("sequence", "Sequence"),
-        ("chorus", "Chorus"),
-        ("carol", "Carol"),
-        ("requiem", "Requiem"),
-        ("mass", "Mass"),
         ("anthem", "Anthem"),
-        ("popular music", "Popular music"),
+        ("carol", "Carol"),
+        ("chorus", "Chorus"),
         ("folk music", "Folk music"),
+        ("gregorian chant", "Gregorian Chant"),
+        ("hymn", "Hymn"),
+        ("litany", "Litany"),
+        ("madrigral", "Madrigal"),
+        ("march", "March"),
+        ("mass", "Mass"),
+        ("motet", "Motet"),
+        ("popular music", "Popular music"),
+        ("psalm", "Psalm"),
+        ("requiem", "Requiem"),
+        ("sequence", "Sequence"),
     )
     originator      = models.ForeignKey(SiteUser, on_delete=models.SET_NULL, null=True)
     voicing         = models.ForeignKey(Voicing, on_delete=models.CASCADE)
