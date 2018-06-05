@@ -572,15 +572,15 @@ span.download-count {
 }
 
 .song-index-meta span.text-genre:not(:disabled):not(.disabled) {
-    color: midnightblue;
+    color: indigo;
 }
 
 .song-index-meta span.text-voicing:not(:disabled):not(.disabled) {
-    color: midnightblue;
+    color: darkblue;
 }
 
 .song-index-meta span.text-language:not(:disabled):not(.disabled) {
-    color: midnightblue;
+    color: darkslategrey;
 }
 
 .song-index-meta span.text-masspart:not(:disabled):not(.disabled) {
@@ -589,6 +589,21 @@ span.download-count {
 
 .song-index-meta span.text-season:not(:disabled):not(.disabled) {
     color: purple;
+}
+
+/*SONG SUGGESTION BOX STYLING*/
+
+.autosuggest-form {
+    background: red;
+    min-width: 100%;
+    background: blue;
+    border-radius: .2rem;
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
 }
 
 /*SITEUSER*/
