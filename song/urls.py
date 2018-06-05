@@ -21,6 +21,7 @@ urlpatterns += [
 urlpatterns += [
     path('', views.SongIndex.as_view(), name="index"),
     path("new-song/", views.NewSong.as_view(), name="new"),
+    path('new-song-autocomplete/', views.SongSuggestion.as_view(), name='song_suggestion'),
     path("edit-song/<int:pk>/<slug:slug>/", views.SongEdit.as_view(), name="edit"),
     path("filter/", views.FilterSongs.as_view(), name="filter"),
     path("song/<int:pk>/<slug:slug>/", views.SongDetail.as_view(), name="detail"),

@@ -89,6 +89,13 @@ REST_FRAMEWORK = {
 }
 
 # Application definition
+
+AUTOCOMPLETE_LIGHT = [
+    # Must come before contrib.admin
+    'dal',
+    'dal_select2',
+]
+
 PREREQ_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -122,7 +129,7 @@ THIRD_PARTY_APPS = [
     'rules.apps.AutodiscoverRulesConfig',
 ]
 
-INSTALLED_APPS = PREREQ_APPS +  PROJECT_APPS + THIRD_PARTY_APPS
+INSTALLED_APPS = AUTOCOMPLETE_LIGHT + PREREQ_APPS +  PROJECT_APPS + THIRD_PARTY_APPS
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookOAuth2',

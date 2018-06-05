@@ -3,9 +3,9 @@
 from django import forms
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
-from django_addanother.widgets import AddAnotherWidgetWrapper
 
-from author.models import Author
+from django_addanother.widgets import AddAnotherWidgetWrapper
+from dal import autocomplete
 
 from .models import Voicing, Language, Season, MassPart, Song
 
@@ -99,7 +99,10 @@ class NewSongForm(forms.ModelForm):
             "divisions", "voicing", "authors", "seasons", "mass_parts",]
 
         widgets = {
-            "title" : forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Song title"}),
+            # "title" : forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Song title"}),
+            "title" : autocomplete.ListSelect2(
+                url=reverse_lazy('song:song_suggestion'),
+                attrs={'class' : 'form-control', 'data-placeholder' : "Song title. Song will be shown if already present."}),
             "genre" : forms.Select(attrs={'class' : 'form-control'}),
             "ocassion" : forms.Select(attrs={'class' : 'form-control'}),
             "compose_date" : forms.DateInput(
@@ -125,9 +128,11 @@ class NewSongForm(forms.ModelForm):
             "language" : AddAnotherWidgetWrapper(
                 forms.Select(attrs={'class' : 'form-control'}),
                 reverse_lazy('song:new_language'))}
-
+# https://github.com/yourlabs/django-autocomplete-light/issues/790
+# https://stackoverflow.com/questions/40822373/django-autocomplete-light-error-list-object-has-no-attribute-queryset
     def __init__(self, *args, **kwargs):
         super(NewSongForm, self).__init__(*args, **kwargs)
+        # self.fields['title'].widget = autocomplete.ListSelect2(url=reverse_lazy('song:new_song_autocomplete'), attrs={'class' : 'form-control'}),
         self.fields['language'].initial = Language.objects.get(language='english')
         self.fields['voicing'].initial = Voicing.objects.get(voicing='satb')
         self.fields['ocassion'].initial = "sacred"

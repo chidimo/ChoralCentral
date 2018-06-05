@@ -22,7 +22,7 @@ from django.core.exceptions import ValidationError as VAE
 from django_addanother.views import CreatePopupMixin
 from pure_pagination.mixins import PaginationMixin
 from algoliasearch_django import get_adapter
-
+from dal import autocomplete
 import rules
 
 from universal.utils import render_to_pdf
@@ -34,6 +34,15 @@ from .forms import (
     NewVoicingForm, EditVoicingForm, NewLanguageForm,
     ShareForm, NewSongForm, SongEditForm, SongFilterForm
 )
+
+class SongSuggestion(autocomplete.Select2QuerySetView):
+    """Autocomplete suggestion in song form"""
+    def get_queryset(self):
+        qs = Song.objects.filter(publish=True)
+        if self.q:
+            query = Q(title__contains=self.q.title()) | Q(title__contains=self.q.lower()) | Q(title__contains=self.q.upper())
+            qs = qs.filter(query)
+        return qs
 
 class NewVoicing(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
     form_class = NewVoicingForm
