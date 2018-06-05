@@ -36,14 +36,26 @@
     </div>
 
     <div class="feeds text-center">
-        <h5>Feeds</h5>
+
         <div class="container">
-            <p>
-                <a aria-hidden="true" href="{% url 'song:midi_feed' %}">Midi</a> &#124;
-                <a aria-hidden="true" href="{% url 'song:song_feed' 'popular' %}">Popular</a> &#124;
-                <a aria-hidden="true" href="{% url 'song:song_feed' 'latest' %}">Latest</a> &#124;
-                <a aria-hidden="true" href="{% url 'blog:post_feed' %}">Blog</a>
-            </p>
+            <div class="row">
+                <div class="col-sm-6">
+                    <h5>Resources</h5>
+                    <p>
+                        <a aria-hidden="true" href="{% url 'douay-rheims:bible_index' %}">DRB</a>
+                    </p>
+                </div>
+
+                <div class="col-sm-6">
+                    <h5>Feeds</h5>
+                    <p>
+                        <a aria-hidden="true" href="{% url 'song:midi_feed' %}">Midi</a> &#124;
+                        <a aria-hidden="true" href="{% url 'song:song_feed' 'popular' %}">Popular</a> &#124;
+                        <a aria-hidden="true" href="{% url 'song:song_feed' 'latest' %}">Latest</a> &#124;
+                        <a aria-hidden="true" href="{% url 'blog:post_feed' %}">Blog</a>
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 

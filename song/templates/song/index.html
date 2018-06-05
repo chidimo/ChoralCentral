@@ -24,17 +24,17 @@
             {% endif %}
 
             <div class="row">
-                <div class="col-sm-12">
-                    <span class="song-lower float-left">
-                        <a class="btn btn-sm btn-primary icon-buttons" title="Ocassion: {{ song.ocassion|title }}">{{ song.ocassion|title }}</a>
-                        <a class="btn btn-sm btn-primary icon-buttons" title="Genre: {{ song.genre|title }}">{{ song.genre|title }}</a>
-                        <a class="btn btn-sm btn-primary icon-buttons" title="Voicing: {{ song.voicing|upper }}">{{ song.voicing|upper }}</a>
-                        <a class="btn btn-sm btn-primary icon-buttons" title="Language: {{ song.language|title }}">{{ song.language|title }}</a>
+                <div class="col-sm-12 song-index-meta">
+                    <span class="song-meta float-left">
+                        <span class="btn btn-sm btn-primary icon-buttons text-ocassion" title="Ocassion: {{ song.ocassion|title }}">{{ song.ocassion|title }}</span>
+                        <span class="btn btn-sm btn-primary icon-buttons text-genre" title="Genre: {{ song.genre|title }}">{{ song.genre|title }}</span>
+                        <span class="btn btn-sm btn-primary icon-buttons text-voicing" title="Voicing: {{ song.voicing|upper }}">{{ song.voicing|upper }}</span>
+                        <span class="btn btn-sm btn-primary icon-buttons text-language" title="Language: {{ song.language|title }}">{{ song.language|title }}</span>
                         {% for masspart in song.mass_parts.all %}
-                            <a class="btn btn-sm btn-primary icon-buttons" title="Masspart: {{ masspart|title }}">{{ masspart|title }}</a>
+                            <span class="btn btn-sm btn-primary icon-buttons text-masspart" title="Masspart: {{ masspart|title }}">{{ masspart|title }}</span>
                         {% endfor %}
                         {% for season in song.seasons.all %}
-                            <a class="btn btn-sm btn-primary icon-buttons" title="Season: {{ season|title }}">{{ season|title }}</a>
+                            <span class="btn btn-sm btn-primary icon-buttons text-season" title="Season: {{ season|title }}">{{ season|title }}</span>
                         {% endfor %}
                     </span>
                     <span class="float-right">

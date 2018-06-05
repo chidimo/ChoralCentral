@@ -1,6 +1,5 @@
 """Models"""
 
-import  datetime
 from django.db import models
 from django.shortcuts import reverse
 
@@ -31,7 +30,7 @@ class Language(TimeStampedModel):
 
 class Season(TimeStampedModel):
     SEASON_CHOICES = (
-        ("", "Select an option"),
+        ("", "Select a season"),
         ("ordinary time", "Ordinary Time"),
         ("advent", "Advent"),
         ("christmas", "Christmas"),
@@ -51,7 +50,7 @@ class Season(TimeStampedModel):
 
 class MassPart(TimeStampedModel):
     PART_CHOICES = (
-        ("", "Select an option"),
+        ("", "Select a mass part"),
         ("entrance", "Entrance"),
         ("kyrie", "Kyrie"),
         ("gloria", "Gloria"),
@@ -74,11 +73,13 @@ class MassPart(TimeStampedModel):
 
 class Song(TimeStampedModel):
     SONG_TYPE_CHOICES = (
-        ("sacred", "Sacred/Liturgical"),
+        ("sacred", "Sacred"),
+        ("liturgical", "Liturgical"),
         ("secular", "Secular"),
-        ("na", "na"))
+        ("na", "NA"),
+    )
     GENRE_CHOICES = (
-        ("", "Select an option"),
+        ("", "Select a genre"),
         ("anthem", "Anthem"),
         ("carol", "Carol"),
         ("chorus", "Chorus"),
@@ -94,6 +95,7 @@ class Song(TimeStampedModel):
         ("psalm", "Psalm"),
         ("requiem", "Requiem"),
         ("sequence", "Sequence"),
+        ("na", "NA"),
     )
     originator      = models.ForeignKey(SiteUser, on_delete=models.SET_NULL, null=True)
     voicing         = models.ForeignKey(Voicing, on_delete=models.CASCADE)
@@ -133,7 +135,7 @@ class Song(TimeStampedModel):
         return reverse('song:detail', args=[str(self.id), str(self.slug)])
 
     def get_absolute_uri(self):
-        return "http://www.choralcentral.net" + reverse('song:detail', args=[str(self.id), str(self.slug)])
+        return "https://www.choralcentral.net" + reverse('song:detail', args=[str(self.id), str(self.slug)])
 
     def __str__(self):
         return self.title
@@ -143,6 +145,7 @@ class Song(TimeStampedModel):
         return ", ".join(names)
 
     def should_index(self):
+        """Set which objects are indexed by Algolia"""
         return self.publish
 
     def save(self, *args, **kwargs):
