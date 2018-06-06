@@ -6,7 +6,7 @@ import django.db.models.deletion
 import django.utils.timezone
 import sorl.thumbnail.fields
 import universal.fields
-import universal.media_handlers
+from .. import utils
 import uuid
 
 
@@ -78,7 +78,7 @@ class Migration(migrations.Migration):
                 ('first_name', models.CharField(blank=True, max_length=30, null=True)),
                 ('last_name', models.CharField(blank=True, max_length=30, null=True)),
                 ('location', models.CharField(blank=True, max_length=100, null=True)),
-                ('avatar', sorl.thumbnail.fields.ImageField(blank=True, null=True, upload_to=universal.media_handlers.save_avatar)),
+                ('avatar', sorl.thumbnail.fields.ImageField(blank=True, null=True, upload_to=utils.save_avatar)),
                 ('quota', models.IntegerField(default=100)),
                 ('used', models.IntegerField(default=0)),
                 ('key', models.CharField(blank=True, default=uuid.uuid4, max_length=50, null=True, unique=True)),

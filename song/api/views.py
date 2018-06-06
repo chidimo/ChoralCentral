@@ -3,7 +3,7 @@ from django.utils.decorators import method_decorator
 
 from rest_framework import viewsets
 
-from universal.view_decorators import check_user_quota
+from ..utils import check_user_quota
 
 from ..models import Song
 from . import serializers

@@ -24,6 +24,7 @@ from django_addanother.views import CreatePopupMixin
 from pure_pagination.mixins import PaginationMixin
 from social_django.models import UserSocialAuth
 
+from .utils import check_recaptcha
 from .models import SiteUser, Role, SiteUserGroup, GroupMembership#, GroupJoinRequest
 from song.models import Song
 from blog.models import Post, Comment
@@ -34,7 +35,6 @@ from song_media.models import Score, Midi, VideoLink
 from .forms import (PassWordGetterForm, EmailAndPassWordGetterForm,
     SiteUserRegistrationForm, SiteUserEditForm, NewRoleForm, NewSiteUserGroupForm
 )
-from .utils import check_recaptcha
 
 CustomUser = get_user_model()
 

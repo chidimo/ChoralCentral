@@ -11,7 +11,8 @@ from siteuser.models import CustomUser
 class AuthorModelTests(TestCase):
 
     def setUp(self):
-        self.author = mommy.make('author.Author')
+        originator = mommy.make('siteuser.SiteUser')
+        self.author = mommy.make('author.Author', originator=originator)
 
     def test_model_representation(self):
         self.assertIsInstance(self.author, Author)
@@ -25,8 +26,9 @@ class AuthorModelTests(TestCase):
 class AuthorIndexViewTests(TestCase):
     @classmethod
     def setUpTestData(cls):
+        originator = mommy.make('siteuser.SiteUser')
         for _ in range(35):
-            mommy.make('author.Author')
+            mommy.make('author.Author', originator=originator)
 
     def test_view_url_exists_at_desired_location(self):
         resp = self.client.get('/author/')
@@ -59,8 +61,8 @@ class AuthorDetailViewTests(TestCase):
 
     def setUp(self):
         # set bio manually to avoid error being thrown by template tag markdown_format
-        self.author = mommy.make('author.Author', bio='Some bio text')
-        print('***pk:>>****', self.author.pk, '***slug:>>***', self.author.slug)
+        originator = mommy.make('siteuser.SiteUser')
+        self.author = mommy.make('author.Author', originator=originator, bio='Some bio text')
 
     def test_view_exists_at_desired_location(self):
         resp = self.client.get('/author/detail/{}/{}'.format(self.author.pk, self.author.slug))
@@ -88,21 +90,17 @@ class NewAuthorViewTests(TestCase):
         self.user.save()
 
         # create a siteuser so the view doesn't throw an error on reversing siteuser detail
-        self.siteuser = mommy.make(
-            'siteuser.SiteUser', user=self.user, screen_name='screen_name')
+        mommy.make('siteuser.SiteUser', user=self.user, screen_name='screen_name')
 
-    def test_redirects_if_not_logged_in(self):
+    def test_can_only_create_author_if_logged_in(self):
         resp = self.client.get(reverse('author:new'))
         self.assertRedirects(resp, '/users/login/?next=/author/new/')
 
-    def test_view_renders_correct_template(self):
         login = self.client.login(username='test@user.app', password='testpassword')
+        # check whether new author view is now accessible
         resp = self.client.get(reverse('author:new'))
         self.assertEqual(resp.status_code, 200)
 
-        # check user is logged in
+        # check correct user is logged in
         self.assertEqual(str(resp.context['user']), 'User - test@user.app')
         self.assertTemplateUsed(resp, 'author/new.html')
-
-    def new_author_has_correct_creator(self): #selenium test?
-        pass

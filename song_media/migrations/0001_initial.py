@@ -5,8 +5,7 @@ import django.db.models.deletion
 import django.utils.timezone
 import sorl.thumbnail.fields
 import universal.fields
-import universal.media_handlers
-
+from .. import utils
 
 class Migration(migrations.Migration):
 
@@ -27,7 +26,7 @@ class Migration(migrations.Migration):
                 ('fformat', models.CharField(blank=True, max_length=10)),
                 ('fsize', models.FloatField(blank=True, null=True)),
                 ('description', models.CharField(blank=True, max_length=200, null=True)),
-                ('media_file', models.FileField(blank=True, null=True, upload_to=universal.media_handlers.save_midi)),
+                ('media_file', models.FileField(blank=True, null=True, upload_to=utils.save_midi)),
                 ('downloads', models.IntegerField(default=0)),
                 ('drive_view_link', models.URLField(blank=True, null=True)),
                 ('drive_download_link', models.URLField(blank=True, null=True)),
@@ -43,8 +42,8 @@ class Migration(migrations.Migration):
                 ('created', universal.fields.AutoCreatedField(default=django.utils.timezone.now, editable=False, verbose_name='created')),
                 ('modified', universal.fields.AutoLastModifiedField(default=django.utils.timezone.now, editable=False, verbose_name='modified')),
                 ('fsize', models.FloatField(blank=True, null=True)),
-                ('media_file', models.FileField(null=True, upload_to=universal.media_handlers.save_score)),
-                ('thumbnail', models.ImageField(null=True, upload_to=universal.media_handlers.save_score_thumbnail)),
+                ('media_file', models.FileField(null=True, upload_to=utils.save_score)),
+                ('thumbnail', models.ImageField(null=True, upload_to=utils.save_score_thumbnail)),
                 ('downloads', models.IntegerField(default=0)),
                 ('drive_view_link', models.URLField(blank=True, null=True)),
                 ('drive_download_link', models.URLField(blank=True, null=True)),
@@ -79,7 +78,7 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(default='video title', max_length=100)),
                 ('youtube_likes', models.IntegerField(default=0)),
                 ('youtube_views', models.IntegerField(default=0)),
-                ('thumbnail', sorl.thumbnail.fields.ImageField(blank=True, null=True, upload_to=universal.media_handlers.save_video_thumbnail)),
+                ('thumbnail', sorl.thumbnail.fields.ImageField(blank=True, null=True, upload_to=utils.save_video_thumbnail)),
                 ('thumbnail_url', models.URLField(default='www.youtube.com')),
                 ('song', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='song.Song')),
                 ('uploader', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='siteuser.SiteUser')),

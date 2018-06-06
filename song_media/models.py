@@ -7,7 +7,7 @@ from song.models import Song
 from siteuser.models import SiteUser
 
 from universal.models import TimeStampedModel
-from universal.media_handlers import save_score, save_score_thumbnail, save_midi, save_video_thumbnail
+from .utils import save_score, save_score_thumbnail, save_midi, save_video_thumbnail
 
 class VocalPart(TimeStampedModel):
     name = models.CharField(max_length=30, default='Choir', unique=True)

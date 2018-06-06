@@ -1,15 +1,35 @@
 """Tests"""
-
+import unittest
 from random import choice
+from unittest import mock
 
 from django.test import TestCase
 from django.shortcuts import reverse
 
 from model_mommy import mommy
 
-# from .models import Voicing, Language, Season, MassPart, Song
+from .models import Song#, Voicing, Language, Season, MassPart
 from .models import Song
-# from siteuser.models import CustomUser
+
+class VoicingModelTests(TestCase):
+    def setUp(self):
+        self.voicing = mommy.make('song.Voicing', voicing='satb')
+
+    def test_model_representation(self):
+        self.assertEqual(self.voicing.__str__(), 'satb')
+
+    def test_absolute_url(self):
+        self.assertEqual(self.voicing.get_absolute_url(), reverse('song:index'))
+
+class LanguageModelTests(TestCase):
+    def setUp(self):
+        self.language = mommy.make('song.Language', language='igbo')
+
+    def test_model_representation(self):
+        self.assertEqual(self.language.__str__(), 'igbo')
+
+    def test_absolute_url(self):
+        self.assertEqual(self.language.get_absolute_url(), reverse('song:index'))
 
 class SongModelTests(TestCase):
     def setUp(self):
@@ -74,29 +94,30 @@ class SongIndexViewTests(TestCase):
 
 class SongDetailViewTests(TestCase):
     def setUp(self):
-        self.song = mommy.make('song.Song', title="some title", lyrics="Some lyrics")
+        originator = mommy.make('siteuser.SiteUser')
+        self.song = mommy.make('song.Song', originator=originator, title="some title", lyrics="Some lyrics")
     def tearDown(self):
         self.song.delete()
 
     def test_view_url_exists_at_desired_location(self):
-        print('aaaaaaaa', self.song.pk)
-        resp = self.client.get('/song/{}/{}'.format(self.song.pk, self.song.slug))
+        # resp = self.client.get('/song/{}/{}'.format(self.song.pk, self.song.slug))
+        resp = self.client.get(reverse('song:detail', args=[self.song.pk, self.song.slug]))
         self.assertEqual(resp.status_code, 200)
 
     def test_view_url_accessible_by_name(self):
         resp = self.client.get(reverse('song:detail', kwargs={'pk' : self.song.pk, 'slug' : self.song.slug}))
-        print('ccccc', self.song.pk)
         self.assertEqual(resp.status_code, 200)
 
     def test_view_renders_correct_template(self):
         resp = self.client.get(reverse('song:detail', kwargs={'pk' : self.song.pk, 'slug' : self.song.slug}))
         self.assertEqual(resp.status_code, 200)
-        print('bbbbb', self.song.pk)
         self.assertTemplateUsed(resp, 'song/detail.html')
 
     def test_view_has_correct_context(self):
         resp = self.client.get(reverse('song:detail', kwargs={'pk' : self.song.pk, 'slug' : self.song.slug}))
-        print('eeee', self.song.pk)
         self.assertEqual(resp.status_code, 200)
         self.assertTrue('song' in resp.context)
         self.assertTrue('share_form' in resp.context)
+
+if __name__ == "__main__":
+    unittest.main()

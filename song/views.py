@@ -25,7 +25,7 @@ from algoliasearch_django import get_adapter
 from dal import autocomplete
 import rules
 
-from universal.utils import render_to_pdf
+from .utils import render_to_pdf
 
 from siteuser.models import SiteUser
 

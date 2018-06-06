@@ -8,7 +8,7 @@ from siteuser.models import SiteUser
 
 from universal.models import TimeStampedModel
 from universal.fields import AutoSlugField
-from universal.utils import get_tempo_text
+from .utils import get_tempo_text
 
 class Voicing(TimeStampedModel):
     voicing = models.CharField(max_length=10, unique=True)

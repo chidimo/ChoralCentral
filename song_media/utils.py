@@ -1,10 +1,6 @@
 import os
 from django.template.defaultfilters import slugify
 
-def save_avatar(instance, filename):
-    _, ext = os.path.splitext(filename)
-    return "avatars/{}{}".format(instance.screen_name.lower(), ext)
-
 def save_score_thumbnail(instance, filename):
     _, ext = os.path.splitext(filename)
     return "scorethumbnail/{}_{}_{}{}".format(

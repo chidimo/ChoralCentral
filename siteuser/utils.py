@@ -1,5 +1,8 @@
 # source: https://simpleisbetterthancomplex.com/tutorial/2017/02/21/how-to-add-recaptcha-to-django-site.html
 
+import os
+from django.template.defaultfilters import slugify
+
 from functools import wraps
 
 from django.conf import settings
@@ -26,3 +29,7 @@ def check_recaptcha(view_func):
                 messages.error(request, 'Invalid reCAPTCHA. Please try again.')
         return view_func(request, *args, **kwargs)
     return _wrapped_view
+
+def save_avatar(instance, filename):
+    _, ext = os.path.splitext(filename)
+    return "avatars/{}{}".format(instance.screen_name.lower(), ext)
