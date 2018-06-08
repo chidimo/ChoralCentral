@@ -72,7 +72,7 @@ class MassPart(TimeStampedModel):
         return self.part
 
 class Song(TimeStampedModel):
-    SONG_TYPE_CHOICES = (
+    OCASSION_CHOICES = (
         ("sacred", "Sacred"),
         ("liturgical", "Liturgical"),
         ("secular", "Secular"),
@@ -118,8 +118,8 @@ class Song(TimeStampedModel):
     views           = models.IntegerField(default=0)
     like_count      = models.IntegerField(default=0)
 
-    ocassion        = models.CharField(max_length=30, choices=SONG_TYPE_CHOICES, default="sacred")
-    genre           = models.CharField(max_length=30, choices=GENRE_CHOICES, default="hymn")
+    ocassion        = models.CharField(max_length=30, choices=OCASSION_CHOICES)
+    genre           = models.CharField(max_length=30, choices=GENRE_CHOICES)
 
     authors         = models.ManyToManyField(Author)
     seasons         = models.ManyToManyField(Season)

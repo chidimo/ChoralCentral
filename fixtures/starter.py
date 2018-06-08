@@ -156,6 +156,8 @@ def songs_from_file():
     users = SiteUser.objects.all()
     voices = Voicing.objects.all()
     languages = Language.objects.all()
+    ocassion_choices = [each[0] for each in Song.OCASSION_CHOICES]
+    genre_choices = [each[0] for each in Song.GENRE_CHOICES]
 
     fn = os.path.join(settings.BASE_DIR, 'fixtures', 'data_hymnal.json')
     with open(fn, "r+") as rh:
@@ -192,6 +194,8 @@ def songs_from_file():
                 originator=originator,
                 title=title,
                 publish=choice([True, False]),
+                genre=choice(genre_choices),
+                ocassion=choice(ocassion_choices),
                 lyrics=song.get("lyrics", "No lyrics"),
                 scripture_reference=choice(SCRIPTURE),
                 tempo=randint(45, 250),
@@ -211,7 +215,7 @@ def songs():
     users = SiteUser.objects.all()
     voices = Voicing.objects.all()
     languages = Language.objects.all()
-    int(input("Enter number of songs to create: "))
+    numb = int(input("Enter number of songs to create: "))
 
     for _ in range(numb):
         lorem = LoremPysum()
