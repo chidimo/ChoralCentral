@@ -3,6 +3,7 @@ DEBUG = True
 
 # force https:
 SECURE_SSL_REDIRECT = True
+# INSTALLED_APPS += ['raven.contrib.django.raven_compat',]
 MIDDLEWARE += ['django.middleware.security.SecurityMiddleware']
 
 DATABASES = {

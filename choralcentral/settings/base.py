@@ -11,6 +11,15 @@ from django.contrib.messages import constants as messages
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+import raven
+RAVEN_CONFIG = {
+    'dsn': 'https://b6ecc578313140618b41d13175ed6152:88a27d13befa4ff69cd2fcec01bd6769@sentry.io/1222272',
+    # If you are using git, you can also automatically configure the
+    # release based on the git info.
+    'release': raven.fetch_git_sha(os.path.abspath(os.pardir)),
+}
+
+
 def get_env_variable(var_name):
     """Get the environment variable or return exception"""
     try:
@@ -126,6 +135,7 @@ THIRD_PARTY_APPS = [
     'django_extensions',
     'algoliasearch_django',
     'django_social_share',
+    'raven.contrib.django.raven_compat',
     'rules.apps.AutodiscoverRulesConfig',
 ]
 
