@@ -4,6 +4,7 @@ https://pypi.org/project/python-decouple/#why-not-just-use-environment-variables
 
 ## Priority
 
+1. Update site certificate
 1. Consolidate multiple variation of same author name (Handel, Haendel)
 1. Reset all app keys (facebook, twitter, google, yahoo)
 1. Turn off debug
@@ -12,6 +13,7 @@ https://pypi.org/project/python-decouple/#why-not-just-use-environment-variables
 1. Write as many tests as possible. Test management commands and song_media app
 1. Suggest names to user based on similarity with already present names. Create it if they're sure its not the same person.
 1. In siteusers index, count only published songs and posts
+1. Clear media folder
 
 ## To do
 

@@ -170,6 +170,10 @@ th, td {
     white-space: nowrap;
 }
 
+.object-delete-button {
+    margin-bottom: 25rem;
+}
+
 /*SONG FILTER BLOCK*/
 
 .filter-block {
@@ -572,15 +576,15 @@ span.download-count {
 }
 
 .song-index-meta span.text-genre:not(:disabled):not(.disabled) {
-    color: midnightblue;
+    color: indigo;
 }
 
 .song-index-meta span.text-voicing:not(:disabled):not(.disabled) {
-    color: midnightblue;
+    color: darkblue;
 }
 
 .song-index-meta span.text-language:not(:disabled):not(.disabled) {
-    color: midnightblue;
+    color: darkslategrey;
 }
 
 .song-index-meta span.text-masspart:not(:disabled):not(.disabled) {
@@ -591,9 +595,12 @@ span.download-count {
     color: purple;
 }
 
-SONG SUGGESTION BOX STYLING
+/*SONG SUGGESTION BOX STYLING*/
 
-.select2-container--default .select2-selection--single {
+.autosuggest-form {
+    background: red;
+    min-width: 100%;
+    background: blue;
     border-radius: .2rem;
     display: block;
     width: 100%;

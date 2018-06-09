@@ -248,6 +248,18 @@
 				$('[data-toggle="popover"]').popover()
 			})
 		</script>
+		<!-- Sentry JS SDK 2.1.+ required -->
+		<script src="https://cdn.ravenjs.com/2.3.0/raven.min.js"></script>
+		{% if request.sentry.id %}
+			<script>
+			Raven.showReportDialog({
+				eventId: '{{ request.sentry.id }}',
+
+				// use the public DSN (dont include your secret!)
+				dsn: 'https://b6ecc578313140618b41d13175ed6152@sentry.io/1222272'
+			});
+			</script>
+		{% endif %}
 
 	</body>
 </html>
