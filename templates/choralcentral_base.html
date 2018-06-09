@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta content="text/html">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<title>ChoralCentral | {% block title %}Happy choralling!{% endblock title %}</title>
+		<title>ChoralCentral | {% block title %}The best way to share sheet music{% endblock title %}</title>
 
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
@@ -171,7 +171,6 @@
 				</div>
 
 				<div class="col-sm-6 centerspread" role='main'>
-
 					{% block content_content %}
 					    content-block
 					{% endblock content_content %}
@@ -190,9 +189,11 @@
 			</div>
 		</div>
 
-		{% block footer %}
-			{% include "footer.html" %}
-		{% endblock footer %}
+		<footer>
+			{% block footer_top %}{% include "footer_top.html" %}{% endblock footer_top %}
+			{% block footer_middle %}{% include "footer_middle.html" %}{% endblock footer_middle %}
+			{% block footer_bottom %}{% include "footer_bottom.html" %}{% endblock footer_bottom %}
+		</footer>
 
 		{% endblock body %}
 

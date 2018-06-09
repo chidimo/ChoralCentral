@@ -171,6 +171,8 @@
                     <th>Part</th>
                     <th>Notation</th>
                     <th>Size</th>
+                    <th><i class="fas fa-download"></i></th>
+                    <th>Added</th>
                     <th><i class="fas fa-cog"></i></th>
                 </tr>
 
@@ -185,6 +187,8 @@
                         <td>{{ score.part }}</td>
                         <td>{{ score.notation }}</td>
                         <td>{{ score.fsize|filesizeformat }}</td>
+                        <td>{{ score.downloads }}</td>
+                        <td>{{ score.created|date }}</td>
                         <td>{% if user == score.uploader.user %}<a href="{% url 'song-media:delete_score' score.pk %}"><i class="fas fa-trash"></i></a>{% endif %}</td>
                     </tr>
                 {% endfor %}
@@ -210,6 +214,8 @@
                     <th>Part</th>
                     <th>Format</th>
                     <th>Size</th>
+                    <th><i class="fas fa-download"></i></th>
+                    <th>Added</th>
                     <th><i class="fas fa-cog"></i></th>
                 </tr>
 
@@ -224,6 +230,8 @@
                             <td>{{ midi.part }}</td>
                             <td>{{ midi.fformat }}</td>
                             <td>{{ midi.fsize|filesizeformat }}</td>
+                            <td>{{ midi.downloads }}</td>
+                            <td>{{ midi.created|date }}</td>
                             <td>{% if user == midi.uploader.user %}<a href="{% url 'song-media:delete_midi' midi.pk %}"><i class="fas fa-trash"></i></a>{% endif %}</td>
                         </tr>
                     {% endfor %}

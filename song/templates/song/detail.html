@@ -162,7 +162,11 @@
 
                 <div class="row score-list-meta-container">
                     <div class="container">
-                        <a class="btn btn-sm btn-primary icon-buttons" href="{{ score.thumbnail.url }}" title="Preview first page">Preview</a>
+                        {% if score.thumbnail %}
+                            <a class="btn btn-sm btn-primary icon-buttons" href="{{ score.thumbnail.url }}" title="Preview first page">Preview</a>
+                        {% else %}
+                        <span class="btn btn-sm btn-primary icon-buttons" title="No preview">No preview</span>
+                        {% endif %}
 
                         <span class="btn btn-sm btn-primary icon-buttons" title="{{ score.part|title }}">{{ score.part }}</span>
                         <span class="btn btn-sm btn-primary icon-buttons" title="{{ score.notation|title }}">{{ score.notation }}</span>

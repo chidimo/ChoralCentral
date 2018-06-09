@@ -62,20 +62,9 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
 
         relative_media_path = self.object.media_file.url
         full_media_path = settings.BASE_DIR + relative_media_path
-        thumbnail_name = full_media_path.replace('.pdf', '')
 
-        # generate thumbnail
-        cmd = "pdftoppm -png -f 1 -singlefile {} {}".format(full_media_path, thumbnail_name)
-        os.system(cmd)
-
-        thumbnail_file = thumbnail_name + '.png'
-
-        content = File(open(thumbnail_file, "rb"))
         self.object.fsize = os.path.getsize(full_media_path)
-        self.object.thumbnail.save(song.title + '.png', content, save=True)
         self.object.save()
-        os.remove(thumbnail_file)
-
         messages.success(self.request, "Score successfully added to {}".format(song.title))
         return redirect(song.get_absolute_url())
 
@@ -94,10 +83,8 @@ class DeleteScore(LoginRequiredMixin, generic.DeleteView):
     template_name = "song_media/score_delete.html"
 
     def get_success_url(self):
-        score_object = self.get_object()
-        song_pk = score_object.song.pk
-        song_slug = score_object.song.slug
-        return reverse("song:detail", kwargs={'pk' : song_pk, 'slug' : song_slug})
+        return reverse('siteuser:library', kwargs={'pk' : self.request.user.siteuser.pk, 'slug' : self.request.user.siteuser.slug})
+        # return reverse("song:detail", kwargs={'pk' : song_pk, 'slug' : song_slug})
 
 class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):
     template_name = 'song_media/midi_new.html'
@@ -164,10 +151,7 @@ class DeleteMidi(LoginRequiredMixin, generic.DeleteView):
     template_name = "song_media/midi_delete.html"
 
     def get_success_url(self):
-        midi_object = self.get_object()
-        song_pk = midi_object.song.pk
-        song_slug = midi_object.song.slug
-        return reverse("song:detail", kwargs={'pk' : song_pk, 'slug' : song_slug})
+        return reverse('siteuser:library', kwargs={'pk' : self.request.user.siteuser.pk, 'slug' : self.request.user.siteuser.slug})
 
 class NewVideoLink(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):
     model = VideoLink

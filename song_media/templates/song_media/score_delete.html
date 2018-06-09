@@ -6,12 +6,14 @@
 
 <h2>Delete score</h2>
 
-<p>Are you sure you want to delete <span class="text-danger">{{ object }}</span> sheet?</p>
+<p>Please confirm if you really want to delete <span class="text-danger">{{ object }}</span> sheet?</p>
+<p>This score has been downloaded {{ object.downloads }} times</p>
 
 <form action="" method="POST">
     {% csrf_token %}
-    <input class="bg-danger btn" type="submit" action="" value="Yes, Delete" style="color:white;"/>
+    <input class="bg-danger btn object-delete-button" type="submit" action="" value="Yes, Delete" style="color:white;"/>
 </form>
     
 {% endblock content_content %}
+{% block footer_top %}{% endblock footer_top %}
 

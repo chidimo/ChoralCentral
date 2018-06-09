@@ -97,10 +97,10 @@ class SiteUserCommonLocation(PaginationMixin, generic.ListView):
         context['location'] = self.kwargs['location']
         return context
 
-class SongLoveBirds(PaginationMixin, generic.ListView):
+class SongStarGivers(PaginationMixin, generic.ListView):
     model = SiteUser
     context_object_name = 'siteuser_list'
-    template_name = 'siteuser/love_birds_song.html'
+    template_name = 'siteuser/stargazers_song.html'
     paginate_by = 24
 
     def get_queryset(self):
@@ -108,14 +108,14 @@ class SongLoveBirds(PaginationMixin, generic.ListView):
         return song.likes.all()
 
     def get_context_data(self, *args):
-        context = super(SongLoveBirds, self).get_context_data(*args)
+        context = super(SongStarGivers, self).get_context_data(*args)
         context['song'] = Song.objects.get(pk=self.kwargs['pk'])
         return context
 
-class PostLoveBirds(PaginationMixin, generic.ListView):
+class PostStarGivers(PaginationMixin, generic.ListView):
     model = SiteUser
     context_object_name = 'siteuser_list'
-    template_name = 'siteuser/love_birds_post.html'
+    template_name = 'siteuser/stargazers_post.html'
     paginate_by = 24
 
     def get_queryset(self):
@@ -123,14 +123,14 @@ class PostLoveBirds(PaginationMixin, generic.ListView):
         return post.likes.all()
 
     def get_context_data(self, *args):
-        context = super(PostLoveBirds, self).get_context_data(*args)
+        context = super(PostStarGivers, self).get_context_data(*args)
         context['post'] = Post.objects.get(pk=self.kwargs['pk'], slug=self.kwargs['slug'])
         return context
 
 class CommentLoveBirds(PaginationMixin, generic.ListView):
     model = SiteUser
-    context_object_name = 'comment_love_birds'
-    template_name = 'siteuser/love_birds_comment.html'
+    context_object_name = 'siteuser_list'
+    template_name = 'siteuser/stargazers_comment.html'
     paginate_by = 24
 
     def get_queryset(self):
@@ -354,8 +354,8 @@ class SiteUserLibrary(LoginRequiredMixin, generic.DetailView):
 
         context['user_requests'] = Request.objects.filter(originator=siteuser)
         context['user_authors'] = Author.objects.filter(originator=siteuser)
-        context['scores'] = Score.objects.filter(uploader=siteuser)
-        context['midis'] = Midi.objects.filter(uploader=siteuser)
+        context['scores'] = Score.objects.filter(uploader=siteuser).order_by("song", "-fsize", "-created", "downloads")
+        context['midis'] = Midi.objects.filter(uploader=siteuser).order_by("song", "-fsize", "-created", "downloads")
         context['user_videos'] = VideoLink.objects.filter(uploader=siteuser)
         return context
 

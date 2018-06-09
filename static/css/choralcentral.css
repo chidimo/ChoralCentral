@@ -170,6 +170,10 @@ th, td {
     white-space: nowrap;
 }
 
+.object-delete-button {
+    margin-bottom: 25rem;
+}
+
 /*SONG FILTER BLOCK*/
 
 .filter-block {
