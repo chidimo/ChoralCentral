@@ -30,29 +30,26 @@ class NewVocalPart(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, ge
     model = VocalPart
     form_class = NewVocalPartForm
     template_name = 'song_media/part_new.html'
-    success_message = "Vocal part added successfully !"
+    success_message = "Vocal part added successfully."
 
 class NewScoreNotation(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):
     model = ScoreNotation
     form_class = NewScoreNotationForm
     template_name = 'song_media/notation_new.html'
-    success_message = "Notation added successfully !"
+    success_message = "Notation added successfully."
 
 class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     template_name = 'song_media/score_new.html'
     form_class = NewScoreForm
 
-    def _pk(self):
-        return self.kwargs.get('pk', None)
-
     def get_context_data(self, *args, **kwargs):
         context = super(NewScore, self).get_context_data(*args, **kwargs)
-        context['song'] = Song.objects.get(pk=self._pk())
+        context['song'] = Song.objects.get(pk=self.kwargs.get('pk', None))
         return context
 
     def get_form_kwargs(self):
         kwargs = super(NewScore, self).get_form_kwargs()
-        kwargs['pk'] = self._pk()
+        kwargs['pk'] = self.kwargs.get('pk', None)
         return kwargs
 
     def form_valid(self, form):
@@ -84,23 +81,19 @@ class DeleteScore(LoginRequiredMixin, generic.DeleteView):
 
     def get_success_url(self):
         return reverse('siteuser:library', kwargs={'pk' : self.request.user.siteuser.pk, 'slug' : self.request.user.siteuser.slug})
-        # return reverse("song:detail", kwargs={'pk' : song_pk, 'slug' : song_slug})
 
 class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):
     template_name = 'song_media/midi_new.html'
     form_class = NewMidiForm
 
-    def _pk(self):
-        return self.kwargs.get('pk', None)
-
     def get_context_data(self, *args, **kwargs):
         context = super(NewMidi, self).get_context_data(*args, **kwargs)
-        context['song'] = Song.objects.get(pk=self._pk())
+        context['song'] = Song.objects.get(pk=self.kwargs.get('pk', None))
         return context
 
     def get_form_kwargs(self):
         kwargs = super(NewMidi, self).get_form_kwargs()
-        kwargs['pk'] = self._pk()
+        kwargs['pk'] = self.kwargs.get('pk', None)
         return kwargs
 
     def form_valid(self, form):
@@ -164,12 +157,12 @@ class NewVideoLink(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, ge
 
     def get_context_data(self, *args, **kwargs):
         context = super(NewVideoLink, self).get_context_data(*args, **kwargs)
-        context['song'] = Song.objects.get(pk=self._pk())
+        context['song'] = Song.objects.get(pk=self.kwargs.get('pk', None))
         return context
 
     def get_form_kwargs(self):
         kwargs = super(NewVideoLink, self).get_form_kwargs()
-        kwargs['pk'] = self._pk()
+        kwargs['pk'] = self.kwargs.get('pk', None)
         return kwargs
 
     def form_valid(self, form):

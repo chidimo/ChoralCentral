@@ -39,7 +39,7 @@ class Score(TimeStampedModel):
     part = models.ForeignKey(VocalPart, on_delete=models.CASCADE)
     notation = models.ForeignKey(ScoreNotation, on_delete=models.CASCADE)
     fsize = models.FloatField(null=True,blank=True)
-    media_file = models.FileField(upload_to=save_score, null=True)
+    media_file = models.FileField(upload_to=save_score)
     thumbnail = models.ImageField(upload_to=save_score_thumbnail, null=True)
     downloads = models.IntegerField(default=0)
     drive_view_link = models.URLField(null=True, blank=True)
@@ -53,7 +53,7 @@ class Score(TimeStampedModel):
         return "{}-{}-{}".format(self.song.title, self.part, self.notation)
 
     def get_absolute_url(self):
-        return reverse('song:detail', kwargs={'pk' : (self.song.id), 'slug' : self.song.slug})
+        return reverse('song:detail', kwargs={'pk' : self.song.id, 'slug' : self.song.slug})
 
     def score_download_path(self):
         return "http://www.choralcentral.net" + self.media_file.url

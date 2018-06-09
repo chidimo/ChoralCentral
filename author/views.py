@@ -43,7 +43,7 @@ class AuthorDetail(generic.ListView):
 class NewAuthor(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):
     form_class = NewAuthorForm
     template_name = 'author/new.html'
-    success_message = "Author added successfully !"
+    success_message = "Author added successfully."
 
     def form_valid(self, form):
         form.instance.originator = SiteUser.objects.get(user=self.request.user)
@@ -53,10 +53,10 @@ class AuthorEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     model = Author
     form_class = AuthorEditForm
     template_name = 'author/edit.html'
-    success_message = "Author updated successfully !"
+    success_message = "Author updated successfully."
 
 class DeleteAuthor(SuccessMessageMixin, generic.DeleteView):
     model = Author
     success_url = reverse_lazy('song:index')
     template_name = "confirm_delete.html"
-    success_message = "Author deleted successfully !"
+    success_message = "Author deleted successfully."

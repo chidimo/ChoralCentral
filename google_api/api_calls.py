@@ -51,15 +51,14 @@ except NameError:
     pass
 
 def create_song_folder(folder_name):
-    """
-    Return folder id
-    """
+    """Return folder id"""
 
     file_metadata = {
         'name': folder_name,
         'mimeType': 'application/vnd.google-apps.folder',
         'folderColorRgb' : choice(DRIVE_FOLDER_COLORS),
     }
+    print(file_metadata)
 
     folder = AUTH_DRIVE.files().create(
         body=file_metadata,

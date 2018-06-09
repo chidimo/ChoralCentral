@@ -35,9 +35,10 @@ class Season(TimeStampedModel):
         ("advent", "Advent"),
         ("christmas", "Christmas"),
         ("lent", "Lent"),
-        ("Easter", "Easter"),
+        ("easter", "Easter"),
         ("pentecost", "Pentecost"),
-        ("na", "NA")
+        ('any', "Any"),
+        ("na", "NA"),
     )
     season = models.CharField(max_length=15, choices=SEASON_CHOICES, unique=True)
     about = models.TextField()

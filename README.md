@@ -20,7 +20,6 @@ https://pypi.org/project/python-decouple/#why-not-just-use-environment-variables
 1. Send weekly summary of activities upon subscription
 1. Download user comments
 1. Display comment replies properly
-1. Add Douay-Rheims bible
 1. Revisit request status
 1. Cache
 1. Explore delivering midis via podcast

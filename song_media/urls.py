@@ -5,14 +5,14 @@ from . import views
 
 app_name = 'song-media'
 urlpatterns = [
-    path('new-score/', views.NewScore.as_view(), name='new_score'),
-    path('new-score-<int:pk>/', views.NewScore.as_view(), name='score_add_song'),
+    # path('new-score/', views.NewScore.as_view(), name='new_score'),
+    path('new-score/song-<int:pk>/', views.NewScore.as_view(), name='score_add_song'),
     path('view-score/<int:pk>/', views.show_score, name='show_score'),
 ]
 
 urlpatterns += [
     path('new/sound/', views.NewMidi.as_view(), name='midi_add'),
-    path('new/sound/<int:pk>/', views.NewMidi.as_view(), name='midi_add_song'),
+    path('new-sound/score-<int:pk>/', views.NewMidi.as_view(), name='midi_add_song'),
     path('play-mp3/<int:pk>/', views.play_mp3, name='playmp3'),
     path('download-sound/<int:pk>/', views.download_midi, name='download_midi'),
 ]
@@ -24,7 +24,7 @@ urlpatterns += [
 
 urlpatterns += [
     path('new/video/', views.NewVideoLink.as_view(), name='videolink_new'),
-    path('new/video/<int:pk>/', views.NewVideoLink.as_view(), name='add_videolink_to_song'),
+    path('new-video/song-<int:pk>/', views.NewVideoLink.as_view(), name='add_videolink_to_song'),
 ]
 
 urlpatterns += [

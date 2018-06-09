@@ -1,11 +1,14 @@
 """Tests"""
 
+import unittest
+
 from django.test import TestCase
 from django.shortcuts import reverse
 
 from model_mommy import mommy
 
 from .models import Author
+from .forms import NewAuthorForm
 from siteuser.models import CustomUser
 
 class AuthorModelTests(TestCase):
@@ -13,6 +16,9 @@ class AuthorModelTests(TestCase):
     def setUp(self):
         originator = mommy.make('siteuser.SiteUser')
         self.author = mommy.make('author.Author', originator=originator)
+
+    def tearDown(self):
+        self.author.delete()
 
     def test_model_representation(self):
         self.assertIsInstance(self.author, Author)
@@ -24,11 +30,19 @@ class AuthorModelTests(TestCase):
         self.assertEqual(self.author.get_absolute_url(), abs_url)
 
 class AuthorIndexViewTests(TestCase):
-    @classmethod
-    def setUpTestData(cls):
+
+    @classmethod    
+    def setUpClass(cls):
+        super(AuthorIndexViewTests, cls).setUpClass()
         originator = mommy.make('siteuser.SiteUser')
         for _ in range(35):
             mommy.make('author.Author', originator=originator)
+
+    @classmethod
+    def tearDownClass(cls):
+        for each in Author.objects.all():
+            each.delete()
+        super(AuthorIndexViewTests, cls).tearDownClass()     
 
     def test_view_url_exists_at_desired_location(self):
         resp = self.client.get('/author/')
@@ -64,6 +78,9 @@ class AuthorDetailViewTests(TestCase):
         originator = mommy.make('siteuser.SiteUser')
         self.author = mommy.make('author.Author', originator=originator, bio='Some bio text')
 
+    def tearDown(self):
+        self.author.delete()
+
     def test_view_exists_at_desired_location(self):
         resp = self.client.get('/author/detail/{}/{}'.format(self.author.pk, self.author.slug))
         self.assertEqual(resp.status_code, 200)
@@ -89,14 +106,17 @@ class NewAuthorViewTests(TestCase):
         self.user.set_password("testpassword")
         self.user.save()
 
-        # create a siteuser so the view doesn't throw an error on reversing siteuser detail
-        mommy.make('siteuser.SiteUser', user=self.user, screen_name='screen_name')
+        # create siteuser so the view doesn't throw an error on reversing siteuser detail present in the base url
+        self.originator  = mommy.make('siteuser.SiteUser', user=self.user, screen_name='screen_name')
+        self.author_count = Author.objects.count()
 
-    def test_can_only_create_author_if_logged_in(self):
+    def test_new_author_view_only_accessible_when_logged_in(self):
         resp = self.client.get(reverse('author:new'))
+        self.assertEqual(resp.status_code, 302)
         self.assertRedirects(resp, '/users/login/?next=/author/new/')
 
         login = self.client.login(username='test@user.app', password='testpassword')
+        
         # check whether new author view is now accessible
         resp = self.client.get(reverse('author:new'))
         self.assertEqual(resp.status_code, 200)
@@ -104,3 +124,19 @@ class NewAuthorViewTests(TestCase):
         # check correct user is logged in
         self.assertEqual(str(resp.context['user']), 'User - test@user.app')
         self.assertTemplateUsed(resp, 'author/new.html')
+
+
+        # post some data
+        data = {"author_type" : "lyricist", "first_name" : "first name", "last_name" : "last name", "bio" :"some random text"}
+        resp = self.client.post('/author/new/', data)
+
+        print("+++++", resp['Location'])
+
+        # self.assertEqual(resp['Location'], '/author/detail/1/last-name-first-name')
+        self.assertEqual(resp.status_code, 302)
+        self.assertEqual(Author.objects.count(), self.author_count+1)
+
+
+class NewAuthorFormTests(TestCase):
+    pass
+

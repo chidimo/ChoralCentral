@@ -49,10 +49,13 @@ class SongModelTests(TestCase):
 class SongIndexViewTests(TestCase):
     @classmethod
     def setUpTestData(cls):
-        for _ in range(26):
-            mommy.make('song.Song', publish=True)
-        for _ in range(25):
-            mommy.make('song.Song', publish=False)
+        mommy.make('song.Song', publish=True, _quantity=27)
+        mommy.make('song.Song', publish=False, _quantity=27)
+
+    def test_total_songs_created(self):
+        """Total number of songs created is 27+27=54"""
+        songs = Song.objects.count()
+        self.assertEqual(songs, 54)
 
     def test_view_url_exists_at_desired_location(self):
         resp = self.client.get('/')
@@ -73,22 +76,22 @@ class SongIndexViewTests(TestCase):
         self.assertTrue('songs' in resp.context)
         self.assertTrue('form' in resp.context)
 
-    def test_pagination_is_correct(self):
+    def test_pagination(self):
+        """Test pagination"""
         resp = self.client.get(reverse('song:index'))
         self.assertEqual(resp.status_code, 200)
         self.assertTrue('is_paginated' in resp.context)
         self.assertTrue(resp.context['is_paginated'])
+        # 25 songs on this page
         self.assertTrue(len(resp.context['songs']) == 25)
 
-    def test_all_published_songs_are_listed(self):
+        # test page 2
         resp = self.client.get(reverse('song:index') + "?page=2")
         self.assertEqual(resp.status_code, 200)
-        self.assertTrue('is_paginated' in resp.context)
-        self.assertTrue(resp.context['is_paginated'])
-        self.assertTrue(len(resp.context['songs']) == 1)
+        # only two songs on this page
+        self.assertTrue(len(resp.context['songs']) == 2)
 
-    def test_there_is_no_data_after_page_2(self):
-        """Test that only songs with "publish=True" are in the view"""
+        # test page 3
         resp = self.client.get(reverse('song:index') + "?page=3")
         self.assertEqual(resp.status_code, 404)
 
