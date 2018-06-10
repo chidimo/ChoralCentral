@@ -136,8 +136,8 @@ class NewSongForm(forms.ModelForm):
         super(NewSongForm, self).__init__(*args, **kwargs)
         self.fields['language'].initial = Language.objects.get(language='english')
         self.fields['voicing'].initial = Voicing.objects.get(voicing='satb')
-        self.fields['ocassion'].initial = "sacred"
-        self.fields['genre'].initial = "hymn"
+        self.fields['ocassion'].initial = "NA"
+        self.fields['genre'].initial = "NA"
         self.fields['compose_date'].initial = "1685-02-23"
         self.fields['tempo'].initial = 100
         self.fields['bpm'].initial = 4
