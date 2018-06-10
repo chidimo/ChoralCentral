@@ -102,6 +102,14 @@ class NewMidiForm(forms.ModelForm):
         self.fields['song'].queryset = Song.objects.filter(pk=pk)
         self.fields['song'].initial = Song.objects.get(pk=pk)
 
+    def clean(self):
+        media_file = self.cleaned_data['media_file']
+        fsize = media_file.size/1048576
+        max_size = 2097152/1048576 # limit size to 2MB
+        if fsize > max_size:
+            msg = "File is {:.2f}MB. Maximum allowed file size is {:.2f}MB".format(fsize, max_size)
+            self.add_error("media_file", msg)
+
 class NewVideoLinkForm(forms.ModelForm):
     class Meta:
         model = VideoLink
@@ -112,14 +120,6 @@ class NewVideoLinkForm(forms.ModelForm):
             'video_link' : forms.URLInput(
                 attrs={'class' : 'form-control', 'placeholder' : 'Video Url'})
         }
-
-    def clean(self):
-        media_file = self.cleaned_data['media_file']
-        fsize = media_file.size/1048576
-        max_size = 2097152/1048576# limit size to 5MB
-        if fsize > max_size:
-            msg = "File is {:.2f}MB. Maximum allowed file size is {:.2f}MB".format(fsize, max_size)
-            self.add_error("media_file", msg)
 
     def __init__(self, *args, **kwargs):
         pk = kwargs.pop('pk')

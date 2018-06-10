@@ -1,10 +1,14 @@
 # https://support.google.com/cloud/answer/7454865
 import os
+import logging
 from random import choice
 import google.oauth2.credentials
 from googleapiclient.discovery import build
 from apiclient.http import MediaFileUpload
 # from googleapiclient.errors import HttpError
+
+# silence 'file_cache is unavailable when using oauth2client >= 4.0.0 or google-auth'
+logging.getLogger('googleapiclient.discovery_cache').setLevel(logging.ERROR)
 
 DRIVE_FOLDER_COLORS = [
     "#ac725e", "#d06b64", "#f83a22", "#fa573c", "#ff7537", "#ffad46", "#fad165",
@@ -16,78 +20,71 @@ DRIVE_API_KEY = 'AIzaSyBMNx5aAONSIqm3NCFrC_YoEoDT98bwKjE'
 DRIVE_API_VERSION = "v3"
 DRIVE_API_SERVICE_NAME = "drive"
 DRIVE_AUTHORIZED_USER_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'credentials/drive_credentials.json')
+DRIVE_SCOPES = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.file ', 'https://www.googleapis.com/auth/drive.appdata']
 
 YOUTUBE_API_KEY = 'AIzaSyBMNx5aAONSIqm3NCFrC_YoEoDT98bwKjE'
 YOUTUBE_API_VERSION = "v3"
 YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_AUTHORIZED_USER_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'credentials/youtube_credentials.json')
-API_ONLY_YOUTUBE = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=YOUTUBE_API_KEY)
+YOUTUBE_SCOPES = ['https://www.googleapis.com/auth/youtube.forcessl']
 
 CHORAL_CENTRAL_CHANNEL_ID = 'UCetUQLixYoAu3iQnXS7H0_Q'
 
-try:
-    drive_credentials = google.oauth2.credentials.Credentials.from_authorized_user_file(
-        DRIVE_AUTHORIZED_USER_FILE,
-        scopes = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.file ', 'https://www.googleapis.com/auth/drive.appdata'])
-except FileNotFoundError:
-    print('Credentials not created')
-    pass
+def construct_youtube_api_only_service():
+    return build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=YOUTUBE_API_KEY)
 
-try:
-    AUTH_DRIVE = build(DRIVE_API_SERVICE_NAME, DRIVE_API_VERSION, credentials=drive_credentials)
-except NameError:
-    pass
+def construct_drive_service():
+    try:
+        drive_credentials = google.oauth2.credentials.Credentials.from_authorized_user_file(
+            DRIVE_AUTHORIZED_USER_FILE, scopes=DRIVE_SCOPES)
+    except FileNotFoundError:
+        print('Drive credentials not created')
+        pass
+    if drive_credentials:
+        return build(DRIVE_API_SERVICE_NAME, DRIVE_API_VERSION, credentials=drive_credentials, cache_discovery=False)
+    else:
+        return None
 
-try:
-    youtube_credentials = google.oauth2.credentials.Credentials.from_authorized_user_file(
-        YOUTUBE_AUTHORIZED_USER_FILE, scopes = ['https://www.googleapis.com/auth/youtube.forcessl'])
-except FileNotFoundError:
-    print('Credentials not created')
-    pass
+def construct_youtube_service():
+    try:
+        youtube_credentials = google.oauth2.credentials.Credentials.from_authorized_user_file(
+            YOUTUBE_AUTHORIZED_USER_FILE, scopes=YOUTUBE_SCOPES)
+    except FileNotFoundError:
+        print('YouTube credentials not created')
+        pass
+    if youtube_credentials:
+        return build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, credentials=youtube_credentials, cache_discovery=False)
+    else:
+        return None
 
-try:
-    AUTH_YOUTUBE = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, credentials=youtube_credentials)
-except NameError:
-    pass
+# DRIVE_SERVICE = construct_drive_service()
+# YOUTUBE_SERVICE = construct_youtube_service()
 
 def create_song_folder(folder_name):
-    """Return folder id"""
-
+    """Create folder and return its id"""
     file_metadata = {
         'name': folder_name,
         'mimeType': 'application/vnd.google-apps.folder',
         'folderColorRgb' : choice(DRIVE_FOLDER_COLORS),
     }
-    print(file_metadata)
+    request = construct_drive_service().files().create(body=file_metadata, fields="id")
+    response = request.execute()
+    return response.get("id")
 
-    folder = AUTH_DRIVE.files().create(
-        body=file_metadata,
-        fields="id"
-        ).execute()
-    return folder.get("id")
-
-def upload_pdf_to_drive(score_data, file_location_on_disk):
-    file_metadata = score_data
-    media = MediaFileUpload(
-        file_location_on_disk, mimetype='application/pdf')
-
-    file = AUTH_DRIVE.files().create(
-        body=file_metadata,
-        media_body=media,
-        fields="id,size,webViewLink,webContentLink,thumbnailLink,hasThumbnail"
-        ).execute()
-    return file
+def upload_pdf_to_drive(file_metadata, file_location_on_disk):
+    media = MediaFileUpload(file_location_on_disk, mimetype='application/pdf')
+    request = construct_drive_service().files().create(body=file_metadata, media_body=media,
+        fields="id,size,webViewLink,webContentLink,thumbnailLink,hasThumbnail")
+    response = request.execute()
+    return response
 
 def upload_audio_to_drive(score_data, file_location_on_disk, mimetype):
     file_metadata = score_data
     media_body = MediaFileUpload(
         file_location_on_disk, mimetype=mimetype)
-
-    response = AUTH_DRIVE.files().create(
-        body=file_metadata,
-        media_body=media_body,
-        fields="id,size,webViewLink,webContentLink,thumbnailLink,hasThumbnail"
-        ).execute()
+    request = construct_drive_service().files().create(body=file_metadata, media_body=media_body,
+        fields="id,size,webViewLink,webContentLink,thumbnailLink,hasThumbnail")
+    response = request.execute()
     return response
 
 def share_file_permission(file_id):
@@ -96,11 +93,9 @@ def share_file_permission(file_id):
         'role' : 'reader',
         'type' : 'anyone',
         }
-    permission = AUTH_DRIVE.permissions().create(
-        fileId=file_id,
-        body=body,
-        ).execute()
-    return permission
+    request = construct_drive_service().permissions().create(fileId=file_id, body=body)
+    response = request.execute()
+    return response
 
 # Youtube API
 
@@ -110,13 +105,14 @@ def get_youtube_video_id(video_url):
 
 def get_video_information(video_ids, part='snippet,contentDetails,statistics'):
     """Get information about a single youtube video"""
-    response = API_ONLY_YOUTUBE.videos().list(
-    part=part, id=video_ids).execute()
+    request = construct_youtube_api_only_service().videos().list(part=part, id=video_ids)
+    response = request.execute()
     return response
 
 def get_playlist_using_id(playlist_id, part='snippet,status'):
     """Return a playlist id if such a playlist exists. Else return None"""
-    response = AUTH_YOUTUBE.playlists().list(part=part, id=playlist_id).execute()
+    request = construct_youtube_service().playlists().list(part=part, id=playlist_id)
+    response = request.execute()
     try:
         return response['items'][0]['id']
     except KeyError:
@@ -128,7 +124,7 @@ def create_playlist(title, part='snippet,status'):
     resource = {}
     resource['snippet'] = {'title' : title, 'description' : 'playlist for {}'.format(title)}
     resource['status'] = {'privacyStatus' : 'public'}
-    response = AUTH_YOUTUBE.playlists().insert(part=part, body=resource).execute()
+    response = construct_youtube_service().playlists().insert(part=part, body=resource).execute()
     return response['id']
 
 def get_playlist_id(playlist_id, title):
@@ -143,10 +139,13 @@ def get_playlist_id(playlist_id, title):
 def add_video_to_playlist(video_id, playlist_id):
     """Add a youtube video to a youtube playlist"""
     resource = {}
-
     resource['snippet'] = {
         'playlistId': playlist_id,
         'resourceId': {'kind' : 'youtube#video', 'videoId': video_id}
     }
-    response = AUTH_YOUTUBE.playlistItems().insert(body=resource,part='snippet').execute()
+    request = construct_youtube_service().playlistItems().insert(body=resource, part='snippet')
+    response = request.execute()
     return response
+
+if __name__ == "__main__":
+    pass

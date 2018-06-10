@@ -110,33 +110,47 @@ class NewAuthorViewTests(TestCase):
         self.originator  = mommy.make('siteuser.SiteUser', user=self.user, screen_name='screen_name')
         self.author_count = Author.objects.count()
 
-    def test_new_author_view_only_accessible_when_logged_in(self):
+    def test_new_author_view(self):
         resp = self.client.get(reverse('author:new'))
+
+        # assert view redirects for non-logged in user
         self.assertEqual(resp.status_code, 302)
         self.assertRedirects(resp, '/users/login/?next=/author/new/')
 
+        # login
         login = self.client.login(username='test@user.app', password='testpassword')
         
-        # check whether new author view is now accessible
+        # assert view accessible after log in
         resp = self.client.get(reverse('author:new'))
         self.assertEqual(resp.status_code, 200)
 
-        # check correct user is logged in
+        # assert logged in user is correct
         self.assertEqual(str(resp.context['user']), 'User - test@user.app')
         self.assertTemplateUsed(resp, 'author/new.html')
 
+        # create author
+        author_data = {"author_type" : "lyricist", "first_name" : "first name", "last_name" : "last name", "bio" :"some random text"}
+        resp = self.client.post('/author/new/', author_data)
 
-        # post some data
-        data = {"author_type" : "lyricist", "first_name" : "first name", "last_name" : "last name", "bio" :"some random text"}
-        resp = self.client.post('/author/new/', data)
+        print("check the author pk", resp['Location'])
 
-        print("+++++", resp['Location'])
+        # get created author
+        author = Author.objects.get(first_name='first name', last_name='last name', author_type="lyricist")
 
-        # self.assertEqual(resp['Location'], '/author/detail/1/last-name-first-name')
-        self.assertEqual(resp.status_code, 302)
+        # assert new author has been created
         self.assertEqual(Author.objects.count(), self.author_count+1)
+        
+        # assert creator is logged in user
+        self.assertEqual(author.originator, self.originator)
 
+        # assert view redirects        
+        self.assertEqual(resp.status_code, 302)
+
+        # assert redirected to author detail url
+        self.assertEqual(resp['Location'], '/author/detail/{}/{}'.format(author.pk, author.slug))
 
 class NewAuthorFormTests(TestCase):
-    pass
-
+    def test_form(self):
+        data = {"author_type" : "lyricist", "first_name" : "first name", "last_name" : "last name", "bio" :"some random text"}
+        form = NewAuthorForm(data=data)
+        self.assertTrue(form.is_valid())

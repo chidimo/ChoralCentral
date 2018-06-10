@@ -1,3 +1,5 @@
+from httplib2 import ServerNotFoundError
+
 from django.conf import settings
 from django.template.defaultfilters import slugify
 from django.core.management.base import BaseCommand
@@ -26,7 +28,11 @@ class Command(BaseCommand):
                 folder_id = song.drive_folder_id
                 if (folder_id is None) or (folder_id == ""):
                     folder_name = "{}-{}".format(song.pk, slugify(song.title))
-                    folder_id = create_song_folder(folder_name)
+                    try:
+                        folder_id = create_song_folder(folder_name)
+                    except ServerNotFoundError:
+                        self.stdout.write(self.style.NOTICE('\tServer Error: Unable to complete back up\n'))
+                        continue
                     song.drive_folder_id = folder_id
                     song.save(update_fields=['drive_folder_id'])
 
@@ -44,6 +50,6 @@ class Command(BaseCommand):
                 score.save(update_fields=['drive_view_link', 'drive_download_link', 'embed_link'])
                 share_file_permission(file_resource.get('id')) # make shareable
             else:
-                self.stdout.write(self.style.NOTICE('{} already backed up. Continue'.format(score.__str__())))
+                self.stdout.write(self.style.NOTICE('Already backed up {}.'.format(score.__str__())))
                 continue
         self.stdout.write(self.style.SUCCESS('Score backup completed successfully'))

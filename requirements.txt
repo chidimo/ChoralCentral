@@ -23,8 +23,8 @@ django-extensions==2.0.0
 django-pure-pagination==0.3.0
 django-social-share==1.1.2
 djangorestframework==3.7.7
-google-api-python-client==1.6.5
-google-auth==1.4.1
+google-api-python-client==1.7.3
+google-auth==1.5.0
 google-auth-httplib2==0.0.3
 google-auth-oauthlib==0.2.0
 html5lib==1.0.1

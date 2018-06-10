@@ -105,9 +105,6 @@ class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
         self.object.fsize = os.path.getsize(full_media_path)
         extension = os.path.splitext(relative_media_path)[1]
 
-        with open("ext.txt", "w+") as fh:
-            fh.write(extension)
-
         if extension.startswith(".mp3"):
             self.object.fformat = "mp3"
         if extension.startswith(".mid"):
