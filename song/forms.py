@@ -99,13 +99,13 @@ class NewSongForm(forms.ModelForm):
             "divisions", "voicing", "authors", "seasons", "mass_parts",]
 
         widgets = {
-            # "title" : forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Song title"}),
-            "title" : autocomplete.ListSelect2(
-                url=reverse_lazy('song:song_suggestion'),
-                attrs={'class' : 'autosuggest-form',
-                       'data-placeholder' : "Song title. Song will be shown if already present.",
-                       'data-minimum-input-length': 3},
-                ),
+            "title" : forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Song title"}),
+            # "title" : autocomplete.ListSelect2(
+            #     url=reverse_lazy('song:song_suggestion'),
+            #     attrs={'class' : 'autosuggest-form',
+            #            'data-placeholder' : "Song title. Song will be shown if already present.",
+            #            'data-minimum-input-length': 3},
+            #     ),
             "genre" : forms.Select(attrs={'class' : 'form-control'}),
             "ocassion" : forms.Select(attrs={'class' : 'form-control'}),
             "compose_date" : forms.DateInput(
@@ -131,8 +131,7 @@ class NewSongForm(forms.ModelForm):
             "language" : AddAnotherWidgetWrapper(
                 forms.Select(attrs={'class' : 'form-control'}),
                 reverse_lazy('song:new_language'))}
-# https://github.com/yourlabs/django-autocomplete-light/issues/790
-# https://stackoverflow.com/questions/40822373/django-autocomplete-light-error-list-object-has-no-attribute-queryset
+
     def __init__(self, *args, **kwargs):
         super(NewSongForm, self).__init__(*args, **kwargs)
         self.fields['language'].initial = Language.objects.get(language='english')
