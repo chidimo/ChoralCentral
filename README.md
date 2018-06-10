@@ -58,3 +58,7 @@ https://pypi.org/project/python-decouple/#why-not-just-use-environment-variables
 ## Badges
 
 1. First song, post, request
+
+## Resources
+
+1. <https://github.com/jazzband/django-model-utils>

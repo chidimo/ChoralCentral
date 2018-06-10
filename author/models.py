@@ -1,18 +1,22 @@
 from django.db import models
 from django.shortcuts import reverse
+from django.core.validators import RegexValidator
+
 from siteuser.models import SiteUser
 
 from universal.models import TimeStampedModel
 from universal.fields import AutoMultipleSlugField
 
 class Author(TimeStampedModel):
+    msg = "Only alphabets are values allowed."
+    validate_name = RegexValidator(regex=r'[a-zA-Z-\s]+', message=msg, code='Not set')
     CHOICES = (('', 'Select author type'),
                ('lyricist', 'Lyricist'),
                ('composer', 'Composer'))
 
     originator = models.ForeignKey(SiteUser, null=True, on_delete=models.SET_NULL)
-    first_name = models.CharField(max_length=75)
-    last_name = models.CharField(max_length=75)
+    first_name = models.CharField(max_length=30, validators=[validate_name])
+    last_name = models.CharField(max_length=30, validators=[validate_name])
     bio = models.TextField(blank=True, null=True)
     slug = AutoMultipleSlugField(set_using=["last_name", "first_name"], max_length=255)
     likes = models.ManyToManyField(SiteUser, related_name="author_likes")

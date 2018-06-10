@@ -27,8 +27,7 @@ class NewAuthorForm(forms.ModelForm):
         author_type = data['author_type']
 
         try:
-            Author.objects.get(
-                first_name=first_name, last_name=last_name, author_type=author_type)
+            Author.objects.get(first_name=first_name, last_name=last_name)
             msg = '{} {} already exists.'.format(first_name, last_name)
             self.add_error('first_name', msg)
         except Author.DoesNotExist:

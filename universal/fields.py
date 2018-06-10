@@ -106,7 +106,6 @@ class AutoMultipleSlugField(models.SlugField):
         kwargs['set_once'] = self.set_once
         return name, path, args, kwargs
 
-# https://github.com/jazzband/django-model-utils
 class AutoCreatedField(models.DateTimeField):
     """
     A DateTimeField that automatically populates itself at

@@ -110,7 +110,7 @@ class NewAuthorViewTests(TestCase):
         self.originator  = mommy.make('siteuser.SiteUser', user=self.user, screen_name='screen_name')
         self.author_count = Author.objects.count()
 
-    def test_new_author_view(self):
+    def test_a_new_author_view(self):
         resp = self.client.get(reverse('author:new'))
 
         # assert view redirects for non-logged in user
@@ -132,7 +132,7 @@ class NewAuthorViewTests(TestCase):
         author_data = {"author_type" : "lyricist", "first_name" : "first name", "last_name" : "last name", "bio" :"some random text"}
         resp = self.client.post('/author/new/', author_data)
 
-        print("check the author pk", resp['Location'])
+        print("\ncheck the author pk: {}".format(resp['Location']))
 
         # get created author
         author = Author.objects.get(first_name='first name', last_name='last name', author_type="lyricist")
@@ -150,7 +150,42 @@ class NewAuthorViewTests(TestCase):
         self.assertEqual(resp['Location'], '/author/detail/{}/{}'.format(author.pk, author.slug))
 
 class NewAuthorFormTests(TestCase):
-    def test_form(self):
+    def test_form_valid_data(self):
         data = {"author_type" : "lyricist", "first_name" : "first name", "last_name" : "last name", "bio" :"some random text"}
         form = NewAuthorForm(data=data)
         self.assertTrue(form.is_valid())
+
+    def test_form_invalid_data(self):
+        data = {"author_type" : "lyricist", 'first_name' : 25, "last_name" : "last name", "bio" :"some random text"}
+        form = NewAuthorForm(data=data)
+        self.assertEqual(form.errors["first_name"], ["Only alphabets are values allowed."])
+        self.assertFalse(form.is_valid())
+
+    def test_duplicate_author_creation(self):
+        user = CustomUser.objects.create_user(email='test@user.app')
+        user.is_active = True
+        user.set_password("testpassword")
+        user.save()
+        # create siteuser so the view doesn't throw an error on reversing siteuser detail present in the base url
+        originator  = mommy.make('siteuser.SiteUser', user=user, screen_name='screen_name')
+        author_count = Author.objects.count()
+        login = self.client.login(username='test@user.app', password='testpassword')
+        
+        # assert view accessible after log in
+        resp = self.client.get(reverse('author:new'))
+        self.assertEqual(resp.status_code, 200)
+
+        data = {"author_type" : "composer", 'first_name' : "first name", "last_name" : "last name", "bio" :"some random text"}
+        form = NewAuthorForm(data=data)
+        self.assertTrue(form.is_valid())
+        resp = self.client.post(reverse('author:new'), data)
+
+        author = Author.objects.get(first_name='first name', last_name='last name', author_type="composer")
+        self.assertEqual(author.originator, originator)
+        self.assertEqual(resp.status_code, 302)
+        self.assertEqual(resp['Location'], '/author/detail/{}/{}'.format(author.pk, author.slug))
+
+
+        form2 = NewAuthorForm(data=data)
+        self.assertEqual(form2.errors["first_name"], ["first name last name already exists."])
+        self.assertFalse(form2.is_valid())
