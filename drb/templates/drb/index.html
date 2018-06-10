@@ -17,14 +17,8 @@
                 {% if book.alt_name %} ({{ book.alt_name }}){% endif %}</a></p>
             </div>
         {% empty %}
-            <p>No books added yet.</p>
+            <p style="margin-bottom:25rem">Coming soon</p>
         {% endfor %}
     </div>
 </div>
-<div class="container">
-    <div class="row">
-        <h2><a href="{% url 'douay-rheims:commentaries' %}">Commentaries</a></h2>
-    </div>
-</div>
-
 {% endblock content_content %}

@@ -3,12 +3,9 @@
 {% block introduction %}{% endblock introduction %}
 
 {% block content_content %}
-<div class='container request-index-heading'>
+<div class='container siteuser-index-heading'>
     <div class='row'>
-        <div class='col-sm-12'>
-            <span class='h5 float-left'>Requests</span>
-            <span class='float-right'><a href='/request/' title='Go back'><i class='fas fa-arrow-left'></i></a></span>
-        </div>
+        <h3 class='float-left'>Requests</h3>
     </div>
 </div>
 
@@ -34,7 +31,7 @@
         </div>
     </div>
 {% empty %}
-    <p>No request at the moment.</p>
+    <p style="margin-bottom:25rem">No request at the moment.</p>
 {% endfor %}
 
 {% endblock content_content %}

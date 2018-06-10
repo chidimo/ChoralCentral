@@ -4,6 +4,12 @@
 
 {% block content_content %}
 
+<div class='container siteuser-index-heading'>
+    <div class='row'>
+        <h3 class='float-left'>Blog</h3>
+    </div>
+</div>
+
 {% for post in posts %}
     <div class="list-blog-posts">
         <h4><a href="{% url 'blog:detail' post.pk post.slug %}">{{ post }}</a></h4>
@@ -28,7 +34,7 @@
         </div>
     </div>
 {% empty %}
-    <p>No post.</p>
+    <p style="margin-bottom:25rem">No post.</p>
 {% endfor %}
 
 {% endblock content_content %}

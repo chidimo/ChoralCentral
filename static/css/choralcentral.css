@@ -823,7 +823,7 @@ input#id_password {
 
 .large-print {
   padding: 40px 0;
-  background: #cacaca;
+  background: #ccd0f5;
 }
 
 .large-print-item {
@@ -833,7 +833,7 @@ input#id_password {
 
 .feeds  {
   padding: 30px 0;
-  background-color: silver;
+  background-color: #f2f3fb;
 }
 
 .feeds > .container > .row {
