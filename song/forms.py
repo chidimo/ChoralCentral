@@ -94,7 +94,7 @@ class SongFilterForm(forms.Form):
 class NewSongForm(forms.ModelForm):
     class Meta:
         model = Song
-        fields = ["publish", "ocassion", "genre", "title", "compose_date", "lyrics",
+        fields = ["publish", "ocassion", "genre", "title", "year", "lyrics",
             "scripture_reference", "language", "tempo", "bpm",
             "divisions", "voicing", "authors", "seasons", "mass_parts",]
 
@@ -108,8 +108,8 @@ class NewSongForm(forms.ModelForm):
             #     ),
             "genre" : forms.Select(attrs={'class' : 'form-control'}),
             "ocassion" : forms.Select(attrs={'class' : 'form-control'}),
-            "compose_date" : forms.DateInput(
-                attrs={'class' : 'form-control', 'placeholder' : "Composition date YYYY-MM-DD (optional)", "title" : "YYYY-MM-DD"}),
+            "year" : forms.DateInput(
+                attrs={'class' : 'form-control', 'placeholder' : "Composition year in <YYYY> format (Optional)", "title" : "YYYY-MM-DD"}),
             "lyrics" : forms.Textarea(
                 attrs={'rows' : 5, 'columns' : 10, 'class' : 'form-control', 'placeholder' : "Optional. Supports markdown syntax"}),
             "scripture_reference" : forms.TextInput(
@@ -138,7 +138,7 @@ class NewSongForm(forms.ModelForm):
         self.fields['voicing'].initial = Voicing.objects.get(voicing='satb')
         self.fields['ocassion'].initial = "NA"
         self.fields['genre'].initial = "NA"
-        self.fields['compose_date'].initial = "1685-02-23"
+        self.fields['year'].initial = "1685"
         self.fields['tempo'].initial = 100
         self.fields['bpm'].initial = 4
         self.fields['divisions'].initial = 4
@@ -148,7 +148,7 @@ class NewSongForm(forms.ModelForm):
 class SongEditForm(forms.ModelForm):
     class Meta:
         model = Song
-        fields = ["publish", "genre", "ocassion", "title", "compose_date", "lyrics",
+        fields = ["publish", "genre", "ocassion", "title", "year", "lyrics",
             "scripture_reference", "language", "tempo", "bpm",
             "divisions", "voicing", "authors", "seasons", "mass_parts",]
 
@@ -156,8 +156,8 @@ class SongEditForm(forms.ModelForm):
             "title" : forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Song title"}),
             "genre" : forms.Select(attrs={'class' : 'form-control'}),
             "ocassion" : forms.Select(attrs={'class' : 'form-control'}),
-            "compose_date" : forms.DateInput(
-                attrs={'class' : 'form-control', 'placeholder' : "Composition date YYYY-MM-DD (optional)"}),
+            "year" : forms.DateInput(
+                attrs={'class' : 'form-control', 'placeholder' : "Composition year in <YYYY> format (Optional)"}),
             "lyrics" : forms.Textarea(
                 attrs={'rows' : 5, 'columns' : 10, 'class' : 'form-control', 'placeholder' : "Lyrics (optional). Supports markdown syntax"}),
             "scripture_reference" : forms.TextInput(

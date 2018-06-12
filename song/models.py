@@ -1,7 +1,10 @@
 """Models"""
 
+from datetime import datetime
+
 from django.db import models
 from django.shortcuts import reverse
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 from author.models import Author
 from siteuser.models import SiteUser
@@ -104,7 +107,7 @@ class Song(TimeStampedModel):
     publish         = models.BooleanField(default=False)
 
     title           = models.CharField(max_length=100)
-    compose_date    = models.DateField(null=True, blank=True)
+    year            = models.PositiveIntegerField(validators=[MinValueValidator(1000), MaxValueValidator(datetime.now().year)])
     likes           = models.ManyToManyField(SiteUser, related_name="song_likes")
     slug            = AutoSlugField(set_using="title", max_length=255)
 
