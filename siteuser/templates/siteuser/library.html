@@ -44,7 +44,7 @@
                 {% for song in user_songs %}
                     <tr>
                         <td>{{ forloop.counter }}</td>
-                        <td>{% if song.publish %}Public{% else %}Private{% endif %}</td>
+                        <td>{% if song.publish %}Public{% else %}<span class="text-danger">Private</span>{% endif %}</td>
                         <td><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></td>
                         <td>{{ song.like_count }}</td>
                         <td>

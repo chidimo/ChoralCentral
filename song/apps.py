@@ -7,5 +7,6 @@ class SongConfig(AppConfig):
     name = 'song'
 
     def ready(self):
+        import song.signals
         song = self.get_model("song")
         algoliasearch.register(song, SongIndex)
