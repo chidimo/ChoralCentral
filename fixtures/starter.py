@@ -22,7 +22,7 @@ from request.models import Request, Reply
 
 AVATAR_PATH = os.path.join(settings.BASE_DIR, 'fixtures/wallpaper/')
 IMAGES = [os.path.abspath(each) for each in glob.glob("{}/*.jpg".format(AVATAR_PATH))]
-AUTHORS = ["LYRICIST", "COMPOSER"]
+AUTHORS = ["lyricist", "composer", 'lyricist and composer']
 LANGUAGE = ["english", "igbo", "bini", "ibibio", "hausa", "chinese", "yoruba", "latin"]
 VOICING = ["solo", "satb", "ssab", "sab", "ssabtt", "atb", "sattb"]
 SCRIPTURE = ["Psalm 91", "Proverbs 23", "Matthew 11"]

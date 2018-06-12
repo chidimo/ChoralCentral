@@ -1,6 +1,8 @@
 from .base import *
 
 DEBUG = True
+SKIP_TASK = True # custom variable to be used to skip certain mgt tasks during testing
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',

@@ -122,5 +122,17 @@ class SongDetailViewTests(TestCase):
         self.assertTrue('song' in resp.context)
         self.assertTrue('share_form' in resp.context)
 
+class SongFeedTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        originator = mommy.make('siteuser.SiteUser')
+        mommy.make('song.Song', originator=originator, title="some title", lyrics="Some lyrics", publish=True, _quantity=27)
+        mommy.make('song.Song', originator=originator, title="some title", lyrics="Some lyrics", publish=False, _quantity=27)
+
+    def test_feed_url_reachable(self):
+        url = reverse('song:song_feed', kwargs={'feed_type' : 'popular'})
+        resp = self.client.get(url)
+        self.assertEqual(resp.status_code, 200)
+
 if __name__ == "__main__":
     unittest.main()

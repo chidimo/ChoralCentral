@@ -33,3 +33,7 @@ def check_recaptcha(view_func):
 def save_avatar(instance, filename):
     _, ext = os.path.splitext(filename)
     return "avatars/{}{}".format(instance.screen_name.lower(), ext)
+
+def badge_icon(instance, filename):
+    _, ext = os.path.splitext(filename)
+    return "badges/{}_{}{}".format(instance.hierarchy, instance.name.lower(), ext)

@@ -11,7 +11,7 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from sorl.thumbnail import ImageField
 from universal.models import TimeStampedModel
 from universal.fields import AutoSlugField
-from .utils import save_avatar
+from .utils import save_avatar, badge_icon
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None):
@@ -135,3 +135,21 @@ class GroupMembership(TimeStampedModel):
 class GroupJoinRequest(TimeStampedModel):
     requesting_user = models.ForeignKey(SiteUser, null=True, blank=True, on_delete=models.SET_NULL)
     group_of_interest = models.ForeignKey(SiteUserGroup, null=True, blank=True, on_delete=models.SET_NULL)
+
+class Badge(TimeStampedModel):
+    name = models.CharField(max_length=30)
+    description = models.CharField(max_length=200)
+    icon = models.ImageField(upload_to=badge_icon)
+    hierarchy = models.IntegerField()
+    siteuser = models.ManyToManyField(SiteUser)
+
+    class Meta:
+        ordering = ('hierarchy', )
+
+    def __str__(self):
+        return self.name
+
+class Message(TimeStampedModel):
+    sender = models.ForeignKey(SiteUser, on_delete=models.SET_NULL)
+    body = models.CharField(max_length=200)
+    receiver = models.ForeignKey(SiteUser, on_delete=models.SET_NULL, related_name='message_recipient')

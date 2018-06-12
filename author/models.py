@@ -12,8 +12,8 @@ class Author(TimeStampedModel):
     validate_name = RegexValidator(regex=r'[a-zA-Z-\s]+', message=msg, code='Not set')
     CHOICES = (('', 'Select author type'),
                ('lyricist', 'Lyricist'),
-               ('composer', 'Composer'))
-
+               ('composer', 'Composer'),
+               ('lyricist and composer', 'Lyricist and Composer'))
     originator = models.ForeignKey(SiteUser, null=True, on_delete=models.SET_NULL)
     first_name = models.CharField(max_length=30, validators=[validate_name])
     last_name = models.CharField(max_length=30, validators=[validate_name])
