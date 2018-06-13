@@ -150,6 +150,6 @@ class Badge(TimeStampedModel):
         return self.name
 
 class Message(TimeStampedModel):
-    sender = models.ForeignKey(SiteUser, on_delete=models.SET_NULL)
+    sender = models.ForeignKey(SiteUser, on_delete=models.CASCADE)
     body = models.CharField(max_length=200)
-    receiver = models.ForeignKey(SiteUser, on_delete=models.SET_NULL, related_name='message_recipient')
+    receiver = models.ForeignKey(SiteUser, on_delete=models.CASCADE, related_name='message_recipient')

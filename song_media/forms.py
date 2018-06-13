@@ -46,10 +46,9 @@ class NewScoreNotationForm(forms.ModelForm):
 class NewScoreForm(forms.ModelForm):
     class Meta:
         model = Score
-        fields = ('song', 'notation', 'part', 'media_file')
+        fields = ('notation', 'part', 'media_file')
 
-        widgets = {'song' : forms.Select(attrs={'class' : 'form-control'}),
-
+        widgets = {
                    'part' : AddAnotherWidgetWrapper(
                        forms.Select(attrs={'class' : 'form-control'}),
                        reverse_lazy('song-media:new_part')),
@@ -61,15 +60,10 @@ class NewScoreForm(forms.ModelForm):
                     'media_file' : ClearableFileInput(attrs={'class' : 'form-control'}),
                   }
 
-    def __init__(self, *args, **kwargs):
-        """Query in forms"""
-        pk = kwargs.pop('pk')
-        super(NewScoreForm, self).__init__(*args, **kwargs)
-        self.fields['song'].queryset = Song.objects.filter(pk=pk)
-        self.fields['song'].initial = Song.objects.get(pk=pk)
-
     def clean(self):
-        media_file = self.cleaned_data['media_file']
+        data = self.cleaned_data
+        print("cleaned data", data)
+        media_file = data['media_file']
         fsize = media_file.size/1048576
         max_size = 5242880/1048576# limit size to 5MB
         if fsize > max_size:

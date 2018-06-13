@@ -14,9 +14,10 @@ def generate_pdf_preview(sender, instance, **kwargs):
     thumbnail_name = full_media_path.replace('.pdf', '')
     thumbnail_file = thumbnail_name + '.png'
 
-    # generate thumbnail
-    cmd = "pdftoppm -png -f 1 -singlefile {} {}".format(full_media_path, thumbnail_name)
-    os.system(cmd)
+    if settings.SKIP_TASK is False:
+        # generate thumbnail only in production system
+        cmd = "pdftoppm -png -f 1 -singlefile {} {}".format(full_media_path, thumbnail_name)
+        os.system(cmd)
 
     try:
         content = File(open(thumbnail_file, "rb"))
@@ -24,5 +25,5 @@ def generate_pdf_preview(sender, instance, **kwargs):
         instance.thumbnail.save(instance.song.title + '.png', content, save=False)
         os.remove(thumbnail_file)
     except FileNotFoundError:
-        print("Probably windows system. File not generated")
+        # print("Probably windows system. File not generated")
         pass

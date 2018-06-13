@@ -130,32 +130,38 @@ class NewAuthorViewTests(TestCase):
 
         # create author
         author_data = {"author_type" : "lyricist", "first_name" : "first name", "last_name" : "last name", "bio" :"some random text"}
-        resp = self.client.post('/author/new/', author_data)
+        resp = self.client.post(reverse('author:new'), author_data)
 
         print("\ncheck the author pk: {}".format(resp['Location']))
 
+        # assert view redirects        
+        self.assertEqual(resp.status_code, 302)
+
+        # assert author count has increased
+        self.assertEqual(Author.objects.count(), self.author_count+1)
+
         # get created author
         author = Author.objects.get(first_name='first name', last_name='last name', author_type="lyricist")
-
-        # assert new author has been created
-        self.assertEqual(Author.objects.count(), self.author_count+1)
         
         # assert creator is logged in user
         self.assertEqual(author.originator, self.originator)
-
-        # assert view redirects        
-        self.assertEqual(resp.status_code, 302)
 
         # assert redirected to author detail url
         self.assertEqual(resp['Location'], '/author/detail/{}/{}'.format(author.pk, author.slug))
 
 class NewAuthorFormTests(TestCase):
-    def test_form_valid_data(self):
-        data = {"author_type" : "lyricist", "first_name" : "first name", "last_name" : "last name", "bio" :"some random text"}
+    def test_valid_data(self):
+        print("\n\nFORM TESTS")
+        data = {"author_type" : "lyricist", "first_name" : "first name", "last_name" : "last name", "bio" : "some random text"}
         form = NewAuthorForm(data=data)
         self.assertTrue(form.is_valid())
+        author = form.save()
+        self.assertEqual(author.first_name, "first name")
+        self.assertEqual(author.last_name, "last name")
+        self.assertEqual(author.author_type, "lyricist")
+        self.assertEqual(author.bio, "some random text")
 
-    def test_form_invalid_data(self):
+    def test_invalid_data(self):
         data = {"author_type" : "lyricist", 'first_name' : 25, "last_name" : "last name", "bio" :"some random text"}
         form = NewAuthorForm(data=data)
         self.assertEqual(form.errors["first_name"], ["Only alphabets are values allowed."])
@@ -184,7 +190,6 @@ class NewAuthorFormTests(TestCase):
         self.assertEqual(author.originator, originator)
         self.assertEqual(resp.status_code, 302)
         self.assertEqual(resp['Location'], '/author/detail/{}/{}'.format(author.pk, author.slug))
-
 
         form2 = NewAuthorForm(data=data)
         self.assertEqual(form2.errors["first_name"], ["first name last name already exists."])

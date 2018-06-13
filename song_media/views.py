@@ -47,15 +47,11 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         context['song'] = Song.objects.get(pk=self.kwargs.get('pk', None))
         return context
 
-    def get_form_kwargs(self):
-        kwargs = super(NewScore, self).get_form_kwargs()
-        kwargs['pk'] = self.kwargs.get('pk', None)
-        return kwargs
-
     def form_valid(self, form):
+        song = Song.objects.get(pk=self.kwargs.get('pk', None))
         form.instance.uploader = self.request.user.siteuser
+        form.instance.song = song
         self.object = form.save()
-        song = self.object.song
 
         relative_media_path = self.object.media_file.url
         full_media_path = settings.BASE_DIR + relative_media_path
