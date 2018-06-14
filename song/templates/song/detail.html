@@ -3,6 +3,7 @@
 {% load thumbnail %}
 {% load social_share %}
 {% load static %}
+{% load likes_inclusion_tags %}
 {% load song_ttags %}
 
 {% block introduction %}{% endblock introduction %}
@@ -15,19 +16,22 @@
             <span class='float-left'>{{ song.title }}</span>
 
             <span class='float-right song-icons'>
-                <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:song_likers' song.pk song.slug %}" title="{{ song.like_count }} Star givers">{{ song.like_count }}</a>
-
-                {% if user.is_authenticated %}
+                {% likes song %}                
+                
+                <!--
+                    <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:song_likers' song.pk song.slug %}" title="{{ song.like_count }} Star givers">{{ song.like_count }}</a>
+                    {% if user.is_authenticated %}
                     {% if request.user.siteuser in song.likes.all %}
-                        <a class="btn btn-sm btn-primary icon-buttons" href="" id="like" name="{{ song.pk }}" value="Like" title="unstar this song"><i class="fas fa-star"></i> Unstar</a>
-                        {% include 'song/song_like_script.html' %}
+                    <a class="btn btn-sm btn-primary icon-buttons" href="" id="like" name="{{ song.pk }}" value="Like" title="unstar this song"><i class="fas fa-star"></i> Unstar</a>
+                    {% include 'song/song_like_script.html' %}
                     {% else %}
-                        <a class="btn btn-sm btn-primary icon-buttons" href="" id="like" name="{{ song.pk }}" value="Like" title="star this song"><i class="fas fa-star"></i> Star</a>
-                        {% include 'song/song_like_script.html' %}
+                    <a class="btn btn-sm btn-primary icon-buttons" href="" id="like" name="{{ song.pk }}" value="Like" title="star this song"><i class="fas fa-star"></i> Star</a>
+                    {% include 'song/song_like_script.html' %}
                     {% endif %}
-                {% else %}
+                    {% else %}
                     <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:login' %}">Login to give a star</a>
-                {% endif %}
+                    {% endif %}
+                -->
 
                 <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'blog:new_song' song.pk %}" title="Make a post about {{ song.title }}"><i class="fas fa-pencil-alt"></i></a>
                 <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song:reader_view' song.pk song.slug %}" title="Print {{ song.title }} in pdf format" target="_blank"><i class="fas fa-print"></i></a>
@@ -149,6 +153,7 @@
 
     <div class="row">
         {% for score in song.score_set.all %}
+        
             <div class="col-sm-6 col-md-4 col-lg-3 py-2 px-0 score-list">
                 <!--<div class="container score-pdf-container">-->
                 <!--    {% thumbnail score.thumbnail "40x40" crop="center" as im %}-->
@@ -175,6 +180,7 @@
 
                         <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song-media:show_score' score.pk %}" target="_blank" title="Click to Download: {{ score.downloads }} total downloads">
                             <span class="download-count">{{ score.downloads }}</span> <i class="fas fa-download"></i></a>
+                        {% likes score %}
                     </div>
                 </div>
             </div>
@@ -208,6 +214,7 @@
                         <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:library' midi.uploader.pk midi.uploader.slug %}" title="{{ midi.uploader.screen_name }}">{{ midi.uploader.screen_name }}</a>
                         <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song-media:download_midi' midi.pk %}" target="_blank" title="Click to Download: {{ midi.downloads }} total downloads">
                             <span class="download-count">{{ midi.downloads }}</span> <i class="fas fa-download"></i></a>
+                        {% likes midi %}
                     </div>
                 </div>
             </div>

@@ -108,7 +108,6 @@ class Song(TimeStampedModel):
 
     title           = models.CharField(max_length=100)
     year            = models.PositiveIntegerField(validators=[MinValueValidator(1000), MaxValueValidator(datetime.now().year)])
-    likes           = models.ManyToManyField(SiteUser, related_name="song_likes")
     slug            = AutoSlugField(set_using="title", max_length=255)
 
     lyrics          = models.TextField(blank=True)

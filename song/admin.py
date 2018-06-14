@@ -12,7 +12,7 @@ class LanguageAdmin(admin.ModelAdmin):
 
 class SongAdmin(admin.ModelAdmin):
     list_display = (
-        "title", "get_absolute_uri", "youtube_playlist_id", "drive_folder_id", "like_count", "song_likers", "all_authors", "all_seasons", "all_masspart",
+        "title", "get_absolute_uri", "youtube_playlist_id", "drive_folder_id", "like_count", "all_authors", "all_seasons", "all_masspart",
         "originator", "publish", "voicing", "scripture_reference", "language")
     list_filter = ("seasons", "mass_parts")
     list_editable = ("publish", )
@@ -24,9 +24,6 @@ class SongAdmin(admin.ModelAdmin):
 
     def all_masspart(self, obj):
         return ", ".join(["{}".format(part.part) for part in obj.mass_parts.all()])
-
-    def song_likers(self, obj):
-        return ", ".join([each.screen_name for each in obj.likes.all()])
 
 admin.site.register(Voicing, VoicingAdmin)
 admin.site.register(Language, LanguageAdmin)

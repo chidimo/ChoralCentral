@@ -126,6 +126,8 @@ PROJECT_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    'likes',
+    'secretballot',
     'rest_framework',
     'sorl.thumbnail',
     'social_django',
@@ -173,6 +175,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
+    'likes.middleware.SecretBallotUserIpUseragentMiddleware',
 ]
 
 

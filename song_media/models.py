@@ -39,6 +39,7 @@ class Score(TimeStampedModel):
     part = models.ForeignKey(VocalPart, on_delete=models.CASCADE)
     notation = models.ForeignKey(ScoreNotation, on_delete=models.CASCADE)
     fsize = models.FloatField(null=True,blank=True)
+    like_count = models.IntegerField(default=0)
     media_file = models.FileField(upload_to=save_score)
     thumbnail = models.ImageField(upload_to=save_score_thumbnail, null=True)
     downloads = models.IntegerField(default=0)
@@ -47,7 +48,7 @@ class Score(TimeStampedModel):
     embed_link = models.URLField(null=True, blank=True)
 
     class Meta:
-        ordering = ('-downloads', 'created', )
+        ordering = ('-like_count', '-downloads', 'created', )
 
     def __str__(self):
         return "{}-{}-{}".format(self.song.title, self.part, self.notation)
@@ -68,13 +69,14 @@ class Midi(TimeStampedModel):
     fformat = models.CharField(max_length=10, blank=True)
     fsize = models.FloatField(null=True, blank=True)
     description = models.CharField(max_length=200, blank=True, null=True)
+    like_count = models.IntegerField(default=0)
     media_file = models.FileField(upload_to=save_midi, null=True, blank=True)
     downloads = models.IntegerField(default=0)
     drive_view_link = models.URLField(null=True, blank=True)
     drive_download_link = models.URLField(null=True, blank=True)
 
     class Meta:
-        ordering = ('-downloads', 'created', )
+        ordering = ('-like_count', '-downloads', 'created', )
 
     def __str__(self):
         return "{}-{}".format(self.song.title, self.part)

@@ -38,6 +38,7 @@ urlpatterns = [
 
 urlpatterns += [
     path('social/', include('social_django.urls', namespace='social')),
+    path('likes/', include('likes.urls')),
 ]
 
 urlpatterns += [
