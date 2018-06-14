@@ -441,3 +441,9 @@ class ViewMessage(LoginRequiredMixin, generic.DetailView):
     model = Message
     template_name = 'siteuser/message_view.html'
     context_object_name = 'message'
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset=None)
+        self.object.read = True
+        self.object.save(update_fields=['read'])
+        return self.object
