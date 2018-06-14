@@ -202,13 +202,12 @@ def songs_from_file():
                 bpm=randint(4, 8),
                 divisions=randint(4, 8),
                 voicing=choice(voices),
-                language=choice(languages))
+                language=choice(languages),
+                like_count=randint(1, 100))
 
             for each in authors:
                 song.authors.add(author)
-            song.likes.add(originator)
             song.save()
-        song.save()
     add_manyfields()
 
 def songs():
@@ -241,7 +240,6 @@ def add_manyfields():
     for song in Song.objects.all():
         song.seasons.add(randint(1, 3), randint(4, 7))
         song.mass_parts.add(randint(1, 5), randint(6, 10))
-        song.likes.add(choice(users), choice(users), choice(users), choice(users))
         song.save()
         aut = len(Author.objects.all())
         if not song.authors:

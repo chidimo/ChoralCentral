@@ -1,7 +1,7 @@
 """Requests views"""
 
 from django.views import generic
-from django.shortcuts import redirect
+from django.shortcuts import redirect, reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
@@ -23,7 +23,8 @@ class RequestCreate(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         form.instance.originator = SiteUser.objects.get(user=self.request.user)
         messages.success(self.request, "Request added successfully.")
-        return super(RequestCreate, self).form_valid(form)
+        form.save()
+        return redirect('request:index')
 
 class RequestEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     model = Request
