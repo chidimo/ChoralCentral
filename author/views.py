@@ -2,6 +2,7 @@
 
 from django.db.models import Count
 from django.views import generic
+from django.shortcuts import redirect, reverse
 # from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -54,9 +55,19 @@ class AuthorEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     form_class = AuthorEditForm
     template_name = 'author/edit.html'
     success_message = "Author updated successfully."
+    
+    def get_success_url(self):
+        return reverse('siteuser:library', kwargs={'pk' : self.request.user.siteuser.pk, 'slug' : self.request.user.siteuser.slug})
 
 class DeleteAuthor(SuccessMessageMixin, generic.DeleteView):
     model = Author
-    success_url = reverse_lazy('song:index')
-    template_name = "confirm_delete.html"
+    template_name = "author/delete.html"
     success_message = "Author deleted successfully."
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['author_songs'] = Author.objects.get(pk=self.kwargs['pk']).song_set.all()
+        return context
+    
+    def get_success_url(self):
+        return reverse('siteuser:library', kwargs={'pk' : self.request.user.siteuser.pk, 'slug' : self.request.user.siteuser.slug})

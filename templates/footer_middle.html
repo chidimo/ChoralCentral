@@ -1,23 +1,23 @@
 {% block footer_middle %}    
 <div class="container-fluid feeds text-center">
-        <div class="row">
-            <div class="col-sm-6">
-                <h5>Resources</h5>
-                <p>
-                    <a aria-hidden="true" href="{% url 'douay-rheims:bible_index' %}">DRB</a> &#124;
-                    <a aria-hidden="true" href="{% url 'douay-rheims:commentaries' %}">Commentaries</a>
-                </p>
-            </div>
-
-            <div class="col-sm-6">
-                <h5>Feeds</h5>
-                <p>
-                    <a aria-hidden="true" href="{% url 'song:midi_feed' %}">Midi</a> &#124;
-                    <a aria-hidden="true" href="{% url 'song:song_feed' 'popular' %}">Popular</a> &#124;
-                    <a aria-hidden="true" href="{% url 'song:song_feed' 'latest' %}">Latest</a> &#124;
-                    <a aria-hidden="true" href="{% url 'blog:post_feed' %}">Blog</a>
-                </p>
-            </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <h5>Resources</h5>
+            <p>
+                <a aria-hidden="true" href="{% url 'douay-rheims:bible_index' %}">DRB</a> &#124;
+                <a aria-hidden="true" href="{% url 'douay-rheims:commentaries' %}">Commentaries</a>
+            </p>
         </div>
+
+        <div class="col-sm-6">
+            <h5>Feeds</h5>
+            <p>
+                <a aria-hidden="true" href="{% url 'song:midi_feed' %}">Midi</a> &#124;
+                <a aria-hidden="true" href="{% url 'song:song_feed' 'popular' %}">Popular</a> &#124;
+                <a aria-hidden="true" href="{% url 'song:song_feed' 'latest' %}">Latest</a> &#124;
+                <a aria-hidden="true" href="{% url 'blog:post_feed' %}">Blog</a>
+            </p>
+        </div>
+    </div>
 </div>
 {% endblock footer_middle %}

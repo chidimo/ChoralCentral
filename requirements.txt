@@ -22,7 +22,7 @@ django-addanother==2.0.0
 django-autocomplete-light==3.2.10
 django-debug-toolbar==1.9.1
 django-extensions==2.0.0
-git+https://github.com/immensity/django-likes.git
+django-likes==2.0.0
 django-pure-pagination==0.3.0
 django-secretballot==1.0.0
 django-social-share==1.1.2
@@ -51,7 +51,6 @@ psycopg2==2.7.3.2
 pyasn1==0.4.2
 pyasn1-modules==0.2.1
 pycparser==2.18
-pycryptodome==3.6.1
 Pygments==2.2.0
 PyJWT==1.6.1
 pylint==1.9.2

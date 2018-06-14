@@ -1,6 +1,7 @@
 {% extends "choralcentral_base.html" %}
 {% block title %}{{ siteuser.screen_name }}'s library{% endblock title %}
 {% block introduction %}{% endblock introduction %}
+{% load author_ttags %}
 
 {% block content_content %}
 
@@ -137,6 +138,7 @@
                         <th>S/No.</th>
                         <th>Name</th>
                         <th>Type</th>
+                        <th>Pub. songs</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -146,8 +148,13 @@
                             <td>{{ forloop.counter }}</td>
                             <td><a href="{% url 'author:detail' author.pk author.slug %}">{{ author }}</a></td>
                             <td>{{ author.author_type|title }}</td>
-                            <td><a href="#"><i class="fas fa-edit"></i></a> |
-                            <a href="#"><i class="fas fa-trash"></i></a></td>
+                            <td>
+                                {% with auth=author.song_set.all %}
+                                    {{ auth|count_published }}
+                                {% endwith %}
+                            </td>
+                            <td><a href="{% url 'author:edit' author.pk author.slug %}"><i class="fas fa-edit"></i></a> |
+                            <a href="{% url 'author:delete' author.pk %}"><i class="fas fa-trash"></i></a></td>
                         </tr>
                     {% empty %}
                         <p>No author to display</p>

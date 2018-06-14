@@ -20,7 +20,7 @@ class Author(TimeStampedModel):
     bio = models.TextField(blank=True, null=True)
     slug = AutoMultipleSlugField(set_using=["last_name", "first_name"], max_length=255)
     likes = models.ManyToManyField(SiteUser, related_name="author_likes")
-    author_type = models.CharField(choices=CHOICES, max_length=15, default="lyricist")
+    author_type = models.CharField(choices=CHOICES, max_length=30)
 
     class Meta:
         ordering = ["first_name"]

@@ -1,0 +1,32 @@
+{% extends "choralcentral_base.html" %}
+{% if song %}{% block title %}Delete {{ object }}{% endblock title %} {% endif %}
+{% block introduction %}{% endblock introduction %}
+
+{% block content_content %}
+
+<h2>Delete sound</h2>
+
+<p>Please confirm if you really want to delete <span class="text-danger">{{ object }}</span></p>
+
+<p>This author's name will be removed from the following songs</p>
+
+{% for song in author_songs %}
+    <div class="list-author-songs">
+        {% if song.publish %}
+            <h5><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h5>
+        {% else %}
+            <h5><a class="text-danger" href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h5>
+        {% endif %}
+    </div>
+{% empty %}
+    <p>Author has no song</p>
+{% endfor %}
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <input class="bg-danger btn object-delete-button" type="submit" action="" value="Yes, Delete" style="color:white;"/>
+</form>
+    
+{% endblock content_content %}
+{% block footer_top %}{% endblock footer_top %}
+
