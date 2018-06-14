@@ -73,10 +73,9 @@ class NewScoreForm(forms.ModelForm):
 class NewMidiForm(forms.ModelForm):
     class Meta:
         model = Midi
-        fields = ('song', 'part', 'description', 'media_file')
+        fields = ('part', 'description', 'media_file')
 
-        widgets = {'song' : forms.Select(attrs={'class' : 'form-control'}),
-
+        widgets = {
                    'part' : AddAnotherWidgetWrapper(
                        forms.Select(attrs={'class' : 'form-control'}),
                        reverse_lazy('song-media:new_part')),
@@ -89,13 +88,6 @@ class NewMidiForm(forms.ModelForm):
                     'description' : forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : 'Enter a short description (optional)'}),
                   }
 
-    def __init__(self, *args, **kwargs):
-        pk = kwargs.pop('pk')
-
-        super(NewMidiForm, self).__init__(*args, **kwargs)
-        self.fields['song'].queryset = Song.objects.filter(pk=pk)
-        self.fields['song'].initial = Song.objects.get(pk=pk)
-
     def clean(self):
         media_file = self.cleaned_data['media_file']
         fsize = media_file.size/1048576
@@ -107,16 +99,10 @@ class NewMidiForm(forms.ModelForm):
 class NewVideoLinkForm(forms.ModelForm):
     class Meta:
         model = VideoLink
-        fields = ('song', 'video_link',)
+        fields = ('video_link',)
 
         widgets = {
             'song' : forms.Select(attrs={'class' : 'form-control'}),
             'video_link' : forms.URLInput(
                 attrs={'class' : 'form-control', 'placeholder' : 'Video Url'})
         }
-
-    def __init__(self, *args, **kwargs):
-        pk = kwargs.pop('pk')
-        super(NewVideoLinkForm, self).__init__(*args, **kwargs)
-        self.fields['song'].queryset = Song.objects.filter(pk=pk)
-        self.fields['song'].initial = Song.objects.get(pk=pk)

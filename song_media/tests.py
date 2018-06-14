@@ -115,10 +115,7 @@ class NewScoreFormTests(TestCase):
         # file_path = os.path.join(settings.BASE_DIR, 'song_media', 'skills.pdf')
         # data = {'notation' : self.notation, 'part' : self.part, 'media_file' : open(file_path, 'rb')}
         data = {'notation' : self.notation, 'part' : self.part, 'media_file' : BytesIO(b'filepath')}
-        print('song', self.song)
-        print('part', self.part)
-        print('notation', self.notation)
-        print('data', data)
+
         form = NewScoreForm(data)
         self.assertTrue(form.is_valid())
         score = form.save()
@@ -142,3 +139,4 @@ class NewScoreFormTests(TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+njnjn

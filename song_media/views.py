@@ -87,15 +87,12 @@ class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
         context['song'] = Song.objects.get(pk=self.kwargs.get('pk', None))
         return context
 
-    def get_form_kwargs(self):
-        kwargs = super(NewMidi, self).get_form_kwargs()
-        kwargs['pk'] = self.kwargs.get('pk', None)
-        return kwargs
-
     def form_valid(self, form):
+        song = Song.objects.get(pk=self.kwargs.get('pk', None))
         form.instance.uploader = self.request.user.siteuser
+        form.instance.song = song
         self.object = form.save()
-        song = self.object.song
+
         relative_media_path = self.object.media_file.url
         full_media_path = settings.BASE_DIR + relative_media_path
         self.object.fsize = os.path.getsize(full_media_path)
@@ -153,16 +150,12 @@ class NewVideoLink(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, ge
         context['song'] = Song.objects.get(pk=self.kwargs.get('pk', None))
         return context
 
-    def get_form_kwargs(self):
-        kwargs = super(NewVideoLink, self).get_form_kwargs()
-        kwargs['pk'] = self.kwargs.get('pk', None)
-        return kwargs
-
     def form_valid(self, form):
+        song = Song.objects.get(pk=self.kwargs.get('pk', None))
         form.instance.uploader = self.request.user.siteuser
+        form.instance.song = song
         self.object = form.save()
 
-        song = self.object.song
         playlist_id = song.youtube_playlist_id
         if (playlist_id is None) or (playlist_id == ''):
             playlist_id = get_playlist_id(playlist_id, song.title.strip())
