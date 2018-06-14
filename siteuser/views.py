@@ -444,6 +444,9 @@ class ViewMessage(LoginRequiredMixin, generic.DetailView):
 
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset=None)
-        self.object.read = True
-        self.object.save(update_fields=['read'])
+
+        # if the receiver is the one to read it, then mark it read
+        if self.object.receiver == self.request.user.siteuser:
+            self.object.read = True
+            self.object.save(update_fields=['read'])
         return self.object

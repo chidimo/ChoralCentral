@@ -18,7 +18,7 @@ class BadgeAdmin(admin.ModelAdmin):
     list_display = ('name', 'description',)
 
 class MessageAdmin(admin.ModelAdmin):
-    list_display = ('read', 'body')
+    list_display = ('read', 'sender', 'receiver', 'body')
 
 class UserAdmin(BaseUserAdmin):
     form = UserChangeForm

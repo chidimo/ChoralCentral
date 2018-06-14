@@ -6,7 +6,7 @@
 
 <div class='container siteuser-index-heading'>
     <div class='row'>
-        <h3 class='float-left'>View message</h3>
+        <h3 class='float-left'>Message {% if message.sender == request.user.siteuser %}to {{ message.receiver }}{% else %}from {{ message.sender }}{% endif %}</h3>
     </div>
 </div>
 
