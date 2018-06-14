@@ -1,5 +1,5 @@
 from .base import *
-DEBUG = True
+DEBUG = False
 SKIP_TASK = False # custom variable to be used to skip certain mgt tasks during testing
 
 # force https:
