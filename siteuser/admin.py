@@ -14,6 +14,8 @@ class SiteUserAdmin(admin.ModelAdmin):
 class FollowAdmin(admin.ModelAdmin):
     list_display = ("from_siteuser", "to_siteuser", "created")
 
+class BadgeAdmin(admin.ModelAdmin):
+    list_display = ('name', 'description',)
 class UserAdmin(BaseUserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
@@ -40,7 +42,7 @@ admin.site.register(SiteUser, SiteUserAdmin)
 admin.site.register(CustomUser, UserAdmin)
 admin.site.register(Role)
 admin.site.register(Permission)
-admin.site.register(Badge)
+admin.site.register(Badge, BadgeAdmin)
 admin.site.register(Message)
 
 admin.site.unregister(Group)

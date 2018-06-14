@@ -164,11 +164,7 @@ class NewSong(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
         if form.instance.genre == "gregorian chant":
             form.instance.bpm = None
             form.instance.divisions = None
-        self.object = form.save()
-        self.object.likes.add(SiteUser.objects.get(user=self.request.user))
-
-        self.object.like_count = self.object.likes.count()
-        self.object.save(update_fields=['like_count'])
+        form.save()
         messages.success(self.request, "Song was successfully added")
         return redirect(self.get_success_url())
 

@@ -25,7 +25,7 @@ from pure_pagination.mixins import PaginationMixin
 from social_django.models import UserSocialAuth
 
 from .utils import check_recaptcha
-from .models import SiteUser, Role, SiteUserGroup, GroupMembership#, GroupJoinRequest
+from .models import SiteUser, Role, SiteUserGroup, GroupMembership, Badge#, GroupJoinRequest
 from song.models import Song
 from blog.models import Post, Comment
 from request.models import Request
@@ -391,6 +391,7 @@ def account_management(request):
     context['siteuser'] = siteuser
     context['user_songs'] = Song.objects.filter(originator=siteuser)
     context['user_posts'] = Post.objects.filter(creator=siteuser)
+    context['user_badges'] = Badge.objects.filter(siteuser=siteuser)
 
     context['facebook_login'] = facebook_login
     context['google_login'] = google_login
