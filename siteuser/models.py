@@ -153,3 +153,9 @@ class Message(TimeStampedModel):
     sender = models.ForeignKey(SiteUser, on_delete=models.CASCADE)
     body = models.CharField(max_length=200)
     receiver = models.ForeignKey(SiteUser, on_delete=models.CASCADE, related_name='message_recipient')
+
+    def __str__(self):
+        return "Message for {}".format(self.receiver.screen_name)
+
+    def get_absolute_url(self):
+        return reverse('siteuser:library', kwargs={'pk' : self.sender.pk, 'slug' : self.sender.slug})

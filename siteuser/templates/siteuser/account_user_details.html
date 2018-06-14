@@ -6,7 +6,7 @@
             <p class="text-secondary">Last name: {{ siteuser.last_name }}</p>
 
             <p class="text-secondary">Email: {% if user == siteuser.user %}
-                <a href="mailto:{{ user.siteuser.user.email }}">{{ siteuser.user.email }}</a>{% else %}<a href="">message</a>{% endif %}</p>
+                <a href="mailto:{{ user.siteuser.user.email }}">{{ siteuser.user.email }}</a>{% else %}<a href="{% url 'siteuser:new_message' siteuser.pk siteuser.slug %}">message</a>{% endif %}</p>
             <p class="text-secondary">Location: <a href="{% url 'siteuser:siteusers_common_location' siteuser.location %}" title='See others in {{ siteuser.location }}'>{{ siteuser.location }}</a></p>
         </div>
 

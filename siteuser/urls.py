@@ -45,6 +45,7 @@ urlpatterns += [
 urlpatterns += [
     path('manage-account/', views.account_management, name='account_management'),
     path('set-social-password/', views.social_password, name='social_password'),
+    path('message/<int:pk>/<slug:slug>/', views.NewMessage.as_view(), name='new_message'),
 ]
 
 urlpatterns += [

@@ -33,7 +33,7 @@ from author.models import Author
 from song_media.models import Score, Midi, VideoLink
 
 from .forms import (PassWordGetterForm, EmailAndPassWordGetterForm,
-    SiteUserRegistrationForm, SiteUserEditForm, NewRoleForm, NewSiteUserGroupForm
+    SiteUserRegistrationForm, SiteUserEditForm, NewRoleForm, NewSiteUserGroupForm, NewMessageForm
 )
 
 CustomUser = get_user_model()
@@ -420,4 +420,18 @@ def social_password(request):
     else:
         form = PasswordForm(request.user)
     return render(request, 'siteuser/social_password_change_form.html', {'form': form})
+
+class NewMessage(LoginRequiredMixin, generic.CreateView):
+    form_class = NewMessageForm
+    template_name = 'siteuser/message_new.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['receiver'] = SiteUser.objects.get(pk=self.kwargs['pk'], slug=self.kwargs['slug'])
+        return context
+
+    def form_valid(self, form):
+        form.instance.sender = self.request.user.siteuser
+        form.instance.receiver = SiteUser.objects.get(pk=self.kwargs['pk'], slug=self.kwargs['slug'])
+        return super().form_valid(form)
 
