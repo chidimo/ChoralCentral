@@ -437,3 +437,7 @@ class NewMessage(LoginRequiredMixin, generic.CreateView):
         form.instance.receiver = SiteUser.objects.get(pk=self.kwargs['pk'], slug=self.kwargs['slug'])
         return super().form_valid(form)
 
+class ViewMessage(LoginRequiredMixin, generic.DetailView):
+    model = Message
+    template_name = 'siteuser/message_view.html'
+    context_object_name = 'message'

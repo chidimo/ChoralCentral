@@ -1,0 +1,21 @@
+{% extends "choralcentral_base.html" %}
+{% block title %}{{ siteuser.screen_name }}'s comments{% endblock title %}
+{% block introduction %}{% endblock introduction %}
+{% load song_ttags %}
+{% block content_content %}
+
+<div class='container siteuser-index-heading'>
+    <div class='row'>
+        <h3 class='float-left'>View message</h3>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            {{ message.body }}
+        </div>
+    </div>
+</div>
+
+{% endblock content_content %}
