@@ -24,14 +24,14 @@ from django_addanother.views import CreatePopupMixin
 from pure_pagination.mixins import PaginationMixin
 from social_django.models import UserSocialAuth
 
-from .utils import check_recaptcha
-from .models import SiteUser, Role, SiteUserGroup, GroupMembership, Badge#, GroupJoinRequest
 from song.models import Song
 from blog.models import Post, Comment
 from request.models import Request
 from author.models import Author
 from song_media.models import Score, Midi, VideoLink
 
+from .utils import check_recaptcha
+from .models import SiteUser, Role, SiteUserGroup, GroupMembership, Badge, Message#, GroupJoinRequest
 from .forms import (PassWordGetterForm, EmailAndPassWordGetterForm,
     SiteUserRegistrationForm, SiteUserEditForm, NewRoleForm, NewSiteUserGroupForm, NewMessageForm
 )
@@ -392,6 +392,8 @@ def account_management(request):
     context['user_songs'] = Song.objects.filter(originator=siteuser)
     context['user_posts'] = Post.objects.filter(creator=siteuser)
     context['user_badges'] = Badge.objects.filter(siteuser=siteuser)
+    context['inbox_messages'] = Message.objects.filter(receiver=siteuser)
+    context['outbox_messages'] = Message.objects.filter(sender=siteuser)
 
     context['facebook_login'] = facebook_login
     context['google_login'] = google_login

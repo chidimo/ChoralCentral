@@ -38,12 +38,86 @@
     </div>
 </div>
 
+
+<div class='container siteuser-index-heading'>
+    <div class='row'>
+        <h5 class='float-left'>My messages</h5>
+    </div>
+</div>
+
+<div class="message-tabs">
+    <ul class="nav nav-tabs">
+        <li class="nav-item"><a class="nav-link" href="#inbox" aria-controls="songs" role="tab" data-toggle="tab">Inbox</a></li>
+        <li class="nav-item"><a class="nav-link" href="#outbox" aria-controls="posts" role="tab" data-toggle="tab">Outbox</a></li>
+    </ul>
+</div>
+
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="inbox">
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="thead-dark">
+                    <caption>Inbox</caption>
+                    <tr>
+                        <th>S/No.</th>
+                        <th>Status</th>
+                        <th>Sender</th>
+                        <th>Message</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for message in inbox_messages %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{% if message.read %}Read{% else %}<span class="text-danger">Unread</span>{% endif %}</td>
+                        <td>{{ message.sender }}</td>
+                        <td><a href="">{{ message.body|truncatechars:15 }}</a></td>
+                        <td>{{ message.created }}</td>
+                    </tr>
+                {% empty %}
+                    <p>No message to display</p>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div role="tabpanel" class="tab-pane active" id="outbox">
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="thead-dark">
+                    <caption>Outbox</caption>
+                    <tr>
+                        <th>S/No.</th>
+                        <th>Status</th>
+                        <th>Receiver</th>
+                        <th>Message</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for message in outbox_messages %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{% if message.read %}Read{% else %}<span class="text-danger">Unread</span>{% endif %}</td>
+                        <td>{{ message.receiver }}</td>
+                        <td><a href="">{{ message.body|truncatechars:15 }}</a></td>
+                        <td>{{ message.created }}</td>
+                    </tr>
+                {% empty %}
+                    <p>No message to display</p>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 <div class='container siteuser-index-heading'>
     <div class='row'>
         <h5 class='float-left'>My groups</h5>
     </div>
 </div>
-
 
 <div class="container song-about">
     <div class="row">

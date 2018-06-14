@@ -152,7 +152,11 @@ class Badge(TimeStampedModel):
 class Message(TimeStampedModel):
     sender = models.ForeignKey(SiteUser, on_delete=models.CASCADE)
     body = models.CharField(max_length=200)
+    read = models.BooleanField(default=False)
     receiver = models.ForeignKey(SiteUser, on_delete=models.CASCADE, related_name='message_recipient')
+
+    class Meta:
+        ordering = ('read', '-created')
 
     def __str__(self):
         return "Message for {}".format(self.receiver.screen_name)
