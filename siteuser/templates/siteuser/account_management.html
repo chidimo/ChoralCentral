@@ -73,7 +73,7 @@
                         <td>{% if message.read %}Read{% else %}<span class="text-danger">Unread</span>{% endif %}</td>
                         <td>{{ message.sender }}</td>
                         <td><a href="{% url 'siteuser:view_message' message.pk %}">{{ message.body|truncatechars:15 }}</a></td>
-                        <td>{{ message.created }}</td>
+                        <td>{{ message.created|date }}</td>
                     </tr>
                 {% empty %}
                     <p>No message to display</p>
@@ -102,7 +102,7 @@
                         <td>{% if message.read %}Read{% else %}<span class="text-danger">Unread</span>{% endif %}</td>
                         <td>{{ message.receiver }}</td>
                         <td><a href="{% url 'siteuser:view_message' message.pk %}">{{ message.body|truncatechars:15 }}</a></td>
-                        <td>{{ message.created }}</td>
+                        <td>{{ message.created|date }}</td>
                     </tr>
                 {% empty %}
                     <p>No message to display</p>

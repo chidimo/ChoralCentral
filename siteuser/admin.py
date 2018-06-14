@@ -16,6 +16,10 @@ class FollowAdmin(admin.ModelAdmin):
 
 class BadgeAdmin(admin.ModelAdmin):
     list_display = ('name', 'description',)
+
+class MessageAdmin(admin.ModelAdmin):
+    list_display = ('read', 'body')
+
 class UserAdmin(BaseUserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
@@ -43,6 +47,6 @@ admin.site.register(CustomUser, UserAdmin)
 admin.site.register(Role)
 admin.site.register(Permission)
 admin.site.register(Badge, BadgeAdmin)
-admin.site.register(Message)
+admin.site.register(Message, MessageAdmin)
 
 admin.site.unregister(Group)
