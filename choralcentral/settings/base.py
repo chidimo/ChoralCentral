@@ -83,7 +83,7 @@ SOCIAL_AUTH_FACEBOOK_SECRET = config('SOCIAL_AUTH_FACEBOOK_SECRET')
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email','public_profile']
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
   'locale': 'en',
-  'fields': 'id, name, email, age_range'
+  'fields': 'id, name, email'
 }
 
 SOCIAL_AUTH_YAHOO_OAUTH2_KEY = config('SOCIAL_AUTH_YAHOO_OAUTH2_KEY')
