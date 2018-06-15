@@ -23,7 +23,7 @@ class AuthorModelTests(TestCase):
     def test_model_representation(self):
         self.assertIsInstance(self.author, Author)
         self.assertEqual(
-            self.author.__str__(), "{} {}".format(self.author.first_name, self.author.last_name))
+            self.author.__str__(), "{} {}".format(self.author.first_name.title(), self.author.last_name.title()))
 
     def test_absolute_url(self):
         abs_url = reverse('author:detail', kwargs={'pk' : self.author.pk, 'slug' : self.author.slug})
@@ -82,7 +82,7 @@ class AuthorDetailViewTests(TestCase):
         self.author.delete()
 
     def test_view_exists_at_desired_location(self):
-        resp = self.client.get('/author/detail/{}/{}'.format(self.author.pk, self.author.slug))
+        resp = self.client.get('/author/detail/{}/{}/'.format(self.author.pk, self.author.slug))
         self.assertEqual(resp.status_code, 200)
 
     def test_view_url_accessible_by_name(self):
@@ -147,11 +147,10 @@ class NewAuthorViewTests(TestCase):
         self.assertEqual(author.originator, self.originator)
 
         # assert redirected to author detail url
-        self.assertEqual(resp['Location'], '/author/detail/{}/{}'.format(author.pk, author.slug))
+        self.assertEqual(resp['Location'], '/author/detail/{}/{}/'.format(author.pk, author.slug))
 
 class NewAuthorFormTests(TestCase):
     def test_valid_data(self):
-        print("\n\nFORM TESTS")
         data = {"author_type" : "lyricist", "first_name" : "first name", "last_name" : "last name", "bio" : "some random text"}
         form = NewAuthorForm(data=data)
         self.assertTrue(form.is_valid())
@@ -189,7 +188,7 @@ class NewAuthorFormTests(TestCase):
         author = Author.objects.get(first_name='first name', last_name='last name', author_type="composer")
         self.assertEqual(author.originator, originator)
         self.assertEqual(resp.status_code, 302)
-        self.assertEqual(resp['Location'], '/author/detail/{}/{}'.format(author.pk, author.slug))
+        self.assertEqual(resp['Location'], '/author/detail/{}/{}/'.format(author.pk, author.slug))
 
         form2 = NewAuthorForm(data=data)
         self.assertEqual(form2.errors["first_name"], ["first name last name already exists."])

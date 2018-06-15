@@ -22,7 +22,6 @@ class NewAuthorForm(forms.ModelForm):
 
     def clean(self):
         data = self.cleaned_data
-        print('data', data)
         first_name = data['first_name'].lower()
         last_name = data['last_name'].lower()
         author_type = data['author_type'].lower()
