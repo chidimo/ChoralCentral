@@ -50,6 +50,15 @@ class CustomUser(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
+    def has_perms(self, perm_list, obj=None):
+        # perm_list = list(self.group.values_list('name', flat=True))
+        print("self", self)
+        print("permissions set", perm_list)
+        print(obj, "object")
+        print(perm_list, 'perm ist')
+        print(obj.originator)
+        return True
+
     def has_perm(self, perm, obj=None):
         return True
 
@@ -163,3 +172,18 @@ class Message(TimeStampedModel):
 
     def get_absolute_url(self):
         return reverse('siteuser:library', kwargs={'pk' : self.sender.pk, 'slug' : self.sender.slug})
+
+class SiteUserPermission(TimeStampedModel):
+    name = models.CharField(max_length=50)
+    code_name = models.CharField(max_length=50)
+    siteuser = models.ManyToManyField(SiteUser)
+
+    class Meta:
+        ordering = ("name", )
+
+    def __str__(self):
+        return self.name
+
+    @property
+    def permitted_siteusers(self):
+        return ", ".join([siteuser.screen_name for siteuser in self.siteuser.all()])

@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.contrib.auth.models import Group, Permission
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from .models import CustomUser, Role, SiteUser, SiteUserGroup, GroupMembership, GroupJoinRequest, Badge, Message
+from .models import CustomUser, Role, SiteUser, SiteUserGroup, GroupMembership, GroupJoinRequest, Badge, Message, SiteUserPermission
 from .forms import UserChangeForm, UserCreationForm
 
 class SiteUserAdmin(admin.ModelAdmin):
@@ -19,6 +19,9 @@ class BadgeAdmin(admin.ModelAdmin):
 
 class MessageAdmin(admin.ModelAdmin):
     list_display = ('read', 'sender', 'receiver', 'body')
+
+class SiteUserPermissionAdmin(admin.ModelAdmin):
+    list_display = ('name', 'code_name', 'permitted_siteusers')
 
 class UserAdmin(BaseUserAdmin):
     form = UserChangeForm
@@ -48,5 +51,6 @@ admin.site.register(Role)
 admin.site.register(Permission)
 admin.site.register(Badge, BadgeAdmin)
 admin.site.register(Message, MessageAdmin)
+admin.site.register(SiteUserPermission, SiteUserPermissionAdmin)
 
 admin.site.unregister(Group)
