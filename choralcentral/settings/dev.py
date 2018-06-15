@@ -1,6 +1,6 @@
 from .base import *
 
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 SKIP_TASK = True # custom variable to be used to skip certain mgt tasks during testing
 
 DATABASES = {
@@ -8,7 +8,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'choral',
         'USER': 'postgres',
-        'PASSWORD': get_env_variable('CENTRAL_PASS'),
+        'PASSWORD': config('DB_PASSWORD'),
         'HOST': 'localhost',
         'PORT': 5432
     }
