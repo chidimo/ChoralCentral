@@ -59,6 +59,8 @@ https://pypi.org/project/python-decouple/#why-not-just-use-environment-variables
 
 1. First song, post, request
 
+git+https://github.com/immensity/django-likes.git
+
 ## Resources
 
 1. <https://github.com/jazzband/django-model-utils>

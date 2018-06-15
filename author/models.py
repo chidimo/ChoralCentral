@@ -29,4 +29,4 @@ class Author(TimeStampedModel):
         return reverse('author:detail', kwargs={'pk' : self.id, 'slug' : self.slug })
 
     def __str__(self):
-        return "{} {}".format(self.first_name, self.last_name)
+        return "{} {}".format(self.first_name.title(), self.last_name.title())

@@ -94,12 +94,12 @@ class SongFilterForm(forms.Form):
 class NewSongForm(forms.ModelForm):
     class Meta:
         model = Song
-        fields = ["publish", "ocassion", "genre", "title", "year", "lyrics",
+        fields = ["publish", "title", "ocassion", "genre", "year", "lyrics",
             "scripture_reference", "language", "tempo", "bpm",
             "divisions", "voicing", "authors", "seasons", "mass_parts",]
 
         widgets = {
-            "title" : forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Song title"}),
+            "title" : forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Song title (100 characters max)"}),
             # "title" : autocomplete.ListSelect2(
             #     url=reverse_lazy('song:song_suggestion'),
             #     attrs={'class' : 'autosuggest-form',
@@ -109,7 +109,7 @@ class NewSongForm(forms.ModelForm):
             "genre" : forms.Select(attrs={'class' : 'form-control'}),
             "ocassion" : forms.Select(attrs={'class' : 'form-control'}),
             "year" : forms.DateInput(
-                attrs={'class' : 'form-control', 'placeholder' : "Composition year in <YYYY> format (Optional)", "title" : "YYYY-MM-DD"}),
+                attrs={'class' : 'form-control', 'placeholder' : "Composition year in <YYYY> format (Optional)"}),
             "lyrics" : forms.Textarea(
                 attrs={'rows' : 5, 'columns' : 10, 'class' : 'form-control', 'placeholder' : "Optional. Supports markdown syntax"}),
             "scripture_reference" : forms.TextInput(
@@ -136,8 +136,8 @@ class NewSongForm(forms.ModelForm):
         super(NewSongForm, self).__init__(*args, **kwargs)
         self.fields['language'].initial = Language.objects.get(language='english')
         self.fields['voicing'].initial = Voicing.objects.get(voicing='satb')
-        self.fields['ocassion'].initial = "NA"
-        self.fields['genre'].initial = "NA"
+        self.fields['ocassion'].initial = "na"
+        self.fields['genre'].initial = "na"
         self.fields['year'].initial = "1685"
         self.fields['tempo'].initial = 100
         self.fields['bpm'].initial = 4

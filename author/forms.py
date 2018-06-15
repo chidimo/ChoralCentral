@@ -23,9 +23,9 @@ class NewAuthorForm(forms.ModelForm):
     def clean(self):
         data = self.cleaned_data
         print('data', data)
-        first_name = data['first_name']
-        last_name = data['last_name']
-        author_type = data['author_type']
+        first_name = data['first_name'].lower()
+        last_name = data['last_name'].lower()
+        author_type = data['author_type'].lower()
 
         try:
             Author.objects.get(first_name=first_name, last_name=last_name)

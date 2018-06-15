@@ -7,7 +7,7 @@
 <h2>Delete score</h2>
 
 <p>Please confirm if you really want to delete <span class="text-danger">{{ object }}</span> sheet?</p>
-<p>This score has been downloaded {{ object.downloads }} times</p>
+<p>This score has {{ object.like_count }} likes and has been downloaded {{ object.downloads }}</p>
 
 <form action="" method="POST">
     {% csrf_token %}

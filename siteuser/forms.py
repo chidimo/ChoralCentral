@@ -142,11 +142,10 @@ class NewRoleForm(forms.ModelForm):
                 attrs={'class' : 'form-control', "placeholder" : "Role"})
         }
 
-    def clean_name(self):
-        name = self.cleaned_data.get("name", None).upper().strip()
+    def clean(self):
+        name = self.cleaned_data.get("name", None).lower().strip()
         if Role.objects.filter(name=name):
             self.add_error('name', "Role with this name already exists")
-        return name.strip()
 
 class RoleEditForm(forms.ModelForm):
     class Meta:
