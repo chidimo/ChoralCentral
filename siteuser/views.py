@@ -436,7 +436,9 @@ class NewMessage(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         form.instance.sender = self.request.user.siteuser
         form.instance.receiver = SiteUser.objects.get(pk=self.kwargs['pk'], slug=self.kwargs['slug'])
-        return super().form_valid(form)
+        form.save()
+        return redirect('siteuser:account_management')
+        # return super().form_valid(form)
 
 class ViewMessage(LoginRequiredMixin, generic.DetailView):
     model = Message

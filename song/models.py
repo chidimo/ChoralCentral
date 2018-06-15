@@ -77,6 +77,7 @@ class MassPart(TimeStampedModel):
 
 class Song(TimeStampedModel):
     OCASSION_CHOICES = (
+        ("", "Select ocassion"),
         ("sacred", "Sacred"),
         ("liturgical", "Liturgical"),
         ("secular", "Secular"),
