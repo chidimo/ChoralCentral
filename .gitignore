@@ -2,7 +2,6 @@ media/
 .vscode/
 keys
 staticfiles/
-staticfiles
 **/__pycache__
 **__pycache__
 geckodriver.log
@@ -11,3 +10,4 @@ choralcentral_prod.log
 choralcentral_stage.log
 htmlcov
 .coveragestaticfiles
+.env

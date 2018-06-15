@@ -5,7 +5,6 @@ from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from django_addanother.widgets import AddAnotherWidgetWrapper
-from dal import autocomplete
 
 from .models import Voicing, Language, Season, MassPart, Song
 

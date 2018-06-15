@@ -8,16 +8,17 @@ from django.urls import reverse_lazy
 from django.core.exceptions import ImproperlyConfigured
 from django.contrib.messages import constants as messages
 
+import raven
+from decouple import config, Csv
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import raven
 RAVEN_CONFIG = {
     'dsn': 'https://b6ecc578313140618b41d13175ed6152:88a27d13befa4ff69cd2fcec01bd6769@sentry.io/1222272',
     # If you are using git, you can also automatically configure the release based on the git info.
     'release': raven.fetch_git_sha(BASE_DIR),
 }
-
 
 def get_env_variable(var_name):
     """Get the environment variable or return exception"""
@@ -27,9 +28,10 @@ def get_env_variable(var_name):
         error_msg = "Set the {} environment variable".format(var_name)
         raise ImproperlyConfigured(error_msg)
 
-ALLOWED_HOSTS = ['*']
+
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 ROOT_URLCONF = 'choralcentral.urls'
-SECRET_KEY = get_env_variable("SECRET_KEY")
+SECRET_KEY = config('SECRET_KEY')
 WSGI_APPLICATION = 'choralcentral.wsgi.application'
 INTERNAL_IPS = ('127.0.0.1', 'localhost')
 
@@ -53,10 +55,10 @@ MESSAGE_TAGS = {
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
 EMAIL_HOST_USER = 'choralcentral@gmail.com'
 DEFAULT_FROM_EMAIL = 'choralcentral@gmail.com'
-EMAIL_HOST_PASSWORD = get_env_variable('DEFAULT_EMAIL_PASS')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 # SHELL_PLUS_PRINT_SQL = True
 SHELL_PLUS_PYGMENTS_FORMATTER = pygments.formatters.TerminalFormatter
@@ -69,40 +71,34 @@ SHELL_PLUS_POST_IMPORTS = [
     ('drb_fixtures'),
     ]
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '778785529263-j0gliifiledngb10gptji0514o5srjqi.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'sr9-rKSYRmdRYmLpzwslIcvf'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 
-SOCIAL_AUTH_TWITTER_KEY = 'pEmqXP2U6w8EeblGB3Eg0SvfL'
-SOCIAL_AUTH_TWITTER_SECRET = 'khl62hQETrYUgh2zB9KTx7e2SPEjra76KTI2m85V4nfYzwzBgB'
+SOCIAL_AUTH_TWITTER_KEY = config('SOCIAL_AUTH_TWITTER_KEY')
+SOCIAL_AUTH_TWITTER_SECRET = config('SOCIAL_AUTH_TWITTER_SECRET')
 
-SOCIAL_AUTH_FACEBOOK_KEY = '977674249054153'
-SOCIAL_AUTH_FACEBOOK_SECRET = '982efc4814c26870b5bbb382ca314432'
+SOCIAL_AUTH_FACEBOOK_KEY = config('SOCIAL_AUTH_FACEBOOK_KEY')
+SOCIAL_AUTH_FACEBOOK_SECRET = config('SOCIAL_AUTH_FACEBOOK_SECRET')
+
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email','public_profile']
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
   'locale': 'en',
   'fields': 'id, name, email, age_range'
 }
 
-SOCIAL_AUTH_YAHOO_OAUTH2_KEY = 'dj0yJmk9QUpmTEdZS2lLTmd5JmQ9WVdrOVdGZG5ZMmh1TldNbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD1jYg--'
-SOCIAL_AUTH_YAHOO_OAUTH2_SECRET = 'c032d7ff2a5a1af2e7276e7a8e4b0c974321d73d'
+SOCIAL_AUTH_YAHOO_OAUTH2_KEY = config('SOCIAL_AUTH_YAHOO_OAUTH2_KEY')
+SOCIAL_AUTH_YAHOO_OAUTH2_SECRET = config('SOCIAL_AUTH_YAHOO_OAUTH2_SECRET')
 
-GOOGLE_RECAPTCHA_SECRET_KEY = '6LdJMlsUAAAAAJaHzAZUJsYV2UQ1tEsGK7KNL8oX'
+GOOGLE_RECAPTCHA_SECRET_KEY = config('GOOGLE_RECAPTCHA_SECRET_KEY')
 REST_FRAMEWORK = {
     # 'DEFAULT_AUTHENTICATION_CLASSES' : (
     #     'blog.api.authentication.VerifyUserIsActive',
     #  ),
-
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE' : 100,
 }
 
 # Application definition
-
-AUTOCOMPLETE_LIGHT = [
-    # Must come before contrib.admin
-    'dal',
-    'dal_select2',
-]
 
 PREREQ_APPS = [
     'django.contrib.admin',
@@ -140,7 +136,7 @@ THIRD_PARTY_APPS = [
     'rules.apps.AutodiscoverRulesConfig',
 ]
 
-INSTALLED_APPS = AUTOCOMPLETE_LIGHT + PREREQ_APPS +  PROJECT_APPS + THIRD_PARTY_APPS
+INSTALLED_APPS = PREREQ_APPS +  PROJECT_APPS + THIRD_PARTY_APPS
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookOAuth2',

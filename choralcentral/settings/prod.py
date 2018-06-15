@@ -1,5 +1,5 @@
 from .base import *
-DEBUG = False
+DEBUG = config('DEBUG', default=False, cast=bool)
 SKIP_TASK = False # custom variable to be used to skip certain mgt tasks during testing
 
 # force https:
@@ -13,7 +13,7 @@ DATABASES = {
         'OPTIONS': {'sql_mode' : 'traditional'},
         'NAME': 'parousia$choral',
         'USER': 'parousia',
-        'PASSWORD': get_env_variable('CENTRAL_PASS'),
+        'PASSWORD': config('DB_PASSWORD'),
         'HOST': 'parousia.mysql.pythonanywhere-services.com',
         'TEST':{
             'ENGINE': 'django.db.backends.mysql',
