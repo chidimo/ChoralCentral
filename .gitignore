@@ -2,6 +2,7 @@ media/
 .vscode/
 keys
 staticfiles/
+staticfiles
 **/__pycache__
 **__pycache__
 geckodriver.log
