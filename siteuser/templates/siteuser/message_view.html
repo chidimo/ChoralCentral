@@ -11,6 +11,7 @@
     </div>
 </div>
 
+{% if not message.sender == request.user.siteuser %}
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
@@ -18,6 +19,7 @@
         </div>
     </div>
 </div>
+{% endif %}
 
 <div class="container">
     <div class="row">

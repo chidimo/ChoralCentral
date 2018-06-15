@@ -195,6 +195,7 @@ TEMPLATES = [
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
                 'universal.context_processors.site_stats',
+                'universal.context_processors.unread_messages',
             ],
         },
     },
