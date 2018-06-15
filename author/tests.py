@@ -151,7 +151,6 @@ class NewAuthorViewTests(TestCase):
 
 class NewAuthorFormTests(TestCase):
     def test_valid_data(self):
-        print("\n\nFORM TESTS")
         data = {"author_type" : "lyricist", "first_name" : "first name", "last_name" : "last name", "bio" : "some random text"}
         form = NewAuthorForm(data=data)
         self.assertTrue(form.is_valid())
