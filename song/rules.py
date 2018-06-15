@@ -1,4 +1,6 @@
 import rules
 from . import predicates
 
-rules.add_rule('can_edit_song', predicates.can_edit_song)
+# rules
+
+rules.add_rule('edit_song', predicates.is_song_creator)

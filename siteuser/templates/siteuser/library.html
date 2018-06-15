@@ -38,6 +38,7 @@
                         <th>Status</th>
                         <th>Title</th>
                         <th>Likes</th>
+                        <th>Date</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -48,8 +49,9 @@
                         <td>{% if song.publish %}Public{% else %}<span class="text-danger">Private</span>{% endif %}</td>
                         <td><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></td>
                         <td>{{ song.like_count }}</td>
+                        <td>{{ song.created|date }}</td>
                         <td>
-                            {% if is_song_owner == True %}
+                            {% if is_library_owner == True %}
                                 <a href="{% url 'song:edit' song.pk song.slug %}" title='Edit'><i class="fas fa-edit"></i></a> |
                                 <a href="{% url 'song:delete' song.pk %}" title='Delete {{ song.title }}'><i class="fas fa-trash"></i></a> |
                             {% endif %}
@@ -82,7 +84,7 @@
                         <td><a href="{% url 'blog:detail' post.pk post.slug %}">{{ post.title }}</a></td>
 
                         <td>
-                            {% if is_post_owner is True %}
+                            {% if is_library_owner is True %}
                                 <a href="{% url 'blog:edit' post.pk %}"><i class="fas fa-edit"></i></a> |
                                 <a href="#"><i class="fas fa-trash"></i></a>
                             {% endif %}
@@ -119,7 +121,9 @@
                             <td class="text-danger">{{ request.status }}</td>
                         {% endif %}
                         <td>
+                            {% if is_library_owner == True %}
                             <a href="{% url 'request:edit' request.pk %}"><i class="fas fa-edit"></i></a>
+                            {% endif %}
                         </td>
                     </tr>
                 {% empty %}
@@ -153,8 +157,12 @@
                                     {{ auth|count_published }}
                                 {% endwith %}
                             </td>
-                            <td><a href="{% url 'author:edit' author.pk author.slug %}"><i class="fas fa-edit"></i></a> |
-                            <a href="{% url 'author:delete' author.pk %}"><i class="fas fa-trash"></i></a></td>
+                            <td>
+                                {% if is_library_owner == True %}
+                                    <a href="{% url 'author:edit' author.pk author.slug %}"><i class="fas fa-edit"></i></a> |
+                                    <a href="{% url 'author:delete' author.pk %}"><i class="fas fa-trash"></i></a>
+                                {% endif %}
+                            </td>
                         </tr>
                     {% empty %}
                         <p>No author to display</p>
@@ -180,8 +188,8 @@
                     <th>Notation</th>
                     <th>Size</th>
                     <th><i class="fas fa-download"></i></th>
-                    <th>Added</th>
-                    <th><i class="fas fa-cog"></i></th>
+                    <th>Date</th>
+                    <th>Action</th>
                 </tr>
 
                 {% if scores %}
@@ -198,7 +206,12 @@
                         <td>{{ score.fsize|filesizeformat }}</td>
                         <td>{{ score.downloads }}</td>
                         <td>{{ score.created|date }}</td>
-                        <td>{% if user == score.uploader.user %}<a href="{% url 'song-media:delete_score' score.pk %}"><i class="fas fa-trash"></i></a>{% endif %}</td>
+                        <td>
+                            {% if is_library_owner == True %}
+                                <a href=""><i class="fas fa-edit"></i></a> |
+                                <a href="{% url 'song-media:delete_score' score.pk %}"><i class="fas fa-trash"></i></a>
+                            {% endif %}
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -225,8 +238,8 @@
                     <th>Format</th>
                     <th>Size</th>
                     <th><i class="fas fa-download"></i></th>
-                    <th>Added</th>
-                    <th><i class="fas fa-cog"></i></th>
+                    <th>Date</th>
+                    <th>Action</th>
                 </tr>
 
                 {% if midis %}
@@ -243,7 +256,12 @@
                             <td>{{ midi.fsize|filesizeformat }}</td>
                             <td>{{ midi.downloads }}</td>
                             <td>{{ midi.created|date }}</td>
-                            <td>{% if user == midi.uploader.user %}<a href="{% url 'song-media:delete_midi' midi.pk %}"><i class="fas fa-trash"></i></a>{% endif %}</td>
+                            <td>
+                                {% if is_library_owner == True %}
+                                    <a href=""><i class="fas fa-edit"></i></a> |
+                                    <a href="{% url 'song-media:delete_midi' midi.pk %}"><i class="fas fa-trash"></i></a>
+                                {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>

@@ -51,12 +51,11 @@ class CustomUser(AbstractBaseUser):
         return True
 
     def has_perms(self, perm_list, obj=None):
-        # perm_list = list(self.group.values_list('name', flat=True))
-        print("self", self)
-        print("permissions set", perm_list)
-        print(obj, "object")
-        print(perm_list, 'perm ist')
-        print(obj.originator)
+        # print("self", self)
+        # print("permissions set", perm_list)
+        # print(obj, "object")
+        # print(perm_list, 'perm ist')
+        # print(obj.originator)
         return True
 
     def has_perm(self, perm, obj=None):

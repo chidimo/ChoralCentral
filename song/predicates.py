@@ -1,5 +1,13 @@
+import rules
 from rules import predicate
 
-@predicate
-def can_edit_song(user, song):
+RULE_MESSAGES = {}
+RULE_MESSAGES['OPERATION_FAILED'] = "You do not have sufficient right to perform this operation."
+RULE_MESSAGES['OPERATION_SUCCESSFUL'] = "Operation successfully completed"
+RULE_MESSAGES['RESTRICTED_PAGE'] = "You do not have sufficient right to view this page."
+
+def user_permissions(user):
+    return [each.code_name for each in user.siteuser.siteuserpermission_set.all()]
+
+def is_song_creator(user, song):
     return user == song.originator.user

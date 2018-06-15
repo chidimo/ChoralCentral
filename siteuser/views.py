@@ -340,17 +340,18 @@ class SiteUserLibrary(LoginRequiredMixin, generic.DetailView):
         siteuser = SiteUser.objects.get(pk=pk, slug=slug)
 
         if self.request.user == siteuser.user: # requester is user of interest
+            context['is_library_owner'] = True
+
+        if self.request.user == siteuser.user: # requester is user of interest
             context['user_songs'] = Song.objects.filter(originator=siteuser).order_by('publish')
-            context['is_song_owner'] = True
         else:
+            context['user_songs'] = Song.objects.filter(originator=siteuser).filter(publish=True).order_by('-created')
             # q = Q(publish=True) and Q(originator=siteuser)
-            context['user_songs'] = Song.objects.filter(originator=siteuser).filter(publish=True)
 
         if self.request.user == siteuser.user:
             context['user_posts'] = Post.objects.filter(creator=siteuser).order_by('publish')
-            context['is_post_owner'] = True
         else:
-            context['user_posts'] = Post.objects.filter(creator=siteuser).filter(publish=True)
+            context['user_posts'] = Post.objects.filter(creator=siteuser).filter(publish=True).order_by('-created')
 
         context['user_requests'] = Request.objects.filter(originator=siteuser)
         context['user_authors'] = Author.objects.filter(originator=siteuser)

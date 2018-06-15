@@ -173,14 +173,16 @@ class SongEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     form_class = SongEditForm
     template_name = 'song/edit.html'
     success_message = "Song updated successfully"
+        
+    def get_success_url(self):
+        return reverse('siteuser:library', kwargs={'pk' : self.request.user.siteuser.pk, 'slug' : self.request.user.siteuser.slug})
 
     def get(self, request, *args, **kwargs):
         self.object = Song.objects.get(pk=self.kwargs["pk"])
-        if rules.test_rule('can_edit_song', self.request.user, self.object):
+        if rules.test_rule('edit_song', self.request.user, self.object):
             return self.render_to_response(self.get_context_data())
-        messages.error(self.request, "Only the owner of {} may edit.".format(self.object))
-        return redirect(reverse('siteuser:library',
-            kwargs={'pk' : self.request.user.siteuser.pk, 'slug' : self.request.user.siteuser.slug}))
+        messages.error(self.request, RULE_MESSAGES['OPERATION_FAILED'])
+        return redirect(self.get_success_url())
 
     def form_valid(self, form):
         if form.instance.genre == "gregorian chant":
@@ -193,10 +195,16 @@ class SongEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
 class SongDelete(generic.DeleteView):
     model = Song
     template_name = "song/song_delete.html"
-
+        
     def get_success_url(self):
-        return reverse('siteuser:library',
-        kwargs={'pk' : self.request.user.siteuser.pk, 'slug' : self.request.user.siteuser.slug})
+        return reverse('siteuser:library', kwargs={'pk' : self.request.user.siteuser.pk, 'slug' : self.request.user.siteuser.slug})
+
+    def get(self, request, *args, **kwargs):
+        self.object = Song.objects.get(pk=self.kwargs["pk"])
+        if rules.test_rule('edit_song', self.request.user, self.object):
+            return self.render_to_response(self.get_context_data())
+        messages.error(self.request, RULE_MESSAGES['OPERATION_FAILED'])
+        return redirect(self.get_success_url())
 
 class FilterSongs(PaginationMixin, SuccessMessageMixin, generic.ListView):
     model = Song
