@@ -345,8 +345,8 @@ class SiteUserLibrary(LoginRequiredMixin, generic.DetailView):
         if self.request.user == siteuser.user: # requester is user of interest
             context['user_songs'] = Song.objects.filter(originator=siteuser).order_by('publish')
         else:
-            context['user_songs'] = Song.objects.filter(originator=siteuser).filter(publish=True).order_by('-created')
             # q = Q(publish=True) and Q(originator=siteuser)
+            context['user_songs'] = Song.objects.filter(originator=siteuser).filter(publish=True).order_by('-created')
 
         if self.request.user == siteuser.user:
             context['user_posts'] = Post.objects.filter(creator=siteuser).order_by('publish')
@@ -369,26 +369,26 @@ def account_management(request):
     siteuser = user.siteuser
 
     try:
-        facebook_login = user.social_auth.get(provider='facebook')
+        context['facebook_login'] = user.social_auth.get(provider='facebook')
     except UserSocialAuth.DoesNotExist:
         facebook_login = None
 
     try:
-        google_login = user.social_auth.get(provider='google-oauth2')
+        context['google_login'] = user.social_auth.get(provider='google-oauth2')
     except UserSocialAuth.DoesNotExist:
         google_login = None
 
     try:
-        twitter_login = user.social_auth.get(provider='twitter')
+        context['twitter_login'] = user.social_auth.get(provider='twitter')
     except UserSocialAuth.DoesNotExist:
         twitter_login = None
 
     try:
-        yahoo_login = user.social_auth.get(provider='yahoo-oauth2')
+        context['yahoo_login'] = user.social_auth.get(provider='yahoo-oauth2')
     except UserSocialAuth.DoesNotExist:
         yahoo_login = None
 
-    can_disconnect = (user.social_auth.count() > 1 or user.has_usable_password())
+    context['can_disconnect'] = (user.social_auth.count() > 1 or user.has_usable_password())
 
     context['siteuser'] = siteuser
     context['user_songs'] = Song.objects.filter(originator=siteuser)
@@ -398,11 +398,6 @@ def account_management(request):
     context['outbox_messages'] = Message.objects.filter(sender=siteuser)
     context['total_likes'] = 400
 
-    context['facebook_login'] = facebook_login
-    context['google_login'] = google_login
-    context['twitter_login'] = twitter_login
-    context['yahoo_login'] = yahoo_login
-    context['can_disconnect'] = can_disconnect
     return render(request, template, context)
 
 @login_required

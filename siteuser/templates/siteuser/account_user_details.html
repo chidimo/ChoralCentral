@@ -15,10 +15,7 @@
         <div class="col-md-3">
             <h3>{{ siteuser.screen_name }}</h3>
             <h5 class="text-secondary ml-0">
-                {% for role in siteuser.roles.all %}
-                    <a href="{% url 'siteuser:siteusers_common_roles' role %}" title='See all {{ role.name|title }}s'>{{ role.name|title }}</a>
-                    {% if not forloop.last %}, {% endif %}
-                {% endfor %}
+                {% for role in siteuser.roles.all %}<a href="{% url 'siteuser:siteusers_common_roles' role %}" title='See all {{ role.name|title }}s'>{{ role.name|title }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
             </h5>
             <p class="text-secondary my-1"><a href="{% url 'siteuser:siteusers_common_location' siteuser.location %}" title='See others in {{ siteuser.location }}'>{{ siteuser.location }}</a></p>
             <p class="text-secondary my-1">
