@@ -47,7 +47,7 @@ nav {
     background: #34348f;
 }
 
-.fixed-top span.notification {
+.fixed-top sup.notification {
     color: red;
     font-size: 14px;
 }
