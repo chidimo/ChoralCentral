@@ -5,7 +5,11 @@ SKIP_TASK = False # custom variable to be used to skip certain mgt tasks during 
 # force https:
 SECURE_SSL_REDIRECT = True
 # INSTALLED_APPS += ['raven.contrib.django.raven_compat',]
-MIDDLEWARE += ['django.middleware.security.SecurityMiddleware']
+MIDDLEWARE += [
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DATABASES = {
     'default': {
