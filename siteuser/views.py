@@ -33,7 +33,7 @@ from song_media.models import Score, Midi, VideoLink
 from .utils import check_recaptcha
 from .models import SiteUser, Role, SiteUserGroup, GroupMembership, Badge, Message#, GroupJoinRequest
 from .forms import (PassWordGetterForm, EmailAndPassWordGetterForm,
-    SiteUserRegistrationForm, SiteUserEditForm, NewRoleForm, NewSiteUserGroupForm, NewMessageForm
+    SiteUserRegistrationForm, SiteUserEditForm, NewRoleForm, NewSiteUserGroupForm, NewMessageForm, ReplyMessageForm
 )
 
 CustomUser = get_user_model()
@@ -438,7 +438,24 @@ class NewMessage(LoginRequiredMixin, generic.CreateView):
         form.instance.receiver = SiteUser.objects.get(pk=self.kwargs['pk'], slug=self.kwargs['slug'])
         form.save()
         return redirect('siteuser:account_management')
-        # return super().form_valid(form)
+
+def reply_message(request, pk):
+    template = 'siteuser/message_reply.html'
+    context = {}
+    msg = Message.objects.get(pk=pk)
+    thread_id = msg.thread_id
+    sender = request.user.siteuser
+    receiver = msg.sender
+
+    if request.method == 'POST':
+        form = ReplyMessageForm(request.POST)
+        if form.is_valid():
+            body = form.cleaned_data['body']
+            msg = Message.objects.create(body=body, sender=sender, receiver=receiver, thread_id=thread_id)
+            return redirect('siteuser:account_management')
+        else:
+            return render(request, template, {'form' : form, 'receiver' : receiver})
+    return render(request, template, {'form' : ReplyMessageForm(), 'receiver' : receiver})
 
 class ViewMessage(LoginRequiredMixin, generic.DetailView):
     model = Message
@@ -453,3 +470,17 @@ class ViewMessage(LoginRequiredMixin, generic.DetailView):
             self.object.read = True
             self.object.save(update_fields=['read'])
         return self.object
+
+class ViewMessageThread(LoginRequiredMixin, generic.ListView):
+    model = Message
+    template_name = 'siteuser/message_view_thread.html'
+    context_object_name = 'message_list'
+
+    def get_queryset(self, queryset=None):
+        thread_id = Message.objects.get(pk=self.kwargs['pk']).thread_id
+        return Message.objects.filter(thread_id=thread_id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['partner'] = Message.objects.get(pk=self.kwargs['pk']).sender
+        return context

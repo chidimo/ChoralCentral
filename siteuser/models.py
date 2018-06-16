@@ -161,6 +161,7 @@ class Message(TimeStampedModel):
     sender = models.ForeignKey(SiteUser, on_delete=models.CASCADE)
     body = models.CharField(max_length=200)
     read = models.BooleanField(default=False)
+    thread_id = models.CharField(max_length=50, default=uuid.uuid4)
     receiver = models.ForeignKey(SiteUser, on_delete=models.CASCADE, related_name='message_recipient')
 
     class Meta:
