@@ -64,6 +64,7 @@
                         <th>Sender</th>
                         <th>Message</th>
                         <th>Date</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,6 +75,10 @@
                         <td>{{ message.sender }}</td>
                         <td><a href="{% url 'siteuser:view_message' message.pk %}">{{ message.body|truncatechars:15 }}</a></td>
                         <td>{{ message.created|date }}</td>
+                        <td>
+                            <a href="{% url 'siteuser:view_message_thread' message.pk %}" title="Message thread"><i class="fas fa-history"></i></a> |
+                            <a href="{% url 'siteuser:reply_message' message.pk %}" title="Reply"><i class="fas fa-reply"></i></a>
+                        </td>
                     </tr>
                 {% empty %}
                     <p>No message to display</p>

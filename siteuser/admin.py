@@ -18,7 +18,8 @@ class BadgeAdmin(admin.ModelAdmin):
     list_display = ('name', 'description',)
 
 class MessageAdmin(admin.ModelAdmin):
-    list_display = ('read', 'sender', 'receiver', 'body')
+    list_display = ('read', 'sender', 'receiver', 'body', 'thread_id')
+    list_editable = ('thread_id', )
 
 class SiteUserPermissionAdmin(admin.ModelAdmin):
     list_display = ('name', 'code_name', 'permitted_siteusers')
