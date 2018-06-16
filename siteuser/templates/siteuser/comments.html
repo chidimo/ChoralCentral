@@ -4,13 +4,9 @@
 {% load blog_ttags %}
 {% block content_content %}
 
-<div class='container comment-detail-header'>
+<div class='container siteuser-index-heading'>
     <div class='row'>
-        <div class='col-sm-12 head-title'>
-            <span class='h5 float-left'>
-                Comments by <a href="{% url 'siteuser:library' siteuser.pk siteuser.slug %}">{{ siteuser.screen_name }}</a>
-            </span>
-        </div>
+        <h3 class='float-left'>{{ siteuser.screen_name }}'s comments</h3>
     </div>
 </div>
 
@@ -47,6 +43,6 @@
         </span>
     </div>
 {% empty %}
-    <p>No comments to display</p>
+    <p style="margin-bottom:25rem;">No comments to display</p>
 {% endfor %}
 {% endblock content_content %}

@@ -1,28 +1,46 @@
+{% load static %}
+{% load thumbnail %}
 
 <div class="container song-about">
     <div class="row">
-        <div class="col-sm-6">
-            <p class="text-secondary">First name: {{ siteuser.first_name }}</p>
-            <p class="text-secondary">Last name: {{ siteuser.last_name }}</p>
-
-            <p class="text-secondary">Email: {% if user == siteuser.user %}
-                <a href="mailto:{{ user.siteuser.user.email }}">{{ siteuser.user.email }}</a>{% else %}<a href="{% url 'siteuser:new_message' siteuser.pk siteuser.slug %}">message</a>{% endif %}</p>
-            <p class="text-secondary">Location: <a href="{% url 'siteuser:siteusers_common_location' siteuser.location %}" title='See others in {{ siteuser.location }}'>{{ siteuser.location }}</a></p>
+        <div class="col-md-3">
+            <a class="nav-link px-0" href="">
+                {% thumbnail user.siteuser.avatar "150x150" crop="center" as im %}
+                    <img class="card" src="{{ user.siteuser.avatar.url }}" width="150" height="150">
+                {% empty %}
+                    <img class="card" src="{% static 'img/django-logo.png' %}">
+                {% endthumbnail %}
+            </a>
         </div>
-
-        <div class="col-sm-6">
-            <p class="text-secondary">Activity: {{ user_songs.count }} songs, {{ user_posts.count }} blog posts,
-                {{ siteuser.score_set.count }} scores, {{ siteuser.midi_set.count }} midis,
-                <a href="{% url 'siteuser:siteuser_comments' siteuser.pk siteuser.slug %}">{{ siteuser.comment_set.count }}</a> comments
-            </p>
-            <p class="text-secondary">Roles:
+        <div class="col-md-3">
+            <h3>{{ siteuser.screen_name }}</h3>
+            <h5 class="text-secondary ml-0">
                 {% for role in siteuser.roles.all %}
                     <a href="{% url 'siteuser:siteusers_common_roles' role %}" title='See all {{ role.name|title }}s'>{{ role.name|title }}</a>
                     {% if not forloop.last %}, {% endif %}
                 {% endfor %}
+            </h5>
+            <p class="text-secondary my-1"><a href="{% url 'siteuser:siteusers_common_location' siteuser.location %}" title='See others in {{ siteuser.location }}'>{{ siteuser.location }}</a></p>
+            <p class="text-secondary my-1">
+                {% if user == siteuser.user %}
+                    <a href="mailto:{{ user.siteuser.user.email }}" title="{{ siteuser.user.email }}">email</a>
+                {% else %}
+                    <a href="{% url 'siteuser:new_message' siteuser.pk siteuser.slug %}" title="Message {{ siteuser }}">message</a>
+                {% endif %}
             </p>
-            <p class="text-secondary">Member since: {{ siteuser.created }}</p>
-            <p class="text-secondary">Last seen: {{ siteuser.user.last_login }}</p>
+            <p class="text-secondary my-1">Joined {{ siteuser.created|date }}</p>
+            <p class="text-secondary my-1">Last seen {{ siteuser.user.last_login|date }}</p>
+        </div>
+        <div class="col-md-3">
+            <p class="my-1"><span class="activity-stats-count" style="font-weight:bold;">{{ user_songs.count }}</span> songs</p>
+            <p class="my-1"><span class="activity-stats-count" style="font-weight:bold;">{{ user_posts.count }}</span> blog posts</p>
+            <p class="my-1"><span class="activity-stats-count" style="font-weight:bold;">{{ siteuser.score_set.count }}</span> scores</p>
+            <p class="my-1"><span class="activity-stats-count" style="font-weight:bold;">{{ siteuser.midi_set.count }}</span> midis</p>
+            <p class="my-1"><span class="activity-stats-count" style="font-weight:bold;">{{ siteuser.comment_set.count }}</span> <a href="{% url 'siteuser:siteuser_comments' siteuser.pk siteuser.slug %}">comments</a></p>
+            <p class="my-1"><span class="activity-stats-count" style="font-weight:bold;">{{ total_likes }}</span> likes</p>
+        </div>
+        <div class="col-md-3">
+            social
         </div>
     </div>
 </div>

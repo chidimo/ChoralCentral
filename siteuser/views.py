@@ -358,6 +358,7 @@ class SiteUserLibrary(LoginRequiredMixin, generic.DetailView):
         context['scores'] = Score.objects.filter(uploader=siteuser).order_by("song", "-fsize", "-created", "downloads")
         context['midis'] = Midi.objects.filter(uploader=siteuser).order_by("song", "-fsize", "-created", "downloads")
         context['user_videos'] = VideoLink.objects.filter(uploader=siteuser)
+        context['total_likes'] = 300
         return context
 
 @login_required
@@ -395,6 +396,7 @@ def account_management(request):
     context['user_badges'] = Badge.objects.filter(siteuser=siteuser)
     context['inbox_messages'] = Message.objects.filter(receiver=siteuser)
     context['outbox_messages'] = Message.objects.filter(sender=siteuser)
+    context['total_likes'] = 400
 
     context['facebook_login'] = facebook_login
     context['google_login'] = google_login
