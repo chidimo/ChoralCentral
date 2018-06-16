@@ -93,7 +93,7 @@ def get_and_login_siteuser(user, screen_name, email, image, first_name, last_nam
     else:
         while True: # keep looping until a SiteUser is successfully created
             try:
-                su = SiteUser.objects.create(user=social_user, screen_name=screen_name, first_name=first_name, last_name=last_name, location=location)
+                su = SiteUser.objects.create(user=user, screen_name=screen_name, first_name=first_name, last_name=last_name, location=location)
                 save_avatar(image, su)
                 break
             except IntegrityError:
