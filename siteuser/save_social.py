@@ -7,7 +7,7 @@ import requests
 from django.template.defaultfilters import slugify
 
 from django.db import IntegrityError
-from django.core.exceptions import ObjectDoesNotExist
+# from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import ContentFile
 from django.contrib.auth import login
 from django.contrib.auth import get_user_model
@@ -30,7 +30,7 @@ def save_avatar(image_url, model_object):
         name = model_object.screen_name.lower()
         model_object.avatar.save(name, ContentFile(response.content), save=True)
 
-def process_response(backend, response):
+def process_response(request, backend, response):
     """Process the response returned by a backend"""
     save_name = "response-{}.json".format(backend)
     with open(save_name, "w+") as fh:
@@ -101,7 +101,7 @@ def get_and_login_siteuser(request, user, screen_name, email, image, first_name,
                 continue
     login(request, user, backend=login_backends['django'])
 
-def get_or_create_user_from_social_detail(screen_name, email, image, first_name, last_name, location):
+def get_or_create_user_from_social_detail(request, screen_name, email, image, first_name, last_name, location):
     """Create new user from social profile details"""
     if CustomUser.objects.filter(email=email).exists():
         user = CustomUser.objects.get(email=email)
@@ -118,5 +118,5 @@ def save_social_profile(backend, user, response, *args, **kwargs):
     if request.user.is_authenticated:
         login(request, request.user, backend=login_backends['django'])
     else:
-        screen_name, email, image, first_name, last_name, location = process_response(backend, response)
-        get_or_create_user_from_social_detail(screen_name, email, image, first_name, last_name, location)
+        screen_name, email, image, first_name, last_name, location = process_response(request, backend, response)
+        get_or_create_user_from_social_detail(request, screen_name, email, image, first_name, last_name, location)
