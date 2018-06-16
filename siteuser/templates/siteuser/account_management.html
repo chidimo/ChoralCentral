@@ -12,6 +12,16 @@
     </div>
 </div>
 
+<p>{{ request.user }}</p>
+<p>{{ request.user.siteuser }}</p>
+<p>{{ siteuser }}</p>
+<p>{{ siteuser.user }}</p>
+<p>{{ can_disconnect}}</p>
+<p>{{ facebook_login }}</p>
+<p>{{ google_login }}</p>
+<p>{{ twitter_login }}</p>
+<p>{{ yahoo_login }}</p>
+
 {% include 'siteuser/account_user_details.html' %}
 
 <div class='container siteuser-index-heading'>
@@ -19,6 +29,8 @@
         <h5 class='float-left'>Badges</h5>
     </div>
 </div>
+
+
 
 <div class="container">
     <div class="row">

@@ -371,28 +371,26 @@ def account_management(request):
     try:
         context['facebook_login'] = user.social_auth.get(provider='facebook')
     except UserSocialAuth.DoesNotExist:
-        facebook_login = None
+        context['facebook_login'] = None
 
     try:
         context['google_login'] = user.social_auth.get(provider='google-oauth2')
     except UserSocialAuth.DoesNotExist:
-        google_login = None
+        context['google_login'] = None
 
     try:
         context['twitter_login'] = user.social_auth.get(provider='twitter')
     except UserSocialAuth.DoesNotExist:
-        twitter_login = None
+        context['twitter_login'] = None
 
     try:
         context['yahoo_login'] = user.social_auth.get(provider='yahoo-oauth2')
     except UserSocialAuth.DoesNotExist:
-        yahoo_login = None
+        context['yahoo_login'] = None
 
     context['can_disconnect'] = (user.social_auth.count() > 1 or user.has_usable_password())
 
     context['siteuser'] = siteuser
-    context['user_songs'] = Song.objects.filter(originator=siteuser)
-    context['user_posts'] = Post.objects.filter(creator=siteuser)
     context['user_badges'] = Badge.objects.filter(siteuser=siteuser)
     context['inbox_messages'] = Message.objects.filter(receiver=siteuser)
     context['outbox_messages'] = Message.objects.filter(sender=siteuser)
