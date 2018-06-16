@@ -86,7 +86,7 @@ def process_response(backend, response):
         return
     return screen_name, email, image, first_name, last_name, location
 
-def get_and_login_siteuser(user, screen_name, email, image, first_name, last_name, location):
+def get_and_login_siteuser(request, user, screen_name, email, image, first_name, last_name, location):
     """If siteuser exists, just log it in and move on, else create it and log it in"""
     if SiteUser.objects.filter(user=user).exists():
         pass
@@ -109,7 +109,7 @@ def get_or_create_user_from_social_detail(screen_name, email, image, first_name,
         user = CustomUser.objects.create_user(email=email, password=None)
         user.is_active = True
         user.save()
-    get_and_login_siteuser(user, screen_name, email, image, first_name, last_name, location)
+    get_and_login_siteuser(request, user, screen_name, email, image, first_name, last_name, location)
 
 def save_social_profile(backend, user, response, *args, **kwargs):
     request = kwargs['request']
