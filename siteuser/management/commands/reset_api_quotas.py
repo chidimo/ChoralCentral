@@ -12,7 +12,7 @@ class Command(BaseCommand):
         if options['quota']:
             quota = options['quota']
         else:
-            quota = 10
+            quota = 1000
         siteusers = SiteUser.objects.all()
         for siteuser in siteusers:
             siteuser.quota = quota

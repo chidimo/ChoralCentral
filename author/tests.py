@@ -23,7 +23,7 @@ class AuthorModelTests(TestCase):
     def test_model_representation(self):
         self.assertIsInstance(self.author, Author)
         self.assertEqual(
-            self.author.__str__(), "{} {}".format(self.author.first_name.title(), self.author.last_name.title()))
+            self.author.__str__(), "{} {}".format(self.author.first_name, self.author.last_name))
 
     def test_absolute_url(self):
         abs_url = reverse('author:detail', kwargs={'pk' : self.author.pk, 'slug' : self.author.slug})
@@ -72,31 +72,34 @@ class AuthorIndexViewTests(TestCase):
         self.assertTrue(len(resp.context['authors']) == 10)
 
 class AuthorDetailViewTests(TestCase):
-
     def setUp(self):
+        self.user = CustomUser.objects.create_user(email='test@user.app')
+        self.user.is_active = True
+        self.user.set_password("testpassword")
+        self.user.save()
+
+        creator = mommy.make('siteuser.SiteUser', user=self.user, screen_name='screen_name')
         # set bio manually to avoid error being thrown by template tag markdown_format
-        creator = mommy.make('siteuser.SiteUser')
         self.author = mommy.make('author.Author', creator=creator, bio='Some bio text')
 
     def tearDown(self):
         self.author.delete()
 
+    def test_view_fails_when_not_logged_in(self):
+        resp = self.client.get('/author/detail/{}/{}/'.format(self.author.pk, self.author.slug))
+        self.assertEqual(resp.status_code, 302)
+        self.assertRedirects(resp, '/users/login/?next=/author/detail/{}/{}/'.format(self.author.pk, self.author.slug))
+
+
     def test_view_exists_at_desired_location(self):
+        login = self.client.login(username='test@user.app', password='testpassword')
+        # test url reversal gives correct view
+        resp = self.client.get(reverse('author:detail', kwargs={'pk' : self.author.pk, 'slug' : self.author.slug}))
+        self.assertEqual(resp.status_code, 200)
+
         resp = self.client.get('/author/detail/{}/{}/'.format(self.author.pk, self.author.slug))
         self.assertEqual(resp.status_code, 200)
-
-    def test_view_url_accessible_by_name(self):
-        resp = self.client.get(reverse('author:detail', kwargs={'pk' : self.author.pk, 'slug' : self.author.slug}))
-        self.assertEqual(resp.status_code, 200)
-
-    def test_view_renders_correct_template(self):
-        resp = self.client.get(reverse('author:detail', kwargs={'pk' : self.author.pk, 'slug' : self.author.slug}))
-        self.assertEqual(resp.status_code, 200)
         self.assertTemplateUsed(resp, 'author/detail.html')
-
-    def test_view_has_correct_context(self):
-        resp = self.client.get(reverse('author:detail', kwargs={'pk' : self.author.pk, 'slug' : self.author.slug}))
-        self.assertEqual(resp.status_code, 200)
         self.assertTrue('author' in resp.context)
 
 class NewAuthorViewTests(TestCase):
@@ -163,7 +166,7 @@ class NewAuthorFormTests(TestCase):
     def test_invalid_data(self):
         data = {"author_type" : "lyricist", 'first_name' : 25, "last_name" : "last name", "bio" :"some random text"}
         form = NewAuthorForm(data=data)
-        self.assertEqual(form.errors["first_name"], ["Only alphabets are values allowed."])
+        self.assertEqual(form.errors["first_name"], ["Only alphabetic values are allowed."])
         self.assertFalse(form.is_valid())
 
     def test_duplicate_author_creation(self):

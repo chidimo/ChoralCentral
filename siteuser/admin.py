@@ -8,10 +8,10 @@ from .models import CustomUser, Role, SiteUser, SiteUserGroup, GroupMembership, 
 from .forms import UserChangeForm, UserCreationForm
 
 class SiteUserAdmin(admin.ModelAdmin):
-    list_display = ("screen_name", "user", "first_name", "last_name", 'roles', "slug", "location", "key", "quota", "used", "remaining_quota")
-    list_editable = ('location', )
+    list_display = ("pk", "screen_name", "user", "first_name", "last_name", 'all_roles', "slug", "location", "key", "quota", "used", "remaining_quota")
+    # list_editable = ('location', )
 
-    def roles(self, obj):
+    def all_roles(self, obj):
         return ", ".join([role.name for role in obj.roles.all()])
 
 class FollowAdmin(admin.ModelAdmin):

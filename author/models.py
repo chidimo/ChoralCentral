@@ -8,8 +8,8 @@ from universal.models import TimeStampedModel
 from universal.fields import AutoMultipleSlugField
 
 class Author(TimeStampedModel):
-    msg = "Only alphanumeric values are allowed."
-    validate_name = RegexValidator(regex=r'[a-zA-Z0-9-\s]+', message=msg, code='Not set')
+    msg = "Only alphabetic values are allowed."
+    validate_name = RegexValidator(regex=r'[a-zA-Z-\s]+', message=msg, code='Not set')
     CHOICES = (('', 'Select author type'),
                ('lyricist', 'Lyricist'),
                ('composer', 'Composer'),

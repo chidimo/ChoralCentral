@@ -95,7 +95,7 @@ class SiteUser(TimeStampedModel):
     key = models.CharField(max_length=50, default=uuid.uuid4, null=True, blank=True, unique=True)
 
     class Meta:
-        ordering = ('-created', 'screen_name', )
+        ordering = ('created', 'screen_name', )
         verbose_name_plural = 'siteusers'
 
     @property

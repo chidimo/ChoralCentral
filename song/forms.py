@@ -125,16 +125,16 @@ class NewSongForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(NewSongForm, self).__init__(*args, **kwargs)
-        self.fields['language'].initial = Language.objects.get(language='english')
-        self.fields['voicing'].initial = Voicing.objects.get(voicing='satb')
+        self.fields['language'].initial = Language.objects.get(name='english')
+        self.fields['voicing'].initial = Voicing.objects.get(name='satb')
         self.fields['ocassion'].initial = "na"
         self.fields['genre'].initial = "na"
         self.fields['year'].initial = "1685"
         self.fields['tempo'].initial = 100
         self.fields['bpm'].initial = 4
         self.fields['divisions'].initial = 4
-        self.fields['seasons'].initial = Season.objects.get(season='na')
-        self.fields['mass_parts'].initial = MassPart.objects.get(part='na')
+        self.fields['seasons'].initial = Season.objects.get(name='na')
+        self.fields['mass_parts'].initial = MassPart.objects.get(name='na')
 
 class SongEditForm(forms.ModelForm):
     class Meta:
