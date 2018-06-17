@@ -12,16 +12,6 @@
     </div>
 </div>
 
-<p>{{ request.user.social_auth }}</p>
-<p>{{ request.user.siteuser }}</p>
-<p>{{ siteuser }}</p>
-<p>{{ siteuser.user }}</p>
-<p>{{ can_disconnect}}</p>
-<p>{{ facebook_login }}</p>
-<p>{{ google_login }}</p>
-<p>{{ twitter_login }}</p>
-<p>{{ yahoo_login }}</p>
-
 {% include 'siteuser/account_user_details.html' %}
 
 <div class='container siteuser-index-heading'>
@@ -30,22 +20,13 @@
     </div>
 </div>
 
-
-
 <div class="container">
     <div class="row">
         {% for badge in user_badges %}
             <div class="col-lg-2 col-md-3 col-xs-4 col-sm-4 py-2 my-2 siteuser-index-details">
-                {% thumbnail badge.icon "50x50" crop="center" as im %}
-                    <a href="{{ badge.icon.url }}" target="_blank"><img alt="" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="img-fluid card"></a>
-                {% empty %}
-                    <img alt="" src="{% static 'img/django-logo.png' %}" width="150" height="150" class="img-fluid card">
-                {% endthumbnail %}
-
+                    <i class="fas fa-circle" style="color:{{ badge.color }}"></i>
                 <p class="text-left" title="{{ badge.description }}"><a href="{% url 'siteuser:library' siteuser.pk siteuser.slug %}">{{ badge.name|title }}</a></p>
             </div>
-        {% empty %}
-            <p>No profiles added yet.</p>
         {% endfor %}
     </div>
 </div>

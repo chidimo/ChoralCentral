@@ -113,13 +113,13 @@ PREREQ_APPS = [
 ]
 
 PROJECT_APPS = [
-    'author',
-    'blog',
-    'drb',
-    'request',
     'siteuser',
     'song',
+    'blog',
+    'author',
     'song_media',
+    'request',
+    'drb',
 ]
 
 THIRD_PARTY_APPS = [

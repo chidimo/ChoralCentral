@@ -4,8 +4,9 @@
 import uuid
 import operator
 from functools import reduce
+from collections import OrderedDict, namedtuple, deque
 
-from django.db.models import Q
+from django.db.models import Q, Count, Prefetch
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.views import generic
@@ -62,6 +63,21 @@ class SiteUserIndex(PaginationMixin, generic.ListView):
     context_object_name = 'siteuser_list'
     template_name = "siteuser/index.html"
     paginate_by = 20
+
+    def get_queryset(self):
+        siteusers = SiteUser.objects.prefetch_related('roles')
+        return_val = []
+        for siteuser in siteusers:
+            stats = {}
+            stats['siteuser'] = siteuser
+            stats['song_count'] = Song.objects.filter(originator=siteuser, publish=True).count()
+            stats['post_count'] = Post.objects.filter(creator=siteuser, publish=True).count()
+            stats['comment_count'] = Comment.objects.filter(creator=siteuser).count()
+            stats['score_count'] = Score.objects.filter(uploader=siteuser).count()
+            stats['midi_count'] = Midi.objects.filter(uploader=siteuser).count()
+            stats['siteuser_roles'] = siteuser.roles.all()
+            return_val.append(stats)
+        return return_val
 
 class SiteUserCommonRoles(PaginationMixin, generic.ListView):
     model = SiteUser
@@ -341,23 +357,18 @@ class SiteUserLibrary(LoginRequiredMixin, generic.DetailView):
 
         if self.request.user == siteuser.user: # requester is user of interest
             context['is_library_owner'] = True
-
-        if self.request.user == siteuser.user: # requester is user of interest
-            context['user_songs'] = Song.objects.filter(originator=siteuser).order_by('publish')
+            context['user_songs'] = Song.objects.filter(originator__pk=pk).order_by('publish')
+            context['user_posts'] = Post.objects.filter(creator__pk=pk).order_by('publish')
         else:
-            # q = Q(publish=True) and Q(originator=siteuser)
-            context['user_songs'] = Song.objects.filter(originator=siteuser).filter(publish=True).order_by('-created')
+            q = Q(publish=True) and Q(originator__pk=pk)
+            context['user_songs'] = Song.objects.filter(originator__pk=pk, publish=True).order_by('-created').values('pk', 'title', 'publish', 'like_count', 'slug')
+            context['user_posts'] = Post.objects.filter(creator__pk=pk, publish=True).order_by('-created').values('pk', 'title', 'publish', 'slug')
 
-        if self.request.user == siteuser.user:
-            context['user_posts'] = Post.objects.filter(creator=siteuser).order_by('publish')
-        else:
-            context['user_posts'] = Post.objects.filter(creator=siteuser).filter(publish=True).order_by('-created')
-
-        context['user_requests'] = Request.objects.filter(originator=siteuser)
-        context['user_authors'] = Author.objects.filter(originator=siteuser)
-        context['scores'] = Score.objects.filter(uploader=siteuser).order_by("song", "-fsize", "-created", "downloads")
-        context['midis'] = Midi.objects.filter(uploader=siteuser).order_by("song", "-fsize", "-created", "downloads")
-        context['user_videos'] = VideoLink.objects.filter(uploader=siteuser)
+        context['user_requests'] = Request.objects.filter(originator__pk=pk)
+        context['user_authors'] = Author.objects.filter(originator__pk=pk)
+        context['scores'] = Score.objects.filter(uploader__pk=pk).select_related('song').order_by("song", "-fsize", "-created", "downloads")
+        context['midis'] = Midi.objects.filter(uploader__pk=pk).select_related('song').order_by("song", "-fsize", "-created", "downloads")
+        context['user_videos'] = VideoLink.objects.filter(uploader__pk=pk).select_related('song')
         context['total_likes'] = 300
         return context
 
@@ -391,6 +402,8 @@ def account_management(request):
     context['can_disconnect'] = (user.social_auth.count() > 1 or user.has_usable_password())
 
     context['siteuser'] = siteuser
+    context['user_songs'] = Song.objects.filter(originator=siteuser)
+    context['user_posts'] = Post.objects.filter(creator=siteuser)
     context['user_badges'] = Badge.objects.filter(siteuser=siteuser)
     context['inbox_messages'] = Message.objects.filter(receiver=siteuser)
     context['outbox_messages'] = Message.objects.filter(sender=siteuser)

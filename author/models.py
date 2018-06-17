@@ -14,7 +14,7 @@ class Author(TimeStampedModel):
                ('lyricist', 'Lyricist'),
                ('composer', 'Composer'),
                ('lyricist and composer', 'Lyricist and Composer'))
-    originator = models.ForeignKey(SiteUser, null=True, on_delete=models.SET_NULL)
+    originator = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
     first_name = models.CharField(max_length=30, validators=[validate_name])
     last_name = models.CharField(max_length=30, validators=[validate_name])
     bio = models.TextField(blank=True, null=True)

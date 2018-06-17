@@ -15,7 +15,8 @@ class FollowAdmin(admin.ModelAdmin):
     list_display = ("from_siteuser", "to_siteuser", "created")
 
 class BadgeAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description',)
+    list_display = ('name', 'hierarchy', 'description', 'color')
+    list_editable = ('color', )
 
 class MessageAdmin(admin.ModelAdmin):
     list_display = ('read', 'sender', 'receiver', 'body', 'thread_id')
@@ -28,7 +29,7 @@ class UserAdmin(BaseUserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
 
-    list_display = ('email', 'is_admin', 'is_active', "prof")
+    list_display = ('email', 'is_admin', 'is_active', "siteuser")
     list_filter = ('is_admin', )
     fieldsets = (
         (None, {'fields' : ('email', 'password')}),

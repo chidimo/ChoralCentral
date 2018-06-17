@@ -102,7 +102,7 @@ class Song(TimeStampedModel):
         ("sequence", "Sequence"),
         ("na", "NA"),
     )
-    originator      = models.ForeignKey(SiteUser, on_delete=models.SET_NULL, null=True)
+    originator      = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
     voicing         = models.ForeignKey(Voicing, on_delete=models.CASCADE)
     language        = models.ForeignKey(Language, on_delete=models.CASCADE)
     publish         = models.BooleanField(default=False)

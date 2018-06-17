@@ -12,7 +12,7 @@ from siteuser.models import SiteUser
 from song.models import Song
 
 class Post(TimeStampedModel):
-    creator = models.ForeignKey(SiteUser, on_delete=models.SET_NULL, null=True)
+    creator = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
     title = models.CharField(max_length=100)
     subtitle = models.CharField(max_length=100, blank=True, null=True)
     body = models.TextField()
@@ -41,7 +41,7 @@ class Post(TimeStampedModel):
         return super(Post, self).save(*args, **kwargs)
 
 class Comment(TimeStampedModel):
-    creator = models.ForeignKey(SiteUser, on_delete=models.CASCADE)
+    creator = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     likes = models.ManyToManyField(SiteUser, related_name="comment_likes", blank=True)
     like_count = models.IntegerField(default=1)

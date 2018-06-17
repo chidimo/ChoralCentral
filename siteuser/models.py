@@ -65,8 +65,8 @@ class CustomUser(AbstractBaseUser):
     def is_staff(self):
         return self.is_admin
 
-    def prof(self):
-        return self.siteuser.screen_name
+    def siteuser(self):
+        return self.siteuser
 
 class Role(TimeStampedModel):
     name = models.CharField(max_length=20, unique=True)
@@ -147,8 +147,8 @@ class GroupJoinRequest(TimeStampedModel):
 class Badge(TimeStampedModel):
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=200)
-    icon = models.ImageField(upload_to=badge_icon)
     hierarchy = models.IntegerField()
+    color = models.CharField(max_length=30)
     siteuser = models.ManyToManyField(SiteUser)
 
     class Meta:
@@ -158,11 +158,11 @@ class Badge(TimeStampedModel):
         return self.name
 
 class Message(TimeStampedModel):
-    sender = models.ForeignKey(SiteUser, on_delete=models.CASCADE)
+    sender = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
     body = models.CharField(max_length=200)
     read = models.BooleanField(default=False)
     thread_id = models.CharField(max_length=50, default=uuid.uuid4)
-    receiver = models.ForeignKey(SiteUser, on_delete=models.CASCADE, related_name='message_recipient')
+    receiver = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1, related_name='message_recipient')
 
     class Meta:
         ordering = ('read', '-created')

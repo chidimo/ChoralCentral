@@ -34,7 +34,7 @@ class ScoreNotation(TimeStampedModel):
     #     return reverse('song:detail', kwargs={'pk' : (self.song.id), 'slug' : self.song.slug})
 
 class Score(TimeStampedModel):
-    uploader = models.ForeignKey(SiteUser, null=True, on_delete=models.SET_NULL)
+    uploader = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
     song = models.ForeignKey(Song, on_delete=models.CASCADE)
     part = models.ForeignKey(VocalPart, on_delete=models.CASCADE)
     notation = models.ForeignKey(ScoreNotation, on_delete=models.CASCADE)
@@ -63,7 +63,7 @@ class Score(TimeStampedModel):
         return "https://www.choralcentral.net" + reverse('song-media:score_view', kwargs={'pk' : (self.id)})
 
 class Midi(TimeStampedModel):
-    uploader = models.ForeignKey(SiteUser, null=True, on_delete=models.SET_NULL)
+    uploader = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
     song = models.ForeignKey(Song, null=True, on_delete=models.SET_NULL)
     part = models.ForeignKey(VocalPart, on_delete=models.CASCADE)
     fformat = models.CharField(max_length=10, blank=True)
@@ -85,7 +85,7 @@ class Midi(TimeStampedModel):
         return reverse('song:detail', kwargs={'pk' : (self.song.id), 'slug' : self.song.slug})
 
 class VideoLink(TimeStampedModel):
-    uploader = models.ForeignKey(SiteUser, null=True, on_delete=models.SET_NULL)
+    uploader = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
     song = models.ForeignKey(Song, null=True, on_delete=models.SET_NULL)
     video_link = models.URLField(max_length=100, unique=True)
     channel_link = models.URLField(max_length=100, default='')

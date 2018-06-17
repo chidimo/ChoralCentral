@@ -10,7 +10,7 @@ from universal.models import TimeStampedModel
 from universal.fields import AutoSlugField
 
 class Request(TimeStampedModel):
-    originator = models.ForeignKey(SiteUser, null=True, on_delete=models.SET_NULL)
+    originator = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
     request = models.CharField(max_length=200)
     slug = AutoSlugField(set_using="request")
     status = models.BooleanField(default=False)
@@ -26,7 +26,7 @@ class Request(TimeStampedModel):
         return reverse("request:detail", args=[str(self.id), str(self.slug)])
 
 class Reply(TimeStampedModel):
-    originator = models.ForeignKey(SiteUser, on_delete=models.CASCADE)
+    originator = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
     request = models.ForeignKey(Request, on_delete=models.CASCADE)
     song = models.OneToOneField(Song, on_delete=models.SET_NULL, null=True)
 

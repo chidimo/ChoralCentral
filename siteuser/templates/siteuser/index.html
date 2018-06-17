@@ -15,29 +15,26 @@
 
 <div class="container">
     <div class="row">
-        {% for siteuser in siteuser_list %}
+        {% for each in siteuser_list %}
             <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 siteuser-index-details">
-                {% thumbnail siteuser.avatar "150x150" crop="center" as im %}
-                   <a href="{{ siteuser.avatar.url }}" target="_blank"><img alt="" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="img-fluid card"></a>
+                {% thumbnail each.siteuser.avatar "150x150" crop="center" as im %}
+                   <a href="{{ each.siteuser.avatar.url }}" target="_blank"><img alt="" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="img-fluid card"></a>
                 {% empty %}
                    <img alt="" src="{% static 'img/django-logo.png' %}" width="150" height="150" class="img-fluid card">
                 {% endthumbnail %}
-                <p class="text-left"><a href="{% url 'siteuser:library' siteuser.pk siteuser.slug %}">{{ siteuser.screen_name }}</a></p>
-                <p class="text-left">Roles:
-                    {% for role in siteuser.roles.all %}
+                <h6 class="text-left"><a href="{% url 'siteuser:library' each.siteuser.pk each.siteuser.slug %}">{{ each.siteuser.screen_name }}</a></h6>
+                <p class="text-left">
+                    {% for role in each.siteuser_roles %}
                         <a href="{% url 'siteuser:siteusers_common_roles' role %}" title='See all {{ role.name|title }}s ({{ role.siteuser_set.count }})'>{{ role.name|title }}</a>{% if not forloop.last %}, {% endif %}
                     {% endfor %}
                 </p>
-                <p class="text-left">Location: <a href="{% url 'siteuser:siteusers_common_location' siteuser.location %}" title="See others in {{ siteuser.location }}">{{ siteuser.location }}</a></p>
-                <p class="text-left">Activity: {{ siteuser.song_set.all|count_published }} songs, {{ siteuser.post_set.all|count_published }} blog posts,
-                    {{ siteuser.score_set.count }} scores, {{ siteuser.midi_set.count }} midis, {{ siteuser.comment_set.count }} comments
-                </p>
+                <p class="text-left"><a href="{% url 'siteuser:siteusers_common_location' each.siteuser.location %}" title="See others in {{ each.siteuser.location }}">{{ each.siteuser.location }}</a></p>
+                <p class="text-left">{{ each.song_count }} songs, {{ each.post_count }} posts, {{ each.comment_count }} comments, {{ each.score_count }} scores, {{ each.midi_count }} midis, {{ each. }}
             </div>
         {% empty %}
             <p>No profiles added yet.</p>
         {% endfor %}
     </div>
 </div>
-
 {% endblock content_content %}
 

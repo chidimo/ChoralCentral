@@ -23,7 +23,7 @@ from request.models import Request, Reply
 AVATAR_PATH = os.path.join(settings.BASE_DIR, 'fixtures/wallpaper/')
 IMAGES = [os.path.abspath(each) for each in glob.glob("{}/*.jpg".format(AVATAR_PATH))]
 AUTHORS = ["lyricist", "composer", 'lyricist and composer']
-LANGUAGE = ["english", "igbo", "bini", "ibibio", "hausa", "chinese", "yoruba", "latin"]
+LANGUAGE = ["english", "igbo", "bini", "ibibio", "hausa", "chinese", "yoruba", "latin", "french"]
 VOICING = ["solo", "satb", "ssab", "sab", "ssabtt", "atb", "sattb"]
 SCRIPTURE = ["Psalm 91", "Proverbs 23", "Matthew 11"]
 LOCATIONS = ['lagos', 'abuja', 'benin', 'benin city', 'abu dhabi', 'dubai']
@@ -41,36 +41,15 @@ ROLES = ['composer', 'choir master', 'conductor', 'organist', 'guitarist', 'drum
 django.setup()
 CustomUser = get_user_model()
 
-def clear():
-    if sys.platform == 'linux':
-        os.system('clear')
-    else:
-        os.system('cls')
-
-def independents():
-    roles()
-    seasons()
-    massparts()
-    voice_notation()
-    voicing_language()
-
 def roles():
     for each in ROLES:
-        _, _ = Role.objects.get_or_create(name=each)
+        Role.objects.get_or_create(name=each)
 
 def voicing_language():
-    users = SiteUser.objects.all()
     for each in VOICING:
-        try:
-            _, _ = Voicing.objects.get_or_create(voicing=each)
-        except IntegrityError:
-            continue
-
+        Voicing.objects.get_or_create(voicing=each)
     for each in LANGUAGE:
-        try:
-            _, _ = Language.objects.get_or_create(language=each)
-        except IntegrityError:
-            continue
+        Language.objects.get_or_create(language=each)
 
 def seasons():
     for each in SEASONS:
@@ -82,31 +61,42 @@ def massparts():
 
 def voice_notation():
     for each in VOICE_PARTS:
-        _, _ = VocalPart.objects.get_or_create(name=each.title())
+       VocalPart.objects.get_or_create(name=each)
     for each in NOTATIONS:
-        _, _ = ScoreNotation.objects.get_or_create(name=each.title())
+        ScoreNotation.objects.get_or_create(name=each)
+
+def default_user():
+    try:
+        su = CustomUser.objects.create_user(email='deleted@user.net', password='somepassword')
+        su.save()
+    except IntegrityError:
+        su = CustomUser.objects.get(email='deleted@userl.net')
+    try:
+        SiteUser.objects.create(user=su, screen_name="Unknown-User", first_name="Unknown", last_name="User")
+    except IntegrityError:
+        pass
+
+def my_account():
+    try:
+        su = CustomUser.objects.create_user(email='orjichidi95@gmail.com', password='dwarfstar')
+        su.is_active = True
+        su.save()
+    except IntegrityError:
+        su = CustomUser.objects.get(email='admin@choralcentral.net')
+    try:
+        SiteUser.objects.create(user=su, screen_name="parousia", first_name="Chidi", last_name="Orji", location="Abu Dhabi")
+    except IntegrityError:
+        pass
 
 def superuser():
     try:
-        su = CustomUser.objects.create_user(email='admin@choralcentral.net', password='dwarfstar')
+        su = CustomUser.objects.create_user(email='choralcentral@gmail.com', password='dwarfstar')
         su.is_superuser = True
         su.is_admin = True
         su.is_active = True
         su.save()
     except IntegrityError:
         su = CustomUser.objects.get(email='admin@choralcentral.net')
-
-    try:
-        pro = SiteUser.objects.create(
-            user=su,
-            screen_name="CCAdmin",
-            first_name="Chidi",
-            last_name="Orji",
-            location="Abu Dhabi",
-            avatar=File(open(choice(IMAGES), "rb")),
-        )
-    except IntegrityError:
-        pass
 
 def members():
     roles = Role.objects.all()
@@ -125,7 +115,6 @@ def members():
             last_name = lorem.word()
             location = choice(LOCATIONS)
             screen_name = LoremPysum().word()
-
             try:
                 member = SiteUser.objects.create(
                     user=user,
@@ -162,7 +151,6 @@ def songs_from_file():
     fn = os.path.join(settings.BASE_DIR, 'fixtures', 'data_hymnal.json')
     with open(fn, "r+") as rh:
         song_file = json.load(rh)
-
     for song in song_file:
         authors = []
         for name, about in song["author"].items():
@@ -172,7 +160,6 @@ def songs_from_file():
                 last_name=names[1].strip()
             except IndexError:
                 first_name = last_name = "Unknown"
-
             try:
                 author = Author.objects.get(first_name=first_name, last_name=last_name)
             except:
@@ -181,9 +168,7 @@ def songs_from_file():
                     first_name=first_name,
                     last_name=last_name,
                     bio=about)
-
             authors.append(author)
-
         originator = choice(users)
         title = song.get("title", "Unknown").strip()
 
@@ -317,6 +302,23 @@ def comments():
                 creator=choice(users),
                 post=post,
                 comment=lorem.sentence())
+
+def production_setup():
+    roles()
+    seasons()
+    massparts()
+    voice_notation()
+    voicing_language()
+    default_user()
+    superuser()
+    my_account()
+
+def independents():
+    roles()
+    seasons()
+    massparts()
+    voice_notation()
+    voicing_language()
 
 def run_all():
     independents()
