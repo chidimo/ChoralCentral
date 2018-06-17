@@ -10,4 +10,4 @@ def user_permissions(user):
     return [each.code_name for each in user.siteuser.siteuserpermission_set.all()]
 
 def is_song_creator(user, song):
-    return user == song.originator.user
+    return user == song.creator.user

@@ -35,8 +35,9 @@ NOTATIONS = ['solfa', 'staff', 'solfa + staff']
 PARTS = ["entrance", "kyrie", "gloria", "acclammation", "offertory", "communion", "sanctus",
     "agnus dei", "recession", "general", "na"]
 
-ROLES = ['composer', 'choir master', 'conductor', 'organist', 'guitarist', 'drummer',
-    'soprano', 'alto', 'tenor', 'bass', 'enthusiast', 'baritone', 'other', 'na']
+# role number 1 is default for all users
+ROLES = ['enthusiast', 'composer', 'choir master', 'conductor', 'organist', 'guitarist', 'drummer',
+    'soprano', 'alto', 'tenor', 'bass', 'baritone', 'other', 'na']
 
 django.setup()
 CustomUser = get_user_model()
@@ -47,17 +48,15 @@ def roles():
 
 def voicing_language():
     for each in VOICING:
-        Voicing.objects.get_or_create(voicing=each)
+        Voicing.objects.get_or_create(name=each)
     for each in LANGUAGE:
-        Language.objects.get_or_create(language=each)
+        Language.objects.get_or_create(name=each)
 
-def seasons():
+def seasons_massparts():
     for each in SEASONS:
-        Season.objects.get_or_create(season=each)
-
-def massparts():
+        Season.objects.get_or_create(name=each)
     for each in PARTS:
-        MassPart.objects.get_or_create(part=each)
+        MassPart.objects.get_or_create(name=each)
 
 def voice_notation():
     for each in VOICE_PARTS:
@@ -67,12 +66,13 @@ def voice_notation():
 
 def default_user():
     try:
-        su = CustomUser.objects.create_user(email='deleted@user.net', password='somepassword')
+        su = CustomUser.objects.create_user(email='default@user.net', password='defaultuser')
+        su.is_active = False
         su.save()
     except IntegrityError:
-        su = CustomUser.objects.get(email='deleted@userl.net')
+        su = CustomUser.objects.get(email='default@user.net')
     try:
-        SiteUser.objects.create(user=su, screen_name="Unknown-User", first_name="Unknown", last_name="User")
+        SiteUser.objects.create(user=su, screen_name="Default-User", first_name="Default", last_name="User")
     except IntegrityError:
         pass
 
@@ -82,7 +82,7 @@ def my_account():
         su.is_active = True
         su.save()
     except IntegrityError:
-        su = CustomUser.objects.get(email='admin@choralcentral.net')
+        su = CustomUser.objects.get(email='orjichidi95@gmail.com')
     try:
         SiteUser.objects.create(user=su, screen_name="parousia", first_name="Chidi", last_name="Orji", location="Abu Dhabi")
     except IntegrityError:
@@ -90,13 +90,14 @@ def my_account():
 
 def superuser():
     try:
-        su = CustomUser.objects.create_user(email='choralcentral@gmail.com', password='dwarfstar')
+        su = CustomUser.objects.create_user(email='admin@choralcentral.net', password='dwarfstar')
         su.is_superuser = True
         su.is_admin = True
         su.is_active = True
         su.save()
     except IntegrityError:
         su = CustomUser.objects.get(email='admin@choralcentral.net')
+        pass
 
 def members():
     roles = Role.objects.all()
@@ -164,19 +165,19 @@ def songs_from_file():
                 author = Author.objects.get(first_name=first_name, last_name=last_name)
             except:
                 author = Author.objects.create(
-                    originator=choice(users),
+                    creator=choice(users),
                     first_name=first_name,
                     last_name=last_name,
                     bio=about)
             authors.append(author)
-        originator = choice(users)
+        creator = choice(users)
         title = song.get("title", "Unknown").strip()
 
         try:
             song = Song.objects.get(title=title)
         except:
             song = Song.objects.create(
-                originator=originator,
+                creator=creator,
                 title=title,
                 publish=choice([True, False]),
                 genre=choice(genre_choices),
@@ -204,15 +205,14 @@ def songs():
     for _ in range(numb):
         lorem = LoremPysum()
 
-        voicing = Voicing.objects.get(voicing=choice(VOICING))
-        language = Language.objects.get(language=choice(LANGUAGE).upper())
+        voicing = Voicing.objects.get(name=choice(VOICING))
+        language = Language.objects.get(name=choice(LANGUAGE))
 
         _ = Song.objects.create(
-            originator=choice(users),
+            creator=choice(users),
             title=lorem.title(),
             publish=choice([True, False]),
             lyrics=lorem.paragraphs(count=randint(2, 4)),
-            first_line=lorem.sentence()[:50],
             scripture_reference=choice(SCRIPTURE),
             tempo=randint(45, 250),
             bpm=randint(4, 8),
@@ -236,7 +236,7 @@ def requests():
     lorem = LoremPysum()
     for _ in range(numb):
         _ = Request.objects.create(
-            originator=choice(users),
+            creator=choice(users),
             request=lorem.title(),
             status=choice([True, False]))
 
@@ -249,7 +249,7 @@ def replies():
         # if request.status == ""
         try:
             Reply.objects.get_or_create(
-                originator=choice(users),
+                creator=choice(users),
                 request=request,
                 song=choice(songs))
         except (IntegrityError, IndexError):
@@ -261,7 +261,7 @@ def authors():
     for _ in range(numb):
         lorem = LoremPysum()
         _, _ = Author.objects.get_or_create(
-            originator=choice(users),
+            creator=choice(users),
             first_name=lorem.word(),
             last_name=lorem.word(),
             bio=lorem.paragraphs(count=randint(1, 3)),
@@ -305,8 +305,7 @@ def comments():
 
 def production_setup():
     roles()
-    seasons()
-    massparts()
+    seasons_massparts()
     voice_notation()
     voicing_language()
     default_user()
@@ -315,8 +314,7 @@ def production_setup():
 
 def independents():
     roles()
-    seasons()
-    massparts()
+    seasons_massparts()
     voice_notation()
     voicing_language()
 

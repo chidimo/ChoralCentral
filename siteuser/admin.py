@@ -8,8 +8,11 @@ from .models import CustomUser, Role, SiteUser, SiteUserGroup, GroupMembership, 
 from .forms import UserChangeForm, UserCreationForm
 
 class SiteUserAdmin(admin.ModelAdmin):
-    list_display = ("screen_name", "user", "first_name", "last_name", "slug", "location", "key", "quota", "used", "remaining_quota")
+    list_display = ("screen_name", "user", "first_name", "last_name", 'roles', "slug", "location", "key", "quota", "used", "remaining_quota")
     list_editable = ('location', )
+
+    def roles(self, obj):
+        return ", ".join([role.name for role in obj.roles.all()])
 
 class FollowAdmin(admin.ModelAdmin):
     list_display = ("from_siteuser", "to_siteuser", "created")
@@ -19,7 +22,7 @@ class BadgeAdmin(admin.ModelAdmin):
     list_editable = ('color', )
 
 class MessageAdmin(admin.ModelAdmin):
-    list_display = ('read', 'sender', 'receiver', 'body', 'thread_id')
+    list_display = ('read', 'creator', 'receiver', 'body', 'thread_id')
     list_editable = ('thread_id', )
 
 class SiteUserPermissionAdmin(admin.ModelAdmin):

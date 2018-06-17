@@ -8,9 +8,9 @@ from . import views
 app_name = "request"
 urlpatterns = [
     path('', views.RequestIndex.as_view(), name="index"),
-    path("new/", views.RequestCreate.as_view(), name="new"),
+    path("new/", views.NewRequest.as_view(), name="new"),
     path("edit/<int:pk>/", views.RequestEdit.as_view(), name="edit"),
-    path("<int:pk>/<slug:slug>/", views.RequestDetail.as_view(), name="detail"),
+    path("<int:pk>/", views.RequestDetail.as_view(), name="detail"),
     path("sort/", views.FilterRequests.as_view(), name="filter"),
 ]
 

@@ -11,46 +11,44 @@ from .models import Voicing, Language, Season, MassPart, Song
 class NewVoicingForm(forms.ModelForm):
     class Meta:
         model = Voicing
-        fields = ("voicing", )
+        fields = ("name", )
 
         widgets = {
-            "voicing" : forms.TextInput(
+            "name" : forms.TextInput(
                 attrs={'class' : 'form-control', 'placeholder' : "Voicing"})
         }
 
-    def clean_voicing(self):
-        voicing = self.cleaned_data["voicing"].lower()
+    def clean(self):
+        name = self.cleaned_data["name"].lower()
         if Voicing.objects.filter(voicing=voicing).exists():
-            self.add_error("voicing", _("{} already exists".format(voicing)))
-        return voicing
+            self.add_error("name", _("{} already exists".format(name)))
 
 class EditVoicingForm(forms.ModelForm):
     class Meta:
         model = Voicing
-        fields = ("voicing", )
+        fields = ("name", )
 
 class NewLanguageForm(forms.ModelForm):
     class Meta:
         model = Language
-        fields = ("language", )
+        fields = ("name", )
 
         widgets = {
-            "language" : forms.TextInput(
+            "name" : forms.TextInput(
                 attrs={'class' : 'form-control', 'placeholder' : "Language"})
         }
 
-    def clean_language(self):
-        language = self.cleaned_data["language"].lower()
-        if Language.objects.filter(language=language):
-            self.add_error("language", _("{} already exists".format(language)))
-        return language
+    def clean(self):
+        name = self.cleaned_data["name"].lower()
+        if Language.objects.filter(name=name):
+            self.add_error("name", _("{} already exists".format(name)))
 
 class EditLanguageForm(forms.ModelForm):
     class Meta:
         model = Language
-        fields = ("language",)
+        fields = ("name",)
 
-class ShareForm(forms.Form):
+class SongShareForm(forms.Form):
     receiving_emails = forms.CharField(
         required=True,
         widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Enter at most 3 emails, separated by commas."}),
@@ -99,12 +97,6 @@ class NewSongForm(forms.ModelForm):
 
         widgets = {
             "title" : forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Song title (100 characters max)"}),
-            # "title" : autocomplete.ListSelect2(
-            #     url=reverse_lazy('song:song_suggestion'),
-            #     attrs={'class' : 'autosuggest-form',
-            #            'data-placeholder' : "Song title. Song will be shown if already present.",
-            #            'data-minimum-input-length': 3},
-            #     ),
             "genre" : forms.Select(attrs={'class' : 'form-control'}),
             "ocassion" : forms.Select(attrs={'class' : 'form-control'}),
             "year" : forms.DateInput(

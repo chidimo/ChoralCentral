@@ -15,8 +15,8 @@
             <span class='song-title'><a href="{{ song.get_absolute_uri }}">{{ song.title }}</a></span>
         </h2>
         <div class='heading'>
-            <p class='uploader'>
-                by <a href="{% url 'siteuser:library' song.originator.pk song.originator.slug %}">{{ song.originator.screen_name }}</a>
+            <p class='creator'>
+                by <a href="{% url 'siteuser:library' song.creator.pk song.creator.slug %}">{{ song.creator.screen_name }}</a>
             </h6>
             <hr>
         </div>

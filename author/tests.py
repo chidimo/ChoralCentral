@@ -14,8 +14,8 @@ from siteuser.models import CustomUser
 class AuthorModelTests(TestCase):
 
     def setUp(self):
-        originator = mommy.make('siteuser.SiteUser')
-        self.author = mommy.make('author.Author', originator=originator)
+        creator = mommy.make('siteuser.SiteUser')
+        self.author = mommy.make('author.Author', creator=creator)
 
     def tearDown(self):
         self.author.delete()
@@ -34,9 +34,9 @@ class AuthorIndexViewTests(TestCase):
     @classmethod    
     def setUpClass(cls):
         super(AuthorIndexViewTests, cls).setUpClass()
-        originator = mommy.make('siteuser.SiteUser')
+        creator = mommy.make('siteuser.SiteUser')
         for _ in range(35):
-            mommy.make('author.Author', originator=originator)
+            mommy.make('author.Author', creator=creator)
 
     @classmethod
     def tearDownClass(cls):
@@ -75,8 +75,8 @@ class AuthorDetailViewTests(TestCase):
 
     def setUp(self):
         # set bio manually to avoid error being thrown by template tag markdown_format
-        originator = mommy.make('siteuser.SiteUser')
-        self.author = mommy.make('author.Author', originator=originator, bio='Some bio text')
+        creator = mommy.make('siteuser.SiteUser')
+        self.author = mommy.make('author.Author', creator=creator, bio='Some bio text')
 
     def tearDown(self):
         self.author.delete()
@@ -107,7 +107,7 @@ class NewAuthorViewTests(TestCase):
         self.user.save()
 
         # create siteuser so the view doesn't throw an error on reversing siteuser detail present in the base url
-        self.originator  = mommy.make('siteuser.SiteUser', user=self.user, screen_name='screen_name')
+        self.creator  = mommy.make('siteuser.SiteUser', user=self.user, screen_name='screen_name')
         self.author_count = Author.objects.count()
 
     def test_a_new_author_view(self):
@@ -144,7 +144,7 @@ class NewAuthorViewTests(TestCase):
         author = Author.objects.get(first_name='first name', last_name='last name', author_type="lyricist")
         
         # assert creator is logged in user
-        self.assertEqual(author.originator, self.originator)
+        self.assertEqual(author.creator, self.creator)
 
         # assert redirected to author detail url
         self.assertEqual(resp['Location'], '/author/detail/{}/{}/'.format(author.pk, author.slug))
@@ -172,7 +172,7 @@ class NewAuthorFormTests(TestCase):
         user.set_password("testpassword")
         user.save()
         # create siteuser so the view doesn't throw an error on reversing siteuser detail present in the base url
-        originator  = mommy.make('siteuser.SiteUser', user=user, screen_name='screen_name')
+        creator  = mommy.make('siteuser.SiteUser', user=user, screen_name='screen_name')
         author_count = Author.objects.count()
         login = self.client.login(username='test@user.app', password='testpassword')
         
@@ -186,7 +186,7 @@ class NewAuthorFormTests(TestCase):
         resp = self.client.post(reverse('author:new'), data)
 
         author = Author.objects.get(first_name='first name', last_name='last name', author_type="composer")
-        self.assertEqual(author.originator, originator)
+        self.assertEqual(author.creator, creator)
         self.assertEqual(resp.status_code, 302)
         self.assertEqual(resp['Location'], '/author/detail/{}/{}/'.format(author.pk, author.slug))
 

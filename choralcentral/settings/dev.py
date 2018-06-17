@@ -1,7 +1,7 @@
 from .base import *
 
 DEBUG = config('DEBUG', default=False, cast=bool)
-SKIP_TASK = True # custom variable to be used to skip certain mgt tasks during testing
+SKIP_TASK = config('SKIP_TASK', default=True, cast=bool) # custom variable to be used to skip certain mgt tasks during testing
 
 DATABASES = {
     'default': {

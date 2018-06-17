@@ -14,19 +14,25 @@ from universal.fields import AutoSlugField
 from .utils import get_tempo_text
 
 class Voicing(TimeStampedModel):
-    voicing = models.CharField(max_length=10, unique=True)
+    name = models.CharField(max_length=10, unique=True)
+
+    class Meta:
+        ordering = ('name', )
 
     def __str__(self):
-        return self.voicing
+        return self.name
 
     def get_absolute_url(self):
         return reverse('song:index')
 
 class Language(TimeStampedModel):
-    language = models.CharField(max_length=25, unique=True)
+    name = models.CharField(max_length=25, unique=True)
+
+    class Meta:
+        ordering = ('name', )
 
     def __str__(self):
-        return self.language
+        return self.name
 
     def get_absolute_url(self):
         return reverse('song:index')
@@ -43,14 +49,14 @@ class Season(TimeStampedModel):
         ('any', "Any"),
         ("na", "NA"),
     )
-    season = models.CharField(max_length=15, choices=SEASON_CHOICES, unique=True)
-    about = models.TextField()
+    name = models.CharField(max_length=15, choices=SEASON_CHOICES, unique=True)
+    about = models.CharField(max_length=200, blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse('song:index')
 
     def __str__(self):
-        return self.season
+        return self.name
 
 class MassPart(TimeStampedModel):
     PART_CHOICES = (
@@ -66,14 +72,14 @@ class MassPart(TimeStampedModel):
         ("recesssion", "Recesssion"),
         ("na", "NA")
     )
-    part = models.CharField(max_length=15, choices=PART_CHOICES, unique=True)
-    about = models.TextField()
+    name = models.CharField(max_length=15, choices=PART_CHOICES, unique=True)
+    about = models.CharField(max_length=200, blank=True, null=True)
 
     def get_absolute_url(self):
-        return reverse('song:index', args=[str(self.id)])
+        return reverse('song:index')
 
     def __str__(self):
-        return self.part
+        return self.name
 
 class Song(TimeStampedModel):
     OCASSION_CHOICES = (
@@ -102,13 +108,13 @@ class Song(TimeStampedModel):
         ("sequence", "Sequence"),
         ("na", "NA"),
     )
-    originator      = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
+    creator      = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
     voicing         = models.ForeignKey(Voicing, on_delete=models.CASCADE)
     language        = models.ForeignKey(Language, on_delete=models.CASCADE)
     publish         = models.BooleanField(default=False)
 
     title           = models.CharField(max_length=100)
-    year            = models.PositiveIntegerField(validators=[MinValueValidator(1000), MaxValueValidator(datetime.now().year)])
+    year            = models.PositiveIntegerField(blank=True, null=True, validators=[MinValueValidator(1000), MaxValueValidator(datetime.now().year)])
     slug            = AutoSlugField(set_using="title", max_length=255)
 
     lyrics          = models.TextField(blank=True)
@@ -120,6 +126,8 @@ class Song(TimeStampedModel):
     divisions       = models.IntegerField(null=True, blank=True)
     tempo_text      = models.CharField(max_length=30, blank=True)
     views           = models.IntegerField(default=0)
+
+    likes           = models.ManyToManyField(SiteUser, related_name='song_likes')
     like_count      = models.IntegerField(default=0)
 
     ocassion        = models.CharField(max_length=30, choices=OCASSION_CHOICES)
@@ -154,4 +162,5 @@ class Song(TimeStampedModel):
 
     def save(self, *args, **kwargs):
         self.tempo_text = get_tempo_text(self.tempo)
+        self.like_count = self.likes.count()
         return super(Song, self).save(*args, **kwargs)

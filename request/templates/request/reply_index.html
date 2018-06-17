@@ -10,7 +10,7 @@
         {% for reply in replys %}
         <div class="list-group-item list-group-item-primary">
             <h5><a href="#">{{ reply }}</a> replied by
-                <a href="{% url 'siteuser:siteuser_detail' reply.originator.pk %}">{{ reply.originator.screen_name }}</a>
+                <a href="{% url 'siteuser:siteuser_detail' reply.creator.pk %}">{{ reply.creator.screen_name }}</a>
             </h5>
             <h5>
                 <a href="{% url 'song:song_detail' reply.song.pk reply.song.slug %}">{{ reply.song }}</a>

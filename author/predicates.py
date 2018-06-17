@@ -10,4 +10,4 @@ def user_permissions(user):
     return [each.code_name for each in user.siteuser.siteuserpermission_set.all()]
 
 def is_author_creator(user, author):
-    return user == author.originator.user
+    return user == author.creator.user

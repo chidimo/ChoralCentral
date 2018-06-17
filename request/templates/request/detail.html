@@ -9,15 +9,15 @@
             {% if request.status %}
                 <h4 class='text-success'>Replies to {{ request }}</h4>
                 <h6><em>
-                    <a href="{% url 'siteuser:library' request.originator.pk request.originator.slug %}">{{request.originator.screen_name }}</a>
+                    <a href="{% url 'siteuser:library' request.creator.pk request.creator.slug %}">{{request.creator.screen_name }}</a>
                     | {{ request.created|date }}
                     </em>
                 </h6>
-                <h6>Thanks to {{ request.answer.originator.screen_name }}</h6>
+                <h6>Thanks to {{ request.answer.creator.screen_name }}</h6>
             {% else %}
                 <h4>Replies to {{ request }}</h4>
                 <h6><em>
-                    <a href="{% url 'siteuser:library' request.originator.pk request.originator.slug %}">{{request.originator.screen_name }}</a>
+                    <a href="{% url 'siteuser:library' request.creator.pk request.creator.slug %}">{{request.creator.screen_name }}</a>
                     | {{ request.created|date }}
                     </em>
                 </h6>

@@ -8,6 +8,9 @@ class PostAdmin(admin.ModelAdmin):
     list_editable = ('publish', )
     list_display_links = ('title', )
 
+    def likers(self, obj):
+        return ", ".join([each.screen_name for each in obj.likes.all()])
+
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('creator', 'post', 'comment', 'active')
 

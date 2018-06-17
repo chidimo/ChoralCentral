@@ -33,8 +33,8 @@
                     {% for score in scores %}
                         <tr>
                             <td><a href="{% url 'song:detail' score.song.pk score.song.slug %}">{{ score.song.title }}</a></td>
-                            <td>{{ score.song.originator }}</td>
-                            <td>{{ score.uploader }}</td>
+                            <td>{{ score.song.creator }}</td>
+                            <td>{{ score.creator }}</td>
                             <td>
                                 <a href="{% url 'song-media:score_view' score.pk %}" target="_blank"><i class="fas fa-download"></i></a>
                             </td>

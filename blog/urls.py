@@ -7,16 +7,16 @@ from .feeds import LatestPostSFeed
 app_name = "blog"
 urlpatterns = [
     path('', views.PostIndex.as_view(), name="index"),
-    path("new/", views.PostCreate.as_view(), name="new"),
+    path("new/", views.NewPost.as_view(), name="new"),
     path("<int:pk>/<slug:slug>/", views.PostDetail.as_view(), name="detail"),
-    path("new/from/<int:pk>/", views.PostCreateFromSong.as_view(), name="new_song"),
+    path("new/from/<int:pk>/", views.NewPostFromSong.as_view(), name="new_song"),
     path("edit/<int:pk>/", views.PostEdit.as_view(), name="edit"),
     path("share-email/<int:pk>/<slug:slug>/", views.share_post_by_mail, name='share_post_by_mail'),
     path("like/", views.post_like_view, name='like_post'),
 ]
 
 urlpatterns += [
-    path("new-comment/<int:pk>/", views.CommentCreate.as_view(), name="new_comment"),
+    path("new-comment/<int:pk>/", views.NewComment.as_view(), name="new_comment"),
     path("edit-comment/<int:pk>/", views.EditComment.as_view(), name="edit_comment"),
     path("delete-comment/<int:pk>/", views.DeleteComment.as_view(), name="comment_delete"),
     path("reply/<int:comment_pk>/<int:post_pk>/", views.ReplyComment.as_view(), name="comment_reply"),

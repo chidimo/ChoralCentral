@@ -3,7 +3,7 @@
 {% load thumbnail %}
 {% load social_share %}
 {% load static %}
-{% load likes_inclusion_tags %}
+
 {% load song_ttags %}
 
 {% block introduction %}{% endblock introduction %}
@@ -16,7 +16,11 @@
             <span class='float-left'>{{ song.title }}</span>
 
             <span class='float-right song-icons'>
-                {% likes song %}                
+                
+                    <a class="btn btn-sm btn-primary likes-button-style" href="">
+                        <span class="like-count-embed" title="">{{ song.like_count }} Star </span>
+                        <span title="Give a star"><i class="fas fa-star"></i> Star/Unstar</span>
+                    </a>                
                 
                 <!--
                     <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:song_likers' song.pk song.slug %}" title="{{ song.like_count }} Star givers">{{ song.like_count }}</a>
@@ -62,8 +66,8 @@
             <div class="row">
 
                 <div class="col-sm-12">
-                    <span class="h6 float-left">Uploader</span>
-                    <span class="h6 float-right"><a href="{% url 'siteuser:library' song.originator.pk song.originator.slug %}">{{ song.originator.screen_name }}</a></span>
+                    <span class="h6 float-left">creator</span>
+                    <span class="h6 float-right"><a href="{% url 'siteuser:library' song.creator.pk song.creator.slug %}">{{ song.creator.screen_name }}</a></span>
                 </div>
                 <div class="col-sm-12">
                     <span class="h6 float-left">Ocassion</span>
@@ -110,7 +114,7 @@
                     <span class="h6 float-left">Seasons</span>
                     <span class="h6 float-right text-left">
                         {% for season in song.seasons.all %}
-                        {{ season }}{% if not forloop.last %},{% endif %}
+                        {{ season|title }}{% if not forloop.last %},{% endif %}
                         {% endfor %}
                     </span>
                 </div>
@@ -119,7 +123,7 @@
                     <span class="h6 float-left">Massparts</span>
                     <span class="h6 float-right">
                         {% for masspart in song.mass_parts.all %}
-                        {{ masspart }}{% if not forloop.last %},{% endif %}
+                        {{ masspart|title }}{% if not forloop.last %},{% endif %}
                         {% endfor %}
                     </span>
                 </div>
@@ -155,16 +159,6 @@
         {% for score in song.score_set.all %}
         
             <div class="col-sm-6 col-md-4 col-lg-3 py-2 px-0 score-list">
-                <!--<div class="container score-pdf-container">-->
-                <!--    {% thumbnail score.thumbnail "40x40" crop="center" as im %}-->
-                <!--        <img src="{{ im.url }}" class="card score-png-preview" title="Preview first page">-->
-                <!--        <div id="scorePngPreview"></div>-->
-                <!--    {% empty %}-->
-                <!--        <img src="{% static 'img/django-logo.png' %}" class="card score-png-preview">-->
-                <!--        <div id="scorePngPreview"></div>-->
-                <!--    {% endthumbnail %}-->
-                <!--</div>-->
-
                 <div class="row score-list-meta-container">
                     <div class="container">
                         {% if score.thumbnail %}
@@ -176,11 +170,16 @@
                         <span class="btn btn-sm btn-primary icon-buttons" title="{{ score.part|title }}">{{ score.part }}</span>
                         <span class="btn btn-sm btn-primary icon-buttons" title="{{ score.notation|title }}">{{ score.notation }}</span>
                         <span class="btn btn-sm btn-primary icon-buttons" title="Filesize: {{ score.fsize|filesizeformat }}">{{ score.fsize|filesizeformat }}</span>
-                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:library' score.uploader.pk score.uploader.slug %}" title="{{ score.uploader.screen_name }}"> {{ score.uploader.screen_name }}</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:library' score.creator.pk score.creator.slug %}" title="{{ score.creator.screen_name }}"> {{ score.creator.screen_name }}</a>
 
                         <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song-media:show_score' score.pk %}" target="_blank" title="Click to Download: {{ score.downloads }} total downloads">
-                            <span class="download-count">{{ score.downloads }}</span> <i class="fas fa-download"></i></a>
-                        {% likes score %}
+                            <span class="download-count">{{ score.downloads }}</span> <i class="fas fa-download"></i>
+                        </a>
+                        
+                        <a class="btn btn-sm btn-primary likes-button-style" href="">
+                            <span class="like-count-embed" title="">{{ score.like_count }} Star </span>
+                            <span title="Give a star"><i class="fas fa-star"></i> Star/Unstar</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -211,10 +210,15 @@
                         {% endif %}
                         <span class="btn btn-sm btn-primary icon-buttons" title="{{ midi.part }}">{{ midi.part }}</span>
                         <span class="btn btn-sm btn-primary icon-buttons" title="Filesize: {{ midi.fsize|filesizeformat }}">{{ midi.fsize|filesizeformat }}</span>
-                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:library' midi.uploader.pk midi.uploader.slug %}" title="{{ midi.uploader.screen_name }}">{{ midi.uploader.screen_name }}</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:library' midi.creator.pk midi.creator.slug %}" title="{{ midi.creator.screen_name }}">{{ midi.creator.screen_name }}</a>
                         <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song-media:download_midi' midi.pk %}" target="_blank" title="Click to Download: {{ midi.downloads }} total downloads">
-                            <span class="download-count">{{ midi.downloads }}</span> <i class="fas fa-download"></i></a>
-                        {% likes midi %}
+                            <span class="download-count">{{ midi.downloads }}</span> <i class="fas fa-download"></i>
+                        </a>
+                        
+                        <a class="btn btn-sm btn-primary likes-button-style" href="">
+                            <span class="like-count-embed" title="">{{ midi.like_count }} Star </span>
+                            <span title="Give a star"><i class="fas fa-star"></i> Star/Unstar</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -249,7 +253,7 @@
                             <p class="text-right">
                                 <a href="{{ link.channel_link }}" target="_blank" title='Watch it on our channel'>{{ link.title }}</a></p>
                             <p class="text-right">
-                                <a href="{% url 'siteuser:library' link.uploader.pk link.uploader.slug %}">{{ link.uploader.screen_name }}</a></p>
+                                <a href="{% url 'siteuser:library' link.creator.pk link.creator.slug %}">{{ link.creator.screen_name }}</a></p>
                         </div>
                     </div>
                 </div>

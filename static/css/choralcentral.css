@@ -186,6 +186,7 @@ th, td {
   margin: auto;
   background: #e9ecef;
   margin-top: 0.5rem;
+  margin-bottom: 8rem;
   padding: .5rem 1rem 3rem 1rem;
   border-radius: .15rem;
   border: 1px solid mintcream;
@@ -350,7 +351,6 @@ a.upload-button {
 .comment-detail-header > .row > .col-sm-12 > span.float-right {
     margin-top: .2rem;
 }
-
 
 /*REQUEST*/
 
@@ -544,7 +544,6 @@ span.download-count {
     border-radius: .15rem;
     margin-top: .5rem;
 }
-
 
 .video-list-video-container {
     padding-left: .5rem;
@@ -822,6 +821,32 @@ input#id_password {
     color: red;
     border-radius: .15rem;
 }
+
+/* LIKE BUTTON STYLE */
+a.likes-button-style, span.icon-buttons {
+    float: left;
+    padding: 3px 10px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 20px;
+    vertical-align: middle;
+    background-color: #fff;
+    border: 1px solid rgba(27,31,35,0.2);
+    border-radius: 3px;
+    margin: 2px 1px;
+}
+
+a.likes-button-style {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a.likes-button-style > span.like-count-embed {
+    color: midnightblue;
+    border-right: .6px solid midnightblue;
+    padding-right: .5rem;
+}
+    
 
 /*FOOTER*/
 

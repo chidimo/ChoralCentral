@@ -97,8 +97,8 @@ class SongIndexViewTests(TestCase):
 
 class SongDetailViewTests(TestCase):
     def setUp(self):
-        originator = mommy.make('siteuser.SiteUser')
-        self.song = mommy.make('song.Song', originator=originator, title="some title", lyrics="Some lyrics")
+        creator = mommy.make('siteuser.SiteUser')
+        self.song = mommy.make('song.Song', creator=creator, title="some title", lyrics="Some lyrics")
     def tearDown(self):
         self.song.delete()
 
@@ -125,9 +125,9 @@ class SongDetailViewTests(TestCase):
 class SongFeedTests(TestCase):
     @classmethod
     def setUpTestData(cls):
-        originator = mommy.make('siteuser.SiteUser')
-        mommy.make('song.Song', originator=originator, title="some title", lyrics="Some lyrics", publish=True, _quantity=27)
-        mommy.make('song.Song', originator=originator, title="some title", lyrics="Some lyrics", publish=False, _quantity=27)
+        creator = mommy.make('siteuser.SiteUser')
+        mommy.make('song.Song', creator=creator, title="some title", lyrics="Some lyrics", publish=True, _quantity=27)
+        mommy.make('song.Song', creator=creator, title="some title", lyrics="Some lyrics", publish=False, _quantity=27)
 
     def test_feed_url_reachable(self):
         url = reverse('song:song_feed', kwargs={'feed_type' : 'popular'})

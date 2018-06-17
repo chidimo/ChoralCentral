@@ -23,7 +23,7 @@ from song.models import Song
 from .models import Post, Comment
 from .forms import (
     PostShareForm, NewPostForm, PostEditForm,
-    PostCreateFromSongForm, CommentCreateForm,
+    NewPostFromSongForm, NewCommentForm,
     CommentEditForm, CommentReplyForm
 )
 
@@ -65,37 +65,39 @@ def post_like_view(request):
     context = {'message' : message}
     return HttpResponse(json.dumps(context), content_type='application/json')
 
-class PostCreate(LoginRequiredMixin, generic.CreateView):
+class NewPost(LoginRequiredMixin, generic.CreateView):
     context_object_name = 'post'
     template_name = 'blog/new.html'
     form_class = NewPostForm
 
     def form_valid(self, form):
-        form.instance.creator = SiteUser.objects.get(user=self.request.user)
+        siteuser = self.request.user.siteuser
+        form.instance.creator = siteuser
         self.object = form.save()
-        self.object.likes.add(SiteUser.objects.get(user=self.request.user))
+        self.object.likes.add(siteuser)
 
         self.object.like_count = self.object.likes.count()
         self.object.save(update_fields=['like_count'])
         messages.success(self.request, "Post created successfully !")
-        return super(PostCreate, self).form_valid(form)
+        return super(NewPost, self).form_valid(form)
 
-class PostCreateFromSong(LoginRequiredMixin, generic.CreateView):
-    form_class = PostCreateFromSongForm
+class NewPostFromSong(LoginRequiredMixin, generic.CreateView):
+    form_class = NewPostFromSongForm
     context_object_name = 'post'
     template_name = 'blog/new.html'
 
     def form_valid(self, form):
-        form.instance.creator = SiteUser.objects.get(user=self.request.user)
+        siteuser = self.request.user.siteuser
+        form.instance.creator = siteuser
         form.instance.song = Song.objects.get(pk=self.kwargs["pk"])
 
         self.object = form.save()
-        self.object.likes.add(SiteUser.objects.get(user=self.request.user))
+        self.object.likes.add(siteuser)
 
         self.object.like_count = self.object.likes.count()
         self.object.save(update_fields=['like_count'])
         messages.success(self.request, "Post successfully created for song {}".format(self.object.song.title))
-        return super(PostCreateFromSong, self).form_valid(form)
+        return super(NewPostFromSong, self).form_valid(form)
 
 class PostIndex(PaginationMixin, generic.ListView):
     model = Post
@@ -123,7 +125,7 @@ class PostDetail(PaginationMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(PostDetail, self).get_context_data(**kwargs)
-        context["comment_form"] = CommentCreateForm()
+        context["comment_form"] = NewCommentForm()
         context['post_share_form'] = PostShareForm()
         context["post"] = Post.objects.get(pk=self.kwargs.get("pk", None))
         return context
@@ -146,9 +148,9 @@ class EditComment(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     template_name = "blog/edit_comment.html"
     success_message = "Comment updated successfully"
 
-class CommentCreate(LoginRequiredMixin, generic.CreateView):
+class NewComment(LoginRequiredMixin, generic.CreateView):
     context_object_name = 'comment'
-    form_class = CommentCreateForm
+    form_class = NewCommentForm
     template_name = 'blog/comment_new.html'
 
     def get_success_url(self):
@@ -166,19 +168,19 @@ class CommentCreate(LoginRequiredMixin, generic.CreateView):
         return post_url + comment_page + comment_target_id
 
     def form_valid(self, form):
-        form.instance.creator = SiteUser.objects.get(user=self.request.user)
+        siteuser = self.request.user.siteuser
+        form.instance.creator = siteuser
         form.instance.post = Post.objects.get(pk=self.kwargs["pk"])
-
         self.object = form.save()
-        self.object.likes.add(SiteUser.objects.get(user=self.request.user))
 
+        self.object.likes.add(siteuser)
         self.object.like_count = self.object.likes.count()
         self.object.save(update_fields=['like_count'])
         messages.success(self.request, "Comment successfully created !")
-        return super(CommentCreate, self).form_valid(form)
+        return super(NewComment, self).form_valid(form)
 
     def get_context_data(self, *args):
-        context = super(CommentCreate, self).get_context_data(*args)
+        context = super(NewComment, self).get_context_data(*args)
         context['post'] = Post.objects.get(pk=self.kwargs['pk'])
         return context
 
@@ -193,12 +195,12 @@ class ReplyComment(LoginRequiredMixin, generic.CreateView):
         return kwargs
 
     def form_valid(self, form):
-        form.instance.creator = SiteUser.objects.get(user=self.request.user)
+        siteuser = self.request.user.siteuser
+        form.instance.creator = siteuser
         form.instance.post = Post.objects.get(pk=self.kwargs["post_pk"])
-
         self.object = form.save()
-        self.object.likes.add(SiteUser.objects.get(user=self.request.user))
 
+        self.object.likes.add(siteuser)
         self.object.like_count = self.object.likes.count()
         self.object.save(update_fields=['like_count'])
         messages.success(self.request, "Reply successfully created.")

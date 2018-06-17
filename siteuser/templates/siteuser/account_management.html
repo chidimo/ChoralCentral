@@ -54,7 +54,7 @@
                     <tr>
                         <th>S/No.</th>
                         <th>Status</th>
-                        <th>Sender</th>
+                        <th>creator</th>
                         <th>Message</th>
                         <th>Date</th>
                         <th>Action</th>
@@ -65,7 +65,7 @@
                     <tr>
                         <td>{{ forloop.counter }}</td>
                         <td>{% if message.read %}Read{% else %}<span class="text-danger">Unread</span>{% endif %}</td>
-                        <td>{{ message.sender }}</td>
+                        <td>{{ message.creator }}</td>
                         <td><a href="{% url 'siteuser:view_message' message.pk %}">{{ message.body|truncatechars:15 }}</a></td>
                         <td>{{ message.created|date }}</td>
                         <td>

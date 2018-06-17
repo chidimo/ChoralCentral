@@ -34,11 +34,12 @@ class ScoreNotation(TimeStampedModel):
     #     return reverse('song:detail', kwargs={'pk' : (self.song.id), 'slug' : self.song.slug})
 
 class Score(TimeStampedModel):
-    uploader = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
+    creator = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
     song = models.ForeignKey(Song, on_delete=models.CASCADE)
     part = models.ForeignKey(VocalPart, on_delete=models.CASCADE)
     notation = models.ForeignKey(ScoreNotation, on_delete=models.CASCADE)
     fsize = models.FloatField(null=True,blank=True)
+    likes = models.ManyToManyField(SiteUser, related_name='score_likes')
     like_count = models.IntegerField(default=0)
     media_file = models.FileField(upload_to=save_score)
     thumbnail = models.ImageField(upload_to=save_score_thumbnail, null=True)
@@ -62,13 +63,18 @@ class Score(TimeStampedModel):
     def score_absolute_url(self):
         return "https://www.choralcentral.net" + reverse('song-media:score_view', kwargs={'pk' : (self.id)})
 
+    def save(self, *args, **kwargs):
+        self.like_count = self.likes.count()
+        return super(Song, self).save(*args, **kwargs)
+
 class Midi(TimeStampedModel):
-    uploader = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
+    creator = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
     song = models.ForeignKey(Song, null=True, on_delete=models.SET_NULL)
     part = models.ForeignKey(VocalPart, on_delete=models.CASCADE)
     fformat = models.CharField(max_length=10, blank=True)
     fsize = models.FloatField(null=True, blank=True)
     description = models.CharField(max_length=200, blank=True, null=True)
+    likes = models.ManyToManyField(SiteUser, related_name='midi_likes')
     like_count = models.IntegerField(default=0)
     media_file = models.FileField(upload_to=save_midi, null=True, blank=True)
     downloads = models.IntegerField(default=0)
@@ -83,9 +89,13 @@ class Midi(TimeStampedModel):
 
     def get_absolute_url(self):
         return reverse('song:detail', kwargs={'pk' : (self.song.id), 'slug' : self.song.slug})
+        
+    def save(self, *args, **kwargs):
+        self.like_count = self.likes.count()
+        return super(Song, self).save(*args, **kwargs)
 
 class VideoLink(TimeStampedModel):
-    uploader = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
+    creator = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
     song = models.ForeignKey(Song, null=True, on_delete=models.SET_NULL)
     video_link = models.URLField(max_length=100, unique=True)
     channel_link = models.URLField(max_length=100, default='')

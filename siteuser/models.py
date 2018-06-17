@@ -55,7 +55,7 @@ class CustomUser(AbstractBaseUser):
         # print("permissions set", perm_list)
         # print(obj, "object")
         # print(perm_list, 'perm ist')
-        # print(obj.originator)
+        # print(obj.creator)
         return True
 
     def has_perm(self, perm, obj=None):
@@ -72,7 +72,7 @@ class Role(TimeStampedModel):
     name = models.CharField(max_length=20, unique=True)
 
     class Meta:
-        ordering = ['name']
+        ordering = ('name',)
 
     def __str__(self):
         return self.name
@@ -83,19 +83,19 @@ class Role(TimeStampedModel):
 class SiteUser(TimeStampedModel):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     slug = AutoSlugField(set_using="screen_name")
-    roles = models.ManyToManyField(Role)
+    roles = models.ManyToManyField(Role, default=1)
     screen_name = models.CharField(max_length=20, unique=True)
     first_name = models.CharField(max_length=30, blank=True, null=True)
     last_name = models.CharField(max_length=30, blank=True, null=True)
     location = models.CharField(max_length=100, blank=True, null=True)
     avatar = ImageField(upload_to=save_avatar, null=True, blank=True)
 
-    quota = models.IntegerField(default=100)
+    quota = models.IntegerField(default=1000)
     used = models.IntegerField(default=0)
     key = models.CharField(max_length=50, default=uuid.uuid4, null=True, blank=True, unique=True)
 
     class Meta:
-        ordering = ['screen_name']
+        ordering = ('-created', 'screen_name', )
         verbose_name_plural = 'siteusers'
 
     @property
@@ -114,9 +114,6 @@ class SiteUser(TimeStampedModel):
     def get_user_creation_url(self):
         return reverse('siteuser:new_activation', args=[str(self.user.id), str(self.screen_name)])
 
-    def get_all_roles(self):
-        return ", ".join([role.name for role in self.roles.all()])
-
 class SiteUserGroup(TimeStampedModel):
     name = models.CharField(max_length=30, blank=True, null=True)
     about_group = models.TextField()
@@ -130,7 +127,7 @@ class SiteUserGroup(TimeStampedModel):
         return reverse('siteuser:group_detail', kwargs={'pk' : self.pk})
 
 class GroupMembership(TimeStampedModel):
-    siteuser = models.ForeignKey(SiteUser, blank=True, null=True, on_delete=models.SET_NULL)
+    creator = models.ForeignKey(SiteUser, blank=True, null=True, on_delete=models.SET_NULL)
     group = models.ForeignKey(SiteUserGroup, blank=True, null=True, on_delete=models.SET_NULL)
     is_group_admin = models.BooleanField(default=False)
 
@@ -141,7 +138,7 @@ class GroupMembership(TimeStampedModel):
         return reverse('siteuser:group_detail', kwargs={'pk' : self.group.pk})
 
 class GroupJoinRequest(TimeStampedModel):
-    requesting_user = models.ForeignKey(SiteUser, null=True, blank=True, on_delete=models.SET_NULL)
+    creator = models.ForeignKey(SiteUser, null=True, blank=True, on_delete=models.SET_NULL)
     group_of_interest = models.ForeignKey(SiteUserGroup, null=True, blank=True, on_delete=models.SET_NULL)
 
 class Badge(TimeStampedModel):
@@ -158,11 +155,11 @@ class Badge(TimeStampedModel):
         return self.name
 
 class Message(TimeStampedModel):
-    sender = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
+    creator = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
     body = models.CharField(max_length=200)
     read = models.BooleanField(default=False)
     thread_id = models.CharField(max_length=50, default=uuid.uuid4)
-    receiver = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1, related_name='message_recipient')
+    receiver = models.ForeignKey(SiteUser, on_delete=models.SET_NULL, null=True, related_name='message_recipient')
 
     class Meta:
         ordering = ('read', '-created')
@@ -171,7 +168,7 @@ class Message(TimeStampedModel):
         return "Message for {}".format(self.receiver.screen_name)
 
     def get_absolute_url(self):
-        return reverse('siteuser:library', kwargs={'pk' : self.sender.pk, 'slug' : self.sender.slug})
+        return reverse('siteuser:library', kwargs={'pk' : self.creator.pk, 'slug' : self.creator.slug})
 
 class SiteUserPermission(TimeStampedModel):
     name = models.CharField(max_length=50)

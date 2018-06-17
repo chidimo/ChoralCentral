@@ -9,7 +9,6 @@ from django.contrib.sitemaps.views import sitemap
 from django.contrib.sitemaps import views as sitemapviews
 
 from blog.sitemaps import PostSiteMap
-from request.sitemaps import RequestSiteMap
 from song.sitemaps import SongSiteMap
 
 from blog.api.urls import blog_api_urls
@@ -21,7 +20,6 @@ from .import views
 
 sitemaps = {
     "posts" : PostSiteMap,
-    "requests" : RequestSiteMap,
     "songs" : SongSiteMap,
 }
 
@@ -38,7 +36,6 @@ urlpatterns = [
 
 urlpatterns += [
     path('social/', include('social_django.urls', namespace='social')),
-    path('likes/', include('likes.urls')),
 ]
 
 urlpatterns += [

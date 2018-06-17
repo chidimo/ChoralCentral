@@ -50,9 +50,9 @@ class PostEditForm(forms.ModelForm):
         """How to do query in forms"""
         user = kwargs.pop("user")
         super(PostEditForm, self).__init__(*args, **kwargs)
-        self.fields['song'].queryset = Song.objects.filter(originator__user=user)
+        self.fields['song'].queryset = Song.objects.filter(creator__user=user)
 
-class PostCreateFromSongForm(forms.ModelForm):
+class NewPostFromSongForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ("title", "subtitle", "body")
@@ -66,7 +66,7 @@ class PostCreateFromSongForm(forms.ModelForm):
                        attrs={'class' : 'form-control', "placeholder" : "Body"}),
                   }
 
-class CommentCreateForm(forms.ModelForm):
+class NewCommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ("comment", )

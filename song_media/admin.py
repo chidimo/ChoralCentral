@@ -4,21 +4,21 @@ from django.contrib import admin
 from .models import VocalPart, ScoreNotation, Score, Midi, VideoLink
 
 class ScoreAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'part', 'uploader', 'media_file', 'drive_view_link', 'drive_download_link', 'embed_link', 'thumbnail')
+    list_display = ('__str__', 'part', 'creator', 'media_file', 'drive_view_link', 'drive_download_link', 'embed_link', 'thumbnail')
 
-    def uploader(self, obj):
-        return obj.uploader.screen_name
+    def creator(self, obj):
+        return obj.creator.screen_name
 
 class MidiAdmin(admin.ModelAdmin):
-    list_display = ('__str__', "fformat", 'fsize', 'part', 'uploader', 'description', 'media_file', 'drive_view_link', 'drive_download_link')
-    def uploader(self, obj):
-        return obj.uploader.screen_name
+    list_display = ('__str__', "fformat", 'fsize', 'part', 'creator', 'description', 'media_file', 'drive_view_link', 'drive_download_link')
+    def creator(self, obj):
+        return obj.creator.screen_name
 
 class VideoLinkAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'uploader', 'youtube_likes', 'youtube_views', 'channel_link', 'video_link')
+    list_display = ('__str__', 'creator', 'youtube_likes', 'youtube_views', 'channel_link', 'video_link')
 
-    def uploader(self, obj):
-        return obj.uploader.screen_name
+    def creator(self, obj):
+        return obj.creator.screen_name
 
 admin.site.register(VocalPart)
 admin.site.register(ScoreNotation)

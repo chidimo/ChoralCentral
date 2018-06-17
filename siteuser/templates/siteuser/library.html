@@ -114,10 +114,10 @@
                     <tr>
                         <td>{{ forloop.counter }}</td>
                         {% if request.status == True %}
-                            <td><a href="{% url 'request:detail' request.pk request.slug %}">{{ request }}</a></td>
+                            <td><a href="{% url 'request:detail' request.pk %}">{{ request }}</a></td>
                             <td>{{ request.status }}</td>
                         {% else %}
-                            <td><a "text-danger" href="{% url 'request:detail' request.pk request.slug %}">{{ request }}</a></td>
+                            <td><a "text-danger" href="{% url 'request:detail' request.pk %}">{{ request }}</a></td>
                             <td class="text-danger">{{ request.status }}</td>
                         {% endif %}
                         <td>
@@ -198,8 +198,8 @@
                     <tr>
                         <td>{{ forloop.counter }}</td>
                         <td><a href="{% url 'song:detail' score.song.pk score.song.slug %}">{{ score.song.title }}</a></td>
-                        <td>{{ score.song.originator }}</td>
-                        <td>{{ score.uploader }}</td>
+                        <td>{{ score.song.creator }}</td>
+                        <td>{{ score.creator }}</td>
                         <td>{{ score.like_count }}</td>
                         <td>{{ score.part }}</td>
                         <td>{{ score.notation }}</td>
@@ -248,8 +248,8 @@
                         <tr>
                             <td>{{ forloop.counter }}</td>
                             <td><a href="{% url 'song:detail' midi.song.pk midi.song.slug %}">{{ midi.song.title }}</a></td>
-                            <td>{{ midi.song.originator }}</td>
-                            <td>{{ midi.uploader }}</td>
+                            <td>{{ midi.song.creator }}</td>
+                            <td>{{ midi.creator }}</td>
                             <td>{{ midi.like_count }}</td>
                             <td>{{ midi.part }}</td>
                             <td>{{ midi.fformat }}</td>
@@ -282,7 +282,7 @@
                     <th>S/No.</th>
                     <th>Song</th>
                     <th>Song owner</th>
-                    <th>Link uploader</th>
+                    <th>Link creator</th>
                     <th>Play url</th>
                 </tr>
 
@@ -292,8 +292,8 @@
                     <tr>
                         <td>{{ forloop.counter }}</td>
                         <td><a href="{% url 'song:detail' video.song.pk video.song.slug %}">{{ video.song.title }}</a></td>
-                        <td>{{ video.song.originator }}</td>
-                        <td>{{ video.uploader }}</td>
+                        <td>{{ video.song.creator }}</td>
+                        <td>{{ video.creator }}</td>
                         <td><a href="{{ video.channel_link }}" target="_blank"><i class="fas fa-play"></i></a></td>
                     </tr>
                 {% endfor %}

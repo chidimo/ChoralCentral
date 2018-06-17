@@ -19,8 +19,7 @@ class Post(TimeStampedModel):
     slug = AutoSlugField(set_using="title")
     song = models.ForeignKey(Song, on_delete=models.SET_NULL, blank=True, null=True)
     publish = models.BooleanField(default=False)
-    views = models.IntegerField(default=1)
-    likes = models.ManyToManyField(SiteUser, related_name="post_likes", blank=True)
+    likes = models.ManyToManyField(SiteUser, related_name='post_likes')
     like_count = models.IntegerField(default=0)
 
     class Meta:
@@ -32,18 +31,14 @@ class Post(TimeStampedModel):
     def __str__(self):
         return self.title
 
-    def likers(self):
-        return ", ".join([each.screen_name for each in self.likes.all()])
-
     def save(self, *args, **kwargs):
-        if self.id:
-            self.like_count = self.likes.count()
-        return super(Post, self).save(*args, **kwargs)
+        self.like_count = self.likes.count()
+        return super(Song, self).save(*args, **kwargs)
 
 class Comment(TimeStampedModel):
     creator = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    likes = models.ManyToManyField(SiteUser, related_name="comment_likes", blank=True)
+    likes = models.ManyToManyField(SiteUser, related_name='comment_likes')
     like_count = models.IntegerField(default=1)
     comment = models.TextField()
 
@@ -57,6 +52,5 @@ class Comment(TimeStampedModel):
         return self.comment
 
     def save(self, *args, **kwargs):
-        if self.id:
-            self.like_count = self.likes.count()
-        return super(Comment, self).save(*args, **kwargs)
+        self.like_count = self.likes.count()
+        return super(Song, self).save(*args, **kwargs)

@@ -1,6 +1,6 @@
 from .base import *
 DEBUG = config('DEBUG', default=False, cast=bool)
-SKIP_TASK = False # custom variable to be used to skip certain mgt tasks during testing
+SKIP_TASK = config('SKIP_TASK', cast=bool) # custom variable to be used to skip certain mgt tasks during testing
 
 # force https:
 SECURE_SSL_REDIRECT = True

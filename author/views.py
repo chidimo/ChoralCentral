@@ -29,7 +29,7 @@ class AuthorIndex(PaginationMixin, generic.ListView):
     def get_queryset(self):
         return Author.objects.annotate(Count("song__publish")).order_by("-song__publish__count")
 
-class AuthorDetail(generic.ListView):
+class AuthorDetail(LoginRequiredMixin, generic.ListView):
     model = Author
     context_object_name = 'author_songs'
     template_name = 'author/detail.html'
@@ -51,7 +51,7 @@ class NewAuthor(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, gener
     success_message = "Author added successfully."
 
     def form_valid(self, form):
-        form.instance.originator = self.request.user.siteuser
+        form.instance.creator = self.request.user.siteuser
         return super(NewAuthor, self).form_valid(form)
 
 class AuthorEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):

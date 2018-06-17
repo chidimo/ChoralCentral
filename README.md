@@ -9,6 +9,7 @@
 1. 5 songs ready to upload.
 1. Clear media folder
 1. Regenerate staticfiles
+1. Change my personal account and django admin password (lastpass)
 
     python manage.py makemigrations siteuser
 

@@ -11,30 +11,30 @@ from song.models import Song
 
 from .models import Request, Reply
 
-class RequestCreateForm(forms.ModelForm):
+class NewRequestForm(forms.ModelForm):
     class Meta:
         model = Request
-        fields = ("request", )
+        fields = ("title", )
 
         widgets = {
-            "request" : forms.TextInput(
-                attrs={"class" : "form-control", "placeholder" : "Request"})
+            "title" : forms.TextInput(
+                attrs={"class" : "form-control", "placeholder" : "Name of song you wish to get"})
         }
 
-    def clean_request(self):
-        request = self.cleaned_data.get("request", None)
-        if Request.objects.filter(request=request.upper()):
-            raise forms.ValidationError(_("{} already exists".format(request)))
-        return request
+    def clean(self):
+        title = self.cleaned_data.get("title", None)
+        if Request.objects.filter(title=title.lower()):
+            msg = _("{} already exists".format(title))
+            self.add_error('title', msg)
 
 class RequestEditForm(forms.ModelForm):
     class Meta:
         model = Request
-        fields = ("request", "status")
+        fields = ("title", "status")
 
         widgets = {
-            "request" : forms.TextInput(attrs={"class" : "form-control"}),
-            "status" : forms.Select(attrs={"class" : "form-control", "placeholder" : "Status"})
+            "title" : forms.TextInput(attrs={"class" : "form-control"}),
+            "status" : forms.Select(attrs={"class" : "form-control"})
         }
 
 class ReplyCreateFromRequestForm(forms.ModelForm):
@@ -49,19 +49,19 @@ class ReplyCreateFromRequestForm(forms.ModelForm):
                 reverse_lazy('song:new'))
         }
 
-    def clean(self):
-        song = self.cleaned_data["song"]
-        if Reply.objects.filter(song=song).exists():
-            msg = "This song is already listed as a reply to {}".format(song.reply.request)
-            self.add_error('song', msg)
-
     def __init__(self, *args, **kwargs):
         pk = kwargs.pop("pk")
         user = kwargs.pop("user")
         super(ReplyCreateFromRequestForm, self).__init__(*args, **kwargs)
         if pk:
-            self.fields["request"].initial = Request.objects.get(pk=pk)
             self.fields["request"].queryset = Request.objects.filter(pk=pk)
+            self.fields["request"].initial = Request.objects.get(pk=pk)
         if user:
-            f = Q(originator__user=user) & Q(publish=True)
+            f = Q(creator__user=user) & Q(publish=True)
             self.fields["song"].queryset = Song.objects.filter(f)
+
+    def clean(self):
+        song = self.cleaned_data["song"]
+        if Reply.objects.filter(song=song).exists():
+            msg = _("This song is already listed as a reply to {}".format(song.reply.request))
+            self.add_error('song', msg)

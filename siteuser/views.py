@@ -65,16 +65,16 @@ class SiteUserIndex(PaginationMixin, generic.ListView):
     paginate_by = 20
 
     def get_queryset(self):
-        siteusers = SiteUser.objects.prefetch_related('roles')
+        siteusers = SiteUser.objects.prefetch_related('roles').exclude(user__email='default@user.net')
         return_val = []
         for siteuser in siteusers:
             stats = {}
             stats['siteuser'] = siteuser
-            stats['song_count'] = Song.objects.filter(originator=siteuser, publish=True).count()
+            stats['song_count'] = Song.objects.filter(creator=siteuser, publish=True).count()
             stats['post_count'] = Post.objects.filter(creator=siteuser, publish=True).count()
             stats['comment_count'] = Comment.objects.filter(creator=siteuser).count()
-            stats['score_count'] = Score.objects.filter(uploader=siteuser).count()
-            stats['midi_count'] = Midi.objects.filter(uploader=siteuser).count()
+            stats['score_count'] = Score.objects.filter(creator=siteuser).count()
+            stats['midi_count'] = Midi.objects.filter(creator=siteuser).count()
             stats['siteuser_roles'] = siteuser.roles.all()
             return_val.append(stats)
         return return_val
@@ -357,18 +357,18 @@ class SiteUserLibrary(LoginRequiredMixin, generic.DetailView):
 
         if self.request.user == siteuser.user: # requester is user of interest
             context['is_library_owner'] = True
-            context['user_songs'] = Song.objects.filter(originator__pk=pk).order_by('publish')
+            context['user_songs'] = Song.objects.filter(creator__pk=pk).order_by('publish')
             context['user_posts'] = Post.objects.filter(creator__pk=pk).order_by('publish')
         else:
-            q = Q(publish=True) and Q(originator__pk=pk)
-            context['user_songs'] = Song.objects.filter(originator__pk=pk, publish=True).order_by('-created').values('pk', 'title', 'publish', 'like_count', 'slug')
+            q = Q(publish=True) and Q(creator__pk=pk)
+            context['user_songs'] = Song.objects.filter(creator__pk=pk, publish=True).order_by('-created').values('pk', 'title', 'publish', 'like_count', 'slug')
             context['user_posts'] = Post.objects.filter(creator__pk=pk, publish=True).order_by('-created').values('pk', 'title', 'publish', 'slug')
 
-        context['user_requests'] = Request.objects.filter(originator__pk=pk)
-        context['user_authors'] = Author.objects.filter(originator__pk=pk)
-        context['scores'] = Score.objects.filter(uploader__pk=pk).select_related('song').order_by("song", "-fsize", "-created", "downloads")
-        context['midis'] = Midi.objects.filter(uploader__pk=pk).select_related('song').order_by("song", "-fsize", "-created", "downloads")
-        context['user_videos'] = VideoLink.objects.filter(uploader__pk=pk).select_related('song')
+        context['user_requests'] = Request.objects.filter(creator__pk=pk)
+        context['user_authors'] = Author.objects.filter(creator__pk=pk)
+        context['scores'] = Score.objects.filter(creator__pk=pk).select_related('song').order_by("song", "-fsize", "-created", "downloads")
+        context['midis'] = Midi.objects.filter(creator__pk=pk).select_related('song').order_by("song", "-fsize", "-created", "downloads")
+        context['user_videos'] = VideoLink.objects.filter(creator__pk=pk).select_related('song')
         context['total_likes'] = 300
         return context
 
@@ -402,11 +402,11 @@ def account_management(request):
     context['can_disconnect'] = (user.social_auth.count() > 1 or user.has_usable_password())
 
     context['siteuser'] = siteuser
-    context['user_songs'] = Song.objects.filter(originator=siteuser)
+    context['user_songs'] = Song.objects.filter(creator=siteuser)
     context['user_posts'] = Post.objects.filter(creator=siteuser)
     context['user_badges'] = Badge.objects.filter(siteuser=siteuser)
     context['inbox_messages'] = Message.objects.filter(receiver=siteuser)
-    context['outbox_messages'] = Message.objects.filter(sender=siteuser)
+    context['outbox_messages'] = Message.objects.filter(creator=siteuser)
     context['total_likes'] = 400
 
     return render(request, template, context)
@@ -442,7 +442,7 @@ class NewMessage(LoginRequiredMixin, generic.CreateView):
         return context
 
     def form_valid(self, form):
-        form.instance.sender = self.request.user.siteuser
+        form.instance.creator = self.request.user.siteuser
         form.instance.receiver = SiteUser.objects.get(pk=self.kwargs['pk'], slug=self.kwargs['slug'])
         form.save()
         return redirect('siteuser:account_management')
@@ -452,14 +452,14 @@ def reply_message(request, pk):
     context = {}
     msg = Message.objects.get(pk=pk)
     thread_id = msg.thread_id
-    sender = request.user.siteuser
-    receiver = msg.sender
+    creator = request.user.siteuser
+    receiver = msg.creator
 
     if request.method == 'POST':
         form = ReplyMessageForm(request.POST)
         if form.is_valid():
             body = form.cleaned_data['body']
-            msg = Message.objects.create(body=body, sender=sender, receiver=receiver, thread_id=thread_id)
+            msg = Message.objects.create(body=body, creator=creator, receiver=receiver, thread_id=thread_id)
             return redirect('siteuser:account_management')
         else:
             return render(request, template, {'form' : form, 'receiver' : receiver})
@@ -490,5 +490,5 @@ class ViewMessageThread(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['partner'] = Message.objects.get(pk=self.kwargs['pk']).sender
+        context['partner'] = Message.objects.get(pk=self.kwargs['pk']).creator
         return context

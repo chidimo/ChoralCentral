@@ -10,9 +10,8 @@ from universal.models import TimeStampedModel
 from universal.fields import AutoSlugField
 
 class Request(TimeStampedModel):
-    originator = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
-    request = models.CharField(max_length=200)
-    slug = AutoSlugField(set_using="request")
+    creator = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
+    title = models.CharField(max_length=100)
     status = models.BooleanField(default=False)
     answer = models.OneToOneField(Song, on_delete=models.SET_NULL, null=True)
 
@@ -20,13 +19,13 @@ class Request(TimeStampedModel):
         ordering = ("status", "-created")
 
     def __str__(self):
-        return self.request
+        return self.title
 
     def get_absolute_url(self):
-        return reverse("request:detail", args=[str(self.id), str(self.slug)])
+        return reverse("request:detail", kwargs={'pk' : self.pk})
 
 class Reply(TimeStampedModel):
-    originator = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
+    creator = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
     request = models.ForeignKey(Request, on_delete=models.CASCADE)
     song = models.OneToOneField(Song, on_delete=models.SET_NULL, null=True)
 
@@ -34,7 +33,7 @@ class Reply(TimeStampedModel):
         ordering = ("request", )
 
     def __str__(self):
-        return self.request.request
+        return self.request.title
 
     def get_absolute_url(self):
-        return reverse("request:detail", kwargs={'pk' : self.request.pk, 'slug' : self.request.slug})
+        return reverse("request:detail", kwargs={'pk' : self.request.pk})

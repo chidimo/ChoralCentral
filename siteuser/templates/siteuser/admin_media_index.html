@@ -147,10 +147,10 @@
                 {% for request in user_requests %}
                     <tr>
                         {% if request.status == True %}
-                            <td><a href="{% url 'request:detail' request.pk request.slug %}">{{ request }}</a></td>
+                            <td><a href="{% url 'request:detail' request.pk %}">{{ request }}</a></td>
                             <td>{{ request.status }}</td>
                         {% else %}
-                            <td><a "text-danger" href="{% url 'request:detail' request.pk request.slug %}">{{ request }}</a></td>
+                            <td><a "text-danger" href="{% url 'request:detail' request.pk %}">{{ request }}</a></td>
                             <td class="text-danger">{{ request.status }}</td>
                         {% endif %}
                         <td>
@@ -217,8 +217,8 @@
                 {% for score in scores %}
                     <tr>
                         <td><a href="{% url 'song:detail' score.song.pk score.song.slug %}">{{ score.song.title }}</a></td>
-                        <td>{{ score.song.originator }}</td>
-                        <td>{{ score.uploader }}</td>
+                        <td>{{ score.song.creator }}</td>
+                        <td>{{ score.creator }}</td>
                         <td>{{ score.part }}</td>
                         <td>{{ score.notation }}</td>
                         <td>{{ score.fsize|filesizeformat }}</td>
@@ -282,8 +282,8 @@
                     {% for midi in midis %}
                         <tr>
                             <td><a href="{% url 'song:detail' midi.song.pk midi.song.slug %}">{{ midi.song.title }}</a></td>
-                            <td>{{ midi.song.originator }}</td>
-                            <td>{{ midi.uploader }}</td>
+                            <td>{{ midi.song.creator }}</td>
+                            <td>{{ midi.creator }}</td>
                             <td>{{ midi.part }}</td>
                             <td>{{ midi.fformat }}</td>
                             <td>{{ midi.fsize|filesizeformat }}</td>
@@ -335,7 +335,7 @@
                 </thead>
                 <tr>
                     <th>Song</th>
-                    <th>Link uploader</th>
+                    <th>Link creator</th>
                     <th><i class="fab fa-google-drive" title="Google Drive download url"></i></th>
                     <th>Play url</th>
                 </tr>
@@ -345,8 +345,8 @@
                 {% for video in user_videos %}
                     <tr>
                         <td><a href="{% url 'song:detail' video.song.pk video.song.slug %}">{{ video.song.title }}</a></td>
-                        <td>{{ video.song.originator }}</td>
-                        <td>{{ video.uploader }}</td>
+                        <td>{{ video.song.creator }}</td>
+                        <td>{{ video.creator }}</td>
                         <td><a href="{{ video.channel_link }}" target="_blank"><i class="fas fa-play"></i></a></td>
                     </tr>
                 {% endfor %}

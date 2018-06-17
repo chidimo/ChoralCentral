@@ -6,16 +6,16 @@
 
 <div class='container siteuser-index-heading'>
     <div class='row'>
-        <h3 class='float-left'>Message {% if message.sender == request.user.siteuser %}to {{ message.receiver }}
-            {% else %}from {{ message.sender }}{% endif %}</h3>
+        <h3 class='float-left'>Message {% if message.creator == request.user.siteuser %}to {{ message.receiver }}
+            {% else %}from {{ message.creator }}{% endif %}</h3>
     </div>
 </div>
 
-{% if not message.sender == request.user.siteuser %}
+{% if not message.creator == request.user.siteuser %}
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-                <p><a href="mailto:{{ msessage.sender.user.email }}">{{ message.sender.user.email }}</a></p>
+                <p><a href="mailto:{{ msessage.creator.user.email }}">{{ message.creator.user.email }}</a></p>
         </div>
     </div>
 </div>

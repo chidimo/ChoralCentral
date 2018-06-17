@@ -13,15 +13,15 @@ from song.models import Song
 
 from .models import Request, Reply
 from .forms import (
-    RequestCreateForm, RequestEditForm, ReplyCreateFromRequestForm
-    )
+    NewRequestForm, RequestEditForm, ReplyCreateFromRequestForm
+)
 
-class RequestCreate(LoginRequiredMixin, generic.CreateView):
-    form_class = RequestCreateForm
+class NewRequest(LoginRequiredMixin, generic.CreateView):
+    form_class = NewRequestForm
     template_name = "request/new.html"
 
     def form_valid(self, form):
-        form.instance.originator = SiteUser.objects.get(user=self.request.user)
+        form.instance.creator = self.request.user.siteuser
         messages.success(self.request, "Request added successfully.")
         form.save()
         return redirect('request:index')
@@ -70,7 +70,7 @@ class ReplyAddFromRequest(LoginRequiredMixin, generic.CreateView):
         return kwargs
 
     def form_valid(self, form):
-        form.instance.originator = SiteUser.objects.get(user=self.request.user)
+        form.instance.creator = self.request.user.siteuser
         self.object = form.save()
         messages.success(self.request, "Reply successfully added to {}".format(self.object))
         return super(ReplyAddFromRequest, self).form_valid(form)
@@ -85,7 +85,7 @@ class ReplyIndex(PaginationMixin, generic.ListView):
 def accept_reply(request, request_pk, song_pk):
     request_to_be_answered = Request.objects.get(pk=request_pk)
 
-    if request_to_be_answered.originator.user != request.user:
+    if request_to_be_answered.creator.user != request.user:
         messages.error(request, "You're not authorized to accept an answer for this request.")
         return redirect(request_to_be_answered.get_absolute_url())
 
@@ -93,6 +93,6 @@ def accept_reply(request, request_pk, song_pk):
 
     request_to_be_answered.answer = song
     request_to_be_answered.status = True
-    request_to_be_answered.save()
+    request_to_be_answered.save(update_fields=['status'])
     messages.success(request, "You successfully accepted answer to this request.")
     return redirect(request_to_be_answered.get_absolute_url())

@@ -31,16 +31,12 @@ from siteuser.models import SiteUser
 from .models import Song, Language#, Voicing, Season, MassPart, Song
 from .forms import (
     NewVoicingForm, EditVoicingForm, NewLanguageForm,
-    ShareForm, NewSongForm, SongEditForm, SongFilterForm
+    SongShareForm, NewSongForm, SongEditForm, SongFilterForm
 )
 
 class NewVoicing(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
     form_class = NewVoicingForm
     template_name = "song/voicing_new.html"
-
-    def form_valid(self, form):
-        form.instance.originator = SiteUser.objects.get(user=self.request.user)
-        return super(NewVoicing, self).form_valid(form)
 
 class VoicingEdit(LoginRequiredMixin, generic.UpdateView):
     form_class = EditVoicingForm
@@ -54,10 +50,6 @@ class LanguageIndex(generic.ListView):
 class NewLanguage(LoginRequiredMixin, CreatePopupMixin, generic.CreateView):
     form_class = NewLanguageForm
     template_name = 'song/language_new.html'
-
-    def form_valid(self, form):
-        form.instance.originator = SiteUser.objects.get(user=self.request.user)
-        return super(NewLanguage, self).form_valid(form)
 
 class LanguageEdit(LoginRequiredMixin, generic.CreateView):
     model = Language
@@ -78,7 +70,7 @@ class InstantSong(PaginationMixin, generic.ListView):
     model = Song
     context_object_name = 'songs'
     template_name = 'song/instant_song.html'
-    paginate_by = 50
+    paginate_by = 25
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -127,7 +119,7 @@ class SongIndex(PaginationMixin, generic.ListView):
 
     def get_queryset(self):
         return Song.objects.\
-        select_related('voicing', 'language', 'originator').\
+        select_related('voicing', 'language', 'creator').\
         prefetch_related('seasons', 'mass_parts', 'authors').filter(publish=True)
 
 class SongDetail(generic.DetailView):
@@ -138,11 +130,11 @@ class SongDetail(generic.DetailView):
     def get_object(self, *args, **kwargs):
         pk = self.kwargs['pk']
         slug = self.kwargs['slug']
-        return Song.objects.select_related('voicing', 'language', 'originator').get(pk=pk, slug=slug)
+        return Song.objects.select_related('voicing', 'language', 'creator').get(pk=pk, slug=slug)
 
     def get_context_data(self, **kwargs):
         context = super(SongDetail, self).get_context_data(**kwargs)
-        context['share_form'] = ShareForm()
+        context['share_form'] = SongShareForm()
         return context
 
 class NewSong(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):
@@ -150,11 +142,17 @@ class NewSong(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
     form_class = NewSongForm
 
     def form_valid(self, form):
-        form.instance.originator = self.request.user.siteuser
+        siteuser = self.request.user.siteuser
+        form.instance.creator = siteuser
         if form.instance.genre == "gregorian chant":
             form.instance.bpm = None
             form.instance.divisions = None
-        form.save()
+        self.object = form.save()
+
+        self.object.likes.add(siteuser)
+        self.object.like_count = self.likes.count()
+        self.object.save(update_fields=['like_count'])
+
         messages.success(self.request, "Song was successfully added")
         return redirect(self.get_success_url())
 
@@ -178,7 +176,7 @@ class SongEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
         if form.instance.genre == "gregorian chant":
             form.instance.bpm = None
             form.instance.divisions = None
-        self.object = form.save()
+        form.save()
         messages.success(self.request, "Song was successfully updated")
         return redirect(self.get_success_url())
 
@@ -221,7 +219,7 @@ class FilterSongs(PaginationMixin, SuccessMessageMixin, generic.ListView):
 
                 if (genre == '') and (season == None) and (masspart == None) and (language == None):
                     messages.success(self.request, "You did not make any selection.")
-                    return Song.objects.select_related('voicing', 'language', 'originator').\
+                    return Song.objects.select_related('voicing', 'language', 'creator').\
                     prefetch_related('seasons', 'mass_parts', 'authors').filter(publish=True)
 
                 queries = []
@@ -247,7 +245,7 @@ class FilterSongs(PaginationMixin, SuccessMessageMixin, generic.ListView):
                     query_str = " AND ".join(msg)
 
                 query = operator.and_(query, Q(publish=True)) # filter out unpublished songs and remove duplicates
-                results = Song.objects.select_related('voicing', 'language', 'originator').\
+                results = Song.objects.select_related('voicing', 'language', 'creator').\
                 prefetch_related('seasons', 'mass_parts', 'authors').filter(query).distinct()
                 messages.success(self.request, "found {} results for {}".format(results.count(), query_str))
                 return results
@@ -272,7 +270,7 @@ def share_song_by_mail(request, pk, slug):
         context['song'] = song
         context['song_link'] = request.build_absolute_uri(song.get_absolute_url())
 
-        form = ShareForm(request.GET)
+        form = SongShareForm(request.GET)
         if form.is_valid():
             form = form.cleaned_data
             receiving_emails = form['receiving_emails']

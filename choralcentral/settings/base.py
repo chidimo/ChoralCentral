@@ -60,6 +60,13 @@ EMAIL_HOST_USER = 'choralcentral@gmail.com'
 DEFAULT_FROM_EMAIL = 'choralcentral@gmail.com'
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
+ALGOLIA = {
+    'APPLICATION_ID': config('ALGOLIA_APPLICATION_ID'),
+    'API_KEY': config('ALGOLIA_API_KEY'),
+    'SEARCH_API_KEY': config('ALGOLIA_SEARCH_API_KEY'),
+    'INDEX_PREFIX' : 'choralcentral'
+}
+
 # SHELL_PLUS_PRINT_SQL = True
 SHELL_PLUS_PYGMENTS_FORMATTER = pygments.formatters.TerminalFormatter
 SHELL_PLUS_PYGMENTS_FORMATTER_KWARGS = {}
@@ -123,8 +130,6 @@ PROJECT_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-    'likes',
-    'secretballot',
     'rest_framework',
     'sorl.thumbnail',
     'social_django',
@@ -172,7 +177,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
-    'likes.middleware.SecretBallotUserIpUseragentMiddleware',
 ]
 
 
@@ -198,15 +202,6 @@ TEMPLATES = [
     },
 ]
 
-
-ALGOLIA = {
-    'APPLICATION_ID': 'UTXB87TRN7',
-    'API_KEY': '3319d9c270b17c886367aaa05efe7326',
-    'SEARCH_API_KEY': 'fedeb1405dc0324ff4b7378b5b930056',
-    'INDEX_PREFIX' : 'choralcentral'
-}
-
-# Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [

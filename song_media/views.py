@@ -48,8 +48,9 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         return context
 
     def form_valid(self, form):
+        siteuser = self.request.user.siteuser
         song = Song.objects.get(pk=self.kwargs.get('pk', None))
-        form.instance.uploader = self.request.user.siteuser
+        form.instance.creator = siteuser
         form.instance.song = song
         self.object = form.save()
 
@@ -57,7 +58,10 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         full_media_path = settings.BASE_DIR + relative_media_path
 
         self.object.fsize = os.path.getsize(full_media_path)
-        self.object.save()
+        self.object.likes.add(siteuser)
+        self.object.like_count = self.likes.count()
+        self.object.save(update_fields=['fsize', 'like_count'])
+
         messages.success(self.request, "Score successfully added to {}".format(song.title))
         return redirect(song.get_absolute_url())
 
@@ -88,14 +92,14 @@ class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
         return context
 
     def form_valid(self, form):
+        siteuser = self.request.user.siteuser
         song = Song.objects.get(pk=self.kwargs.get('pk', None))
-        form.instance.uploader = self.request.user.siteuser
+        form.instance.creator = siteuser
         form.instance.song = song
         self.object = form.save()
 
         relative_media_path = self.object.media_file.url
         full_media_path = settings.BASE_DIR + relative_media_path
-        self.object.fsize = os.path.getsize(full_media_path)
         extension = os.path.splitext(relative_media_path)[1]
 
         if extension.startswith(".mp3"):
@@ -104,7 +108,9 @@ class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
             self.object.fformat = "midi"
 
         self.object.fsize = os.path.getsize(full_media_path)
-        self.object.save(update_fields=['fsize', 'fformat'])
+        self.object.likes.add(siteuser)
+        self.object.like_count = self.likes.count()
+        self.object.save(update_fields=['fsize', 'fformat', 'like_count'])
 
         messages.success(self.request, "Midi successfully added to {}".format(song.title))
         return redirect(song.get_absolute_url())
@@ -152,7 +158,7 @@ class NewVideoLink(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, ge
 
     def form_valid(self, form):
         song = Song.objects.get(pk=self.kwargs.get('pk', None))
-        form.instance.uploader = self.request.user.siteuser
+        form.instance.creator = self.request.user.siteuser
         form.instance.song = song
         self.object = form.save()
 

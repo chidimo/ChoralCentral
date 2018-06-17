@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <p class="text-secondary">{{ message.created|date }}</p>
-                {% if message.sender == partner %}<p class="text-danger">{{ message.body }}</p>{% else %}<p class="text-primary">{{ message.body }}</p>{% endif %}
+                {% if message.creator == partner %}<p class="text-danger">{{ message.body }}</p>{% else %}<p class="text-primary">{{ message.body }}</p>{% endif %}
                 
             </div>
         </div>

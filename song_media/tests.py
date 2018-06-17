@@ -14,14 +14,14 @@ from .forms import NewScoreForm
 
 class ScoreModelTests(TestCase):
     def setUp(self):
-        self.uploader = mommy.make('siteuser.SiteUser')
+        self.creator = mommy.make('siteuser.SiteUser')
         self.song = mommy.make('song.Song')
         self.part = mommy.make('song_media.VocalPart')
         self.notation = mommy.make('song_media.ScoreNotation')
-        self.score = mommy.make('song_media.Score', uploader=self.uploader, media_file="some/file", song=self.song, part=self.part, notation=self.notation)
+        self.score = mommy.make('song_media.Score', creator=self.creator, media_file="some/file", song=self.song, part=self.part, notation=self.notation)
 
     def tearDown(self):
-        self.uploader.delete()
+        self.creator.delete()
         self.song.delete()
         self.part.delete()
         self.notation.delete()
@@ -44,7 +44,7 @@ class NewScoreViewTests(TestCase):
 
         mommy.make('siteuser.SiteUser', user=self.user, screen_name='screen_name')
 
-        self.uploader = mommy.make('siteuser.SiteUser')
+        self.creator = mommy.make('siteuser.SiteUser')
         self.song = mommy.make('song.Song')
         self.part = mommy.make('song_media.VocalPart')
         self.notation = mommy.make('song_media.ScoreNotation')
@@ -55,7 +55,7 @@ class NewScoreViewTests(TestCase):
 
     def tearDown(self):
         self.user.delete()
-        self.uploader.delete()
+        self.creator.delete()
         self.song.delete()
         self.part.delete()
         self.notation.delete()
@@ -94,7 +94,7 @@ class NewScoreViewTests(TestCase):
         score = Score.objects.get(notation=self.notation, part=self.part)
 
         # assert creator is logged in user
-        self.assertEqual(score.uploader, self.uploader)
+        self.assertEqual(score.creator, self.creator)
 
         # assert redirected to song detail url
         self.assertEqual(resp['Location'], 'detail/{}/{}'.format(self.song.pk, self.song.slug))
@@ -106,7 +106,7 @@ class NewScoreFormTests(TestCase):
         self.user.is_active = True
         self.user.set_password("testpassword")
         self.user.save()
-        self.uploader = mommy.make('siteuser.SiteUser', user=self.user, screen_name='screen_name')
+        self.creator = mommy.make('siteuser.SiteUser', user=self.user, screen_name='screen_name')
         self.song = mommy.make('song.Song')
         self.part = mommy.make('song_media.VocalPart')
         self.notation = mommy.make('song_media.ScoreNotation')
@@ -133,7 +133,7 @@ class NewScoreFormTests(TestCase):
         resp = self.client.post(post_url, data)
 
         score = Score.objects.get(song=self.song, notation=self.notation, part=self.part)
-        self.assertEqual(score.uploader, self.uploader)
+        self.assertEqual(score.creator, self.creator)
         self.assertEqual(resp.status_code, 302)
         self.assertEqual(resp['Location'], '/detail/{}/{}'.format(score.song.pk, score.song.slug))
 
