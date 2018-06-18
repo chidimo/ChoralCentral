@@ -245,8 +245,8 @@ class FilterSongs(PaginationMixin, SuccessMessageMixin, generic.ListView):
                     query_str = " AND ".join(msg)
 
                 query = operator.and_(query, Q(publish=True)) # filter out unpublished songs and remove duplicates
-                results = Song.objects.select_related('voicing', 'language', 'creator').\
-                prefetch_related('seasons', 'mass_parts', 'authors').filter(query).distinct()
+                results = Song.objects.filter(query).select_related('voicing', 'language', 'creator').\
+                prefetch_related('seasons', 'mass_parts', 'authors').distinct()
                 messages.success(self.request, "found {} results for {}".format(results.count(), query_str))
                 return results
 

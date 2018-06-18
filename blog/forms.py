@@ -104,7 +104,7 @@ class CommentReplyForm(forms.ModelForm):
         comment_pk = kwargs.pop("comment_pk")
         super(CommentReplyForm, self).__init__(*args, **kwargs)
         comment = Comment.objects.get(pk=comment_pk)
-        data = "> " + comment.comment
+        data = '<quote>'+ comment.comment + '</quote>'
         self.fields['comment'].initial = data
 
 class SearchForm(forms.Form):

@@ -139,7 +139,7 @@ class PostEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
 class EditComment(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     model = Comment
     form_class = CommentEditForm
-    template_name = "blog/edit_comment.html"
+    template_name = "blog/comment_edit.html"
     success_message = "Comment updated successfully"
 
 class NewComment(LoginRequiredMixin, generic.CreateView):
