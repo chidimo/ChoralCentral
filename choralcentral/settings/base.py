@@ -125,6 +125,7 @@ PROJECT_APPS = [
     'blog',
     'author',
     'song_media',
+    'redirect301',
     'request',
     'drb',
 ]

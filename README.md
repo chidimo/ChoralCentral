@@ -4,7 +4,7 @@
 
 1. Set DEBUG False
 1. Run `production_setup()` from `starter.py`
-1. Reset all app keys (facebook, twitter, google, yahoo)
+1. Reset all app keys (facebook, twitter, google, yahoo, algolia)
 1. Remake all migrations and reset db
 1. 5 songs ready to upload.
 1. Clear media folder
@@ -77,6 +77,10 @@
 1. First song, first post, first request, first midi, first score, enthusiast, helping hand
 
 git+https://github.com/immensity/django-likes.git
+
+## Optimize for search engine
+
+some
 
 ## Resources
 

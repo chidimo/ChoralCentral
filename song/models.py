@@ -115,7 +115,7 @@ class Song(TimeStampedModel):
 
     title           = models.CharField(max_length=100)
     year            = models.PositiveIntegerField(blank=True, null=True, validators=[MinValueValidator(1000), MaxValueValidator(datetime.now().year)])
-    slug            = AutoSlugField(set_using="title", max_length=255)
+    slug            = AutoSlugField(set_using="title", set_once=False, max_length=255)
 
     lyrics          = models.TextField(blank=True)
 
@@ -156,11 +156,12 @@ class Song(TimeStampedModel):
         names = ["{} {}".format(author.first_name, author.last_name) for author in self.authors.all()]
         return ", ".join(names)
 
-    def should_index(self):
+    def algolia_indexable(self):
         """Set which objects are indexed by Algolia"""
         return self.publish
 
     def save(self, *args, **kwargs):
+        if self.pk:
+            self.like_count = self.likes.count()
         self.tempo_text = get_tempo_text(self.tempo)
-        self.like_count = self.likes.count()
         return super(Song, self).save(*args, **kwargs)

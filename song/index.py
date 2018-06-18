@@ -1,7 +1,7 @@
 from algoliasearch_django import AlgoliaIndex
 
 class SongIndex(AlgoliaIndex):
-    should_index = 'should_index' # index only published songs
+    algolia_indexable = 'algolia_indexable' # index only published songs
     fields = (
         "get_absolute_url", "title", "lyrics", "genre", "all_authors",
         )
