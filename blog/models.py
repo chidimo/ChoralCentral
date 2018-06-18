@@ -32,8 +32,9 @@ class Post(TimeStampedModel):
         return self.title
 
     def save(self, *args, **kwargs):
-        self.like_count = self.likes.count()
-        return super(Song, self).save(*args, **kwargs)
+        if self.pk:
+            self.like_count = self.likes.count()
+        return super().save(*args, **kwargs)
 
 class Comment(TimeStampedModel):
     creator = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
@@ -52,5 +53,6 @@ class Comment(TimeStampedModel):
         return self.comment
 
     def save(self, *args, **kwargs):
-        self.like_count = self.likes.count()
-        return super(Song, self).save(*args, **kwargs)
+        if self.pk:
+            self.like_count = self.likes.count()
+        return super().save(*args, **kwargs)

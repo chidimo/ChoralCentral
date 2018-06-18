@@ -5,53 +5,24 @@
 {% block introduction %}{% endblock introduction %}
 
 {% block content_content %}
-<div class='container post-detail-heading'>
+
+<div class='container-fluid song-detail-header'>
     <div class='row'>
-        <div class='col-sm-12'>
-            <h5 class='text-left'>{{ post.title }}</h5>
-            <hr>
+        <div class='col-sm-12 head-title'>
+            <span class='float-left'>{{ post.title }}</span>
 
-            {% if post.subtitle %}
-                <div class='col-sm-12 post-subtitle'>
-                    {{ post.subtitle|markdown_format }}
-                </div>
-            {% endif %}
-
-            {% if post.song %}
-                <div class='col-sm-12 post-song'>
-                    <p>on <a href="{% url 'song:detail' post.song.pk post.song.slug %}">{{ post.song }}</a></p>
-                </div>
-            {% endif %}
-
-            <div class='col-sm-12 post-subtitle'>
-                <p><em><a href="{% url 'siteuser:library' post.creator.pk post.creator.slug %}">
-                        {{ post.creator.screen_name }}</a> | Posted {{ post.created|date }} | Modified {{ post.modified|date }}</em>
-                </p>
-            </div>
-
-            <span class="btn btn-sm btn-primary icon-buttons float-left" title="Comments">
-                <span>{{ post.comment_set.count }}</span> <i class="fas fa-comments"></i>
-            </span>
-
-            <span class='h5 float-right song-icons'>
-                {% if user.is_authenticated %}
-                    {% if request.user.siteuser in post.likes.all %}
-                        <a class="btn btn-sm btn-primary icon-buttons" href="" id="like" name="{{ post.pk }}" value="Like" title="unstar this post"><i class="fas fa-star"></i> Unstar</a>
-                        {% include 'blog/post_like_script.html' %}
-                    {% else %}
-                        <a class="btn btn-sm btn-primary icon-buttons" href="" id="like" name="{{ post.pk }}" value="Like" title="star this post"><i class="fas fa-star"></i> Star</a>
-                        {% include 'blog/post_like_script.html' %}
-                    {% endif %}
-                {% else %}
-                    <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:login' %}" title="Login to give a star">Login to star this post</a>
-                {% endif %}
+            <span class='float-right song-icons'>
+                <span class="btn btn-sm btn-primary icon-buttons" title="">{{ post.like_count }} Star{{ post.like_count|pluralize }}  </span>
+                <a class="btn btn-sm btn-primary likes-button-style" href=""><i class="fas fa-star"></i> Star/Unstar</a>
+                <span class="btn btn-sm btn-primary icon-buttons" title="{{ post.comment_set.count }} comments">{{ post.comment_set.count }} <i class="fas fa-comments"></i></span>
+                <a class="btn btn-sm btn-primary icon-buttons" href="" title="Print {{ post.title }} in pdf format" target="_blank"><i class="fas fa-print"></i></a>
 
                 {% with post.title as link_text %}
-                    {% post_to_facebook post link_text %}
+                    {% post_to_facebook song link_text %}
                 {% endwith %}
 
                 {% with post.title as link_text %}
-                    {% post_to_twitter "Check out {{post.title}}" post link_text %}
+                    {% post_to_twitter "Check out {{ post.title }}" post link_text %}
                 {% endwith %}
 
                 <a class="btn btn-sm btn-primary icon-buttons"href="" title="Email {{ post.title }}" data-toggle="modal" data-target="#postModal">
@@ -62,6 +33,30 @@
         </div>
     </div>
 </div>
+
+<div class='container song-about'>
+    <div class='row'>
+        <div class='col-sm-12'>
+            <div class='post-subtitle'>
+                <h6>by <a href="{% url 'siteuser:library' post.creator.pk post.creator.slug %}">
+                    {{ post.creator.screen_name }}</a> | {{ post.created|date }} | Updated {{ post.modified|date }}
+                </h6>
+            </div>
+            {% if post.subtitle %}
+                <div class='post-subtitle'>
+                    <em>{{ post.subtitle|markdown_format }}</em>
+                </div>
+            {% endif %}
+            {% if post.song %}
+                <div class='post-song'>
+                    <p>on <a href="{% url 'song:detail' post.song.pk post.song.slug %}">{{ post.song }}</a></p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
 
 <div class='container post-body'>
     {{ post.body|markdown_format }}

@@ -31,6 +31,11 @@ class NewPostForm(forms.ModelForm):
                        attrs={'class' : 'form-control', "placeholder" : "Body"}),
                   }
 
+    def __init__(self, *args, **kwargs):
+        """How to do query in forms"""
+        super().__init__(*args, **kwargs)
+        self.fields['song'].queryset = Song.objects.filter(publish=True)
+        
 class PostEditForm(forms.ModelForm):
     class Meta:
         model = Post
@@ -48,9 +53,9 @@ class PostEditForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         """How to do query in forms"""
-        user = kwargs.pop("user")
-        super(PostEditForm, self).__init__(*args, **kwargs)
-        self.fields['song'].queryset = Song.objects.filter(creator__user=user)
+        super().__init__(*args, **kwargs)
+        self.fields['song'].queryset = Song.objects.filter(publish=True)
+        self.fields['song'].initial = self.instance.song
 
 class NewPostFromSongForm(forms.ModelForm):
     class Meta:

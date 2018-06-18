@@ -6,7 +6,7 @@
 
 <div class='container siteuser-index-heading'>
     <div class='row'>
-        <h3 class='float-left'>Blog</h3>
+        <h3 class='float-left'>Blog posts</h3>
     </div>
 </div>
 
@@ -24,14 +24,11 @@
             </em>
         </h6>
 
-        <div>
-            <span class="h5 float-right">
-                <a class="btn btn-sm btn-primary icon-buttons" title="Star {{ post.title }}">{{ post.like_count }}</a>
-                <a class="btn btn-sm btn-primary icon-buttons" href="" title="{{ post.like_count }} Stars">
-                     <i class="fas fa-star"></i> Stars</a>
-                <span class="btn btn-sm btn-primary icon-buttons" title="Comments">{{ post.comment_set.count }} <i class="fas fa-comments"></i></span>
-            </span>
-        </div>
+        <span class="float-right">
+            <span class="btn btn-sm btn-primary icon-buttons" title="{{ post.like_count }} stars">{{ post.like_count }} Star{{ post.like_count|pluralize }}  </span>
+            <a class="btn btn-sm btn-primary likes-button-style" href="Star this post"><i class="fas fa-star"></i> Star/Unstar</a>
+            <span class="btn btn-sm btn-primary icon-buttons" title="{{ post.comment_set.count }} Comments">{{ post.comment_set.count }} <i class="fas fa-comments"></i></span>
+        </span>
     </div>
 {% empty %}
     <p style="margin-bottom:25rem">No post.</p>

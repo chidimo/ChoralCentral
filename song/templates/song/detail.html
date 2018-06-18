@@ -17,10 +17,8 @@
 
             <span class='float-right song-icons'>
                 
-                    <a class="btn btn-sm btn-primary likes-button-style" href="">
-                        <span class="like-count-embed" title="">{{ song.like_count }} Star </span>
-                        <span title="Give a star"><i class="fas fa-star"></i> Star/Unstar</span>
-                    </a>                
+                <span class="btn btn-sm btn-primary icon-buttons" title="">{{ song.like_count }} Star{{ song.like_count|pluralize }}  </span>
+                <a class="btn btn-sm btn-primary likes-button-style" href=""><i class="fas fa-star"></i> Star/Unstar</a>
                 
                 <!--
                     <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:song_likers' song.pk song.slug %}" title="{{ song.like_count }} Star givers">{{ song.like_count }}</a>

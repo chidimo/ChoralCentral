@@ -38,11 +38,8 @@
                         {% endfor %}
                     </span>
                     <span class="float-right">
-
-                        <a class="btn btn-sm btn-primary likes-button-style" href="">
-                            <span class="like-count-embed" title="">{{ song.like_count }} Star </span>
-                            <span title="Give a star"><i class="fas fa-star"></i> Star/Unstar</span>
-                        </a>
+                        <span class="btn btn-sm btn-primary icon-buttons" title="">{{ song.like_count }} Star{{ song.like_count|pluralize }}  </span>
+                        <a class="btn btn-sm btn-primary likes-button-style" href=""><i class="fas fa-star"></i> Star/Unstar</a>
                     </span>
                 </div>
             </div>

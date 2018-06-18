@@ -80,7 +80,7 @@
                 {% for post in user_posts %}
                     <tr>
                         <td>{{ forloop.counter }}</td>
-                        <td>{% if post.publish %}Public{% else %}Private{% endif %}</td>
+                        <td>{% if post.publish %}Public{% else %}<span class="text-danger">Private</span>{% endif %}</td>
                         <td><a href="{% url 'blog:detail' post.pk post.slug %}">{{ post.title }}</a></td>
 
                         <td>
