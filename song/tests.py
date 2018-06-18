@@ -13,73 +13,76 @@ from .models import Song
 
 class VoicingModelTests(TestCase):
     def setUp(self):
-        self.voicing = mommy.make('song.Voicing', voicing='satb')
+        self.voicing = mommy.make('song.Voicing', name='satb')
 
-    def test_model_representation(self):
+    def test_model(self):
+        # model representation
         self.assertEqual(self.voicing.__str__(), 'satb')
-
-    def test_absolute_url(self):
+        # absolute url
         self.assertEqual(self.voicing.get_absolute_url(), reverse('song:index'))
 
 class LanguageModelTests(TestCase):
     def setUp(self):
-        self.language = mommy.make('song.Language', language='igbo')
+        self.language = mommy.make('song.Language', name='igbo')
 
-    def test_model_representation(self):
+    def test_model(self):
+        # model representation
         self.assertEqual(self.language.__str__(), 'igbo')
-
-    def test_absolute_url(self):
+        # absolute url
         self.assertEqual(self.language.get_absolute_url(), reverse('song:index'))
 
 class SongModelTests(TestCase):
     def setUp(self):
-        self.song = mommy.make('song.Song', tempo=200)
+        creator = mommy.make('siteuser.SiteUser')
+        self.song = mommy.make('song.Song', creator=creator, title='Some title', tempo=200)
 
-    def test_model_representation(self):
+    def test(self):
         self.assertIsInstance(self.song, Song)
+
+        # model representation
         self.assertEqual(self.song.__str__(), self.song.title)
 
-    def test_absolute_url(self):
         abs_url = reverse('song:detail', kwargs={'pk' : self.song.pk, 'slug' : self.song.slug})
         self.assertEqual(self.song.get_absolute_url(), abs_url)
 
-    def test_tempo_field_is_set(self):
+        # tempo text is set
         self.assertTrue(self.song.tempo_text)
+
+        # test slug
+        self.assertEqual(self.song.slug, 'some-title')
+
+        # change title and test for slug
+        self.song.title = 'Some new title'
+        self.song.save()
+        self.assertEqual(self.song.slug, 'some-new-title')
 
 class SongIndexViewTests(TestCase):
     @classmethod
     def setUpTestData(cls):
-        mommy.make('song.Song', publish=True, _quantity=27)
-        mommy.make('song.Song', publish=False, _quantity=27)
+        creator = mommy.make('siteuser.SiteUser')
+        mommy.make('song.Song', creator=creator, publish=True, _quantity=27)
+        mommy.make('song.Song', creator=creator, publish=False, _quantity=27)
 
-    def test_total_songs_created(self):
-        """Total number of songs created is 27+27=54"""
+    def test_view(self):
+        # Total number of songs created is 27+27=54
         songs = Song.objects.count()
         self.assertEqual(songs, 54)
 
-    def test_view_url_exists_at_desired_location(self):
         resp = self.client.get('/')
         self.assertEqual(resp.status_code, 200)
 
-    def test_view_url_accessible_by_name(self):
+        # url accessible by reverse
         resp = self.client.get(reverse('song:index'))
         self.assertEqual(resp.status_code, 200)
 
-    def test_view_renders_correct_template(self):
-        resp = self.client.get(reverse('song:index'))
-        self.assertEqual(resp.status_code, 200)
+        # correct template rendered
         self.assertTemplateUsed(resp, 'song/index.html')
 
-    def test_view_has_correct_context(self):
-        resp = self.client.get(reverse('song:index'))
-        self.assertEqual(resp.status_code, 200)
+        # context
         self.assertTrue('songs' in resp.context)
         self.assertTrue('form' in resp.context)
 
-    def test_pagination(self):
-        """Test pagination"""
-        resp = self.client.get(reverse('song:index'))
-        self.assertEqual(resp.status_code, 200)
+        # pagination test
         self.assertTrue('is_paginated' in resp.context)
         self.assertTrue(resp.context['is_paginated'])
         # 25 songs on this page

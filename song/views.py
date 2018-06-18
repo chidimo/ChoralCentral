@@ -27,6 +27,7 @@ import rules
 from .utils import render_to_pdf
 
 from siteuser.models import SiteUser
+from redirect301.models import Url301
 
 from .models import Song, Language#, Voicing, Season, MassPart, Song
 from .forms import (
@@ -173,10 +174,21 @@ class SongEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
         return redirect(self.get_success_url())
 
     def form_valid(self, form):
+        old_url = Song.objects.get(pk=self.kwargs["pk"]).get_absolute_url()
+
         if form.instance.genre == "gregorian chant":
             form.instance.bpm = None
             form.instance.divisions = None
-        form.save()
+        self.object = form.save()
+
+        new_url = self.object.get_absolute_url()
+
+        print("old: ", old_url)
+        print("new: ", new_url)
+
+        if old_url != new_url:
+            redirect_url = Url301.objects.create(old_url=old_url, new_url=new_url)
+
         messages.success(self.request, "Song was successfully updated")
         return redirect(self.get_success_url())
 

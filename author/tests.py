@@ -9,7 +9,7 @@ from model_mommy import mommy
 
 from .models import Author
 from .forms import NewAuthorForm
-from siteuser.models import CustomUser
+from siteuser.models import CustomUser, SiteUser
 
 class AuthorModelTests(TestCase):
 
@@ -90,7 +90,6 @@ class AuthorDetailViewTests(TestCase):
         self.assertEqual(resp.status_code, 302)
         self.assertRedirects(resp, '/users/login/?next=/author/detail/{}/{}/'.format(self.author.pk, self.author.slug))
 
-
     def test_view_exists_at_desired_location(self):
         login = self.client.login(username='test@user.app', password='testpassword')
         # test url reversal gives correct view
@@ -110,7 +109,7 @@ class NewAuthorViewTests(TestCase):
         self.user.save()
 
         # create siteuser so the view doesn't throw an error on reversing siteuser detail present in the base url
-        self.creator  = mommy.make('siteuser.SiteUser', user=self.user, screen_name='screen_name')
+        self.creator  = mommy.make('siteuser.SiteUser', pk=1, user=self.user, screen_name='screen_name')
         self.author_count = Author.objects.count()
 
     def test_a_new_author_view(self):
@@ -137,7 +136,7 @@ class NewAuthorViewTests(TestCase):
 
         print("\ncheck the author pk: {}".format(resp['Location']))
 
-        # assert view redirects        
+        # assert view redirects
         self.assertEqual(resp.status_code, 302)
 
         # assert author count has increased
@@ -153,6 +152,17 @@ class NewAuthorViewTests(TestCase):
         self.assertEqual(resp['Location'], '/author/detail/{}/{}/'.format(author.pk, author.slug))
 
 class NewAuthorFormTests(TestCase):
+    def setUp(self):
+        user = CustomUser.objects.create_user(email='test@user.app')
+        user.is_active = True
+        user.set_password("testpassword")
+        user.save()
+        # create siteuser for two reasons
+        # 1. The view doesn't throw an error on reversing siteuser detail present in the base url
+        # 2. A default user is needed in the database since we're using on_delete=models.SET_DEFAULT, default=1
+        self.creator  = mommy.make('siteuser.SiteUser', pk=1, user=user, screen_name='screen_name')
+        print("*********", self.creator.pk)
+
     def test_valid_data(self):
         data = {"author_type" : "lyricist", "first_name" : "first name", "last_name" : "last name", "bio" : "some random text"}
         form = NewAuthorForm(data=data)
@@ -170,12 +180,6 @@ class NewAuthorFormTests(TestCase):
         self.assertFalse(form.is_valid())
 
     def test_duplicate_author_creation(self):
-        user = CustomUser.objects.create_user(email='test@user.app')
-        user.is_active = True
-        user.set_password("testpassword")
-        user.save()
-        # create siteuser so the view doesn't throw an error on reversing siteuser detail present in the base url
-        creator  = mommy.make('siteuser.SiteUser', user=user, screen_name='screen_name')
         author_count = Author.objects.count()
         login = self.client.login(username='test@user.app', password='testpassword')
         
@@ -189,7 +193,7 @@ class NewAuthorFormTests(TestCase):
         resp = self.client.post(reverse('author:new'), data)
 
         author = Author.objects.get(first_name='first name', last_name='last name', author_type="composer")
-        self.assertEqual(author.creator, creator)
+        self.assertEqual(author.creator, self.creator)
         self.assertEqual(resp.status_code, 302)
         self.assertEqual(resp['Location'], '/author/detail/{}/{}/'.format(author.pk, author.slug))
 
