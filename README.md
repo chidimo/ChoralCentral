@@ -82,6 +82,10 @@ git+https://github.com/immensity/django-likes.git
 
 some
 
+## Libraries
+
+1. Whitenoise
+
 ## Resources
 
 1. mysql grant privilege

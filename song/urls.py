@@ -9,6 +9,7 @@ app_name = "song"
 urlpatterns = [
     path("new-voicing/", views.NewVoicing.as_view(), name="new_voicing"),
     path("edit-voicing/<int:pk>/", views.VoicingEdit.as_view(), name="edit_voicing"),
+    path("song-moved/<int:pk>/<slug:slug>/", views.redirect_301_view, name="song_moved"),
 ]
 
 urlpatterns += [
@@ -23,7 +24,8 @@ urlpatterns += [
     path("new-song/", views.NewSong.as_view(), name="new"),
     path("edit-song/<int:pk>/<slug:slug>/", views.SongEdit.as_view(), name="edit"),
     path("filter/", views.FilterSongs.as_view(), name="filter"),
-    path("song/<int:pk>/<slug:slug>/", views.SongDetail.as_view(), name="detail"),
+    path("song/<int:pk>/<slug:slug>/", views.song_detail_view, name="detail"),
+    # path("<int:pk>/<slug:slug>/", views.SongDetail.as_view(), name="detail"),
     path("song/<int:pk>/<slug:slug>/reader/", views.reader_view, name="reader"),
     path("delete-song/<int:pk>/", views.SongDelete.as_view(), name='delete'),
 ]

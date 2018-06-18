@@ -5,7 +5,7 @@ from functools import reduce
 
 from django.conf import settings
 from django.db.models import Q
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.shortcuts import render, redirect, reverse
@@ -28,6 +28,8 @@ from .utils import render_to_pdf
 
 from siteuser.models import SiteUser
 from redirect301.models import Url301
+
+from .predicates import CONTEXT_MESSAGES
 
 from .models import Song, Language#, Voicing, Season, MassPart, Song
 from .forms import (
@@ -123,20 +125,37 @@ class SongIndex(PaginationMixin, generic.ListView):
         select_related('voicing', 'language', 'creator').\
         prefetch_related('seasons', 'mass_parts', 'authors').filter(publish=True)
 
-class SongDetail(generic.DetailView):
-    model = Song
-    context_object_name = 'song'
-    template_name = 'song/detail.html'
+def redirect_301_view(request, pk, slug):
+    template = '301.html'
+    context = {}
+    context['object'] = Song.objects.select_related('voicing', 'language', 'creator').get(pk=pk, slug=slug)
+    return render(request, template, context)
 
-    def get_object(self, *args, **kwargs):
-        pk = self.kwargs['pk']
-        slug = self.kwargs['slug']
-        return Song.objects.select_related('voicing', 'language', 'creator').get(pk=pk, slug=slug)
-
-    def get_context_data(self, **kwargs):
-        context = super(SongDetail, self).get_context_data(**kwargs)
-        context['share_form'] = SongShareForm()
-        return context
+def song_detail_view(request, pk, slug):
+    template = 'song/detail.html'
+    context = {}
+    context['share_form'] = SongShareForm()
+    try:
+        song = Song.objects.select_related('voicing', 'language', 'creator').get(pk=pk, slug=slug)
+        context['song'] = song
+        return render(request, template, context)
+    except Song.DoesNotExist:
+        # the url pointed to may have itself moved. So we work in a loop till we possibly find a match
+        old_ref = slug
+        while True:
+            print(old_ref, "**")
+            # There's a match in the url mapping table. Now we have to check if the song pointed to still exists
+            try:
+                ref = Url301.objects.get(old_reference=old_ref).new_reference
+                try:
+                    Song.objects.select_related('voicing', 'language', 'creator').get(pk=pk, slug=ref)
+                    return redirect(reverse('song:song_moved', kwargs={'pk' : pk, 'slug' : ref}))
+                except Song.DoesNotExist:
+                    old_ref = ref
+            # there is no match in the url mapping table. We're done
+            except Url301.DoesNotExist:
+                print("Does nto exist raissed")
+                raise(Song.DoesNotExist)
 
 class NewSong(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):
     template_name = 'song/new.html'
@@ -170,24 +189,22 @@ class SongEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
         self.object = Song.objects.get(pk=self.kwargs["pk"])
         if rules.test_rule('edit_song', self.request.user, self.object):
             return self.render_to_response(self.get_context_data())
-        messages.error(self.request, RULE_MESSAGES['OPERATION_FAILED'])
+        messages.error(self.request, CONTEXT_MESSAGES['OPERATION_FAILED'])
         return redirect(self.get_success_url())
 
     def form_valid(self, form):
-        old_url = Song.objects.get(pk=self.kwargs["pk"]).get_absolute_url()
+        old_ref = Song.objects.get(pk=self.kwargs["pk"]).slug
 
         if form.instance.genre == "gregorian chant":
             form.instance.bpm = None
             form.instance.divisions = None
         self.object = form.save()
 
-        new_url = self.object.get_absolute_url()
+        new_ref = self.object.slug
 
-        print("old: ", old_url)
-        print("new: ", new_url)
-
-        if old_url != new_url:
-            redirect_url = Url301.objects.create(old_url=old_url, new_url=new_url)
+        # map the old refrence to a new one
+        if old_ref != new_ref:
+            redirect_url = Url301.objects.create(old_reference=old_ref, new_reference=new_ref)
 
         messages.success(self.request, "Song was successfully updated")
         return redirect(self.get_success_url())
@@ -203,7 +220,7 @@ class SongDelete(generic.DeleteView):
         self.object = Song.objects.get(pk=self.kwargs["pk"])
         if rules.test_rule('edit_song', self.request.user, self.object):
             return self.render_to_response(self.get_context_data())
-        messages.error(self.request, RULE_MESSAGES['OPERATION_FAILED'])
+        messages.error(self.request, CONTEXT_MESSAGES['OPERATION_FAILED'])
         return redirect(self.get_success_url())
 
 class FilterSongs(PaginationMixin, SuccessMessageMixin, generic.ListView):

@@ -18,7 +18,7 @@ from siteuser.models import SiteUser, SiteUserPermission
 
 from .models import Author
 from .forms import AuthorEditForm, NewAuthorForm
-from .predicates import RULE_MESSAGES
+from .predicates import CONTEXT_MESSAGES
 
 class AuthorIndex(PaginationMixin, generic.ListView):
     model = Author
@@ -65,7 +65,7 @@ class AuthorEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
         self.object = self.get_object()
         if rules.test_rule('edit_author', self.request.user, self.object):
             return self.render_to_response(self.get_context_data())
-        messages.error(self.request, RULE_MESSAGES['OPERATION_FAILED'])
+        messages.error(self.request, CONTEXT_MESSAGES['OPERATION_FAILED'])
         return redirect(self.get_success_url())
     
     def get_success_url(self):
@@ -89,5 +89,5 @@ class DeleteAuthor(SuccessMessageMixin, generic.DeleteView):
         self.object = self.get_object()
         if rules.test_rule('edit_author', self.request.user, self.object):
             return self.render_to_response(self.get_context_data())
-        messages.error(self.request, RULE_MESSAGES['OPERATION_FAILED'])
+        messages.error(self.request, CONTEXT_MESSAGES['OPERATION_FAILED'])
         return redirect(self.get_success_url())
