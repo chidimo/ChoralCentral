@@ -11,30 +11,27 @@
 			ChoralCentral | {% block title %}The best way to share sheet music{% endblock title %}
 		</title>
 
+
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-
-		<!-- Fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Inconsolata:700" rel="stylesheet">
 
-		<!-- Algolia search javascript -->
 		<script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
 
 		<script src="//cdn.jsdelivr.net/g/algoliasearch,algoliasearch.helper"></script>
 
-		<!-- font awesome for icons -->
 		<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 
 		<script src="//cdn.jsdelivr.net/hogan.js/3.0.2/hogan.min.js"></script>
 
-		<!--google recaptcha-->
 		<script src='https://www.google.com/recaptcha/api.js'></script>
 
-		<!--midijs for playing midi-->
+		<script src="//cdn.jsdelivr.net/g/algoliasearch,algoliasearch.helper"></script>
+
 		<!-- <script type='text/javascript' src='//www.midijs.net/lib/midi.js'></script> -->
 
 		{% comment %}[if lt IE 9] {% endcomment %}
@@ -50,12 +47,13 @@
 		{{ form.media }}
 
 		{% compress css file %}
-			<link rel="stylesheet" href="{% static 'css/choralcentral.css' %}">
+			<link rel="stylesheet" href="{% static 'css/reader_view.min.css' %}">
+			<link rel="stylesheet" href="{% static 'css/choralcentral.min.css' %}">
 		{% endcompress %}
 
 		{% compress js file %}
 			<script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
-			<script type="text/javascript" src="{% static 'js/choralcentral.js' %}"></script>
+			<script type="text/javascript" src="{% static 'js/choralcentral.min.js' %}"></script>
 		{% endcompress %}
 	</head>
 

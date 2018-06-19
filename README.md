@@ -10,6 +10,7 @@
 1. Clear media folder
 1. Regenerate staticfiles
 1. Change my personal account and django admin password (lastpass)
+1. Edit the sites app and replace example.com with choralcentral.net
 
     python manage.py makemigrations siteuser
 
