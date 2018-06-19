@@ -82,14 +82,13 @@
                         <td>{{ forloop.counter }}</td>
                         <td>{% if post.publish %}Public{% else %}<span class="text-danger">Private</span>{% endif %}</td>
                         <td><a href="{% url 'blog:detail' post.pk post.slug %}">{{ post.title }}</a></td>
-
                         <td>
                             {% if is_library_owner is True %}
                                 <a href="{% url 'blog:edit' post.pk %}"><i class="fas fa-edit"></i></a> |
                                 <a href="#"><i class="fas fa-trash"></i></a>
                             {% endif %}
                         </td>
-                    </td>
+                    </tr>
                 {% empty %}
                     <p>No posts to display</p>
                 {% endfor %}

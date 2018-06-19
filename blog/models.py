@@ -16,7 +16,7 @@ class Post(TimeStampedModel):
     title = models.CharField(max_length=100)
     subtitle = models.CharField(max_length=100, blank=True, null=True)
     body = models.TextField()
-    slug = AutoSlugField(set_using="title")
+    slug = AutoSlugField(set_using="title", set_once=False)
     song = models.ForeignKey(Song, on_delete=models.SET_NULL, blank=True, null=True)
     publish = models.BooleanField(default=False)
     likes = models.ManyToManyField(SiteUser, related_name='post_likes')

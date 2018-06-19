@@ -138,7 +138,7 @@ def post_redirect_301_view(request, pk, slug):
     return render(request, template, context)
 
 def post_detail_view(request, pk, slug):
-    template = 'song/detail.html'
+    template = 'blog/detail.html'
     context = {}
     context['post_share_form'] = PostShareForm()
     context["comment_form"] = NewCommentForm()
@@ -155,7 +155,7 @@ def post_detail_view(request, pk, slug):
                 ref = Url301.objects.get(app_name="blog", old_reference=old_ref).new_reference
                 try:
                     Post.objects.select_related('creator').get(pk=pk, slug=ref)
-                    return redirect(reverse('post:post_moved', kwargs={'pk' : pk, 'slug' : ref}))
+                    return redirect(reverse('blog:post_moved', kwargs={'pk' : pk, 'slug' : ref}))
                 except Post.DoesNotExist:
                     old_ref = ref
             # there is no match in the url mapping table. We're done
@@ -180,13 +180,14 @@ class PostEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
 
     def form_valid(self, form):
         old_ref = Post.objects.get(pk=self.kwargs["pk"]).slug
-
         self.object = form.save()
-
         new_ref = self.object.slug
+
+        print("new: ", new_ref, "old: ", old_ref)
 
         # map the old refrence to a new one
         if old_ref != new_ref:
+            print("not equal")
             redirect_url = Url301.objects.create(app_name="blog", old_reference=old_ref, new_reference=new_ref)
 
         messages.success(self.request, "Song was successfully updated")
