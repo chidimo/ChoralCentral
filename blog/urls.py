@@ -8,9 +8,11 @@ app_name = "blog"
 urlpatterns = [
     path('', views.PostIndex.as_view(), name="index"),
     path("new/", views.NewPost.as_view(), name="new"),
-    path("<int:pk>/<slug:slug>/", views.PostDetail.as_view(), name="detail"),
+    path("<int:pk>/<slug:slug>/", views.post_detail_view, name="detail"),
     path("new/from/<int:pk>/", views.NewPostFromSong.as_view(), name="new_song"),
     path("edit/<int:pk>/", views.PostEdit.as_view(), name="edit"),
+    path("post-moved/<int:pk>/<slug:slug>/", views.post_redirect_301_view, name="post_moved"),
+
     path("share-email/<int:pk>/<slug:slug>/", views.share_post_by_mail, name='share_post_by_mail'),
     path("like/", views.post_like_view, name='like_post'),
 ]

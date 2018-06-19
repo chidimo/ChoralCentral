@@ -3,6 +3,7 @@ from django.db import models
 from .utils import TimeStampedModel
 
 class Url301(TimeStampedModel):
+    app_name = models.CharField(max_length=20)
     old_reference = models.CharField(max_length=50)
     new_reference = models.CharField(max_length=50)
 

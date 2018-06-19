@@ -9,7 +9,7 @@ app_name = "song"
 urlpatterns = [
     path("new-voicing/", views.NewVoicing.as_view(), name="new_voicing"),
     path("edit-voicing/<int:pk>/", views.VoicingEdit.as_view(), name="edit_voicing"),
-    path("song-moved/<int:pk>/<slug:slug>/", views.redirect_301_view, name="song_moved"),
+    path("song-moved/<int:pk>/<slug:slug>/", views.song_redirect_301_view, name="song_moved"),
 ]
 
 urlpatterns += [

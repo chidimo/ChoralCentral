@@ -59,7 +59,7 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
 
         self.object.fsize = os.path.getsize(full_media_path)
         self.object.likes.add(siteuser)
-        self.object.like_count = self.likes.count()
+        self.object.like_count = self.object.likes.count()
         self.object.save(update_fields=['fsize', 'like_count'])
 
         messages.success(self.request, "Score successfully added to {}".format(song.title))
@@ -109,7 +109,7 @@ class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
 
         self.object.fsize = os.path.getsize(full_media_path)
         self.object.likes.add(siteuser)
-        self.object.like_count = self.likes.count()
+        self.object.like_count = self.object.likes.count()
         self.object.save(update_fields=['fsize', 'fformat', 'like_count'])
 
         messages.success(self.request, "Midi successfully added to {}".format(song.title))

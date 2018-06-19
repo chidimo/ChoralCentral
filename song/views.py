@@ -125,7 +125,7 @@ class SongIndex(PaginationMixin, generic.ListView):
         select_related('voicing', 'language', 'creator').\
         prefetch_related('seasons', 'mass_parts', 'authors').filter(publish=True)
 
-def redirect_301_view(request, pk, slug):
+def song_redirect_301_view(request, pk, slug):
     template = '301.html'
     context = {}
     context['object'] = Song.objects.select_related('voicing', 'language', 'creator').get(pk=pk, slug=slug)
@@ -145,7 +145,7 @@ def song_detail_view(request, pk, slug):
         while True:
             # There's a match in the url mapping table. Now we have to check if the song pointed to still exists
             try:
-                ref = Url301.objects.get(old_reference=old_ref).new_reference
+                ref = Url301.objects.get(app_name="song", old_reference=old_ref).new_reference
                 try:
                     Song.objects.select_related('voicing', 'language', 'creator').get(pk=pk, slug=ref)
                     return redirect(reverse('song:song_moved', kwargs={'pk' : pk, 'slug' : ref}))
@@ -168,7 +168,7 @@ class NewSong(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
         self.object = form.save()
 
         self.object.likes.add(siteuser)
-        self.object.like_count = self.likes.count()
+        self.object.like_count = self.object.likes.count()
         self.object.save(update_fields=['like_count'])
 
         messages.success(self.request, "Song was successfully added")
@@ -202,7 +202,7 @@ class SongEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
 
         # map the old refrence to a new one
         if old_ref != new_ref:
-            redirect_url = Url301.objects.create(old_reference=old_ref, new_reference=new_ref)
+            redirect_url = Url301.objects.create(app_name="song", old_reference=old_ref, new_reference=new_ref)
 
         messages.success(self.request, "Song was successfully updated")
         return redirect(self.get_success_url())

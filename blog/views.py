@@ -19,6 +19,7 @@ from algoliasearch_django import get_adapter
 
 from siteuser.models import SiteUser
 from song.models import Song
+from redirect301.models import Url301
 
 from .models import Post, Comment
 from .forms import (
@@ -130,11 +131,66 @@ class PostDetail(PaginationMixin, generic.ListView):
         context["post"] = Post.objects.get(pk=self.kwargs.get("pk", None))
         return context
 
+def post_redirect_301_view(request, pk, slug):
+    template = '301.html'
+    context = {}
+    context['object'] = Post.objects.select_related('creator').get(pk=pk, slug=slug)
+    return render(request, template, context)
+
+def post_detail_view(request, pk, slug):
+    template = 'song/detail.html'
+    context = {}
+    context['post_share_form'] = PostShareForm()
+    context["comment_form"] = NewCommentForm()
+    try:
+        post = Post.objects.select_related('creator').get(pk=pk, slug=slug)
+        context['post'] = post
+        return render(request, template, context)
+    except Post.DoesNotExist:
+        # the url pointed to may have itself moved. So we work in a loop till we possibly find a match
+        old_ref = slug
+        while True:
+            # There's a match in the url mapping table. Now we have to check if the song pointed to still exists
+            try:
+                ref = Url301.objects.get(app_name="blog", old_reference=old_ref).new_reference
+                try:
+                    Post.objects.select_related('creator').get(pk=pk, slug=ref)
+                    return redirect(reverse('post:post_moved', kwargs={'pk' : pk, 'slug' : ref}))
+                except Post.DoesNotExist:
+                    old_ref = ref
+            # there is no match in the url mapping table. We're done
+            except Url301.DoesNotExist:
+                raise(Post.DoesNotExist)
+
 class PostEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     model = Post
     form_class = PostEditForm
     template_name = "blog/edit.html"
-    success_message = "Post updated successfully !"
+    success_message = "Post updated successfully."
+
+    def get_success_url(self):
+        return reverse('siteuser:library', kwargs={'pk' : self.request.user.siteuser.pk, 'slug' : self.request.user.siteuser.slug})
+
+    # def get(self, request, *args, **kwargs):
+    #     self.object = Song.objects.get(pk=self.kwargs["pk"])
+    #     if rules.test_rule('edit_song', self.request.user, self.object):
+    #         return self.render_to_response(self.get_context_data())
+    #     messages.error(self.request, CONTEXT_MESSAGES['OPERATION_FAILED'])
+    #     return redirect(self.get_success_url())
+
+    def form_valid(self, form):
+        old_ref = Post.objects.get(pk=self.kwargs["pk"]).slug
+
+        self.object = form.save()
+
+        new_ref = self.object.slug
+
+        # map the old refrence to a new one
+        if old_ref != new_ref:
+            redirect_url = Url301.objects.create(app_name="blog", old_reference=old_ref, new_reference=new_ref)
+
+        messages.success(self.request, "Song was successfully updated")
+        return redirect(self.get_success_url())
 
 class EditComment(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     model = Comment

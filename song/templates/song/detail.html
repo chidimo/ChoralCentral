@@ -17,7 +17,7 @@
 
             <span class='float-right song-icons'>
                 
-                <span class="btn btn-sm btn-primary icon-buttons" title="">{{ song.like_count }} Star{{ song.like_count|pluralize }}  </span>
+                <span class="btn btn-sm btn-primary icon-buttons" title="">{{ song.like_count }} Star{{ song.like_count|pluralize }}</span>
                 <a class="btn btn-sm btn-primary likes-button-style" href=""><i class="fas fa-star"></i> Star/Unstar</a>
                 
                 <!--
@@ -173,11 +173,10 @@
                         <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song-media:show_score' score.pk %}" target="_blank" title="Click to Download: {{ score.downloads }} total downloads">
                             <span class="download-count">{{ score.downloads }}</span> <i class="fas fa-download"></i>
                         </a>
-                        
-                        <a class="btn btn-sm btn-primary likes-button-style" href="">
-                            <span class="like-count-embed" title="">{{ score.like_count }} Star </span>
-                            <span title="Give a star"><i class="fas fa-star"></i> Star/Unstar</span>
-                        </a>
+
+                        <span class="btn btn-sm btn-primary icon-buttons" title="">{{ score.like_count }} Star{{ score.like_count|pluralize }}</span>
+                        <a class="btn btn-sm btn-primary likes-button-style" href=""><i class="fas fa-star"></i> Star/Unstar</a>
+        
                     </div>
                 </div>
             </div>
@@ -213,10 +212,8 @@
                             <span class="download-count">{{ midi.downloads }}</span> <i class="fas fa-download"></i>
                         </a>
                         
-                        <a class="btn btn-sm btn-primary likes-button-style" href="">
-                            <span class="like-count-embed" title="">{{ midi.like_count }} Star </span>
-                            <span title="Give a star"><i class="fas fa-star"></i> Star/Unstar</span>
-                        </a>
+                        <span class="btn btn-sm btn-primary icon-buttons" title="">{{ midi.like_count }} Star{{ midi.like_count|pluralize }}</span>
+                        <a class="btn btn-sm btn-primary likes-button-style" href=""><i class="fas fa-star"></i> Star/Unstar</a>
                     </div>
                 </div>
             </div>
