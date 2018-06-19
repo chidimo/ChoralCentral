@@ -112,7 +112,7 @@ class NewAuthorViewTests(TestCase):
         self.creator  = mommy.make('siteuser.SiteUser', pk=1, user=self.user, screen_name='screen_name')
         self.author_count = Author.objects.count()
 
-    def test_a_new_author_view(self):
+    def test_new_author_view(self):
         resp = self.client.get(reverse('author:new'))
 
         # assert view redirects for non-logged in user
@@ -146,36 +146,7 @@ class NewAuthorViewTests(TestCase):
         # assert redirected to author detail url
         self.assertEqual(resp['Location'], '/author/detail/{}/{}/'.format(author.pk, author.slug))
 
-class NewAuthorFormTests(TestCase):
-    def setUp(self):
-        user = CustomUser.objects.create_user(email='test@user.app')
-        user.is_active = True
-        user.set_password("testpassword")
-        user.save()
-        # create siteuser for two reasons
-        # 1. The view doesn't throw an error on reversing siteuser detail present in the base url
-        # 2. A default user is needed in the database since we're using on_delete=models.SET_DEFAULT, default=1
-        self.creator  = mommy.make('siteuser.SiteUser', pk=1, user=user, screen_name='screen_name')
-        print("*********", self.creator.pk)
-
-    def test_valid_data(self):
-        data = {"author_type" : "lyricist", "first_name" : "first name", "last_name" : "last name", "bio" : "some random text"}
-        form = NewAuthorForm(data=data)
-        self.assertTrue(form.is_valid())
-        author = form.save()
-        self.assertEqual(author.first_name, "first name")
-        self.assertEqual(author.last_name, "last name")
-        self.assertEqual(author.author_type, "lyricist")
-        self.assertEqual(author.bio, "some random text")
-
-    def test_invalid_data(self):
-        data = {"author_type" : "lyricist", 'first_name' : 25, "last_name" : "last name", "bio" :"some random text"}
-        form = NewAuthorForm(data=data)
-        self.assertEqual(form.errors["first_name"], ["Only alphabetic values are allowed."])
-        self.assertFalse(form.is_valid())
-
     def test_duplicate_author_creation(self):
-        author_count = Author.objects.count()
         login = self.client.login(username='test@user.app', password='testpassword')
         
         # assert view accessible after log in
@@ -193,5 +164,32 @@ class NewAuthorFormTests(TestCase):
         self.assertEqual(resp['Location'], '/author/detail/{}/{}/'.format(author.pk, author.slug))
 
         form2 = NewAuthorForm(data=data)
-        self.assertEqual(form2.errors["first_name"], ["first name last name already exists."])
         self.assertFalse(form2.is_valid())
+        self.assertEqual(form2.errors["first_name"], ["Author named first name last name already exists."])
+
+class NewAuthorFormTests(TestCase):
+    def setUp(self):
+        user = CustomUser.objects.create_user(email='test@user.app')
+        user.is_active = True
+        user.set_password("testpassword")
+        user.save()
+        # create siteuser for two reasons
+        # 1. The view doesn't throw an error on reversing siteuser detail present in the base url
+        # 2. A default user is needed in the database since we're using on_delete=models.SET_DEFAULT, default=1
+        self.creator  = mommy.make('siteuser.SiteUser', pk=1, user=user, screen_name='screen_name')
+
+    def test_valid_data(self):
+        data = {"author_type" : "lyricist", "first_name" : "first name", "last_name" : "last name", "bio" : "some random text"}
+        form = NewAuthorForm(data=data)
+        self.assertTrue(form.is_valid())
+        author = form.save()
+        self.assertEqual(author.first_name, "first name")
+        self.assertEqual(author.last_name, "last name")
+        self.assertEqual(author.author_type, "lyricist")
+        self.assertEqual(author.bio, "some random text")
+
+    def test_invalid_data(self):
+        data = {"author_type" : "lyricist", 'first_name' : 25, "last_name" : "last name", "bio" :"some random text"}
+        form = NewAuthorForm(data=data)
+        self.assertEqual(form.errors["first_name"], ["Only alphabetic values are allowed."])
+        self.assertFalse(form.is_valid())

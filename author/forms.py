@@ -21,14 +21,15 @@ class NewAuthorForm(forms.ModelForm):
         }
 
     def clean(self):
-        data = self.cleaned_data
+        data = super().clean()
+        # print('author cleaned data', data)
         first_name = data['first_name'].lower()
         last_name = data['last_name'].lower()
         author_type = data['author_type'].lower()
 
         try:
             Author.objects.get(first_name=first_name, last_name=last_name)
-            msg = '{} {} already exists.'.format(first_name, last_name)
+            msg = 'Author named {} {} already exists.'.format(first_name, last_name)
             self.add_error('first_name', msg)
         except Author.DoesNotExist:
             pass

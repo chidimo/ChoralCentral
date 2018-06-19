@@ -9,6 +9,8 @@ from model_mommy import mommy
 
 from siteuser.models import CustomUser
 
+from song.models import Song
+
 from .models import Score, ScoreNotation, VocalPart
 from .forms import NewScoreForm
 
@@ -100,34 +102,23 @@ class NewScoreFormTests(TestCase):
         self.user.save()
 
         self.creator = mommy.make('siteuser.SiteUser', pk=1, user=self.user, screen_name='screen_name')
-        self.song = mommy.make('song.Song', title="Some title")
-        self.part = mommy.make('song_media.VocalPart', name="Some name")
-        self.notation = mommy.make('song_media.ScoreNotation', name="Some name")
 
     def test_valid_data(self):
         # file_path = os.path.join(settings.BASE_DIR, 'song_media', 'skills.pdf')
         # data = {'notation' : self.notation, 'part' : self.part, 'media_file' : open(file_path, 'rb')}
-        data = {'notation' : self.notation, 'part' : self.part, 'media_file' : BytesIO(b'filepath')}
+        song = mommy.make('song.Song', creator=self.creator, pk=1, title="Some title")
+        # song = Song.objects.create(creator=self.creator, title="Song title")
+        part = mommy.make('song_media.VocalPart', name="Some name")
+        notation = mommy.make('song_media.ScoreNotation', name="Some name")
+        media_file = BytesIO(b'filepath')
+        data = {'notation' : notation, 'part' : part, 'media_file' : media_file}
 
-        form = NewScoreForm(data)
-        self.assertTrue(form.is_valid())
-        score = form.save()
-        self.assertEqual(score.song.title, self.song.title)
-        self.assertEqual(score.notation, self.notation)
-        self.assertEqual(score.part, self.part)
-
-        login = self.client.login(username='test@user.app', password='testpassword')
-
-        data = {'notation' : self.notation, 'part' : self.part, 'media_file' : BytesIO(b'filepath')}
         form = NewScoreForm(data=data)
         self.assertTrue(form.is_valid())
-        post_url = reverse('song-media:score_add_to_song', kwargs={'pk' : self.song.pk})
-        resp = self.client.post(post_url, data)
-
-        score = Score.objects.get(song=self.song, notation=self.notation, part=self.part)
-        self.assertEqual(score.creator, self.creator)
-        self.assertEqual(resp.status_code, 302)
-        self.assertEqual(resp['Location'], '/detail/{}/{}/'.format(score.song.pk, score.song.slug))
-
+        score = form.save()
+        self.assertEqual(score.song.title, song.title)
+        self.assertEqual(score.notation, notation)
+        self.assertEqual(score.part, part)
+ 
 if __name__ == "__main__":
     unittest.main()

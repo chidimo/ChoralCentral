@@ -35,9 +35,9 @@ class ScoreNotation(TimeStampedModel):
 
 class Score(TimeStampedModel):
     creator = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
-    song = models.ForeignKey(Song, on_delete=models.CASCADE)
-    part = models.ForeignKey(VocalPart, on_delete=models.CASCADE)
-    notation = models.ForeignKey(ScoreNotation, on_delete=models.CASCADE)
+    song = models.ForeignKey(Song, on_delete=models.SET_NULL, null=True)
+    part = models.ForeignKey(VocalPart, on_delete=models.SET_NULL, null=True)
+    notation = models.ForeignKey(ScoreNotation, on_delete=models.SET_NULL, null=True)
     fsize = models.FloatField(null=True,blank=True)
     likes = models.ManyToManyField(SiteUser, related_name='score_likes')
     like_count = models.IntegerField(default=0)
@@ -71,7 +71,7 @@ class Score(TimeStampedModel):
 class Midi(TimeStampedModel):
     creator = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
     song = models.ForeignKey(Song, null=True, on_delete=models.SET_NULL)
-    part = models.ForeignKey(VocalPart, on_delete=models.CASCADE)
+    part = models.ForeignKey(VocalPart, on_delete=models.SET_NULL, null=True)
     fformat = models.CharField(max_length=10, blank=True)
     fsize = models.FloatField(null=True, blank=True)
     description = models.CharField(max_length=200, blank=True, null=True)

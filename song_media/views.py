@@ -48,6 +48,7 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         return context
 
     def form_valid(self, form):
+        print("view ", form.instance.notation, ": ", form.instance.part, ": ", form.instance.media_file)
         siteuser = self.request.user.siteuser
         song = Song.objects.get(pk=self.kwargs.get('pk', None))
         form.instance.creator = siteuser

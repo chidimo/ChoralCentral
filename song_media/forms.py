@@ -49,19 +49,17 @@ class NewScoreForm(forms.ModelForm):
         fields = ('notation', 'part', 'media_file')
 
         widgets = {
-                   'part' : AddAnotherWidgetWrapper(
-                       forms.Select(attrs={'class' : 'form-control'}),
-                       reverse_lazy('song-media:new_part')),
-
-                   'notation' : AddAnotherWidgetWrapper(
-                       forms.Select(attrs={'class' : 'form-control'}),
-                       reverse_lazy('song-media:new_notation')),
-
-                    'media_file' : ClearableFileInput(attrs={'class' : 'form-control'}),
-                  }
+            'part' : AddAnotherWidgetWrapper(
+                forms.Select(attrs={'class' : 'form-control'}),
+                reverse_lazy('song-media:new_part')),
+            'notation' : AddAnotherWidgetWrapper(
+                forms.Select(attrs={'class' : 'form-control'}),
+                reverse_lazy('song-media:new_notation')),
+            'media_file' : ClearableFileInput(attrs={'class' : 'form-control'}),
+        }
 
     def clean(self):
-        data = self.cleaned_data
+        data = super().clean()
         print("cleaned data", data)
         media_file = data['media_file']
         fsize = media_file.size/1048576
@@ -76,17 +74,17 @@ class NewMidiForm(forms.ModelForm):
         fields = ('part', 'description', 'media_file')
 
         widgets = {
-                   'part' : AddAnotherWidgetWrapper(
-                       forms.Select(attrs={'class' : 'form-control'}),
-                       reverse_lazy('song-media:new_part')),
+            'part' : AddAnotherWidgetWrapper(
+                forms.Select(attrs={'class' : 'form-control'}),
+                reverse_lazy('song-media:new_part')),
 
-                    'media_file' : ClearableFileInput(attrs={'class' : 'form-control'}),
+            'media_file' : ClearableFileInput(attrs={'class' : 'form-control'}),
 
-                    'name' : forms.TextInput(
-                        attrs={'class' : 'form-control', 'placeholder' : 'Notation name'}),
+            'name' : forms.TextInput(
+                attrs={'class' : 'form-control', 'placeholder' : 'Notation name'}),
 
-                    'description' : forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : 'Enter a short description (optional)'}),
-                  }
+            'description' : forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : 'Enter a short description (optional)'}),
+        }
 
     def clean(self):
         media_file = self.cleaned_data['media_file']
