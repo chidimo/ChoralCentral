@@ -131,6 +131,7 @@ PROJECT_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    'robots',
     'compressor',
     'rest_framework',
     'sorl.thumbnail',
@@ -264,3 +265,10 @@ COMPRESS_FILTERS = {
 COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'django_libsass.SassCompiler'),
 )
+
+ROBOTS_SITEMAP_URLS = [
+    'http://localhost:8000/sitemap.xml',
+    'https://www.choralcentral.net/sitemap.xml',
+]
+ROBOTS_USE_SCHEME_IN_HOST = True
+ROBOTS_CACHE_TIMEOUT = 60*60*24

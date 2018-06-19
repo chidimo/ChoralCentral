@@ -86,9 +86,11 @@ some
 
 1. Whitenoise
 1. django-compressor. For windows, needs install Visual C++ build tools
+1. django-robots
 
 ## Resources
 
 1. mysql grant privilege
 1. GRANT ALL PRIVILEGES ON myproject_test.* TO 'chandan'@'localhost';
 1. <https://github.com/jazzband/django-model-utils>
+1. <http://www.robotstxt.org/db.html>
