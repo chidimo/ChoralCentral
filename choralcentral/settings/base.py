@@ -257,7 +257,7 @@ COMPRESS_PARSER = 'compressor.parser.HtmlParser'
 COMPRESS_ENABLED = config('COMPRESS_ENABLED')
 COMPRESS_OFFLINE = config('COMPRESS_OFFLINE')
 COMPRESS_OFFLINE_MANIFEST = 'compressor_manifest.json'
-COMPRESS_CSS_FILTERS = {
+COMPRESS_FILTERS = {
     'css': ['compressor.filters.css_default.CssAbsoluteFilter'], 
     'js': ['compressor.filters.jsmin.JSMinFilter']
 }
