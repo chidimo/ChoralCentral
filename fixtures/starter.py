@@ -66,13 +66,13 @@ def voice_notation():
 
 def default_user():
     try:
-        su = CustomUser.objects.create_user(email='default@user.net', password='defaultuser')
+        su = CustomUser.objects.create_user(email='unknown@user.net', password='unknownuser')
         su.is_active = False
         su.save()
     except IntegrityError:
         su = CustomUser.objects.get(email='default@user.net')
     try:
-        SiteUser.objects.create(user=su, screen_name="Default-User", first_name="Default", last_name="User")
+        SiteUser.objects.create(user=su, screen_name="Unknown-User", first_name="Unknown", last_name="User")
     except IntegrityError:
         pass
 
@@ -146,8 +146,8 @@ def songs_from_file():
     users = SiteUser.objects.all()
     voices = Voicing.objects.all()
     languages = Language.objects.all()
-    ocassion_choices = [each[0] for each in Song.OCASSION_CHOICES]
-    genre_choices = [each[0] for each in Song.GENRE_CHOICES]
+    ocassions = [each[0] for each in Song.OCASSION_CHOICES[1:]]
+    genres = [each[0] for each in Song.GENRE_CHOICES[1:]]
 
     fn = os.path.join(settings.BASE_DIR, 'fixtures', 'data_hymnal.json')
     with open(fn, "r+") as rh:
@@ -164,36 +164,21 @@ def songs_from_file():
             try:
                 author = Author.objects.get(first_name=first_name, last_name=last_name)
             except:
-                author = Author.objects.create(
-                    creator=choice(users),
-                    first_name=first_name,
-                    last_name=last_name,
-                    bio=about)
+                author = Author.objects.create(creator=choice(users), first_name=first_name, last_name=last_name, bio=about)
             authors.append(author)
+
         creator = choice(users)
         title = song.get("title", "Unknown").strip()
 
         try:
             song = Song.objects.get(title=title)
         except:
-            song = Song.objects.create(
-                creator=creator,
-                title=title,
-                publish=choice([True, False]),
-                genre=choice(genre_choices),
-                ocassion=choice(ocassion_choices),
-                lyrics=song.get("lyrics", "No lyrics"),
-                scripture_reference=choice(SCRIPTURE),
-                tempo=randint(45, 250),
-                bpm=randint(4, 8),
-                divisions=randint(4, 8),
-                voicing=choice(voices),
-                language=choice(languages),
+            song = Song.objects.create(creator=creator, title=title, publish=choice([True, False]), genre=choice(genres),
+                ocassion=choice(ocassions), lyrics=song.get("lyrics", "No lyrics"), scripture_reference=choice(SCRIPTURE),
+                tempo=randint(45, 250), bpm=randint(4, 8), divisions=randint(4, 8), voicing=choice(voices), language=choice(languages),
                 like_count=randint(1, 100))
-
-            for each in authors:
-                song.authors.add(author)
-            song.save()
+        for each in authors:
+            song.authors.add(author)
     add_manyfields()
 
 def songs():
