@@ -125,7 +125,6 @@ class NewAuthorViewTests(TestCase):
         # assert view accessible after log in
         resp = self.client.get(reverse('author:new'))
         self.assertEqual(resp.status_code, 200)
-
         # assert logged in user is correct
         self.assertEqual(str(resp.context['user']), 'User - test@user.app')
         self.assertTemplateUsed(resp, 'author/new.html')
@@ -138,16 +137,12 @@ class NewAuthorViewTests(TestCase):
 
         # assert view redirects
         self.assertEqual(resp.status_code, 302)
-
         # assert author count has increased
         self.assertEqual(Author.objects.count(), self.author_count+1)
-
         # get created author
         author = Author.objects.get(first_name='first name', last_name='last name', author_type="lyricist")
-        
         # assert creator is logged in user
         self.assertEqual(author.creator, self.creator)
-
         # assert redirected to author detail url
         self.assertEqual(resp['Location'], '/author/detail/{}/{}/'.format(author.pk, author.slug))
 

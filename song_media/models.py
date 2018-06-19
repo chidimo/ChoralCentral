@@ -64,8 +64,9 @@ class Score(TimeStampedModel):
         return "https://www.choralcentral.net" + reverse('song-media:score_view', kwargs={'pk' : (self.id)})
 
     def save(self, *args, **kwargs):
-        self.like_count = self.likes.count()
-        return super(Song, self).save(*args, **kwargs)
+        if self.id:
+            self.like_count = self.likes.count()
+        return super().save(*args, **kwargs)
 
 class Midi(TimeStampedModel):
     creator = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
@@ -91,8 +92,9 @@ class Midi(TimeStampedModel):
         return reverse('song:detail', kwargs={'pk' : (self.song.id), 'slug' : self.song.slug})
         
     def save(self, *args, **kwargs):
-        self.like_count = self.likes.count()
-        return super(Song, self).save(*args, **kwargs)
+        if self.id:
+            self.like_count = self.likes.count()
+        return super().save(*args, **kwargs)
 
 class VideoLink(TimeStampedModel):
     creator = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)

@@ -14,7 +14,7 @@ from .forms import NewScoreForm
 
 class ScoreModelTests(TestCase):
     def setUp(self):
-        self.creator = mommy.make('siteuser.SiteUser')
+        self.creator = mommy.make('siteuser.SiteUser', pk=1)
         self.song = mommy.make('song.Song')
         self.part = mommy.make('song_media.VocalPart')
         self.notation = mommy.make('song_media.ScoreNotation')
@@ -42,15 +42,10 @@ class NewScoreViewTests(TestCase):
         self.user.set_password("testpassword")
         self.user.save()
 
-        mommy.make('siteuser.SiteUser', user=self.user, screen_name='screen_name')
-
-        self.creator = mommy.make('siteuser.SiteUser')
-        self.song = mommy.make('song.Song')
-        self.part = mommy.make('song_media.VocalPart')
-        self.notation = mommy.make('song_media.ScoreNotation')
-
-        self.url = reverse('song-media:score_add_song', kwargs={'pk' : self.song.pk})
-
+        self.creator = mommy.make('siteuser.SiteUser', pk=1, user=self.user, screen_name='screen_name')
+        self.song = mommy.make('song.Song', title="Some title")
+        self.part = mommy.make('song_media.VocalPart', name="some name")
+        self.notation = mommy.make('song_media.ScoreNotation', name="some name")
         self.score_count = Score.objects.count()
 
     def tearDown(self):
@@ -60,15 +55,17 @@ class NewScoreViewTests(TestCase):
         self.part.delete()
         self.notation.delete()
 
-    def test_non_logged_in_user_cannot_access_new_score_view(self):
+    def test_new_score_view(self):
+        url = reverse('song-media:score_add_to_song', kwargs={'pk' : self.song.pk})
+
+        # view redirects for anonymous user
+        resp = self.client.get(url)
         redirect_url = "/users/login/?next=/song-media/new-score/song-{}/".format(self.song.pk)
-        resp = self.client.get(self.url)
         self.assertEqual(resp.status_code, 302)
         self.assertRedirects(resp, redirect_url)
 
-    def test_logged_in_user_can_create_score(self):
         login = self.client.login(username='test@user.app', password='testpassword')
-        resp = self.client.get(self.url)
+        resp = self.client.get(url)
 
         # check url is reachable
         self.assertEqual(resp.status_code, 200)
@@ -80,24 +77,19 @@ class NewScoreViewTests(TestCase):
         self.assertTrue('song' in resp.context)
 
         # post data
-        data = {'notation' : self.notation, 'part' : self.part, 'media_file' : BytesIO(b'filepath')}
-        new_score_url = reverse('song-media:score_add_song', kwargs={'pk' : self.song.pk})
-        resp = self.client.post(new_score_url, data)
+        score_data = {'notation' : self.notation, 'part' : self.part, 'media_file' : BytesIO(b'filepath')}
+        resp = self.client.post(reverse('song-media:score_add_to_song', kwargs={'pk' : self.song.pk}), score_data)
 
         # assert view redirects        
         self.assertEqual(resp.status_code, 302)
-
         # assert author count has increased
         self.assertEqual(Score.objects.count(), self.score_count+1)
-
         # get created score
         score = Score.objects.get(notation=self.notation, part=self.part)
-
         # assert creator is logged in user
         self.assertEqual(score.creator, self.creator)
-
         # assert redirected to song detail url
-        self.assertEqual(resp['Location'], 'detail/{}/{}'.format(self.song.pk, self.song.slug))
+        self.assertEqual(resp['Location'], 'detail/{}/{}/'.format(self.song.pk, self.song.slug))
 
 class NewScoreFormTests(TestCase):
     def setUp(self):
@@ -106,10 +98,11 @@ class NewScoreFormTests(TestCase):
         self.user.is_active = True
         self.user.set_password("testpassword")
         self.user.save()
-        self.creator = mommy.make('siteuser.SiteUser', user=self.user, screen_name='screen_name')
-        self.song = mommy.make('song.Song')
-        self.part = mommy.make('song_media.VocalPart')
-        self.notation = mommy.make('song_media.ScoreNotation')
+
+        self.creator = mommy.make('siteuser.SiteUser', pk=1, user=self.user, screen_name='screen_name')
+        self.song = mommy.make('song.Song', title="Some title")
+        self.part = mommy.make('song_media.VocalPart', name="Some name")
+        self.notation = mommy.make('song_media.ScoreNotation', name="Some name")
 
     def test_valid_data(self):
         # file_path = os.path.join(settings.BASE_DIR, 'song_media', 'skills.pdf')
@@ -123,20 +116,18 @@ class NewScoreFormTests(TestCase):
         self.assertEqual(score.notation, self.notation)
         self.assertEqual(score.part, self.part)
 
-    def test_upload(self):
         login = self.client.login(username='test@user.app', password='testpassword')
 
         data = {'notation' : self.notation, 'part' : self.part, 'media_file' : BytesIO(b'filepath')}
         form = NewScoreForm(data=data)
         self.assertTrue(form.is_valid())
-        post_url = reverse('song-media:score_add_song', kwargs={'pk' : self.song.pk})
+        post_url = reverse('song-media:score_add_to_song', kwargs={'pk' : self.song.pk})
         resp = self.client.post(post_url, data)
 
         score = Score.objects.get(song=self.song, notation=self.notation, part=self.part)
         self.assertEqual(score.creator, self.creator)
         self.assertEqual(resp.status_code, 302)
-        self.assertEqual(resp['Location'], '/detail/{}/{}'.format(score.song.pk, score.song.slug))
+        self.assertEqual(resp['Location'], '/detail/{}/{}/'.format(score.song.pk, score.song.slug))
 
 if __name__ == "__main__":
     unittest.main()
-njnjn

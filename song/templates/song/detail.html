@@ -148,7 +148,7 @@
     <h5 class="my-2 text-left">
         Scores
         <span class="float-right">
-            <a class="btn btn-primary btn-sm" href="{% url 'song-media:score_add_song' song.pk %}">Add score <i class="fas fa-upload"></i></a>
+            <a class="btn btn-primary btn-sm" href="{% url 'song-media:score_add_to_song' song.pk %}">Add score <i class="fas fa-upload"></i></a>
         </span>
         </h5>
         <hr>
@@ -191,7 +191,7 @@
     <h5 class="my-2 text-left">
         Midis
         <span class="float-right">
-            <a class="btn btn-primary btn-sm float-right" href="{% url 'song-media:midi_add_song' song.pk %}">Add midi <i class="fas fa-upload"></i></a>
+            <a class="btn btn-primary btn-sm float-right" href="{% url 'song-media:midi_add_to_song' song.pk %}">Add midi <i class="fas fa-upload"></i></a>
         </span>
         </h5>
         <hr>
