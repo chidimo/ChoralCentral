@@ -31,6 +31,9 @@
 
 		<script src="//cdn.jsdelivr.net/hogan.js/3.0.2/hogan.min.js"></script>
 
+		<!--google recaptcha-->
+		<script src='https://www.google.com/recaptcha/api.js'></script>
+
 		<!--midijs for playing midi-->
 		<!-- <script type='text/javascript' src='//www.midijs.net/lib/midi.js'></script> -->
 
@@ -38,17 +41,22 @@
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		{% comment %} [endif] {% endcomment %}
 
+		{% load staticfiles %}
 		{% load static %}
+		{% load compress %}
 		{% load thumbnail %}
+
 		<link rel="shortcut icon" type="image/png" href="{% static 'favicons/favicon.ico' %}"/>
-		<link rel="stylesheet" href="{% static 'css/choralcentral.css' %}">
-		<script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
-		<script type="text/javascript" src="{% static 'js/choralcentral.js' %}"></script>
 		{{ form.media }}
 
-		<!--google recaptcha-->
-		<script src='https://www.google.com/recaptcha/api.js'></script>
+		{% compress css file %}
+			<link rel="stylesheet" href="{% static 'css/choralcentral.css' %}">
+		{% endcompress %}
 
+		{% compress js file %}
+			<script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+			<script type="text/javascript" src="{% static 'js/choralcentral.js' %}"></script>
+		{% endcompress %}
 	</head>
 
 	{% block body %}

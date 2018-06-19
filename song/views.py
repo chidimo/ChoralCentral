@@ -143,7 +143,6 @@ def song_detail_view(request, pk, slug):
         # the url pointed to may have itself moved. So we work in a loop till we possibly find a match
         old_ref = slug
         while True:
-            print(old_ref, "**")
             # There's a match in the url mapping table. Now we have to check if the song pointed to still exists
             try:
                 ref = Url301.objects.get(old_reference=old_ref).new_reference
@@ -154,7 +153,6 @@ def song_detail_view(request, pk, slug):
                     old_ref = ref
             # there is no match in the url mapping table. We're done
             except Url301.DoesNotExist:
-                print("Does nto exist raissed")
                 raise(Song.DoesNotExist)
 
 class NewSong(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):

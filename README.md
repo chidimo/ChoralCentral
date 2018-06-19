@@ -85,6 +85,7 @@ some
 ## Libraries
 
 1. Whitenoise
+1. django-compressor. For windows, I downloaded the zip from github, then `python setup.py install`
 
 ## Resources
 

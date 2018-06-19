@@ -105,21 +105,18 @@ class SongDetailViewTests(TestCase):
     def tearDown(self):
         self.song.delete()
 
-    def test_view_url_exists_at_desired_location(self):
-        # resp = self.client.get('/song/{}/{}'.format(self.song.pk, self.song.slug))
+    def test_detail_view(self):
         resp = self.client.get(reverse('song:detail', args=[self.song.pk, self.song.slug]))
         self.assertEqual(resp.status_code, 200)
 
-    def test_view_url_accessible_by_name(self):
+        # url reversible
         resp = self.client.get(reverse('song:detail', kwargs={'pk' : self.song.pk, 'slug' : self.song.slug}))
         self.assertEqual(resp.status_code, 200)
 
-    def test_view_renders_correct_template(self):
-        resp = self.client.get(reverse('song:detail', kwargs={'pk' : self.song.pk, 'slug' : self.song.slug}))
-        self.assertEqual(resp.status_code, 200)
+        # renders correct template
         self.assertTemplateUsed(resp, 'song/detail.html')
 
-    def test_view_has_correct_context(self):
+        # renders expected context
         resp = self.client.get(reverse('song:detail', kwargs={'pk' : self.song.pk, 'slug' : self.song.slug}))
         self.assertEqual(resp.status_code, 200)
         self.assertTrue('song' in resp.context)

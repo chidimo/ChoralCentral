@@ -131,6 +131,7 @@ PROJECT_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    'compressor',
     'rest_framework',
     'sorl.thumbnail',
     'social_django',
@@ -233,8 +234,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
@@ -245,3 +244,23 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'siteuser.CustomUser'
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)
+
+COMPRESS_ROOT = STATIC_ROOT
+COMPRESS_URL = STATIC_URL
+COMPRESS_PARSER = 'compressor.parser.HtmlParser'
+COMPRESS_ENABLED = config('COMPRESS_ENABLED')
+COMPRESS_OFFLINE = config('COMPRESS_OFFLINE')
+COMPRESS_OFFLINE_MANIFEST = 'compressor_manifest.json'
+COMPRESS_CSS_FILTERS = {
+    'css': ['compressor.filters.css_default.CssAbsoluteFilter'], 
+    'js': ['compressor.filters.jsmin.JSMinFilter']
+}
+COMPRESS_PRECOMPILERS = (
+    ('text/x-scss', 'django_libsass.SassCompiler'),
+)
