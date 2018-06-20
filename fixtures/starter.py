@@ -164,7 +164,7 @@ def songs_from_file():
             try:
                 author = Author.objects.get(first_name=first_name, last_name=last_name)
             except:
-                author = Author.objects.create(creator=choice(users), first_name=first_name, last_name=last_name, bio=about)
+                author = Author.objects.create(creator=choice(users), first_name=first_name, last_name=last_name, author_type=choice(AUTHORS) bio=about)
             authors.append(author)
 
         creator = choice(users)
