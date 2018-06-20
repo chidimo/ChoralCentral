@@ -18,6 +18,8 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError as VAE
+from django.views.decorators.cache import cache_page, cache_control
+from django.utils.decorators import method_decorator
 
 from django_addanother.views import CreatePopupMixin
 from pure_pagination.mixins import PaginationMixin
@@ -109,6 +111,7 @@ def song_like_view(request):
     context = {'msg' : msg, 'like_count' : song.like_count, 'title' : song.title}
     return JsonResponse(context)
 
+@method_decorator(cache_control(must_revalidate=True, max_age=60*60*24), name='dispatch')
 class SongIndex(PaginationMixin, generic.ListView):
     model = Song
     context_object_name = 'songs'
@@ -179,7 +182,7 @@ class SongEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     form_class = SongEditForm
     template_name = 'song/edit.html'
     success_message = "Song updated successfully"
-        
+
     def get_success_url(self):
         return reverse('siteuser:library', kwargs={'pk' : self.request.user.siteuser.pk, 'slug' : self.request.user.siteuser.slug})
 
@@ -202,7 +205,7 @@ class SongEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
 
         # map the old refrence to a new one
         if old_ref != new_ref:
-            redirect_url = Url301.objects.create(app_name="song", old_reference=old_ref, new_reference=new_ref)
+            Url301.objects.create(app_name="song", old_reference=old_ref, new_reference=new_ref)
 
         messages.success(self.request, "Song was successfully updated")
         return redirect(self.get_success_url())
@@ -210,7 +213,7 @@ class SongEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
 class SongDelete(generic.DeleteView):
     model = Song
     template_name = "song/song_delete.html"
-        
+
     def get_success_url(self):
         return reverse('siteuser:library', kwargs={'pk' : self.request.user.siteuser.pk, 'slug' : self.request.user.siteuser.slug})
 
