@@ -95,6 +95,7 @@ some
 1. Minified js files with <https://javascript-minifier.com>
 1. Compressed my custom css and js files using django-compressor
 1. Moved some render-blocking javascripts to the bottom of the `<body>` tag of my base template
+1. Compress bootstrap.min.css and choralcentral.min.css in that order (important)
 
 ## Resources
 
