@@ -282,8 +282,11 @@ def reader_view(request, pk, slug):
     song = Song.objects.get(pk=pk, slug=slug)
     context = {}
     context['song'] = song
-    # return render(request, template, context)
-    return render_to_pdf(request, template, context)
+    try:
+        return render_to_pdf(request, template, context)
+    except NameError:
+        print("Windows system")
+        return render(request, template, context)
 
 def share_song_by_mail(request, pk, slug):
     context = {}

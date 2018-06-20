@@ -4,48 +4,44 @@
         {% load song_ttags %}
         {% load static %}
         <title>ChoralCentral | {{ song.title }} pdf sheet</title>
-        <link rel='stylesheet' type='text/css' href="{% static 'css/reader_view.css' %}">
-        <link href="https://fonts.googleapis.com/css?family=Inconsolata:700" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
+        <link rel='stylesheet' type='text/css' href="{% static 'css/reader_view.min.css' %}">
     </head>
 
     <body>
-        <h2>
-            <a href="http://www.choralcentral.net/">ChoralCentral</a> |
-            <span class='song-title'><a href="{{ song.get_absolute_uri }}">{{ song.title }}</a></span>
-        </h2>
-        <div class='heading'>
-            <p class='creator'>
-                by <a href="{% url 'siteuser:library' song.creator.pk song.creator.slug %}">{{ song.creator.screen_name }}</a>
-            </h6>
-            <hr>
-        </div>
+        <h2><a href="https://www.choralcentral.net/home/">ChoralCentral</a> | <a href="{{ song.get_absolute_uri }}">{{ song.title }}</a></h2>
+        <hr>
 
         <div class='about'>
             <div class="column-1">
-                <h6>For: {{ song.voicing }}</h6>
-                <h6>Tempo: {{ song.tempo }}</h6>
-                <h6>Performed: {{ song.tempo_text }}</h6>
-                <h6>Timing: {{ song.bpm }}/{{ song.divisions }}</h6>
-                <h6>Scripture: {{ song.scripture_reference }}</h6>
+                <h6><span class="about-headers">Added by:</span> <a href="{{ song.creator.get_absolute_uri}}">{{ song.creator.screen_name }}</a></h6>
+                <h6><span class="about-headers">Ocassion:</span> {{ song.ocassion|title }}</h6>
+                <h6><span class="about-headers">Genre:</span> {{ song.genre|title }}</h6>
+                <h6><span class="about-headers">For:</span> {{ song.voicing|upper }}</h6>
+                <h6><span class="about-headers">Tempo:</span> {{ song.tempo }}</h6>
+                <h6><span class="about-headers">Performed:</span> {{ song.tempo_text }}</h6>
+                <h6><span class="about-headers">Timing:</span> {{ song.bpm }}/{{ song.divisions }}</h6>
             </div>
 
             <div class="column-2">
-                <h6>Language: {{ song.language|upper }}</h6>
-                <h6>Seasons: {% for season in song.seasons.all %}
-                                {{ season }}{% if not forloop.last %},{% endif %}
-                            {% endfor %}
+                <h6><span class="about-headers">Scripture:</span> {{ song.scripture_reference }}</h6>
+                <h6><span class="about-headers">Language:</span> {{ song.language|title }}</h6>
+                <h6><span class="about-headers">Seasons:</span> 
+                    {% for season in song.seasons.all %}
+                        {{ season|title }}{% if not forloop.last %},{% endif %}
+                    {% endfor %}
                 </h6>
-                <h6>Massparts: {% for masspart in song.mass_parts.all %}
-                                {{ masspart }}{% if not forloop.last %},{% endif %}
-                            {% endfor %}
+                <h6><span class="about-headers">Massparts:</span> 
+                    {% for masspart in song.mass_parts.all %}
+                        {{ masspart|title }}{% if not forloop.last %},{% endif %}
+                    {% endfor %}
                 </h6>
 
-                <h6>Authors: {% for author in song.authors.all %}
-                                {{ author }}{% if not forloop.last %},{% endif %}
-                            {% endfor %}
+                <h6><span class="about-headers">Authors:</span> 
+                    {% for author in song.authors.all %}
+                        {{ author }}{% if not forloop.last %},{% endif %}
+                    {% endfor %}
                 </h6>
-                <h6>Composed: {{ song.year }}</h6>
+                <h6><span class="about-headers">Composed:</span> {{ song.year }}</h6>
             </div>
         </div>
 
@@ -54,7 +50,6 @@
             <h4>Lyrics</h4>
             {{ song.lyrics|markdown_format }}
         </div>
-
         <div id="pageFooter"></div>
     </body>
 </html>

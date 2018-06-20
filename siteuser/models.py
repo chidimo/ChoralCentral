@@ -106,7 +106,10 @@ class SiteUser(TimeStampedModel):
         return self.screen_name
 
     def get_absolute_url(self):
-        return reverse('siteuser:library', args=[str(self.id), str(self.slug)])
+        return reverse('siteuser:library', kwargs={'pk' : self.pk, 'slug' : self.slug})
+
+    def get_absolute_uri(self):
+        return "https://www.choralcentral.net" + reverse('siteuser:library', kwargs={'pk' : self.pk, 'slug' : self.slug})
 
     def get_user_success_url(self):
         return reverse()

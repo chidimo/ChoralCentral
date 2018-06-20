@@ -64,7 +64,7 @@
             <div class="row">
 
                 <div class="col-sm-12">
-                    <span class="h6 float-left">creator</span>
+                    <span class="h6 float-left">Added by</span>
                     <span class="h6 float-right"><a href="{% url 'siteuser:library' song.creator.pk song.creator.slug %}">{{ song.creator.screen_name }}</a></span>
                 </div>
                 <div class="col-sm-12">
@@ -106,7 +106,7 @@
                 </div>
                 <div class="col-sm-12">
                     <span class="h6 float-left">Language</span>
-                    <span class="h6 float-right">{{ song.language|upper }}</span>
+                    <span class="h6 float-right">{{ song.language|title }}</span>
                 </div>
                 <div class="col-sm-12">
                     <span class="h6 float-left">Seasons</span>

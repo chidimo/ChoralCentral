@@ -89,6 +89,13 @@ some
 1. django-compressor. For windows, needs install Visual C++ build tools
 1. django-robots
 
+## Optimizing my page
+
+1. Minified css files with <https://cssminifier.com>
+1. Minified js files with <https://javascript-minifier.com>
+1. Compressed my custom css and js files using django-compressor
+1. Moved some render-blocking javascripts to the bottom of the `<body>` tag of my base template
+
 ## Resources
 
 1. mysql grant privilege

@@ -18,12 +18,15 @@ from drb.api.urls import drb_api_urls
 
 from .import views
 
+from song.views import SongIndex
+
 sitemaps = {
     "posts" : PostSiteMap,
     "songs" : SongSiteMap,
 }
 
 urlpatterns = [
+    path('home/', SongIndex.as_view()),
     path("", include('song.urls')),
     path("admin/", admin.site.urls),
     path("author/", include('author.urls')),

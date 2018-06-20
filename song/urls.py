@@ -20,6 +20,7 @@ urlpatterns += [
 ]
 
 urlpatterns += [
+    # path('home/', views.SongIndex.as_view(), name="home"),
     path('', views.SongIndex.as_view(), name="index"),
     path("new-song/", views.NewSong.as_view(), name="new"),
     path("edit-song/<int:pk>/<slug:slug>/", views.SongEdit.as_view(), name="edit"),

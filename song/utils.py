@@ -44,7 +44,6 @@ def check_user_quota(func):
     return check_and_call
 import os
 
-
 try:
     from weasyprint import HTML
 except:
