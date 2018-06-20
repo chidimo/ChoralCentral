@@ -29,9 +29,16 @@
         <script type="text/template" id="hit-template">
             <div class="list-songs container">
                 <h4><a href="{{ get_absolute_url }}">{{{ _highlightResult.title.value }}}</a></h4>
-                <p>{{{ _highlightResult.all_authors.value }}}</p>
-                <p>{{{ _highlightResult.genre.value }}}</p>
-                <p>{{{ _highlightResult.ocassion.value }}}</p>
+
+                <div class="row">
+                    <div class="col-sm-12 song-index-meta">
+                        <span class="song-meta float-left">
+                            <span class="btn btn-sm btn-primary icon-buttons text-voicing">{{{ _highlightResult.all_authors.value }}}</span>
+                            <span class="btn btn-sm btn-primary icon-buttons text-genre">{{{ _highlightResult.genre.value }}}</span>
+                            <span class="btn btn-sm btn-primary icon-buttons text-ocassion">{{{ _highlightResult.ocassion.value }}}</span>
+                        </span>
+                    </div>
+                </div>
                 <p>{{{ _highlightResult.lyrics.value }}}</p>
             </div>
         </script>
