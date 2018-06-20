@@ -10,6 +10,7 @@ from django.contrib.sitemaps import views as sitemapviews
 
 from blog.sitemaps import PostSiteMap
 from song.sitemaps import SongSiteMap
+from author.sitemaps import AuthorSiteMap
 
 from blog.api.urls import blog_api_urls
 from siteuser.api.urls import user_api_urls
@@ -23,6 +24,7 @@ from song.views import SongIndex
 sitemaps = {
     "posts" : PostSiteMap,
     "songs" : SongSiteMap,
+    "authors" : AuthorSiteMap,
 }
 
 urlpatterns = [
