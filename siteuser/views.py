@@ -162,7 +162,7 @@ class SiteUserComments(PaginationMixin, generic.ListView):
     model = Comment
     context_object_name = 'user_comments'
     template_name = "siteuser/comments.html"
-    paginate_by = 25
+    paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super(SiteUserComments, self).get_context_data(**kwargs)

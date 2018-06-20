@@ -36,7 +36,7 @@ class FilterRequests(PaginationMixin, generic.ListView):
     model = Request
     context_object_name = "requests"
     template_name = "request/index.html"
-    paginate_by = 25
+    paginate_by = 20
 
     def get_queryset(self):
         status = self.request.GET["status"]
@@ -46,7 +46,7 @@ class RequestIndex(PaginationMixin, generic.ListView):
     model = Request
     context_object_name = "requests"
     template_name = "request/index.html"
-    paginate_by = 25
+    paginate_by = 20
 
 class RequestDetail(generic.DetailView):
     model = Request
@@ -79,7 +79,7 @@ class ReplyIndex(PaginationMixin, generic.ListView):
     model = Reply
     context_object_name = "replys"
     template_name = "request/reply_index.html"
-    paginate_by = 25
+    paginate_by = 20
 
 @login_required
 def accept_reply(request, request_pk, song_pk):

@@ -104,7 +104,7 @@ class PostIndex(PaginationMixin, generic.ListView):
     model = Post
     context_object_name = 'posts'
     template_name = "blog/index.html"
-    paginate_by = 25
+    paginate_by = 20
 
     def get_queryset(self):
         return Post.objects.select_related('song', 'creator').filter(publish=True)
@@ -118,7 +118,7 @@ class PostDetail(PaginationMixin, generic.ListView):
     model = Post
     template_name = "blog/detail.html"
     context_object_name = "comments"
-    paginate_by = 25
+    paginate_by = 20
 
     def get_queryset(self):
         post = Post.objects.get(pk=self.kwargs.get("pk", None))

@@ -38,7 +38,7 @@ class CommentaryByChapter(PaginationMixin, generic.ListView):
     model = CommentaryText
     template_name = "drb/commentary_index.html"
     context_object_name = "commentaries"
-    paginate_by = 25
+    paginate_by = 20
 
 class CommentaryTextDetail(generic.DetailView):
     model = CommentaryText

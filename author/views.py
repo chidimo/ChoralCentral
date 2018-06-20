@@ -24,7 +24,7 @@ class AuthorIndex(PaginationMixin, generic.ListView):
     model = Author
     context_object_name = 'authors'
     template_name = "author/index.html"
-    paginate_by = 25
+    paginate_by = 20
 
     def get_queryset(self):
         return Author.objects.annotate(Count("song__publish")).order_by("-song__publish__count")

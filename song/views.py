@@ -73,7 +73,7 @@ class InstantSong(PaginationMixin, generic.ListView):
     model = Song
     context_object_name = 'songs'
     template_name = 'song/instant_song.html'
-    paginate_by = 25
+    paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -113,7 +113,7 @@ class SongIndex(PaginationMixin, generic.ListView):
     model = Song
     context_object_name = 'songs'
     template_name = 'song/index.html'
-    paginate_by = 25
+    paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super(SongIndex, self).get_context_data(**kwargs)
@@ -225,7 +225,7 @@ class FilterSongs(PaginationMixin, SuccessMessageMixin, generic.ListView):
     model = Song
     template_name = "song/index.html"
     context_object_name = "songs"
-    paginate_by = 25
+    paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super(FilterSongs, self).get_context_data(**kwargs)
