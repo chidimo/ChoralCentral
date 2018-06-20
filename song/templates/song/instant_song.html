@@ -3,7 +3,7 @@
 {% block introduction %}{% endblock introduction %}
 
 {% load static %}
-{% load blog_ttags %}
+{% load song_ttags %}
 
 {% block content_content %}
     <div class="row search-input-box">
@@ -27,10 +27,11 @@
 <script src="//cdn.jsdelivr.net/hogan.js/3.0.2/hogan.min.js"></script>
     {% verbatim %}
         <script type="text/template" id="hit-template">
-            <div class="list-songs">
-                <h3><a href="{{ get_absolute_url }}">{{{ _highlightResult.title.value }}}</a></h3>
+            <div class="list-songs container">
+                <h4><a href="{{ get_absolute_url }}">{{{ _highlightResult.title.value }}}</a></h4>
                 <p>{{{ _highlightResult.all_authors.value }}}</p>
                 <p>{{{ _highlightResult.genre.value }}}</p>
+                <p>{{{ _highlightResult.genre.ocassion }}}</p>
                 <p>{{{ _highlightResult.lyrics.value }}}</p>
             </div>
         </script>

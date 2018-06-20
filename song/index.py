@@ -1,17 +1,17 @@
 from algoliasearch_django import AlgoliaIndex
 
 class SongIndex(AlgoliaIndex):
-    algolia_indexable = 'algolia_indexable' # index only published songs
+    should_index = 'algolia_index_this' # index only published songs
     fields = (
-        "get_absolute_url", "title", "lyrics", "genre", "all_authors",
+        "get_absolute_url", "title", "lyrics", "genre", "ocassion", "all_authors",
         )
 
     settings = {
         'searchableAttributes' : [
-            "title", "lyrics", "genre", "all_authors",
+            "title", "lyrics", "genre", "ocassion", "all_authors",
             ],
 
-        'attributesForFaceting' : ["title", "all_authors", "genre"],
+        'attributesForFaceting' : ["title", "all_authors", "genre", "ocassion"],
 
         'queryType': 'prefixAll',
         'highlightPreTag': '<mark>',

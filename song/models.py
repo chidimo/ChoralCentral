@@ -156,7 +156,7 @@ class Song(TimeStampedModel):
         names = ["{} {}".format(author.first_name, author.last_name) for author in self.authors.all()]
         return ", ".join(names)
 
-    def algolia_indexable(self):
+    def algolia_index_this(self):
         """Set which objects are indexed by Algolia"""
         return self.publish
 
