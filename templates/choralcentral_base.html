@@ -157,9 +157,11 @@
                     <a href="{% url 'douay-rheims:bible_index' %}" class="btn btn-secondary">Douay-Rheims bible</a>
                 </p>
 
-                <a href="{% url 'siteuser:new' %}" class="btn btn-primary join-campaign">
-                    Join {{ user_count }} plus people celebrating over {{ song_count }} songs in {{ lang_count }} languages and {{ voice_count }} voices
-                </a>
+                <p class="my-0">
+                	<a href="{% url 'siteuser:new' %}" class="btn btn-primary join-campaign">
+	                    Join us celebrate over {{ song_count }} songs in {{ lang_count }} languages and {{ voice_count }} voices
+	                </a>
+                </p>
             </div>
         </section>
         {% endif %}
