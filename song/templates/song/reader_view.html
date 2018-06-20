@@ -38,7 +38,7 @@
 
                 <h6><span class="about-headers">Authors:</span> 
                     {% for author in song.authors.all %}
-                        {{ author }}{% if not forloop.last %},{% endif %}
+                    <a href="{{ author.get_absolute_uri }}">{{ author }}</a>{% if not forloop.last %},{% endif %}
                     {% endfor %}
                 </h6>
                 <h6><span class="about-headers">Composed:</span> {{ song.year }}</h6>
