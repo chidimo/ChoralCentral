@@ -29,10 +29,6 @@
 			<link rel="stylesheet" href="{% static 'css/choralcentral.min.css' %}">
 		{% endcompress %}
 
-		{% compress js file %}
-			<script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
-			<script type="text/javascript" src="{% static 'js/choralcentral.min.js' %}"></script>
-		{% endcompress %}
 	</head>
 
 	{% block body %}
@@ -275,5 +271,8 @@
 		<script defer src='https://www.google.com/recaptcha/api.js'></script>
 
 		<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+
+		<script defer type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+		<script defer type="text/javascript" src="{% static 'js/choralcentral.min.js' %}"></script>
 	</body>
 </html>
