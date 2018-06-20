@@ -60,7 +60,6 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    path('google364c8377c791cdf3.html', views.google_webmaster_verify),
     path('contact/', views.contact),
     path('api/', views.api),
     path('help-page/', views.help_page),

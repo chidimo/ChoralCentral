@@ -1,15 +1,15 @@
 {% block footer_bottom %}
 <div class="fine-prints text-center">
     <div class="container">
-            <p><a href="/home/"></i> Home</a>
+            <p><a href="/home/"><i class="fa fa-home" title="Home"></i> Home</a>
+                &#124;
+                <a href="/sitemap.xml" title="Sitemap"><i class="fas fa-sitemap"></i> Sitemap</a>
                 &#124;
                 <a href="/terms-of-use/" title="Terms of use">Terms</a>
                 &#124;
                 <a href="/privacy-policy/" title="Privacy policy">Privacy</a>
                 &#124;
                 <a href="/contact/" title="Contact owner/developer">Contact</a>
-                &#124;
-                <a href="/sitemap.xml" title="Sitemap">Sitemap</a>
                 &#124;
                 <a href="/help-page/" title="FAQ and Help">FAQ and Help</a>
                 {% if user.is_admin %}
