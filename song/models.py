@@ -66,6 +66,7 @@ class MassPart(TimeStampedModel):
         ("gloria", "Gloria"),
         ("acclamation", "Acclamation"),
         ("offertory", "Offertory"),
+        ("amen", "Amen"),
         ("communion", "Communion"),
         ("sanctus", "Sanctus"),
         ("agnus dei", "Agnus Dei"),
