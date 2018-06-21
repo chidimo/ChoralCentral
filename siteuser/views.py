@@ -65,7 +65,7 @@ class SiteUserIndex(PaginationMixin, generic.ListView):
     paginate_by = 20
 
     def get_queryset(self):
-        siteusers = SiteUser.objects.prefetch_related('roles').exclude(user__email='default@user.net')
+        siteusers = SiteUser.objects.prefetch_related('roles').exclude(user__email='unknown@user.net')
         return_val = []
         for siteuser in siteusers:
             stats = {}
