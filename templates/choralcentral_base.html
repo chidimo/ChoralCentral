@@ -28,7 +28,7 @@
 			<link rel="stylesheet" href="{% static 'css/choralcentral.min.css' %}">
 		{% endcompress %}
 
-		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script defer src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	</head>
 
 	{% block body %}
@@ -266,7 +266,6 @@
 		<script src="//cdn.jsdelivr.net/hogan.js/3.0.2/hogan.min.js"></script>
 		<script defer src='https://www.google.com/recaptcha/api.js'></script>
 		<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-
 
 		<script type="text/javascript" src="{% static 'js/choralcentral.min.js' %}"></script>
 		<!--Django add another, for view popup. These two below lines must follow one another in the same order.-->
