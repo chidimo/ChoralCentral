@@ -175,7 +175,7 @@ class SiteUserComments(PaginationMixin, generic.ListView):
 
 @check_recaptcha
 def new_siteuser(request):
-    template = "siteuser/new.html"
+    template = "siteuser/new_siteuser.html"
     if request.method == 'POST':
         form = SiteUserRegistrationForm(request.POST)
         if form.is_valid() and request.recaptcha_is_valid:

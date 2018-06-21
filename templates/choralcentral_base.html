@@ -22,12 +22,13 @@
 		{% load thumbnail %}
 
 		<link rel="shortcut icon" type="image/png" href="{% static 'favicons/favicon.ico' %}"/>
-		{{ form.media }}
 
 		{% compress css file %}
 			<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 			<link rel="stylesheet" href="{% static 'css/choralcentral.min.css' %}">
 		{% endcompress %}
+
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 
 	</head>
 
@@ -258,21 +259,20 @@
 
 		<!--These javascript files are render-blocking and are not needed to render initial page, so I moved them here-->
 
-		<script defer src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-		<script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-		<script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
-		<script defer src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
-
-		<script defer src="//cdn.jsdelivr.net/g/algoliasearch,algoliasearch.helper"></script>
-
-		<script defer src="//cdn.jsdelivr.net/hogan.js/3.0.2/hogan.min.js"></script>
-
+		<script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+		<script src="//cdn.jsdelivr.net/g/algoliasearch,algoliasearch.helper"></script>
+		<script src="//cdn.jsdelivr.net/hogan.js/3.0.2/hogan.min.js"></script>
 		<script defer src='https://www.google.com/recaptcha/api.js'></script>
-
 		<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 
-		<!--<script defer type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>-->
-		<script defer type="text/javascript" src="{% static 'js/choralcentral.min.js' %}"></script>
+
+		<script type="text/javascript" src="{% static 'js/choralcentral.min.js' %}"></script>
+		<!--Django add another, for view popup. These two below lines must follow one another in the same order.-->
+		<script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+		{{ form.media }}
+
 	</body>
 </html>
