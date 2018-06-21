@@ -40,6 +40,10 @@
 1. Update site certificate
 1. Optimize queries
 
+## Optimizing database performance
+
+1. Use of `select_related` and `prefetch_related`
+
 ## To do
 
 1. Permissions
