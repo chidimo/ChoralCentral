@@ -49,9 +49,9 @@ class EditLanguageForm(forms.ModelForm):
         fields = ("name",)
 
 class SongShareForm(forms.Form):
-    receiving_emails = forms.CharField(
+    receiving_email = forms.EmailField(
         required=True,
-        widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Enter at most 3 emails, separated by commas."}),
+        widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Enter email address of the receiver."}),
     )
     name = forms.CharField(
         required=False,

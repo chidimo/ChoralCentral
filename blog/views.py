@@ -269,30 +269,25 @@ def share_post_by_mail(request, pk, slug):
     if request.method == 'GET':
         post = Post.objects.get(pk=pk, slug=slug)
 
-        subject = '{} was shared with you from ChoralCentral'.format(post.title)
+        subject = 'Post share from ChoralCentral'.format(post.title)
         context['post'] = post
         context['post_link'] = request.build_absolute_uri(post.get_absolute_url())
 
         form = PostShareForm(request.GET)
         if form.is_valid():
             form = form.cleaned_data
-            receiving_emails = form['receiving_emails']
+            receiving_email = form['receiving_email']
             name = form['name']
             context['name'] = name
 
-            email_list = [each.strip() for each in receiving_emails.split(',')]
-            if len(email_list) > 3:
-                messages.error(request, "Too many emails. Please enter at most 5 email addresses.")
-                return redirect(post.get_absolute_url())
+            text_email = render_to_string("blog/share_post_by_mail.txt", context)
+            html_email = render_to_string("blog/share_post_by_mail.html", context)
 
-            for email in email_list:
-                text_email = render_to_string("blog/share_post_by_mail.txt", context)
-                html_email = render_to_string("blog/share_post_by_mail.html", context)
-
-                msg = EmailMultiAlternatives(subject, text_email, from_email, [email])
-                msg.attach_alternative(html_email, "text/html")
-                msg.send()
-
-    success_msg = "Post was successfully sent to {}".format(", ".join(email_list))
-    messages.success(request, success_msg)
-    return redirect(post.get_absolute_url())
+            msg = EmailMultiAlternatives(subject, text_email, from_email, [receiving_email])
+            msg.attach_alternative(html_email, "text/html")
+            msg.send()
+            messages.success(request, "Post was successfully sent to {}".format(receiving_email))
+            return redirect(post.get_absolute_url())
+        else:
+            messages.error(request, "Invalid email.")
+            return redirect(post.get_absolute_url())

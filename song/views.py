@@ -293,48 +293,30 @@ def reader_view(request, pk, slug):
 
 def share_song_by_mail(request, pk, slug):
     context = {}
-
     from_email = settings.EMAIL_HOST_USER
 
     if request.method == 'GET':
         song = Song.objects.get(pk=pk, slug=slug)
 
-        subject = '{} was shared with you from ChoralCentral'.format(song.title)
+        subject = 'Song share from ChoralCentral'
         context['song'] = song
         context['song_link'] = request.build_absolute_uri(song.get_absolute_url())
 
         form = SongShareForm(request.GET)
         if form.is_valid():
             form = form.cleaned_data
-            receiving_emails = form['receiving_emails']
+            receiving_email = form['receiving_email'].strip()
             name = form['name']
             context['name'] = name
 
-            email_list = [email.strip() for email in receiving_emails.split(',')]
-            if len(email_list) > 3:
-                messages.error(request, "Too many emails. Please enter at most 5 email addresses.")
-                return redirect(song.get_absolute_url())
-            good_emails = []
-            bad_emails = []
-
-            for email in email_list:
-                try:
-                    validate_email(email)
-                    good_emails.append(email)
-                except VAE:
-                    bad_emails.append(email)
-
-            if good_emails:
-                for email in good_emails: # avoid mail address bundling in inbox.
-                    text_email = render_to_string("song/share_song_by_mail.txt", context)
-                    html_email = render_to_string("song/share_song_by_mail.html", context)
-                    msg = EmailMultiAlternatives(subject, text_email, from_email, [email])
-                    msg.attach_alternative(html_email, "text/html")
-                    msg.send()
-                success_msg = "Song was successfully sent to {}".format(", ".join(good_emails))
-                messages.success(request, success_msg)
-            if bad_emails:
-                error_msg = "Song was not sent to the following invalid emails: {}".format(", ".join(bad_emails))
-                messages.error(request, error_msg)
-
+            text_email = render_to_string("song/share_song_by_mail.txt", context)
+            html_email = render_to_string("song/share_song_by_mail.html", context)
+            msg = EmailMultiAlternatives(subject, text_email, from_email, [receiving_email])
+            msg.attach_alternative(html_email, "text/html")
+            msg.send()
+            messages.success(request, "Song was successfully sent to {}".format(receiving_email))
             return redirect(song.get_absolute_url())
+
+        else:
+            messages.error(request, "Invalid email.")
+            return redirect(song.get_absolute_url()) 

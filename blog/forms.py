@@ -6,8 +6,8 @@ from song.models import Song
 from .models import Post, Comment
 
 class PostShareForm(forms.Form):
-    receiving_emails = forms.CharField(
-        widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Enter at most 3 emails, separated by commas."}),
+    receiving_emails = forms.EmailField(
+        widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Enter receiver's email address"}),
     )
     name = forms.CharField(
         required=False,
