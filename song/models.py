@@ -114,4 +114,4 @@ class Song(TimeStampedModel):
         if self.pk:
             self.like_count = self.likes.count()
         self.tempo_text = get_tempo_text(self.tempo)
-        return super(Song, self).save(*args, **kwargs)
+        return super().save(*args, **kwargs)

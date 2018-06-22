@@ -31,7 +31,7 @@ class UserCreationForm(forms.ModelForm):
         return password2
 
     def save(self, commit=True):
-        user = super(UserCreationForm, self).save(commit=False)
+        user = super().save(commit=False)
         user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
@@ -117,7 +117,7 @@ class PassWordGetterForm(forms.Form):
         widget=forms.PasswordInput(attrs={'class':'form-control', 'type':'password', "placeholder" : "Enter password"}))
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
-        super(PassWordGetterForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def clean(self):
         password = self.cleaned_data['password']

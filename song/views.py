@@ -119,7 +119,7 @@ class SongIndex(PaginationMixin, generic.ListView):
     paginate_by = 20
 
     def get_context_data(self, **kwargs):
-        context = super(SongIndex, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['form'] = SongFilterForm()
         return context
 
@@ -231,7 +231,7 @@ class FilterSongs(PaginationMixin, SuccessMessageMixin, generic.ListView):
     paginate_by = 20
 
     def get_context_data(self, **kwargs):
-        context = super(FilterSongs, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['form'] = SongFilterForm()
         context['is_filter'] = "yes"
         return context

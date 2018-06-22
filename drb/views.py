@@ -17,7 +17,7 @@ class BookChapters(generic.ListView):
         return Book.objects.get(pk=self.kwargs['pk'], slug=self.kwargs['slug'])
 
     def get_context_data(self, **kwargs):
-        context = super(BookChapters, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['book'] = self.book()
         return context
 

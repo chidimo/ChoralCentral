@@ -80,7 +80,7 @@ class NewPost(LoginRequiredMixin, generic.CreateView):
         self.object.like_count = self.object.likes.count()
         self.object.save(update_fields=['like_count'])
         messages.success(self.request, "Post created successfully !")
-        return super(NewPost, self).form_valid(form)
+        return super().form_valid(form)
 
 class NewPostFromSong(LoginRequiredMixin, generic.CreateView):
     form_class = NewPostFromSongForm
@@ -98,7 +98,7 @@ class NewPostFromSong(LoginRequiredMixin, generic.CreateView):
         self.object.like_count = self.object.likes.count()
         self.object.save(update_fields=['like_count'])
         messages.success(self.request, "Post successfully created for song {}".format(self.object.song.title))
-        return super(NewPostFromSong, self).form_valid(form)
+        return super().form_valid(form)
 
 class PostIndex(PaginationMixin, generic.ListView):
     model = Post
@@ -110,7 +110,7 @@ class PostIndex(PaginationMixin, generic.ListView):
         return Post.objects.select_related('song', 'creator').filter(publish=True)
 
     def get_context_data(self):
-        context = super(PostIndex, self).get_context_data()
+        context = super().get_context_data()
         context['share_form'] = PostShareForm()
         return context
 
@@ -125,7 +125,7 @@ class PostDetail(PaginationMixin, generic.ListView):
         return Comment.objects.filter(post=post)
 
     def get_context_data(self, **kwargs):
-        context = super(PostDetail, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context["comment_form"] = NewCommentForm()
         context['post_share_form'] = PostShareForm()
         context["post"] = Post.objects.get(pk=self.kwargs.get("pk", None))
@@ -228,10 +228,10 @@ class NewComment(LoginRequiredMixin, generic.CreateView):
         self.object.like_count = self.object.likes.count()
         self.object.save(update_fields=['like_count'])
         messages.success(self.request, "Comment successfully created !")
-        return super(NewComment, self).form_valid(form)
+        return super().form_valid(form)
 
     def get_context_data(self, *args):
-        context = super(NewComment, self).get_context_data(*args)
+        context = super().get_context_data(*args)
         context['post'] = Post.objects.get(pk=self.kwargs['pk'])
         return context
 
@@ -241,7 +241,7 @@ class ReplyComment(LoginRequiredMixin, generic.CreateView):
     template_name = "blog/comment_reply.html"
 
     def get_form_kwargs(self):
-        kwargs = super(ReplyComment, self).get_form_kwargs()
+        kwargs = super().get_form_kwargs()
         kwargs['comment_pk'] = self.kwargs['comment_pk']
         return kwargs
 
@@ -255,7 +255,7 @@ class ReplyComment(LoginRequiredMixin, generic.CreateView):
         self.object.like_count = self.object.likes.count()
         self.object.save(update_fields=['like_count'])
         messages.success(self.request, "Reply successfully created.")
-        return super(ReplyComment, self).form_valid(form)
+        return super().form_valid(form)
 
 class DeleteComment(LoginRequiredMixin, generic.DeleteView):
     model = Comment

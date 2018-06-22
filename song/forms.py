@@ -133,7 +133,7 @@ class NewSongForm(forms.ModelForm):
                 reverse_lazy('song:new_language'))}
 
     def __init__(self, *args, **kwargs):
-        super(NewSongForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['language'].initial = Language.objects.get(name='english')
         self.fields['voicing'].initial = Voicing.objects.get(name='satb')
         self.fields['ocassion'].initial = "na"

@@ -52,7 +52,7 @@ class ReplyCreateFromRequestForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         pk = kwargs.pop("pk")
         user = kwargs.pop("user")
-        super(ReplyCreateFromRequestForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         if pk:
             self.fields["request"].queryset = Request.objects.filter(pk=pk)
             self.fields["request"].initial = Request.objects.get(pk=pk)

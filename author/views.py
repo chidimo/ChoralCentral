@@ -38,7 +38,7 @@ class AuthorDetail(LoginRequiredMixin, generic.ListView):
         return Author.objects.get(pk=self.kwargs['pk'], slug=self.kwargs['slug'])
 
     def get_context_data(self, **kwargs):
-        context = super(AuthorDetail, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['author'] = self.author()
         return context
 
@@ -52,7 +52,7 @@ class NewAuthor(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, gener
 
     def form_valid(self, form):
         form.instance.creator = self.request.user.siteuser
-        return super(NewAuthor, self).form_valid(form)
+        return super().form_valid(form)
 
 class AuthorEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     model = Author

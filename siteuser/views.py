@@ -90,7 +90,7 @@ class SiteUserCommonRoles(PaginationMixin, generic.ListView):
         return SiteUser.objects.filter(roles__name__in=[role])
 
     def get_context_data(self, *args):
-        context = super(SiteUserCommonRoles, self).get_context_data(*args)
+        context = super().get_context_data(*args)
         context['role'] = self.kwargs['role']
         return context
 
@@ -109,7 +109,7 @@ class SiteUserCommonLocation(PaginationMixin, generic.ListView):
         return SiteUser.objects.filter(query)
 
     def get_context_data(self, *args):
-        context = super(SiteUserCommonLocation, self).get_context_data(*args)
+        context = super().get_context_data(*args)
         context['location'] = self.kwargs['location']
         return context
 
@@ -124,7 +124,7 @@ class SongStarGivers(PaginationMixin, generic.ListView):
         return song.likes.all()
 
     def get_context_data(self, *args):
-        context = super(SongStarGivers, self).get_context_data(*args)
+        context = super().get_context_data(*args)
         context['song'] = Song.objects.get(pk=self.kwargs['pk'])
         return context
 
@@ -139,7 +139,7 @@ class PostStarGivers(PaginationMixin, generic.ListView):
         return post.likes.all()
 
     def get_context_data(self, *args):
-        context = super(PostStarGivers, self).get_context_data(*args)
+        context = super().get_context_data(*args)
         context['post'] = Post.objects.get(pk=self.kwargs['pk'], slug=self.kwargs['slug'])
         return context
 
@@ -154,7 +154,7 @@ class CommentLoveBirds(PaginationMixin, generic.ListView):
         return comment.likes.all()
 
     def get_context_data(self, *args):
-        context = super(CommentLoveBirds, self).get_context_data(*args)
+        context = super().get_context_data(*args)
         context['comment'] = Comment.objects.get(pk=self.kwargs['pk'])
         return context
 
@@ -165,7 +165,7 @@ class SiteUserComments(PaginationMixin, generic.ListView):
     paginate_by = 20
 
     def get_context_data(self, **kwargs):
-        context = super(SiteUserComments, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context["siteuser"] = SiteUser.objects.get(pk=self.kwargs.get("pk", None))
         return context
 
@@ -350,7 +350,7 @@ class SiteUserLibrary(LoginRequiredMixin, generic.DetailView):
     template_name = "siteuser/library.html"
 
     def get_context_data(self, **kwargs):
-        context = super(SiteUserLibrary, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         pk = self.kwargs.get('pk', None)
         slug = self.kwargs.get('slug', None)
         siteuser = SiteUser.objects.get(pk=pk, slug=slug)

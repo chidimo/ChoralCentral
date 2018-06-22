@@ -54,7 +54,7 @@ class RequestDetail(generic.DetailView):
     template_name = "request/detail.html"
 
     def get_context_data(self, *args, **kwargs):
-        context = super(RequestDetail, self).get_context_data(*args, **kwargs)
+        context = super().get_context_data(*args, **kwargs)
         context['answer'] = 'abc'
         return context
 
@@ -64,7 +64,7 @@ class ReplyAddFromRequest(LoginRequiredMixin, generic.CreateView):
     template_name = "request/reply_new_from_request.html"
 
     def get_form_kwargs(self):
-        kwargs = super(ReplyAddFromRequest, self).get_form_kwargs()
+        kwargs = super().get_form_kwargs()
         kwargs["pk"] = self.kwargs.get("pk", None)
         kwargs["user"] = self.request.user
         return kwargs
@@ -73,7 +73,7 @@ class ReplyAddFromRequest(LoginRequiredMixin, generic.CreateView):
         form.instance.creator = self.request.user.siteuser
         self.object = form.save()
         messages.success(self.request, "Reply successfully added to {}".format(self.object))
-        return super(ReplyAddFromRequest, self).form_valid(form)
+        return super().form_valid(form)
 
 class ReplyIndex(PaginationMixin, generic.ListView):
     model = Reply

@@ -102,7 +102,7 @@ class CommentReplyForm(forms.ModelForm):
         }
     def __init__(self, *args, **kwargs):
         comment_pk = kwargs.pop("comment_pk")
-        super(CommentReplyForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         comment = Comment.objects.get(pk=comment_pk)
         data = '<quote>'+ comment.comment + '</quote>'
         self.fields['comment'].initial = data

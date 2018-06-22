@@ -43,7 +43,7 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     form_class = NewScoreForm
 
     def get_context_data(self, *args, **kwargs):
-        context = super(NewScore, self).get_context_data(*args, **kwargs)
+        context = super().get_context_data(*args, **kwargs)
         context['song'] = Song.objects.get(pk=self.kwargs.get('pk', None))
         return context
 
@@ -88,7 +88,7 @@ class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
     form_class = NewMidiForm
 
     def get_context_data(self, *args, **kwargs):
-        context = super(NewMidi, self).get_context_data(*args, **kwargs)
+        context = super().get_context_data(*args, **kwargs)
         context['song'] = Song.objects.get(pk=self.kwargs.get('pk', None))
         return context
 
@@ -153,7 +153,7 @@ class NewVideoLink(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, ge
         return self.kwargs.get('pk', None)
 
     def get_context_data(self, *args, **kwargs):
-        context = super(NewVideoLink, self).get_context_data(*args, **kwargs)
+        context = super().get_context_data(*args, **kwargs)
         context['song'] = Song.objects.get(pk=self.kwargs.get('pk', None))
         return context
 
@@ -186,4 +186,4 @@ class NewVideoLink(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, ge
         self.object.youtube_views = youtube_views
         self.object.thumbnail_url = default_thumbnail_url
         self.object.save()
-        return super(NewVideoLink, self).form_valid(form)
+        return super().form_valid(form)
