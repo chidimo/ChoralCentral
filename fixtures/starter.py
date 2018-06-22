@@ -16,6 +16,7 @@ from pywebber import LoremPysum
 from author.models import Author
 from siteuser.models import SiteUser, Role
 from song.models import Voicing, Language, Season, MassPart, Song
+from song.forms import GENRES, OCASSIONS
 from song_media.models import VocalPart, ScoreNotation, Score, Midi, VideoLink
 from blog.models import Post, Comment
 from request.models import Request, Reply
@@ -27,11 +28,11 @@ LANGUAGE = ["english", "igbo", "bini", "ibibio", "hausa", "chinese", "yoruba", "
 VOICING = ["solo", "satb", "ssab", "sab", "ssabtt", "atb", "sattb"]
 SCRIPTURE = ["Psalm 91", "Proverbs 23", "Matthew 11"]
 LOCATIONS = ['lagos', 'abuja', 'benin', 'benin city', 'abu dhabi', 'dubai']
-SEASONS = ["ordinary time", "advent", "christmas", "lent", "easter", "pentecost", "na", "any"]
 NOTES = ["solfa", "staff", "other", "lead"]
 VOICE_PARTS = ['soprano', 'alto', 'tenor', 'bass']
 NOTATIONS = ['solfa', 'staff', 'solfa + staff']
 
+SEASONS = ["ordinary time", "advent", "christmas", "lent", "easter", "pentecost", "any", "na"]
 PARTS = ["entrance", "kyrie", "gloria", "acclammation", "offertory", "communion", "sanctus",
     "agnus dei", "recession", "general", "na"]
 
@@ -146,8 +147,6 @@ def songs_from_file():
     users = SiteUser.objects.all()
     voices = Voicing.objects.all()
     languages = Language.objects.all()
-    ocassions = [each[0] for each in Song.OCASSION_CHOICES[1:]]
-    genres = [each[0] for each in Song.GENRE_CHOICES[1:]]
 
     fn = os.path.join(settings.BASE_DIR, 'fixtures', 'data_hymnal.json')
     with open(fn, "r+") as rh:
@@ -173,8 +172,8 @@ def songs_from_file():
         try:
             song = Song.objects.get(title=title)
         except:
-            song = Song.objects.create(creator=creator, title=title, publish=choice([True, False]), genre=choice(genres),
-                ocassion=choice(ocassions), lyrics=song.get("lyrics", "No lyrics"), scripture_reference=choice(SCRIPTURE),
+            song = Song.objects.create(creator=creator, title=title, publish=choice([True, False]), genre=choice(GENRES),
+                ocassion=choice(OCASSIONS), lyrics=song.get("lyrics", "No lyrics"), scripture_reference=choice(SCRIPTURE),
                 tempo=randint(45, 250), bpm=randint(4, 8), divisions=randint(4, 8), voicing=choice(voices), language=choice(languages),
                 like_count=randint(1, 100))
         for each in authors:

@@ -38,18 +38,7 @@ class Language(TimeStampedModel):
         return reverse('song:index')
 
 class Season(TimeStampedModel):
-    SEASON_CHOICES = (
-        ("", "Select a season"),
-        ("ordinary time", "Ordinary Time"),
-        ("advent", "Advent"),
-        ("christmas", "Christmas"),
-        ("lent", "Lent"),
-        ("easter", "Easter"),
-        ("pentecost", "Pentecost"),
-        ('any', "Any"),
-        ("na", "NA"),
-    )
-    name = models.CharField(max_length=15, choices=SEASON_CHOICES, unique=True)
+    name = models.CharField(max_length=15, unique=True)
     about = models.CharField(max_length=200, blank=True, null=True)
 
     def get_absolute_url(self):
@@ -59,21 +48,7 @@ class Season(TimeStampedModel):
         return self.name
 
 class MassPart(TimeStampedModel):
-    PART_CHOICES = (
-        ("", "Select a mass part"),
-        ("entrance", "Entrance"),
-        ("kyrie", "Kyrie"),
-        ("gloria", "Gloria"),
-        ("acclamation", "Acclamation"),
-        ("offertory", "Offertory"),
-        ("amen", "Amen"),
-        ("communion", "Communion"),
-        ("sanctus", "Sanctus"),
-        ("agnus dei", "Agnus Dei"),
-        ("recesssion", "Recesssion"),
-        ("na", "NA")
-    )
-    name = models.CharField(max_length=15, choices=PART_CHOICES, unique=True)
+    name = models.CharField(max_length=15, unique=True)
     about = models.CharField(max_length=200, blank=True, null=True)
 
     def get_absolute_url(self):
@@ -83,32 +58,6 @@ class MassPart(TimeStampedModel):
         return self.name
 
 class Song(TimeStampedModel):
-    OCASSION_CHOICES = (
-        ("", "Select ocassion"),
-        ("sacred", "Sacred"),
-        ("liturgical", "Liturgical"),
-        ("secular", "Secular"),
-        ("na", "NA"),
-    )
-    GENRE_CHOICES = (
-        ("", "Select a genre"),
-        ("anthem", "Anthem"),
-        ("carol", "Carol"),
-        ("chorus", "Chorus"),
-        ("folk music", "Folk music"),
-        ("gregorian chant", "Gregorian Chant"),
-        ("hymn", "Hymn"),
-        ("litany", "Litany"),
-        ("madrigral", "Madrigal"),
-        ("march", "March"),
-        ("mass", "Mass"),
-        ("motet", "Motet"),
-        ("popular music", "Popular music"),
-        ("psalm", "Psalm"),
-        ("requiem", "Requiem"),
-        ("sequence", "Sequence"),
-        ("na", "NA"),
-    )
     creator         = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
     voicing         = models.ForeignKey(Voicing, on_delete=models.CASCADE)
     language        = models.ForeignKey(Language, on_delete=models.CASCADE)
@@ -131,8 +80,8 @@ class Song(TimeStampedModel):
     likes           = models.ManyToManyField(SiteUser, related_name='song_likes')
     like_count      = models.IntegerField(default=0)
 
-    ocassion        = models.CharField(max_length=30, choices=OCASSION_CHOICES)
-    genre           = models.CharField(max_length=30, choices=GENRE_CHOICES)
+    ocassion        = models.CharField(max_length=30)
+    genre           = models.CharField(max_length=30)
 
     authors         = models.ManyToManyField(Author)
     seasons         = models.ManyToManyField(Season)

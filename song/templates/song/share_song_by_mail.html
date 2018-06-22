@@ -29,13 +29,13 @@
             </div>
 
             <div class="column-2">
-                <p>Language: {{ song.language|upper }}</p>
+                <p>Language: {{ song.language|title }}</p>
                 <p>Seasons: {% for season in song.seasons.all %}
-                                {{ season }}{% if not forloop.last %},{% endif %}
+                                {{ season|title }}{% if not forloop.last %},{% endif %}
                             {% endfor %}
                 </p>
                 <p>Massparts: {% for masspart in song.mass_parts.all %}
-                                {{ masspart }}{% if not forloop.last %},{% endif %}
+                                {{ masspart|title }}{% if not forloop.last %},{% endif %}
                             {% endfor %}
                 </p>
 

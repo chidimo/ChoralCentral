@@ -8,6 +8,14 @@ from django_addanother.widgets import AddAnotherWidgetWrapper
 
 from .models import Voicing, Language, Season, MassPart, Song
 
+OCASSIONS = ["sacred", "liturgical", "secular", "na"]
+GENRES = [
+    "anthem", "carol", "chorus", "folk music", "gregorian chant", "hymn", "litany", "madrigral", 
+    "march", "mass", "motet", "popular music", "psalm", "requiem", "sequence", "na"]
+
+GENRE_CHOICES = [(each, each.title()) for each in GENRES]
+OCASSION_CHOICES = [(each, each.title()) for each in OCASSIONS]
+
 class NewVoicingForm(forms.ModelForm):
     class Meta:
         model = Voicing
@@ -69,7 +77,7 @@ class SongFilterForm(forms.Form):
         widget=forms.Select(attrs={"class" : "form-control"}))
 
     genre = forms.ChoiceField(
-        choices = (Song.GENRE_CHOICES),
+        choices = (GENRE_CHOICES),
         required=False,
         widget=forms.Select(attrs={"class" : "form-control"}))
 
@@ -97,8 +105,8 @@ class NewSongForm(forms.ModelForm):
 
         widgets = {
             "title" : forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : "Song title (100 characters max)"}),
-            "genre" : forms.Select(attrs={'class' : 'form-control'}),
-            "ocassion" : forms.Select(attrs={'class' : 'form-control'}),
+            "genre" : forms.Select(choices=GENRE_CHOICES, attrs={'class' : 'form-control'}),
+            "ocassion" : forms.Select(choices=OCASSION_CHOICES, attrs={'class' : 'form-control'}),
             "year" : forms.DateInput(
                 attrs={'class' : 'form-control', 'placeholder' : "Composition year in <YYYY> format (Optional)"}),
             "lyrics" : forms.Textarea(
