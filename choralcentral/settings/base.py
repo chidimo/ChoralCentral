@@ -14,12 +14,6 @@ from decouple import config, Csv
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-RAVEN_CONFIG = {
-    'dsn': 'https://b6ecc578313140618b41d13175ed6152:88a27d13befa4ff69cd2fcec01bd6769@sentry.io/1222272',
-    # If you are using git, you can also automatically configure the release based on the git info.
-    'release': raven.fetch_git_sha(BASE_DIR),
-}
-
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 ROOT_URLCONF = 'choralcentral.urls'
 SECRET_KEY = config('SECRET_KEY')
@@ -132,7 +126,6 @@ THIRD_PARTY_APPS = [
     'django_extensions',
     'algoliasearch_django',
     'django_social_share',
-    'raven.contrib.django.raven_compat',
     'rules.apps.AutodiscoverRulesConfig',
 ]
 
@@ -162,7 +155,6 @@ SOCIAL_AUTH_PIPELINE = (
 )
 
 MIDDLEWARE = [
-    'raven.contrib.django.raven_compat.middleware.Sentry404CatchMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
