@@ -383,7 +383,6 @@ def account_management(request):
     context['siteuser'] = siteuser
     context['user_songs'] = Song.objects.filter(creator=siteuser)
     context['user_posts'] = Post.objects.filter(creator=siteuser)
-    context['user_badges'] = Badge.objects.filter(siteuser=siteuser)
     context['inbox_messages'] = Message.objects.filter(receiver=siteuser)
     context['outbox_messages'] = Message.objects.filter(creator=siteuser)
     context['total_likes'] = 400

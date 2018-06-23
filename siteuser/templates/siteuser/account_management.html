@@ -16,24 +16,6 @@
 
 <div class='container siteuser-index-heading'>
     <div class='row'>
-        <h5 class='float-left'>Badges</h5>
-    </div>
-</div>
-
-<div class="container">
-    <div class="row">
-        {% for badge in user_badges %}
-            <div class="col-lg-2 col-md-3 col-xs-4 col-sm-4 py-2 my-2 siteuser-index-details">
-                    <i class="fas fa-circle" style="color:{{ badge.color }}"></i>
-                <p class="text-left" title="{{ badge.description }}"><a href="{% url 'siteuser:library' siteuser.pk siteuser.slug %}">{{ badge.name|title }}</a></p>
-            </div>
-        {% endfor %}
-    </div>
-</div>
-
-
-<div class='container siteuser-index-heading'>
-    <div class='row'>
         <h5 class='float-left'>Messages</h5>
     </div>
 </div>
@@ -107,20 +89,6 @@
                 {% endfor %}
                 </tbody>
             </table>
-        </div>
-    </div>
-</div>
-
-<div class='container siteuser-index-heading'>
-    <div class='row'>
-        <h5 class='float-left'>Groups</h5>
-    </div>
-</div>
-
-<div class="container song-about">
-    <div class="row">
-        <div class="col-sm-12">
-            <p>Coming soon</p>
         </div>
     </div>
 </div>

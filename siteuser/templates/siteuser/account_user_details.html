@@ -20,7 +20,7 @@
             <p class="text-secondary my-1"><a href="{% url 'siteuser:siteusers_common_location' siteuser.location %}" title='See others in {{ siteuser.location }}'>{{ siteuser.location }}</a></p>
             <p class="text-secondary my-1">
                 {% if user == siteuser.user %}
-                    <a href="mailto:{{ user.siteuser.user.email }}" title="{{ siteuser.user.email }}">email</a>
+                    <a href="mailto:{{ user.siteuser.user.email }}" title="{{ siteuser.user.email }}">{{ siteuser.user.email }}</a>
                 {% else %}
                     <a href="{% url 'siteuser:new_message' siteuser.pk siteuser.slug %}" title="Message {{ siteuser }}">message</a>
                 {% endif %}
