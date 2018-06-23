@@ -46,14 +46,13 @@
 
 ## To do
 
+1. Optimize for search engine
 1. Permissions
 1. Management command to clean thumbnails with no score (trigger when score is deleted)
 1. Users contribute lyrics and author bio
-1. Optimize for search engine
 1. Write as many tests as possible. Test management commands and song_media app
 1. Suggest names to user based on similarity with already present names. Create it if they're sure its not the same person.
 1. Consolidate multiple variation of same author name (Handel, Haendel)
-1. Send weekly summary of activities upon subscription
 1. Download user comments
 1. Display comment replies properly
 1. Revisit request status
@@ -82,6 +81,10 @@
 1. First song, first post, first request, first midi, first score, enthusiast, helping hand
 
 git+https://github.com/immensity/django-likes.git
+
+## Groups
+
+Add later
 
 ## Optimize for search engine
 

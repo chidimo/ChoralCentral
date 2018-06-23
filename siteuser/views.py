@@ -32,9 +32,9 @@ from author.models import Author
 from song_media.models import Score, Midi, VideoLink
 
 from .utils import check_recaptcha
-from .models import SiteUser, Role, SiteUserGroup, GroupMembership, Badge, Message#, GroupJoinRequest
+from .models import SiteUser, Role, Message
 from .forms import (PassWordGetterForm, EmailAndPassWordGetterForm,
-    SiteUserRegistrationForm, SiteUserEditForm, NewRoleForm, NewSiteUserGroupForm, NewMessageForm, ReplyMessageForm
+    SiteUserEditForm, NewRoleForm, NewMessageForm, ReplyMessageForm
 )
 
 CustomUser = get_user_model()
@@ -143,7 +143,7 @@ class PostStarGivers(PaginationMixin, generic.ListView):
         context['post'] = Post.objects.get(pk=self.kwargs['pk'], slug=self.kwargs['slug'])
         return context
 
-class CommentLoveBirds(PaginationMixin, generic.ListView):
+class CommentStarrers(PaginationMixin, generic.ListView):
     model = SiteUser
     context_object_name = 'siteuser_list'
     template_name = 'siteuser/stargazers_comment.html'
@@ -308,27 +308,6 @@ class RoleIndex(generic.ListView):
     model = Role
     context_object_name = 'role_list'
     template_name = 'siteuser/role_index.html'
-
-class GroupIndex(generic.ListView):
-    model = SiteUserGroup
-    template_name = 'siteuser/group_index.html'
-    context_object_name = 'groups'
-
-class NewSiteUserGroup(LoginRequiredMixin, generic.CreateView):
-    form_class = NewSiteUserGroupForm
-    template_name = 'siteuser/new_siteuser_group.html'
-
-    def form_valid(self, form):
-        self.object = form.save()
-
-        GroupMembership(siteuser=self.request.user.siteuser, group=self.object, is_group_admin=True)
-        messages.success(self.request, "Your group was created successfully.")
-        return redirect(self.get_absolute_url())
-
-class GroupDetail(LoginRequiredMixin, generic.DetailView):
-    model = SiteUserGroup
-    template_name = 'siteuser/group_detail.html'
-    context_object_name = 'group'
 
 def admin_media_index(request):
     user = request.user
