@@ -10,10 +10,10 @@
 
 {% block content_content %}
 
-<div class='container-fluid song-detail-header'>
+<div class='container-fluid song-detail-header' itemscope itemtype="https://schema.org/CreativeWork">
     <div class='row'>
         <div class='col-sm-12 head-title'>
-            <span class='float-left'>{{ song.title|title }}</span>
+            <span class='float-left' itemprop="name">{{ song.title|title }}</span>
 
             <span class='float-right song-icons'>
                 
@@ -73,7 +73,7 @@
                 </div>
                 <div class="col-sm-12">
                     <span class="h6 float-left">Genre</span>
-                    <span class="h6 float-right">{{ song.genre|title }}</span>
+                    <span class="h6 float-right" itemprop="genre">{{ song.genre|title }}</span>
                 </div>
 
                 <div class="col-sm-12">
@@ -128,7 +128,7 @@
 
                 <div class="col-sm-12">
                     <span class="h6 float-left">Authors</span>
-                    <span class="h6 float-right">
+                    <span class="h6 float-right" itemprop="author">
                         {% for author in song.authors.all %}
                         <a href="{% url 'author:detail' author.pk author.slug %}">{{ author }}</a>{% if not forloop.last %},{% endif %}
                         {% endfor %}
