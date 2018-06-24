@@ -17,6 +17,9 @@ GENRE_CHOICES = [(each, each.title()) for each in GENRES]
 GENRE_CHOICES.insert(0, ("", "Select genre"))
 OCASSION_CHOICES = [(each, each.title()) for each in OCASSIONS]
 
+class SongLikeForm(forms.Form):
+    pass
+
 class NewVoicingForm(forms.ModelForm):
     class Meta:
         model = Voicing

@@ -4,7 +4,7 @@ from django.contrib.sitemaps import Sitemap
 from .models import Author
 
 class AuthorSiteMap(Sitemap):
-    changefreq = "monthly"
+    changefreq = "weekly"
     priority = 0.5
 
     def items(self):

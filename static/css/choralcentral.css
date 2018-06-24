@@ -836,7 +836,7 @@ a.likes-button-style, span.icon-buttons {
     margin: 2px 1px;
 }
 
-a.likes-button-style {
+a.likes-button-style, button.likes-button-style {
     color: #007bff;
     text-decoration: none;
 }
@@ -925,7 +925,7 @@ tbody tr:nth-child(odd) {
 
 /*BUTTON ICONS*/
 
-a.icon-buttons, span.icon-buttons {
+a.icon-buttons, span.icon-buttons, button.icon-buttons {
   float: left;
   padding: 3px 10px;
   font-size: 13px;

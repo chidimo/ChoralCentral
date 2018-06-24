@@ -1,14 +1,14 @@
 """Sitemap"""
 
 from django.contrib.sitemaps import Sitemap
-from .models import Song
+from .models import Request
 
-class SongSiteMap(Sitemap):
+class RequestSiteMap(Sitemap):
     changefreq = "weekly"
-    priority = 1.0
+    priority = 0.5
 
     def items(self):
-        return Song.objects.filter(publish=True)
+        return Request.objects.all()
 
     def lastmod(self, obj):
         return obj.modified

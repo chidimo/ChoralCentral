@@ -20,6 +20,7 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError as VAE
 from django.views.decorators.cache import cache_page, cache_control
 from django.utils.decorators import method_decorator
+from django.contrib.contenttypes.models import ContentType
 
 from django_addanother.views import CreatePopupMixin
 from pure_pagination.mixins import PaginationMixin
@@ -34,7 +35,7 @@ from redirect301.models import Url301
 from .predicates import CONTEXT_MESSAGES
 
 from .models import Song, Language#, Voicing, Season, MassPart, Song
-from .forms import (
+from .forms import (SongLikeForm,
     NewVoicingForm, EditVoicingForm, NewLanguageForm,
     SongShareForm, NewSongForm, SongEditForm, SongFilterForm
 )
@@ -92,6 +93,47 @@ def auto_song(request):
     context['indexName'] = get_adapter(Song).index_name
     return render(request, 'song/autocomplete_song.html', context)
 
+@login_required
+def like_object(request, pk, app_label, model):
+    """Generic form for liking objects"""
+    siteuser = request.user.siteuser
+    if request.method == 'POST':
+        obj_ct = ContentType.objects.get(app_label=app_label, model=model)
+        obj = obj_ct.get_object_for_this_type(pk=pk)
+
+        if obj.likes.filter(pk=siteuser.pk).exists():
+            obj.likes.remove(siteuser)
+            msg = "You unstarred this song.\n"
+        else:
+            obj.likes.add(siteuser)
+            msg = "You starred this song.\n"
+
+        like_count = obj.likes.count()
+        obj.save(update_fields=['like_count'])
+        return redirect(reverse('song:detail', kwargs={'pk' : song.pk, 'slug' : song.slug}))
+
+def add_or_remove_siteuser(request, model_object, siteuser):
+    if model_object.likes.filter(pk=siteuser.pk).exists():
+        model_object.likes.remove(siteuser)
+        messages.error(request, "You unstarred this item.")
+        msg = "You unstarred this song.\n"
+    else:
+        model_object.likes.add(siteuser)
+        msg = "You starred this song.\n"
+        messages.success(request, "You starred this item")
+    like_count = model_object.likes.count()
+    model_object.save(update_fields=['like_count'])
+
+@login_required
+def like_song(request, pk):
+    siteuser = request.user.siteuser
+    if request.method == 'POST':
+        song_ct = ContentType.objects.get(app_label='song', model='song')
+        song = song_ct.get_object_for_this_type(pk=pk)
+
+        add_or_remove_siteuser(request, song, siteuser)
+        return redirect(reverse('song:detail', kwargs={'pk' : song.pk, 'slug' : song.slug}))
+
 @require_POST
 @login_required
 def song_like_view(request):
@@ -138,6 +180,7 @@ def song_detail_view(request, pk, slug):
     template = 'song/detail.html'
     context = {}
     context['share_form'] = SongShareForm()
+    context['song_like_form'] = SongLikeForm()
     try:
         song = Song.objects.select_related('voicing', 'language', 'creator').get(pk=pk, slug=slug)
         context['song'] = song

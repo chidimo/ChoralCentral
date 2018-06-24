@@ -1,0 +1,14 @@
+{% if user.is_authenticated %}
+<form action="{% url 'song:like_song' song.pk %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ song_like_form }}
+    {% if request.user.siteuser in song.likes.all %}
+        <button class="btn btn-sm btn-primary likes-button-style icon-buttons" type="submit" value="Unstar">Unstar</button>
+    {% else %}
+        <button class="btn btn-sm btn-primary likes-button-style icon-buttons" type="submit" value="Star">Star</button>
+    {% endif %}
+</form>
+{% else %}
+<a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:login' %}">Login to give a star</a>
+{% endif %}
+
