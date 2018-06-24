@@ -1,5 +1,7 @@
+
+<span class="btn btn-sm btn-primary icon-buttons" title="">{{ song.like_count }} Star{{ song.like_count|pluralize }}</span>
 {% if user.is_authenticated %}
-<form action="{% url 'song:like_song' song.pk %}" method="post" enctype="multipart/form-data">
+<form class="object-like-form" action="{% url 'song:like_song' song.pk %}?next={{ request.path }}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ song_like_form }}
     {% if request.user.siteuser in song.likes.all %}
@@ -9,6 +11,79 @@
     {% endif %}
 </form>
 {% else %}
-<a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:login' %}">Login to give a star</a>
+    <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:login' %}">Login to give a star</a>
 {% endif %}
 
+<script>
+    // using jQuery
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    var csrftoken = getCookie('csrftoken');
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+</script>
+
+
+{% block like_javascript %}
+<script>
+    
+    $(document).ready(function() {
+    
+        var $likeForm = $('.object-like-form');        
+
+        $likeForm.submit(function(event) {
+            event.preventDefault()
+            var $form = $(this)
+            var $objUrl = $likeForm.attr('action')
+            var $songDetail = window.location.href
+            var $likeDestination = window.location.origin + $objUrl
+
+            $.ajax({
+                method: 'POST',
+                url : $likeDestination,
+                data : $form.serialize(),
+                //dataType : 'json',
+                success : function(response) {
+                    alert(response.message)
+                    console.log(response)
+                    console.log("Success")
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    //console.log(jqXHR)
+                    //console.log(textStatus)
+                    //console.log(errorThrown)
+                    console.log('Mission failed.')
+                },
+            })
+
+        })
+    
+    });
+</script>
+
+{% endblock like_javascript %}

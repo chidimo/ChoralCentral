@@ -1,11 +1,12 @@
 """Views"""
 
+import json
 import operator
 from functools import reduce
 
 from django.conf import settings
 from django.db.models import Q
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse, HttpResponse,  HttpResponseRedirect
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.shortcuts import render, redirect, reverse
@@ -115,24 +116,25 @@ def like_object(request, pk, app_label, model):
 def add_or_remove_siteuser(request, model_object, siteuser):
     if model_object.likes.filter(pk=siteuser.pk).exists():
         model_object.likes.remove(siteuser)
-        messages.error(request, "You unstarred this item.")
         msg = "You unstarred this song.\n"
     else:
         model_object.likes.add(siteuser)
         msg = "You starred this song.\n"
-        messages.success(request, "You starred this item")
+
     like_count = model_object.likes.count()
     model_object.save(update_fields=['like_count'])
+    response = {'message' : msg}
+    return JsonResponse(response)
 
 @login_required
 def like_song(request, pk):
-    siteuser = request.user.siteuser
-    if request.method == 'POST':
+    if request.is_ajax():
+        siteuser = request.user.siteuser
         song_ct = ContentType.objects.get(app_label='song', model='song')
         song = song_ct.get_object_for_this_type(pk=pk)
-
         add_or_remove_siteuser(request, song, siteuser)
-        return redirect(reverse('song:detail', kwargs={'pk' : song.pk, 'slug' : song.slug}))
+        if 'next' in request.GET:
+            return redirect(request.GET['next'])
 
 @require_POST
 @login_required

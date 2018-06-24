@@ -13,11 +13,14 @@ class LanguageAdmin(admin.ModelAdmin):
 class SongAdmin(admin.ModelAdmin):
     list_display = (
         "title", "get_absolute_uri", "youtube_playlist_id", "drive_folder_id", "like_count", "all_authors", "all_seasons", "all_masspart",
-        "creator", "publish", "voicing", "scripture_reference", "language")
+        "creator", "publish", "voicing", "scripture_reference", "language", 'likers')
     list_filter = ("seasons", "mass_parts")
     list_editable = ("publish", )
     filter_horizontal = ("seasons", "mass_parts")
     search_fields = ("title", )
+
+    def likers(self, obj):
+        return ", ".join([each.screen_name for each in obj.likes.all()])
 
     def all_seasons(self, obj):
         return ", ".join(["{}".format(season.name) for season in obj.seasons.all()])

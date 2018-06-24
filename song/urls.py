@@ -33,7 +33,7 @@ urlpatterns += [
 
 urlpatterns += [
     # path("like/", views.song_like_view, name='like_song'),
-    path("like/<int:pk>/", views.like_song, name='like_song'),
+    path("like-song/<int:pk>/", views.like_song, name='like_song'),
     path("reader/<int:pk>/<slug:slug>/", views.reader_view, name='reader_view'),
     path("share-email/<int:pk>/<slug:slug>/", views.share_song_by_mail, name='share_song_by_mail'),
 ]
