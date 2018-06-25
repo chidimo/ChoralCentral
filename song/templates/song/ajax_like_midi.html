@@ -36,14 +36,17 @@
     });
     // End get csrftoken
 
-    $(document).ready(function() {
+    $(document).ready(
+        function() {
 
-        $likeTrigger = $('.trigger-like');
+        $likeScore = $('.like-midi-{{ forloop.counter}}-on-click');
 
-        $likeTrigger.click(function() {
+        $likeScore.click(function() {
             var pk = $(this).attr('data-pk');
             var model = $(this).attr('data-model');
             var appLabel = $(this).attr('data-app-label');
+            console.log("model", model)
+            console.log("app label", appLabel)
 
             $.ajax({
                 method : 'POST',
@@ -57,8 +60,10 @@
                     if (data.success) {
                         alert(data.message)
                         console.log(data)
+                        var midiStatBox = '#midiDetailBox{{ forloop.counter }}'
+                        console.log(midiStatBox)
                         // reload title box. This doesn't refresh the like button though.
-                        $('#songTitleBox').load(window.location.href + " #songTitleBox>*","")
+                        $(midiStatBox).load(window.location.href +" " + midiStatBox + ">*","")
                     }
                 },
                 error : function(jqXHR, textStatus, errorThrown) {
