@@ -4,7 +4,6 @@
     // Get csrftoken value in form
     // using jQuery
     function getCookie(name) {
-        console.log("Cookie function")
         var cookieValue = null;
         if (document.cookie && document.cookie !== '') {
             var cookies = document.cookie.split(';');
@@ -21,7 +20,6 @@
     }
 
     var csrftoken = getCookie('csrftoken');
-    console.log(csrftoken)
 
     function csrfSafeMethod(method) {
         // these HTTP methods do not require CSRF protection
@@ -57,7 +55,6 @@
                 success : function(data, textStatus, jqXHR){
                     if (data.success) {
                         alert(data.message)
-                        console.log(data)
                         // reload title box. This doesn't refresh the like button though.
                         $('#songTitleBox').load(window.location.href + " #songTitleBox>*","")
                     }

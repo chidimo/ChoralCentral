@@ -1,4 +1,3 @@
-
 <script type="text/javascript">
 
     // Get csrftoken value in form
@@ -37,17 +36,19 @@
     $(document).ready(
         function() {
 
-        $likeScore = $('.like-score-{{ forloop.counter}}-on-click');
+        $likeSong = $('.like-song-{{ forloop.counter }}-on-click');
+        var url = $('#songLink{{ forloop.counter }}').attr('href')
 
-        $likeScore.click(function() {
+        console.log(url)
+
+        $likeSong.click(function() {
             var pk = $(this).attr('data-pk');
             var model = $(this).attr('data-model');
             var appLabel = $(this).attr('data-app-label');
 
             $.ajax({
                 method : 'POST',
-                url : window.location.href,
-                
+                url : url,
                 data : {
                     pk : pk, model : model, app_label : appLabel,
                     csrfmiddlewaretoken : csrftoken
@@ -55,16 +56,17 @@
                 success : function(data, textStatus, jqXHR){
                     if (data.success) {
                         alert(data.message)
-                        var scoreStatBox = '#scoreDetailBox{{ forloop.counter }}'
-                        // reload title box. This doesn't refresh the like button itself.
-                        $(scoreStatBox).load(window.location.href +" " + scoreStatBox + ">*","")
+                        var statBox = '#songContainer{{ forloop.counter }}'
+                        console.log(statBox)
+                        // reload title box. This doesn't refresh the like button though.
+                        $(statBox).load(window.location.href + " " + statBox + ">*","")
+                        console.log("Finish loading")
                     }
                 },
                 error : function(jqXHR, textStatus, errorThrown) {
                     console.log('Failure to like')
                 }
             })
-
         })    
-        });
+    });
 </script>

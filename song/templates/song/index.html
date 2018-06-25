@@ -16,38 +16,47 @@
 {% block content_content %}
 
 {% for song in songs %}
-<div class="list-songs container" itemscope itemtype="https://schema.org/CreativeWork">
-    <div class="row">
-        <div class="col-sm-12">
-            {% if not song.publish %}
-            <h4><a class="text-danger" href="{% url 'song:detail' song.pk song.slug %}">{{ song.title|title }}</a></h4>
-            {% else %}
-            <h4><a href="{% url 'song:detail' song.pk song.slug %}" itemprop="name">{{ song.title|title }}</a></h4>
-            {% endif %}
+    <div class="list-songs container" itemscope itemtype="https://schema.org/CreativeWork">
+        <div class="row">
+            <div class="col-sm-12">
+                {% if not song.publish %}
+                    <h4><a class="text-danger" href="{% url 'song:detail' song.pk song.slug %}">{{ song.title|title }}</a></h4>
+                {% else %}
+                    <h4><a id="songLink{{ forloop.counter }}" href="{% url 'song:detail' song.pk song.slug %}" itemprop="name">{{ song.title|title }}</a></h4>
+                    {% include 'song/ajax_like_song_index.html' %}
+                {% endif %}
 
-            <div class="row">
-                <div class="col-sm-12 song-index-meta">
-                    <span class="song-meta float-left">
-                        <span class="btn btn-sm btn-primary icon-buttons text-ocassion" title="Ocassion: {{ song.ocassion|title }}">{{ song.ocassion|title }}</span>
-                        <span class="btn btn-sm btn-primary icon-buttons text-genre" title="Genre: {{ song.genre|title }}" itemprop="genre">{{ song.genre|title }}</span>
-                        <span class="btn btn-sm btn-primary icon-buttons text-voicing" title="Voicing: {{ song.voicing|upper }}">{{ song.voicing|upper }}</span>
-                        <span class="btn btn-sm btn-primary icon-buttons text-language" title="Language: {{ song.language|title }}" itemprop="inLanguage">{{ song.language|title }}</span>
-                        {% for masspart in song.mass_parts.all %}
-                            <span class="btn btn-sm btn-primary icon-buttons text-masspart" title="Masspart: {{ masspart|title }}">{{ masspart|title }}</span>
-                        {% endfor %}
-                        {% for season in song.seasons.all %}
-                            <span class="btn btn-sm btn-primary icon-buttons text-season" title="Season: {{ season|title }}">{{ season|title }}</span>
-                        {% endfor %}
-                    </span>
-                    <span class="float-right">
-                        <span class="btn btn-sm btn-primary icon-buttons" title="">{{ song.like_count }} Star{{ song.like_count|pluralize }}  </span>
-                        <a class="btn btn-sm btn-primary likes-button-style" href=""><i class="fas fa-star"></i> Star/Unstar</a>
-                    </span>
+                <div class="row">
+                    <div class="col-sm-12 song-index-meta">
+                        <span class="song-meta float-left">
+                            <span class="btn btn-sm btn-primary icon-buttons text-ocassion" title="Ocassion: {{ song.ocassion|title }}">{{ song.ocassion|title }}</span>
+                            <span class="btn btn-sm btn-primary icon-buttons text-genre" title="Genre: {{ song.genre|title }}" itemprop="genre">{{ song.genre|title }}</span>
+                            <span class="btn btn-sm btn-primary icon-buttons text-voicing" title="Voicing: {{ song.voicing|upper }}">{{ song.voicing|upper }}</span>
+                            <span class="btn btn-sm btn-primary icon-buttons text-language" title="Language: {{ song.language|title }}" itemprop="inLanguage">{{ song.language|title }}</span>
+                            {% for masspart in song.mass_parts.all %}
+                                <span class="btn btn-sm btn-primary icon-buttons text-masspart" title="Masspart: {{ masspart|title }}">{{ masspart|title }}</span>
+                            {% endfor %}
+                            {% for season in song.seasons.all %}
+                                <span class="btn btn-sm btn-primary icon-buttons text-season" title="Season: {{ season|title }}">{{ season|title }}</span>
+                            {% endfor %}
+                        </span>
+                        <span class="float-right" id="songContainer{{ forloop.counter }}">
+                            <span class="btn btn-sm btn-primary icon-buttons" title="">{{ song.like_count }} Star{{ song.like_count|pluralize }}  </span>
+                            {% if user.is_authenticated %}
+                                {% if request.user.siteuser in song.likes.all %}
+                                    <span class="btn btn-sm btn-primary star-icon-button like-song-{{ forloop.counter }}-on-click" data-pk="{{ song.pk }}" data-app-label="song" data-model="song">Unstar</span>
+                                {% else %}
+                                    <span class="btn btn-sm btn-primary star-icon-button like-song-{{ forloop.counter }}-on-click" data-pk="{{ song.pk }}" data-app-label="song" data-model="song">Star</span>
+                                {% endif %}
+                            {% else %}
+                                    <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:login' %}?next={{ request.path }}">Give a star</a>
+                            {% endif %}
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% empty %}
     <p>No songs to display</p>
 {% endfor %}

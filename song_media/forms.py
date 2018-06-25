@@ -25,7 +25,7 @@ class NewVocalPartForm(forms.ModelForm):
         name = self.cleaned_data.get("name", None)
         if VocalPart.objects.filter(name=name).exists():
             raise forms.ValidationError(_("{} already exists".format(name)))
-        return name
+        return name.lower()
 
 class NewScoreNotationForm(forms.ModelForm):
     class Meta:
@@ -41,7 +41,7 @@ class NewScoreNotationForm(forms.ModelForm):
         name = self.cleaned_data.get("name", None)
         if VocalPart.objects.filter(name=name).exists():
             raise forms.ValidationError(_("{} already exists".format(name)))
-        return name
+        return name.lower()
 
 class NewScoreForm(forms.ModelForm):
     class Meta:
