@@ -154,6 +154,7 @@
             event.preventDefault()
             
             var comment = $('#id_comment').val();
+            // $("input[name=csrfmiddlewaretoken]").val() get csrf_token from form
             console.log(comment);
             console.log(csrftoken);
 

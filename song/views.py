@@ -6,7 +6,7 @@ from functools import reduce
 
 from django.conf import settings
 from django.db.models import Q
-from django.http import JsonResponse, HttpResponse,  HttpResponseRedirect
+from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.shortcuts import render, redirect, reverse
@@ -94,80 +94,6 @@ def auto_song(request):
     context['indexName'] = get_adapter(Song).index_name
     return render(request, 'song/autocomplete_song.html', context)
 
-@login_required
-def like_object(request, pk, app_label, model):
-    """Generic form for liking objects"""
-    siteuser = request.user.siteuser
-    if request.method == 'POST':
-        obj_ct = ContentType.objects.get(app_label=app_label, model=model)
-        obj = obj_ct.get_object_for_this_type(pk=pk)
-
-        if obj.likes.filter(pk=siteuser.pk).exists():
-            obj.likes.remove(siteuser)
-            msg = "You unstarred this song.\n"
-        else:
-            obj.likes.add(siteuser)
-            msg = "You starred this song.\n"
-
-        like_count = obj.likes.count()
-        obj.save(update_fields=['like_count'])
-        return redirect(reverse('song:detail', kwargs={'pk' : song.pk, 'slug' : song.slug}))
-
-def add_or_remove_siteuser(request, model_object, siteuser):
-    if model_object.likes.filter(pk=siteuser.pk).exists():
-        model_object.likes.remove(siteuser)
-        msg = "You unstarred this song.\n"
-    else:
-        model_object.likes.add(siteuser)
-        msg = "You starred this song.\n"
-
-    like_count = model_object.likes.count()
-    model_object.save(update_fields=['like_count'])
-    response = {'message' : msg}
-    return JsonResponse(response)
-
-@login_required
-def like_song(request, pk):
-    if request.is_ajax():
-        siteuser = request.user.siteuser
-        song_ct = ContentType.objects.get(app_label='song', model='song')
-        song = song_ct.get_object_for_this_type(pk=pk)
-        add_or_remove_siteuser(request, song, siteuser)
-        return redirect(song.get_absolute_url())
-        if 'next' in request.GET:
-            print(request.GET['next'])
-            return redirect(request.GET['next'])
-
-@login_required
-def like_song_no_pk(request):
-    print("righ function")
-    if request.is_ajax():
-        pk = int(request.POST.get('pk', None))
-        siteuser = request.user.siteuser
-        song_ct = ContentType.objects.get(app_label='song', model='song')
-        song = song_ct.get_object_for_this_type(pk=pk)
-        add_or_remove_siteuser(request, song, siteuser)
-        # return redirect(song.get_absolute_url())
-
-@require_POST
-@login_required
-def song_like_view(request):
-    if request.method == 'POST':
-        siteuser = request.user.siteuser
-        pk = request.POST.get('pk', None)
-        song = Song.objects.get(pk=int(pk))
-
-        if song.likes.filter(pk=siteuser.pk).exists():
-            song.likes.remove(siteuser)
-            msg = "You unstarred this song.\n"
-        else:
-            song.likes.add(siteuser)
-            msg = "You starred this song.\n"
-    song.like_count = song.likes.count()
-    song.save(update_fields=['like_count'])
-    context = {'msg' : msg, 'like_count' : song.like_count, 'title' : song.title}
-    return JsonResponse(context)
-
 @method_decorator(cache_control(must_revalidate=True, max_age=60*60*24), name='dispatch')
 class SongIndex(PaginationMixin, generic.ListView):
     model = Song
@@ -191,11 +117,47 @@ def song_redirect_301_view(request, pk, slug):
     context['object'] = Song.objects.select_related('voicing', 'language', 'creator').get(pk=pk, slug=slug)
     return render(request, template, context)
 
+def star_or_unstar_object(siteuser, pk, app_label, model):
+    """
+    Generic function for starring objects
+
+    Parameters
+    ------------
+    app_label : str
+        Sent with ajax request
+    model_name : str
+        Sent with ajax request
+    """
+    # Get the object
+    obj_ct = ContentType.objects.get(app_label=app_label, model=model)
+    model_instance = obj_ct.get_object_for_this_type(pk=pk)
+
+    if model_instance.likes.filter(screen_name=siteuser.screen_name).exists():
+        model_instance.likes.remove(siteuser)
+        data = {'success' : True, 'message' : 'You unstarred this object'}
+    else:
+        model_instance.likes.add(siteuser)
+        data = {'success' : True, 'message' : 'You starred this object'}
+
+    like_count = model_instance.likes.count()
+    model_instance.save(update_fields=['like_count'])
+    return data
+
 def song_detail_view(request, pk, slug):
     template = 'song/detail.html'
     context = {}
     context['share_form'] = SongShareForm()
-    context['song_like_form'] = SongLikeForm()
+
+    # Handle stars via ajax
+    if request.method == 'POST':
+        if request.is_ajax():
+            pk  = int(request.POST.get('pk')) # need to send this since I have multiple like buttons on this page
+            model = request.POST.get('model')
+            app_label = request.POST.get('app_label')
+            siteuser = request.user.siteuser
+            data = star_or_unstar_object(siteuser, pk, app_label, model)
+            return JsonResponse(data)
+
     try:
         song = Song.objects.select_related('voicing', 'language', 'creator').get(pk=pk, slug=slug)
         context['song'] = song
