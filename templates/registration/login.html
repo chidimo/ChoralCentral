@@ -44,4 +44,16 @@
         </div>
     </div>
 </div>
+
+
+<script type="text/javascript" >
+    // add attributes to form input elements
+    $(document).ready(function(){
+        $("#id_username").attr('placeholder', '{{ form.username.label }}');
+        $("#id_username").attr('class', 'form-control');
+
+        $("#id_password").attr('placeholder', '{{ form.password.label }}');
+        $("#id_password").attr('class', 'form-control');
+    });
+</script>
 {% endblock body %}

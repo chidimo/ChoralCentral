@@ -12,15 +12,24 @@
 
 <div class='container-fluid song-detail-header' itemscope itemtype="https://schema.org/CreativeWork">
     <div class='row'>
-        <div class='col-sm-12 head-title'>
+        <div class='col-sm-12 head-title' id="songTitleBox">
             <span class='float-left' itemprop="name">{{ song.title|title }}</span>
 
             <span class='float-right song-icons'>
 
+                {% if user.is_authenticated %}
+                    {% if request.user.siteuser in song.likes.all %}
+                        <span class="btn btn-sm btn-primary star-icon-button trigger-like" data-pk="{{ song.pk }}" data-app-label="song" data-model="song">Unstar</span>
+                    {% else %}
+                        <span class="btn btn-sm btn-primary star-icon-button trigger-like" data-pk="{{ song.pk }}" data-app-label="song" data-model="song">Star</span>
+                    {% endif %}
+                {% else %}
+                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:login' %}?next={{ request.path }}">Login to give stars</a>
+                {% endif %}
+
                 {% include 'song/like_ajax.html' %}
                 
                 <span class="btn btn-sm btn-primary icon-buttons" title="">{{ song.like_count }} Star{{ song.like_count|pluralize }}</span>
-                <!-- <a class="btn btn-sm btn-primary likes-button-style" href=""><i class="fas fa-star"></i> Star/Unstar</a> -->
 
                 <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'blog:new_song' song.pk %}" title="Make a post about {{ song.title }}"><i class="fas fa-pencil-alt"></i></a>
                 <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song:reader_view' song.pk song.slug %}" title="Print {{ song.title }} in pdf format" target="_blank"><i class="fas fa-print"></i></a>

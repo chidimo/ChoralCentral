@@ -1,17 +1,4 @@
 
-
-{% if user.is_authenticated %}
-    {% if request.user.siteuser in song.likes.all %}
-        <span class="btn btn-sm btn-primary star-icon-button trigger-like" data-pk="{{ song.pk }}" data-app-label="song" data-model="song" href="">Unstar</span>
-    {% else %}
-        <span class="btn btn-sm btn-primary star-icon-button trigger-like" data-pk="{{ song.pk }}" data-app-label="song" data-model="song" href="">Star</span>
-    {% endif %}
-
-{% else %}
-    <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:login' %}">Login to give a star</a>
-{% endif %}
-
-
 <script type="text/javascript">
 
     // Get csrftoken value in form
@@ -69,6 +56,9 @@
                 success : function(data, textStatus, jqXHR){
                     if (data.success) {
                         alert(data.message)
+                        console.log(data)
+                        // reload title box. This doesn't refresh the like button though.
+                        $('#songTitleBox').load(window.location.href + " #songTitleBox>*","")
                     }
                 },
                 error : function(jqXHR, textStatus, errorThrown) {

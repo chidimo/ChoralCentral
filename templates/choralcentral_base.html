@@ -189,32 +189,6 @@
 
 		{% endblock body %}
 
-		<script type="text/javascript" >
-			// add attributes to form input elements
-			$(document).ready(function(){
-				$("#id_username").attr('placeholder', '{{ form.username.label }}');
-				$("#id_username").attr('class', 'form-control');
-
-				$("#id_password").attr('placeholder', '{{ form.password.label }}');
-				$("#id_password").attr('class', 'form-control');
-
-				$("#id_email").attr('class', 'form-control');
-				$("#id_email").attr('placeholder', '{{ form.email.label }}');
-
-				$("#id_old_password").attr('class', 'form-control');
-				$("#id_old_password").attr('placeholder', '{{ form.old_password.label }}');
-				$("#id_new_password1").attr('class', 'form-control');
-				$("#id_new_password1").attr('placeholder', '{{ form.new_password1.label }}');
-				$("#id_new_password2").attr('class', 'form-control');
-				$("#id_new_password2").attr('placeholder', '{{ form.new_password2.label }}');
-
-				$("#id_password1").attr('class', 'form-control');
-				// $("#id_password1").attr('placeholder', '{{ form.password1.label }}');
-				$("#id_password2").attr('class', 'form-control');
-				// $("#id_password2").attr('placeholder', '{{ form.password2.label }}');
-			});
-		</script>
-
 		<script>
 			/*
         // Add .active class to navigation menu item.
