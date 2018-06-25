@@ -134,10 +134,10 @@ def star_or_unstar_object(siteuser, pk, app_label, model):
 
     if model_instance.likes.filter(screen_name=siteuser.screen_name).exists():
         model_instance.likes.remove(siteuser)
-        data = {'success' : True, 'message' : 'You unstarred this object'}
+        data = {'success' : True, 'message' : 'You unstarred this {}'.format(model)}
     else:
         model_instance.likes.add(siteuser)
-        data = {'success' : True, 'message' : 'You starred this object'}
+        data = {'success' : True, 'message' : 'You starred this {}'.format(model)}
 
     like_count = model_instance.likes.count()
     model_instance.save(update_fields=['like_count'])
