@@ -1,0 +1,100 @@
+
+
+<span class="btn btn-sm btn-primary icon-buttons" title="">{{ song.like_count }} Star{{ song.like_count|pluralize }}</span>
+{% if user.is_authenticated %}
+
+    {% if request.user.siteuser in song.likes.all %}
+        <a class="btn btn-sm btn-primary icon-buttons trigger-like" data-pk="{{ song.pk }}" href="">Unstar</a>
+    {% else %}
+        <a class="btn btn-sm btn-primary icon-buttons trigger-like" data-pk="{{ song.pk }}" href="">Star</a>
+    {% endif %}
+
+{% else %}
+    <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:login' %}">Login to give a star</a>
+{% endif %}
+
+
+<script type="text/javascript">
+
+    // Get csrftoken value in form
+    // using jQuery
+    function getCookie(name) {
+        console.log("Cookie function")
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    var csrftoken = getCookie('csrftoken');
+    console.log(csrftoken)
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+    // End get csrftoken
+
+
+
+    $(document).ready(function() {
+
+        var $likeTrigger = $('.trigger-like');
+
+        $likeTrigger.click(function() {
+            $aButton = $(this);
+            $pk = $aButton.attr('data-pk')
+            $csrf_token = "{{ csrf_token }}"
+
+            $.ajax({
+                type : 'POST',
+                url : "{% url 'song:like_song_no_pk' %}",
+                data : {'pk' : $pk, csrfmiddlewaretoken : $csrf_token},
+                dataType : 'json',
+                success : function(response) {
+                    alert('Success')
+                    console.log('Success')
+                    console.log(response.message)
+                },
+                error : function(jqXHR, textStatus, errorThrown) {
+                    alert('Failer')
+                    console.log('Failure')
+                }
+            })
+
+        })
+
+    
+        $('#like').click(function(){
+            $.ajax({
+                method: "POST",
+                url: "{% url 'song:like_song_no_pk' %}",
+                data: {'slug': $(this).attr('title'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                dataType: "json",
+                success: function(response) {
+                        alert(response.message);
+                },
+                error: function(rs, e) {
+                        alert(rs.responseText);
+                }
+            });
+            })
+    
+        });
+</script> 

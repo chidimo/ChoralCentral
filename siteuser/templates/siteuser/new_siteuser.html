@@ -14,10 +14,11 @@
         <p>By registering via social account you consent with our <a href="/terms-of-use/" target="_blank">Terms of Use</a> and
             <a href="/privacy-policy/" target="_blank">Privacy policy</a>.</p>
 
-        <form action="" method="post" enctype="multipart/form-data">
+        <form action="" method="post" enctype="multipart/form-data" data-validate-screen-name-url="{% url 'siteuser:validate_screen_name' %}">
             {% csrf_token %}
                 <p>{{ form.email }}</p>
                 <p>{{ form.email.errors }}</p>
+                <p class="screen-name-take"></p>
                 <p>{{ form.screen_name }}</p>
                 <p>{{ form.screen_name.errors }}</p>
                 <p>{{ form.password1 }}</p>
@@ -32,4 +33,27 @@
             <div class="g-recaptcha" data-sitekey="6LdJMlsUAAAAAOnPhZaiIm5-TT1mHLdARR8rl4Qa"></div>
         </form>
     </div>
+
+<script type="text/javascript">
+    $('#id_screen_name').change(function() {
+
+        screen_name = $(this).val()
+
+        $.ajax({
+            type : 'GET',
+            url : "{% url 'siteuser:validate_screen_name' %}",
+            data : {screen_name : screen_name},
+            success : function (data, textStatus, jqXHR) {
+                if (data.is_taken) {
+                    $('.screen-name-take').html('<span class="text-danger">' + data.error_message + '</span>')
+                } else {
+                    $('.screen-name-take').html('')
+                }
+            },
+            error : function(jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown)
+            }
+        });
+    });
+</script>
 {% endblock body %}

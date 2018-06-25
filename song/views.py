@@ -133,8 +133,21 @@ def like_song(request, pk):
         song_ct = ContentType.objects.get(app_label='song', model='song')
         song = song_ct.get_object_for_this_type(pk=pk)
         add_or_remove_siteuser(request, song, siteuser)
+        return redirect(song.get_absolute_url())
         if 'next' in request.GET:
+            print(request.GET['next'])
             return redirect(request.GET['next'])
+
+@login_required
+def like_song_no_pk(request):
+    print("righ function")
+    if request.is_ajax():
+        pk = int(request.POST.get('pk', None))
+        siteuser = request.user.siteuser
+        song_ct = ContentType.objects.get(app_label='song', model='song')
+        song = song_ct.get_object_for_this_type(pk=pk)
+        add_or_remove_siteuser(request, song, siteuser)
+        # return redirect(song.get_absolute_url())
 
 @require_POST
 @login_required
@@ -202,6 +215,13 @@ def song_detail_view(request, pk, slug):
             # there is no match in the url mapping table. We're done
             except Url301.DoesNotExist:
                 raise(Song.DoesNotExist)
+
+def check_song_exists(request):
+    title = request.GET.get('title', None).lower().strip()
+    data = {'exists': Song.objects.filter(title=title).exists()}
+    if data['exists']:
+        data['song_url'] = Song.objects.get(title=title).get_absolute_url()
+    return JsonResponse(data)
 
 class NewSong(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic.CreateView):
     template_name = 'song/new.html'

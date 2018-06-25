@@ -6,6 +6,7 @@ import operator
 from functools import reduce
 from collections import OrderedDict, namedtuple, deque
 
+from django.http import JsonResponse
 from django.db.models import Q, Count, Prefetch
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
@@ -33,7 +34,7 @@ from song_media.models import Score, Midi, VideoLink
 
 from .utils import check_recaptcha
 from .models import SiteUser, Role, Message
-from .forms import (PassWordGetterForm, EmailAndPassWordGetterForm,
+from .forms import (PassWordGetterForm, EmailAndPassWordGetterForm, SiteUserRegistrationForm,
     SiteUserEditForm, NewRoleForm, NewMessageForm, ReplyMessageForm
 )
 
@@ -172,6 +173,13 @@ class SiteUserComments(PaginationMixin, generic.ListView):
     def get_queryset(self):
         creator = SiteUser.objects.get(pk=self.kwargs.get("pk", None))
         return Comment.objects.filter(creator=creator)
+
+def validate_screen_name(request):
+    screen_name = request.GET.get('screen_name', None)
+    data = {'is_taken': SiteUser.objects.filter(screen_name=screen_name).exists()}
+    if data['is_taken']:
+        data['error_message'] = 'Sorry, this screen name is not available.'
+    return JsonResponse(data)
 
 @check_recaptcha
 def new_siteuser(request):

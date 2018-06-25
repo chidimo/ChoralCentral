@@ -148,6 +148,10 @@ class NewSongForm(forms.ModelForm):
         self.fields['seasons'].initial = Season.objects.get(name='na')
         self.fields['mass_parts'].initial = MassPart.objects.get(name='na')
 
+    def clean_title(self):
+        """Make all titles lowercase"""
+        return self.cleaned_data['title'].lower().strip()
+
 class SongEditForm(forms.ModelForm):
     class Meta:
         model = Song

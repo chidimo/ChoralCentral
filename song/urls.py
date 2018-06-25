@@ -20,19 +20,18 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    # path('home/', views.SongIndex.as_view(), name="home"),
     path('', views.SongIndex.as_view(), name="index"),
     path("new-song/", views.NewSong.as_view(), name="new"),
+    path('ajax/check-song-exists/', views.check_song_exists, name='check_song_exists'),
     path("edit-song/<int:pk>/<slug:slug>/", views.SongEdit.as_view(), name="edit"),
     path("filter/", views.FilterSongs.as_view(), name="filter"),
     path("song/<int:pk>/<slug:slug>/", views.song_detail_view, name="detail"),
-    # path("<int:pk>/<slug:slug>/", views.SongDetail.as_view(), name="detail"),
     path("song/<int:pk>/<slug:slug>/reader/", views.reader_view, name="reader"),
     path("delete-song/<int:pk>/", views.SongDelete.as_view(), name='delete'),
 ]
 
 urlpatterns += [
-    # path("like/", views.song_like_view, name='like_song'),
+    path("like-song/", views.like_song_no_pk, name='like_song_no_pk'),
     path("like-song/<int:pk>/", views.like_song, name='like_song'),
     path("reader/<int:pk>/<slug:slug>/", views.reader_view, name='reader_view'),
     path("share-email/<int:pk>/<slug:slug>/", views.share_song_by_mail, name='share_song_by_mail'),

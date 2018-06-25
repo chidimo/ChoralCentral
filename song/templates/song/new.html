@@ -22,4 +22,32 @@
         <button class="btn btn-primary btn-sm float-right" type="submit" value="Save">Save</button>
     </form>
 </div>
+
+<script type="text/javascript">
+    $('#id_title').change(function() {
+
+        title = $(this).val()
+
+        $.ajax({
+            type : 'GET',
+            url : "{% url 'song:check_song_exists' %}",
+            data : {title : title},
+            success : function (data, textStatus, jqXHR) {
+                if (data.exists) {
+                    console.log(data.song_url)
+                    var msg = "A song titled " + "<a id='existingSong' href'' target='_blank'>" + title + "</a>" + " already exists. Perhaps you just want to add scores and midis.";
+
+                    $('#id_title').parent().before('<p id="someId" class="text-danger">');
+                    $('#someId').html(msg).css('font-weight', 'bold');
+                    $('#existingSong').attr('href', data.song_url);
+                } else {
+                    $('.song-exists').html('')
+                }
+            },
+            error : function(jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown)
+            }
+        });
+    });
+</script>
 {% endblock content_content %}

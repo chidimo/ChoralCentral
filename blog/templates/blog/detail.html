@@ -61,43 +61,48 @@
 </div>
 <hr>
 
-{% for comment in comments %}
-    <div class="list-comments">
-        <div class="row commenter-stats">
-            <div class='col-sm-12'>
-                <strong>
-                    <a href="{% url 'siteuser:library' comment.creator.pk comment.creator.slug %}">{{ comment.creator.screen_name }}</a>
-                    <span class="float-right">
-                        <span title="Comment date">{{ comment.created|date }}</span> |
-                        <span title="Modified">{{ comment.modified|date }}</span>
-                    </span>
-                </strong>
+
+<div id="commentsDiv">
+    {% with post.comment_set.all as comments %}
+        {% for comment in comments %}
+            <div class="list-comments">
+                <div class="row commenter-stats">
+                    <div class='col-sm-12'>
+                        <strong>
+                            <a href="{% url 'siteuser:library' comment.creator.pk comment.creator.slug %}">{{ comment.creator.screen_name }}</a>
+                            <span class="float-right">
+                                <span title="Comment date">{{ comment.created|date }}</span> |
+                                <span title="Modified">{{ comment.modified|date }}</span>
+                            </span>
+                        </strong>
+                    </div>
+                </div>
+    
+                <div class='comment-body'>
+                    {{ comment.comment|markdown_format }}
+                </div>
+    
+                <span class='float-left'>
+                    <span class="btn btn-sm btn-primary icon-buttons" title="">{{ comment.like_count }} Star{{ comment.like_count|pluralize }}  </span>
+                    <a class="btn btn-sm btn-primary likes-button-style" href=""><i class="fas fa-star"></i> Star/Unstar</a>
+                </span>
+    
+                <span class="float-right">
+                    {% if request.user == comment.creator.user %}
+                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'blog:edit_comment' comment.pk %}" title="Edit"><i class="fas fa-edit"></i></a>
+                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'blog:comment_delete' comment.pk %}" title="Delete"><i class="fas fa-trash"></i></a>
+                    {% endif %}
+                    <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'blog:comment_reply' comment.pk post.pk %}" title="Reply"><i class="fas fa-reply"></i></a>
+                </span>
             </div>
-        </div>
-
-        <div class='comment-body'>
-            {{ comment.comment|markdown_format }}
-        </div>
-
-        <span class='float-left'>
-            <span class="btn btn-sm btn-primary icon-buttons" title="">{{ comment.like_count }} Star{{ comment.like_count|pluralize }}  </span>
-            <a class="btn btn-sm btn-primary likes-button-style" href=""><i class="fas fa-star"></i> Star/Unstar</a>
-        </span>
-
-        <span class="float-right">
-            {% if request.user == comment.creator.user %}
-                <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'blog:edit_comment' comment.pk %}" title="Edit"><i class="fas fa-edit"></i></a>
-                <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'blog:comment_delete' comment.pk %}" title="Delete"><i class="fas fa-trash"></i></a>
-            {% endif %}
-            <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'blog:comment_reply' comment.pk post.pk %}" title="Reply"><i class="fas fa-reply"></i></a>
-        </span>
-    </div>
-{% empty %}
-    <p>No comments on this post at this time.</p>
-{% endfor %}
+        {% empty %}
+            <p>No comments on this post at this time.</p>
+        {% endfor %}
+    {% endwith %}
+</div>
 
 {% if user.is_authenticated %}
-    <form action="{% url 'blog:new_comment' post.pk %}" method="post" enctype="multipart/form-data" class='comment-form'>
+    <form action="" method="post" enctype="multipart/form-data" id='commentForm'>
         {% csrf_token %}
         {{ comment_form.comment }}
         <button class="btn btn-primary btn-sm float-right" type="submit" value="Post Comment">Post Comment</button>
@@ -105,5 +110,74 @@
 {% else %}
     <p><a href="{% url 'blog:new_comment' post.pk %}">Comment</a> on this post</p>
 {% endif %}
-{% endblock content_content %}
 
+<script type="text/javascript">
+    // Get csrftoken value in form
+        // using jQuery
+    function getCookie(name) {
+        console.log("Cookie function")
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    var csrftoken = getCookie('csrftoken');
+    console.log(csrftoken)
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+    // End get csrftoken
+    
+    $(document).ready(function() {
+        var $commentForm = $('#commentForm');
+
+        $commentForm.submit(function(event) {
+            event.preventDefault()
+            
+            var comment = $('#id_comment').val();
+            console.log(comment);
+            console.log(csrftoken);
+
+            $.ajax({
+                type : 'POST',
+                url : window.location.href,
+                data : {comment : comment, csrfmiddlewaretoken : csrftoken},
+                success : function(data){
+                    if (data.success) {
+                        alert(data.message)
+                        // reload the comments section of the page                        
+                        $('#commentsDiv').load(window.location.href + " #commentsDiv>*","")
+                        // clear form input
+                        $(':input','#commentForm').val("")
+                        console.log(data.message)
+                    }
+                },
+                error : function(jqXHR, textStatus, errorThrown){
+                    console.log('Failed')
+                    console.log(errorThrown)
+                    console.log(textStatus)
+                },
+            });
+        })
+    })
+</script>
+{% endblock content_content %}

@@ -3,7 +3,7 @@ import json
 
 from django.views import generic
 from django.conf import settings
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -142,6 +142,19 @@ def post_detail_view(request, pk, slug):
     context = {}
     context['post_share_form'] = PostShareForm()
     context["comment_form"] = NewCommentForm()
+
+    # Handle comment post via ajax
+    if request.method == 'POST':
+        if request.is_ajax():
+            print("Ajax request")
+            comment = request.POST.get('comment')
+            siteuser = request.user.siteuser
+            post = Post.objects.get(pk=pk, slug=slug)
+
+            Comment.objects.create(creator=siteuser, post=post, comment=comment)
+            data = {'success' : True, 'message' : 'Your comment was successfully added'}
+            return JsonResponse(data)
+
     try:
         post = Post.objects.select_related('creator').get(pk=pk, slug=slug)
         context['post'] = post
@@ -198,42 +211,6 @@ class EditComment(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     form_class = CommentEditForm
     template_name = "blog/comment_edit.html"
     success_message = "Comment updated successfully"
-
-class NewComment(LoginRequiredMixin, generic.CreateView):
-    context_object_name = 'comment'
-    form_class = NewCommentForm
-    template_name = 'blog/comment_new.html'
-
-    def get_success_url(self):
-        post = self.object.post
-        pagination = PostDetail().paginate_by
-        post_url = reverse('blog:detail', kwargs={'pk' : post.pk, 'slug' : post.slug})
-        number_of_comments = post.comment_set.count()
-
-        pages = number_of_comments // pagination # get whole pages
-        remainder_comments = number_of_comments % pagination
-        if remainder_comments: # check for remainder
-            pages += 1
-        comment_page = '?page={}'.format(pages)
-        comment_target_id = '#{}'.format(remainder_comments-1)
-        return post_url + comment_page + comment_target_id
-
-    def form_valid(self, form):
-        siteuser = self.request.user.siteuser
-        form.instance.creator = siteuser
-        form.instance.post = Post.objects.get(pk=self.kwargs["pk"])
-        self.object = form.save()
-
-        self.object.likes.add(siteuser)
-        self.object.like_count = self.object.likes.count()
-        self.object.save(update_fields=['like_count'])
-        messages.success(self.request, "Comment successfully created !")
-        return super().form_valid(form)
-
-    def get_context_data(self, *args):
-        context = super().get_context_data(*args)
-        context['post'] = Post.objects.get(pk=self.kwargs['pk'])
-        return context
 
 class ReplyComment(LoginRequiredMixin, generic.CreateView):
     context_object_name = 'comment'

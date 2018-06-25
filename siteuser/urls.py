@@ -11,6 +11,7 @@ urlpatterns = [
     path('', views.SiteUserIndex.as_view(), name="index"),
     path('roles-<str:role>/', views.SiteUserCommonRoles.as_view(), name="siteusers_common_roles"),
     path('location-<str:location>/', views.SiteUserCommonLocation.as_view(), name="siteusers_common_location"),
+    path('ajax/validate-screen-name/', views.validate_screen_name, name='validate_screen_name'),
     path("new/", views.new_siteuser, name="new"),
     path("delete-account/", views.delete_account, name="delete_account"),
     path("deactivate-account/", views.deactivate_account, name="deactivate_account"),
