@@ -3,17 +3,53 @@
 {% load static %}
 
 {% block left_sidebar %}
+
+{% if filter_form %}
     {% if user.is_authenticated %}
         <div class="d-none d-md-block filter-block">
-            <form action="{% url 'song:filter' %}" method="get" enctype="multipart/form-data">
-                {{ form.as_p }}
+            <form data-url="{% url 'song:index' %}" method="get" enctype="multipart/form-data" id="filterForm">
+                {{ filter_form.as_p }}
                 <button class="btn btn-primary btn-sm float-right" type="submit" value="Filter songs">Apply</button>
             </form>
         </div>
     {% endif %}
+
+<script>
+    $(document).ready(function() {
+        var $filterForm = $('#filterForm')
+
+        $filterForm.submit(function(event) {
+            event.preventDefault();
+
+            var $formData = $(this).serialize();
+            var $destination = $(this).attr('data-url')
+            //console.log($formData)
+
+            $.ajax({
+                method : 'GET',
+                url : $destination,
+                data : $formData,
+                success : function(data, textStatus, jqXHR) {
+                    console.log('Success')
+                    console.log(data)
+                },
+                error(jqXHR, textStatus, errorThrown) {
+                    console.log('Filter error')
+                    console.log(textStatus)
+                    console.log(errorThrown)
+                }
+            })
+        
+        })
+
+    })
+</script>
+{% endif %}
 {% endblock left_sidebar %}
 
 {% block content_content %}
+
+{{ songs.count }}
 
 {% for song in songs %}
     <div class="list-songs container" itemscope itemtype="https://schema.org/CreativeWork">

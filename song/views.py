@@ -35,7 +35,7 @@ from redirect301.models import Url301
 
 from .predicates import CONTEXT_MESSAGES
 
-from .models import Song, Language#, Voicing, Season, MassPart, Song
+from .models import Song, Language, Voicing, Season, MassPart
 from .forms import (SongLikeForm,
     NewVoicingForm, EditVoicingForm, NewLanguageForm,
     SongShareForm, NewSongForm, SongEditForm, SongFilterForm
@@ -94,6 +94,83 @@ def auto_song(request):
     context['indexName'] = get_adapter(Song).index_name
     return render(request, 'song/autocomplete_song.html', context)
 
+def apply_song_filter(request):
+    combinator = request.GET.get('combinator')
+    genre = request.GET.get('genre')
+    season_pk = request.GET.get('season')
+    masspart_pk = request.GET.get('masspart')
+    language_pk = request.GET.get('language')
+
+    if all([(genre == ''), (season_pk == ''), (masspart_pk == ''), (language_pk == '')]):
+        songs = Song.objects.filter(publish=True).select_related('voicing', 'language', 'creator').prefetch_related('seasons', 'mass_parts', 'authors')
+        message = 'You did not make any selection.'
+    else:
+        queries = []
+        message = []
+
+        if genre:
+            queries.append(Q(genre=genre))
+            message.append("Genre '{}'".format(genre))
+        try:
+            queries.append(Q(seasons__id__exact=int(season_pk)))
+            message.append(
+                "Season '{}'".format(Season.objects.get(pk=season_pk).__str__())
+            )
+        except ValueError:
+            pass
+        try:
+            queries.append(Q(mass_parts__id__exact=int(masspart_pk)))
+            message.append(
+                "Masspart '{}'".format(MassPart.objects.get(pk=masspart_pk).__str__())
+            )
+        except ValueError:
+            pass
+        try:
+            queries.append(Q(language__id__exact=int(language_pk)))
+            message.append(
+                "Language '{}'".format(Language.objects.get(pk=language_pk).__str__())
+            )
+        except ValueError:
+            pass
+
+        if combinator == 'or':
+            query = reduce(operator.or_, queries)
+            query_str = " OR ".join(message)
+        else:
+            query = reduce(operator.and_, queries)
+            query_str = " AND ".join(message)
+
+        query = operator.and_(query, Q(publish=True)) # filter out unpublished songs and remove duplicates
+        songs = Song.objects.filter(query).select_related('voicing', 'language', 'creator').prefetch_related('seasons', 'mass_parts', 'authors').distinct()
+        message = "found {} results for {}".format(songs.count(), query_str)
+
+    return {'success' : True, 'message' : message, 'songs' : songs}
+
+def song_index(request):
+    template = 'song/index.html'
+    context = {}
+    context['filter_form'] = SongFilterForm()
+
+    # Handle stars via ajax
+    if request.method == 'POST':
+        if request.is_ajax():
+            pk  = int(request.POST.get('pk')) # each song has unique pk
+            model = 'song'
+            app_label = 'song'
+            siteuser = request.user.siteuser
+            data = star_or_unstar_object(siteuser, pk, app_label, model)
+            return JsonResponse(data)
+
+    # if request.method == 'GET':
+    #     if request.is_ajax():
+    #         data = apply_song_filter(request)
+    #         print("DATA\n", data)
+    #         return JsonResponse(data)
+    else:
+        songs = Song.objects.select_related('voicing', 'language', 'creator').prefetch_related('seasons', 'mass_parts', 'authors').filter(publish=True)
+        context['songs'] = songs
+        return render(request, template, context)
+
 @method_decorator(cache_control(must_revalidate=True, max_age=60*60*24), name='dispatch')
 class SongIndex(PaginationMixin, generic.ListView):
     model = Song
@@ -101,9 +178,20 @@ class SongIndex(PaginationMixin, generic.ListView):
     template_name = 'song/index.html'
     paginate_by = 20
 
+    # Handle stars via ajax
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            pk  = int(request.POST.get('pk')) # need to send this since I have multiple like buttons on this page
+            model = 'song'
+            app_label = 'song'
+            siteuser = request.user.siteuser
+            data = star_or_unstar_object(siteuser, pk, app_label, model)
+            return JsonResponse(data)
+        return super().post(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = SongFilterForm()
+        # context['filter_form'] = SongFilterForm()
         return context
 
     def get_queryset(self):

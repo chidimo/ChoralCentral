@@ -6,7 +6,7 @@
 1. Run `production_setup()` from `starter.py`
 1. Reset all app keys (facebook, twitter, google, yahoo, algolia)
 1. Remake all migrations and reset db
-1. 5 songs ready to uploa (Bia nye chukwu ezi ekele, Ana kiranku)
+1. 5 songs ready to upload (Bia nye chukwu ezi ekele, Ana kiranku)
 1. Clear media folder
 1. Delete `staticfiles` and rerun `python manage.py compress` and `python manage.py collectstatic`
 1. Change my personal account and django admin password (lastpass)
@@ -56,25 +56,17 @@
 1. Download user comments
 1. Display comment replies properly
 1. Revisit request status
-1. Cache
 1. Explore delivering midis via podcast
 1. Redefine scripture reference as a model
-1. Implement user mass compilation (multiple) model: MyMass
 1. Implement recommendation system
 1. Implement notification on response to request
-1. Allow users select songs they think is similar to a particular song
 1. Store users' likes and favorites
 1. Add psalm tune module
 1. create mass song sheet downloadable
 1. Paginate search results
-1. Wrap lyrics field and expand when there is match
 1. Write privacy policy
 1. Write terms of use
-1. Fix quoted comment display
-1. Write tests for social logins
-1. Fix groups
 1. Custom authentication for all API views
-1. Posts can contain pictures
 
 ## Badges
 

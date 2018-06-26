@@ -37,9 +37,6 @@
         function() {
 
         $likeSong = $('.like-song-{{ forloop.counter }}-on-click');
-        var url = $('#songLink{{ forloop.counter }}').attr('href')
-
-        console.log(url)
 
         $likeSong.click(function() {
             var pk = $(this).attr('data-pk');
@@ -48,23 +45,22 @@
 
             $.ajax({
                 method : 'POST',
-                url : url,
+                url : window.location.href,
                 data : {
-                    pk : pk, model : model, app_label : appLabel,
-                    csrfmiddlewaretoken : csrftoken
+                    pk : pk, csrfmiddlewaretoken : csrftoken
                 },
                 success : function(data, textStatus, jqXHR){
                     if (data.success) {
+                        console.log('Success')
                         alert(data.message)
-                        var statBox = '#songContainer{{ forloop.counter }}'
-                        console.log(statBox)
+                        $statBox = '#songContainer{{ forloop.counter }}'
+                        console.log($statBox)
                         // reload title box. This doesn't refresh the like button though.
-                        $(statBox).load(window.location.href + " " + statBox + ">*","")
-                        console.log("Finish loading")
+                        $($statBox).load(window.location.href + " " + $statBox + ">*","")
                     }
                 },
                 error : function(jqXHR, textStatus, errorThrown) {
-                    console.log('Failure to like')
+                    console.log('Failure')
                 }
             })
         })    

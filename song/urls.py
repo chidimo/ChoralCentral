@@ -21,10 +21,11 @@ urlpatterns += [
 
 urlpatterns += [
     path('', views.SongIndex.as_view(), name="index"),
+    # path('', views.song_index, name="index"),
     path("new-song/", views.NewSong.as_view(), name="new"),
     path('ajax/check-song-exists/', views.check_song_exists, name='check_song_exists'),
     path("edit-song/<int:pk>/<slug:slug>/", views.SongEdit.as_view(), name="edit"),
-    path("filter/", views.FilterSongs.as_view(), name="filter"),
+    # path("filter/", views.FilterSongs.as_view(), name="filter"),
     path("song/<int:pk>/<slug:slug>/", views.song_detail_view, name="detail"),
     path("song/<int:pk>/<slug:slug>/reader/", views.reader_view, name="reader"),
     path("delete-song/<int:pk>/", views.SongDelete.as_view(), name='delete'),

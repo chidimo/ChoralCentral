@@ -54,13 +54,14 @@
                 },
                 success : function(data, textStatus, jqXHR){
                     if (data.success) {
+                        console.log('Success')
                         alert(data.message)
                         // reload title box. This doesn't refresh the like button though.
                         $('#songTitleBox').load(window.location.href + " #songTitleBox>*","")
                     }
                 },
                 error : function(jqXHR, textStatus, errorThrown) {
-                    console.log('Failure to like')
+                    console.log('Failure')
                 }
             })
 
