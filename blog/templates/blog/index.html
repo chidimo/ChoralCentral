@@ -25,8 +25,7 @@
         </h6>
 
         <span class="float-right">
-            <span class="btn btn-sm btn-primary icon-buttons" title="{{ post.like_count }} stars">{{ post.like_count }} Star{{ post.like_count|pluralize }}  </span>
-            <a class="btn btn-sm btn-primary likes-button-style" href="Star this post"><i class="fas fa-star"></i> Star/Unstar</a>
+            <a class="btn btn-sm btn-primary icon-buttons" title="{{ post.like_count }} likes" href="{% url 'siteuser:post_likers' post.pk %}">{{ post.like_count }} <i class="fas fa-thumbs-up"></i></a>
             <span class="btn btn-sm btn-primary icon-buttons" title="{{ post.comment_set.count }} Comments">{{ post.comment_set.count }} <i class="fas fa-comments"></i></span>
         </span>
     </div>

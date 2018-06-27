@@ -40,7 +40,7 @@ class Comment(TimeStampedModel):
     creator = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     likes = models.ManyToManyField(SiteUser, related_name='comment_likes')
-    like_count = models.IntegerField(default=1)
+    like_count = models.IntegerField(default=0)
     comment = models.TextField()
 
     class Meta:
@@ -51,8 +51,3 @@ class Comment(TimeStampedModel):
 
     def __str__(self):
         return self.comment
-
-    def save(self, *args, **kwargs):
-        if self.pk:
-            self.like_count = self.likes.count()
-        return super().save(*args, **kwargs)

@@ -21,14 +21,13 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError as VAE
 from django.views.decorators.cache import cache_page, cache_control
 from django.utils.decorators import method_decorator
-from django.contrib.contenttypes.models import ContentType
 
 from django_addanother.views import CreatePopupMixin
 from pure_pagination.mixins import PaginationMixin
 from algoliasearch_django import get_adapter
 import rules
 
-from .utils import render_to_pdf
+from .utils import render_to_pdf, star_or_unstar_object
 
 from siteuser.models import SiteUser
 from redirect301.models import Url301
@@ -204,32 +203,6 @@ def song_redirect_301_view(request, pk, slug):
     context = {}
     context['object'] = Song.objects.select_related('voicing', 'language', 'creator').get(pk=pk, slug=slug)
     return render(request, template, context)
-
-def star_or_unstar_object(siteuser, pk, app_label, model):
-    """
-    Generic function for starring objects
-
-    Parameters
-    ------------
-    app_label : str
-        Sent with ajax request
-    model_name : str
-        Sent with ajax request
-    """
-    # Get the object
-    obj_ct = ContentType.objects.get(app_label=app_label, model=model)
-    model_instance = obj_ct.get_object_for_this_type(pk=pk)
-
-    if model_instance.likes.filter(screen_name=siteuser.screen_name).exists():
-        model_instance.likes.remove(siteuser)
-        data = {'success' : True, 'message' : 'You unstarred this {}'.format(model)}
-    else:
-        model_instance.likes.add(siteuser)
-        data = {'success' : True, 'message' : 'You starred this {}'.format(model)}
-
-    like_count = model_instance.likes.count()
-    model_instance.save(update_fields=['like_count'])
-    return data
 
 def song_detail_view(request, pk, slug):
     template = 'song/detail.html'

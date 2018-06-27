@@ -1,5 +1,5 @@
 {% extends "choralcentral_base.html" %}
-{% block title %}Stargazers: {{ song.title }}{% endblock title %}
+{% block title %}People who liked {{ song.title }}{% endblock title %}
 {% load thumbnail %}
 {% load static %}
 {% load siteuser_tags %}
@@ -9,7 +9,7 @@
 
 <div class='container siteuser-index-heading'>
     <div class='row'>
-        <h3 class='float-left'>Stargazers: {{ song.title }}</h3>
+        <h3 class='float-left'>People who liked {{ song.title }}</h3>
     </div>
 </div>
 
@@ -34,7 +34,7 @@
                 </p>
             </div>
         {% empty %}
-            <p>No lover for {{ song.title }}.</p>
+            <p>No likes for {{ song.title }}.</p>
         {% endfor %}
     </div>
 </div>

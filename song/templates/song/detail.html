@@ -17,20 +17,23 @@
 
             <span class='float-right song-icons'>
 
-                <span class="btn btn-sm btn-primary icon-buttons" title="">{{ song.like_count }} Star{{ song.like_count|pluralize }}</span>
-
                 {% if user.is_authenticated %}
                     {% if request.user.siteuser in song.likes.all %}
-                        <span class="btn btn-sm btn-primary star-icon-button like-song-on-click" data-pk="{{ song.pk }}" data-app-label="song" data-model="song">Unstar</span>
+                        <span class="btn btn-sm btn-primary star-icon-button like-song-on-click" data-pk="{{ song.pk }}" data-app-label="song" data-model="song" title="Unlike">
+                            <i class="fas fa-thumbs-up text-primary"></i>
+                        </span>
                     {% else %}
-                        <span class="btn btn-sm btn-primary star-icon-button like-song-on-click" data-pk="{{ song.pk }}" data-app-label="song" data-model="song">Star</span>
+                        <span class="btn btn-sm btn-primary star-icon-button like-song-on-click" data-pk="{{ song.pk }}" data-app-label="song" data-model="song" title="Like">
+                            <i class="fas fa-thumbs-up text-secondary"></i>
+                        </span>
                     {% endif %}
                 {% else %}
-                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:login' %}?next={{ request.path }}">Give a star</a>
+                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:login' %}?next={{ request.path }}">Login to like</a>
                 {% endif %}
 
                 {% include 'song/ajax_like_song.html' %}
 
+                <a class="btn btn-sm btn-primary icon-buttons" title="" href="{% url 'siteuser:song_likers' song.pk %}">{{ song.like_count }} <i class="fas fa-thumbs-up"></i></a>
                 <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'blog:new_song' song.pk %}" title="Make a post about {{ song.title }}"><i class="fas fa-pencil-alt"></i></a>
                 <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song:reader_view' song.pk song.slug %}" title="Print {{ song.title }} in pdf format" target="_blank"><i class="fas fa-print"></i></a>
 
@@ -170,12 +173,16 @@
                         </a>
 
                         <span id="scoreDetailBox{{ forloop.counter }}">
-                        <span class="btn btn-sm btn-primary icon-buttons" title="">{{ score.like_count }} Star{{ score.like_count|pluralize }}</span>
+                        <a class="btn btn-sm btn-primary icon-buttons" title="" href="#">{{ score.like_count }} <i class="fas fa-thumbs-up"></i></a>
                             {% if user.is_authenticated %}
                                 {% if request.user.siteuser in score.likes.all %}
-                                    <span class="btn btn-sm btn-primary star-icon-button like-score-{{ forloop.counter }}-on-click" data-pk="{{ score.pk }}" data-app-label="song_media" data-model="score">Unstar</span>
+                                    <span class="btn btn-sm btn-primary star-icon-button like-score-{{ forloop.counter }}-on-click" data-pk="{{ score.pk }}" data-app-label="song_media" data-model="score">
+                                        <i class="fas fa-thumbs-up text-primary"></i>
+                                    </span>
                                 {% else %}
-                                    <span class="btn btn-sm btn-primary star-icon-button like-score-{{ forloop.counter }}-on-click" data-pk="{{ score.pk }}" data-app-label="song_media" data-model="score">Star</span>
+                                    <span class="btn btn-sm btn-primary star-icon-button like-score-{{ forloop.counter }}-on-click" data-pk="{{ score.pk }}" data-app-label="song_media" data-model="score">
+                                        <i class="fas fa-thumbs-up text-secondary"></i>
+                                    </span>
                                 {% endif %}
                             {% endif %}
                         </span>
@@ -217,12 +224,12 @@
                         </a>
                         
                         <span id="midiDetailBox{{ forloop.counter }}">
-                            <span class="btn btn-sm btn-primary icon-buttons" title="">{{ midi.like_count }} Star{{ midi.like_count|pluralize }}</span>
+                            <a class="btn btn-sm btn-primary icon-buttons" title="" href="#">{{ midi.like_count }} <i class="fas fa-thumbs-up"></i></a>
                             {% if user.is_authenticated %}
                                 {% if request.user.siteuser in midi.likes.all %}
-                                    <span class="btn btn-sm btn-primary star-icon-button like-midi-{{ forloop.counter }}-on-click" data-pk="{{ midi.pk }}" data-app-label="song_media" data-model="midi">Unstar</span>
+                                    <span class="btn btn-sm btn-primary star-icon-button like-midi-{{ forloop.counter }}-on-click" data-pk="{{ midi.pk }}" data-app-label="song_media" data-model="midi"><i class="fas fa-thumbs-up text-primary"></i></span>
                                 {% else %}
-                                    <span class="btn btn-sm btn-primary star-icon-button like-midi-{{ forloop.counter }}-on-click" data-pk="{{ midi.pk }}" data-app-label="song_media" data-model="midi">Star</span>
+                                    <span class="btn btn-sm btn-primary star-icon-button like-midi-{{ forloop.counter }}-on-click" data-pk="{{ midi.pk }}" data-app-label="song_media" data-model="midi"><i class="fas fa-thumbs-up text-secondary"></i></span>
                                 {% endif %}
                             {% endif %}
                             {% include 'song/ajax_like_midi.html' %}

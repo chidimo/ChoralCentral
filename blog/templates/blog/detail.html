@@ -8,12 +8,28 @@
 
 <div class='container-fluid song-detail-header'>
     <div class='row'>
-        <div class='col-sm-12 head-title'>
+        <div class='col-sm-12 head-title' id="postTitleBox">
             <span class='float-left'>{{ post.title }}</span>
 
             <span class='float-right song-icons'>
-                <span class="btn btn-sm btn-primary icon-buttons" title="">{{ post.like_count }} Star{{ post.like_count|pluralize }}  </span>
-                <a class="btn btn-sm btn-primary likes-button-style" href=""><i class="fas fa-star"></i> Star/Unstar</a>
+                
+                {% if user.is_authenticated %}
+                    {% if request.user.siteuser in post.likes.all %}
+                        <span class="btn btn-sm btn-primary star-icon-button like-post-on-click" data-pk="{{ post.pk }}" data-app-label="blog" data-model="post" title="Unlike">
+                            <i class="fas fa-thumbs-up text-primary"></i>
+                        </span>
+                    {% else %}
+                        <span class="btn btn-sm btn-primary star-icon-button like-post-on-click" data-pk="{{ post.pk }}" data-app-label="blog" data-model="post" title="Like">
+                            <i class="fas fa-thumbs-up text-secondary"></i>
+                        </span>
+                    {% endif %}
+                {% else %}
+                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:login' %}?next={{ request.path }}">Login to like</a>
+                {% endif %}
+                {% include 'blog/ajax_like_post.html' %}
+
+                <a class="btn btn-sm btn-primary icon-buttons" title="{{ post.like_count }} likes" href="{% url 'siteuser:post_likers' post.pk %}">{{ post.like_count }} <i class="fas fa-thumbs-up"></i></a>
+
                 <span class="btn btn-sm btn-primary icon-buttons" title="{{ post.comment_set.count }} comments">{{ post.comment_set.count }} <i class="fas fa-comments"></i></span>
                 <a class="btn btn-sm btn-primary icon-buttons" href="" title="Print {{ post.title }} in pdf format" target="_blank"><i class="fas fa-print"></i></a>
 
@@ -62,7 +78,7 @@
 <hr>
 
 
-<div id="commentsDiv">
+<div id="commentsSection">
     {% with post.comment_set.all as comments %}
         {% for comment in comments %}
             <div class="list-comments">
@@ -82,9 +98,23 @@
                     {{ comment.comment|markdown_format }}
                 </div>
     
-                <span class='float-left'>
-                    <span class="btn btn-sm btn-primary icon-buttons" title="">{{ comment.like_count }} Star{{ comment.like_count|pluralize }}  </span>
-                    <a class="btn btn-sm btn-primary likes-button-style" href=""><i class="fas fa-star"></i> Star/Unstar</a>
+                <span class='float-left' id="commentStatBox{{ forloop.counter }}">
+                    {% if user.is_authenticated %}
+                        {% if request.user.siteuser in comment.likes.all %}
+                            <span class="btn btn-sm btn-primary star-icon-button like-comment-{{ forloop.counter}}-on-click" data-pk="{{ comment.pk }}" data-app-label="blog" data-model="comment" title="Unlike">
+                                <i class="fas fa-thumbs-up text-primary"></i>
+                            </span>
+                        {% else %}
+                            <span class="btn btn-sm btn-primary star-icon-button like-comment-{{ forloop.counter}}-on-click" data-pk="{{ comment.pk }}" data-app-label="blog" data-model="comment" title="Like">
+                                <i class="fas fa-thumbs-up text-secondary"></i>
+                            </span>
+                        {% endif %}
+                    {% else %}
+                            <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:login' %}?next={{ request.path }}">Login to like</a>
+                    {% endif %}
+
+                    {% include "blog/ajax_like_comment.html" %}
+                    <a class="btn btn-sm btn-primary icon-buttons" title="{{ comment.like_count }} likes" href="{% url 'siteuser:comment_likers' comment.pk %}">{{ comment.like_count }} <i class="fas fa-thumbs-up"></i></a>
                 </span>
     
                 <span class="float-right">
@@ -110,75 +140,6 @@
 {% else %}
     <p><a href="{% url 'siteuser:login' %}">Log In</a> to comment</p>
 {% endif %}
+{% include "blog/ajax_add_comment.html" %}
 
-<script type="text/javascript">
-    // Get csrftoken value in form
-        // using jQuery
-    function getCookie(name) {
-        console.log("Cookie function")
-        var cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = jQuery.trim(cookies[i]);
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-
-    var csrftoken = getCookie('csrftoken');
-    console.log(csrftoken)
-
-    function csrfSafeMethod(method) {
-        // these HTTP methods do not require CSRF protection
-        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-    }
-    $.ajaxSetup({
-        beforeSend: function(xhr, settings) {
-            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                xhr.setRequestHeader("X-CSRFToken", csrftoken);
-            }
-        }
-    });
-    // End get csrftoken
-    
-    $(document).ready(function() {
-        var $commentForm = $('#commentForm');
-
-        $commentForm.submit(function(event) {
-            event.preventDefault()
-            
-            var comment = $('#id_comment').val();
-            // $("input[name=csrfmiddlewaretoken]").val() get csrf_token from form
-            console.log(comment);
-            console.log(csrftoken);
-
-            $.ajax({
-                type : 'POST',
-                url : window.location.href,
-                data : {comment : comment, csrfmiddlewaretoken : csrftoken},
-                success : function(data){
-                    if (data.success) {
-                        alert(data.message)
-                        // reload the comments section of the page                        
-                        $('#commentsDiv').load(window.location.href + " #commentsDiv>*","")
-                        // clear form input
-                        $(':input','#commentForm').val("")
-                        console.log(data.message)
-                    }
-                },
-                error : function(jqXHR, textStatus, errorThrown){
-                    console.log('Failed')
-                    console.log(errorThrown)
-                    console.log(textStatus)
-                },
-            });
-        })
-    })
-</script>
 {% endblock content_content %}

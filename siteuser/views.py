@@ -114,14 +114,14 @@ class SiteUserCommonLocation(PaginationMixin, generic.ListView):
         context['location'] = self.kwargs['location']
         return context
 
-class SongStarGivers(PaginationMixin, generic.ListView):
+class SongLikers(PaginationMixin, generic.ListView):
     model = SiteUser
     context_object_name = 'siteuser_list'
-    template_name = 'siteuser/stargazers_song.html'
+    template_name = 'siteuser/likers_song.html'
     paginate_by = 24
 
     def get_queryset(self):
-        song = Song.objects.get(pk=self.kwargs['pk'], slug=self.kwargs['slug'])
+        song = Song.objects.get(pk=self.kwargs['pk'])
         return song.likes.all()
 
     def get_context_data(self, *args):
@@ -129,25 +129,25 @@ class SongStarGivers(PaginationMixin, generic.ListView):
         context['song'] = Song.objects.get(pk=self.kwargs['pk'])
         return context
 
-class PostStarGivers(PaginationMixin, generic.ListView):
+class PostLikers(PaginationMixin, generic.ListView):
     model = SiteUser
     context_object_name = 'siteuser_list'
-    template_name = 'siteuser/stargazers_post.html'
+    template_name = 'siteuser/likers_post.html'
     paginate_by = 24
 
     def get_queryset(self):
-        post = Post.objects.get(pk=self.kwargs['pk'], slug=self.kwargs['slug'])
+        post = Post.objects.get(pk=self.kwargs['pk'])
         return post.likes.all()
 
     def get_context_data(self, *args):
         context = super().get_context_data(*args)
-        context['post'] = Post.objects.get(pk=self.kwargs['pk'], slug=self.kwargs['slug'])
+        context['post'] = Post.objects.get(pk=self.kwargs['pk'])
         return context
 
-class CommentStarrers(PaginationMixin, generic.ListView):
+class CommentLikers(PaginationMixin, generic.ListView):
     model = SiteUser
     context_object_name = 'siteuser_list'
-    template_name = 'siteuser/stargazers_comment.html'
+    template_name = 'siteuser/likers_comment.html'
     paginate_by = 24
 
     def get_queryset(self):

@@ -27,9 +27,9 @@ urlpatterns = [
 urlpatterns += [
     path("new-role/", views.NewRole.as_view(), name="role_create"),
     path("view/roles/", views.RoleIndex.as_view(), name="role_index"),
-    path('song-love-birds/<int:pk>/<slug:slug>/', views.SongStarGivers.as_view(), name='song_likers'),
-    path('post-love-birds/<int:pk>/<slug:slug>/', views.PostStarGivers.as_view(), name='post_likers'),
-    path('comment-love-birds/<int:pk>/', views.CommentStarrers.as_view(), name='comment_likers'),
+    path('song-likers/<int:pk>/', views.SongLikers.as_view(), name='song_likers'),
+    path('post-likers/<int:pk>/', views.PostLikers.as_view(), name='post_likers'),
+    path('comment-likers/<int:pk>/', views.CommentLikers.as_view(), name='comment_likers'),
 ]
 
 urlpatterns += [

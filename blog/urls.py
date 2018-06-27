@@ -14,7 +14,6 @@ urlpatterns = [
     path("post-moved/<int:pk>/<slug:slug>/", views.post_redirect_301_view, name="post_moved"),
 
     path("share-email/<int:pk>/<slug:slug>/", views.share_post_by_mail, name='share_post_by_mail'),
-    path("like/", views.post_like_view, name='like_post'),
 ]
 
 urlpatterns += [

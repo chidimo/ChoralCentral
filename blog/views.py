@@ -21,6 +21,7 @@ from siteuser.models import SiteUser
 from song.models import Song
 from redirect301.models import Url301
 
+from .utils import star_or_unstar_object
 from .models import Post, Comment
 from .forms import (
     PostShareForm, NewPostForm, PostEditForm,
@@ -44,27 +45,6 @@ def auto_blog(request):
     context['searchKey'] = settings.ALGOLIA['SEARCH_API_KEY']
     context['indexName'] = get_adapter(Post).index_name
     return render(request, 'blog/autocomplete_blog.html', context)
-
-@login_required
-@require_POST
-def post_like_view(request):
-    if request.method == 'POST':
-        user = SiteUser.objects.get(user=request.user)
-        pk = request.POST.get('pk', None)
-        post = get_object_or_404(Post, pk=pk)
-
-        if post.likes.filter(pk=user.pk).exists():
-            post.likes.remove(user)
-            post.like_count = post.likes.count()
-            post.save(update_fields=['like_count'])
-            message = "You unstarred this post.\n {} now has {} stars".format(post.title, post.like_count)
-        else:
-            post.likes.add(user)
-            post.like_count = post.likes.count()
-            post.save(update_fields=['like_count'])
-            message = "You starred this post.\n {} now has {} stars".format(post.title, post.like_count)
-    context = {'message' : message}
-    return HttpResponse(json.dumps(context), content_type='application/json')
 
 class NewPost(LoginRequiredMixin, generic.CreateView):
     context_object_name = 'post'
@@ -146,14 +126,33 @@ def post_detail_view(request, pk, slug):
     # Handle comment post via ajax
     if request.method == 'POST':
         if request.is_ajax():
-            print("Ajax request")
-            comment = request.POST.get('comment')
-            siteuser = request.user.siteuser
-            post = Post.objects.get(pk=pk, slug=slug)
 
-            Comment.objects.create(creator=siteuser, post=post, comment=comment)
-            data = {'success' : True, 'message' : 'Your comment was successfully added'}
-            return JsonResponse(data)
+            like_what = request.POST.get('like_what', None)
+            
+            if like_what == 'comment':
+                pk  = int(request.POST.get('pk')) # need to send this since I have multiple like buttons on this page
+                model = request.POST.get('model')
+                app_label = request.POST.get('app_label')
+                siteuser = request.user.siteuser
+                data = star_or_unstar_object(siteuser, pk, app_label, model)
+                return JsonResponse(data)
+            elif like_what is None:
+                comment = request.POST.get('comment')
+                siteuser = request.user.siteuser
+                post = Post.objects.get(pk=pk, slug=slug)
+                comm = Comment.objects.create(creator=siteuser, post=post, comment=comment)
+                comm.likes.add(siteuser)
+                comm.like_count = comm.likes.count()
+                comm.save(update_fields=['like_count'])
+
+                data = {'success' : True, 'message' : 'Your comment was successfully added'}
+                return JsonResponse(data)
+            elif like_what == 'post':
+                siteuser = request.user.siteuser
+                data = star_or_unstar_object(siteuser, pk, 'blog', 'post')
+                return JsonResponse(data)
+            else:
+                pass
 
     try:
         post = Post.objects.select_related('creator').get(pk=pk, slug=slug)

@@ -1,5 +1,5 @@
 {% extends "choralcentral_base.html" %}
-{% block title %}Stargazers: {{ comment.comment }}{% endblock title %}
+{% block title %}People who liked {{ comment.comment }}{% endblock title %}
 {% load thumbnail %}
 {% load static %}
 {% block introduction %}{% endblock introduction %}
@@ -7,7 +7,7 @@
 {% block content_content %}
 
    <div class="container">
-        <h2 class="my-4 text-center text-lg-left">Stargazers: {{ comment.comment }}</h2>
+        <h2 class="my-4 text-center text-lg-left">People who liked {{ comment.comment }}</h2>
         <hr>
 
         <div class="row text-center text-lg-left">
@@ -22,7 +22,7 @@
                     <p class="text-left"><a href="{% url 'siteuser:library' siteuser.pk siteuser.slug %}">{{ siteuser.screen_name }}</a></p>
                 </div>
             {% empty %}
-                <p>No lover for this comment.</p>
+                <p>No likes for this comment.</p>
             {% endfor %}
         </div>
     </div>
