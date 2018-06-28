@@ -121,7 +121,6 @@ PROJECT_APPS = [
 
 THIRD_PARTY_APPS = [
     'robots',
-    'compressor',
     'rest_framework',
     'sorl.thumbnail',
     'social_django',
@@ -236,7 +235,6 @@ AUTH_USER_MODEL = 'siteuser.CustomUser'
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',
 )
 
 ROBOTS_SITEMAP_URLS = [
