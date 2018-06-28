@@ -239,21 +239,6 @@ STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
 )
 
-COMPRESS_ROOT = STATICFILES_DIRS[0]
-COMPRESS_URL = STATIC_URL
-COMPRESS_PARSER = 'compressor.parser.AutoSelectParser'
-COMPRESS_ENABLED = config('COMPRESS_ENABLED')
-COMPRESS_OFFLINE = config('COMPRESS_OFFLINE')
-COMPRESS_OFFLINE_MANIFEST = 'compressor_manifest.json'
-COMPRESS_REBUILD_TIMEOUT = 60*60*24*15
-COMPRESS_FILTERS = {
-    'css': ['compressor.filters.css_default.CssAbsoluteFilter'],
-    'js': ['compressor.filters.jsmin.JSMinFilter']
-}
-COMPRESS_PRECOMPILERS = (
-    ('text/x-scss', 'django_libsass.SassCompiler'),
-)
-
 ROBOTS_SITEMAP_URLS = [
     'http://localhost:8000/sitemap.xml',
     'https://www.choralcentral.net/sitemap.xml',
