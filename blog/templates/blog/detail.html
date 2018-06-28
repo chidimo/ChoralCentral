@@ -111,8 +111,8 @@
                     {% else %}
                             <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:login' %}?next={{ request.path }}">Login to like</a>
                     {% endif %}
-
                     {% include "blog/ajax_like_comment.html" %}
+
                     <a class="btn btn-sm btn-primary icon-buttons" title="{{ comment.like_count }} likes" href="{% url 'siteuser:comment_likers' comment.pk %}">{{ comment.like_count }} <i class="fas fa-thumbs-up"></i></a>
                 </span>
     

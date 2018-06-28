@@ -32,6 +32,7 @@ from request.models import Request
 from author.models import Author
 from song_media.models import Score, Midi, VideoLink
 
+from .utils import star_or_unstar_object
 from .utils import check_recaptcha
 from .models import SiteUser, Role, Message
 from .forms import (PassWordGetterForm, EmailAndPassWordGetterForm, SiteUserRegistrationForm,
@@ -164,6 +165,15 @@ class SiteUserComments(PaginationMixin, generic.ListView):
     context_object_name = 'user_comments'
     template_name = "siteuser/comments.html"
     paginate_by = 20
+
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():        
+            pk  = int(request.POST.get('pk')) # need to send this since I have multiple like buttons on this page
+            model = request.POST.get('model')
+            app_label = request.POST.get('app_label')
+            siteuser = request.user.siteuser
+            data = star_or_unstar_object(siteuser, pk, app_label, model)
+            return JsonResponse(data)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -356,7 +366,7 @@ class SiteUserLibrary(LoginRequiredMixin, generic.DetailView):
         context['scores'] = Score.objects.filter(creator__pk=pk).select_related('song').order_by("song", "-fsize", "-created", "downloads")
         context['midis'] = Midi.objects.filter(creator__pk=pk).select_related('song').order_by("song", "-fsize", "-created", "downloads")
         context['user_videos'] = VideoLink.objects.filter(creator__pk=pk).select_related('song')
-        context['total_likes'] = 300
+        context['total_likes'] = "x"
         return context
 
 @login_required
@@ -393,7 +403,7 @@ def account_management(request):
     context['user_posts'] = Post.objects.filter(creator=siteuser)
     context['inbox_messages'] = Message.objects.filter(receiver=siteuser)
     context['outbox_messages'] = Message.objects.filter(creator=siteuser)
-    context['total_likes'] = 400
+    context['total_likes'] = "y"
 
     return render(request, template, context)
 

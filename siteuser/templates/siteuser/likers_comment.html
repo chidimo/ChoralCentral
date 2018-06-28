@@ -6,26 +6,43 @@
 
 {% block content_content %}
 
-   <div class="container">
-        <h2 class="my-4 text-center text-lg-left">People who liked {{ comment.comment }}</h2>
-        <hr>
-
-        <div class="row text-center text-lg-left">
-            {% for siteuser in siteuser_list %}
-                <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2">
-                    {% thumbnail siteuser.avatar "150x150" crop="center" as im %}
-                       <img alt="" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="img-fluid card">
-                    {% empty %}
-                       <img alt="" src="{% static 'img/django-logo.png' %}" width="150" height="150" class="img-fluid card">
-                    {% endthumbnail %}
-                    <p class="text-left">{{ siteuser.comment_set.count }} uploads</p>
-                    <p class="text-left"><a href="{% url 'siteuser:library' siteuser.pk siteuser.slug %}">{{ siteuser.screen_name }}</a></p>
-                </div>
-            {% empty %}
-                <p>No likes for this comment.</p>
-            {% endfor %}
-        </div>
+<div class='container siteuser-index-heading'>
+    <div class='row'>
+        <h3 class='float-left'>People who liked {{ song.title }}</h3>
     </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <p>{{ comment.comment }}</p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        {% for siteuser in siteuser_list %}
+            <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
+                {% thumbnail siteuser.avatar "150x150" crop="center" as im %}
+                    <img alt="" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="img-fluid card">
+                {% empty %}
+                    <img alt="" src="{% static 'img/django-logo.png' %}" width="150" height="150" class="img-fluid card">
+                {% endthumbnail %}
+                <p class="text-left"><a href="{% url 'siteuser:library' siteuser.pk siteuser.slug %}">{{ siteuser.screen_name }}</a></p>
+                <p class="text-left">Roles:
+                    {% for role in siteuser.roles.all %}
+                        <a href="{% url 'siteuser:siteusers_common_roles' role %}" title='See all {{ role.name|title }}s ({{ role.siteuser_set.count }})'>{{ role.name|title }}</a>{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+                <p class="text-left">Location: <a href="{% url 'siteuser:siteusers_common_location' siteuser.location %}" title="See others in {{ siteuser.location }}">{{ siteuser.location }}</a></p>
+                <p class="text-left">Activity: {{ siteuser.song_set.all|count_published }} songs, {{ siteuser.post_set.all|count_published }} blog posts,
+                    {{ siteuser.score_set.count }} scores, {{ siteuser.midi_set.count }} midis, {{ siteuser.comment_set.count }} comments
+                </p>
+            </div>
+        {% empty %}
+            <p>No one likes this comment.</p>
+        {% endfor %}
+    </div>
+</div>
 
 {% endblock content_content %}
 
