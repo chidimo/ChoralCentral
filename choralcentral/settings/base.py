@@ -91,6 +91,10 @@ REST_FRAMEWORK = {
     'PAGE_SIZE' : 100,
 }
 
+SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
+SESSION_COOKIE_AGE = 60 * 60 * 24
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
 # Application definition
 
 PREREQ_APPS = [

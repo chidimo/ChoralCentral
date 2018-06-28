@@ -1,11 +1,18 @@
 """Admin"""
-
+import pprint
 from django.contrib import admin
 from django.contrib.auth.models import Group, Permission
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from .models import CustomUser, Role, SiteUser, Message, SiteUserPermission
 from .forms import UserChangeForm, UserCreationForm
+
+from django.contrib.sessions.models import Session
+
+class SessionAdmin(admin.ModelAdmin):
+    def _session_data(self, obj):
+        return obj.get_decoded()
+    list_display = ('session_key', '_session_data', 'expire_date')
 
 class SiteUserAdmin(admin.ModelAdmin):
     list_display = ("pk", "screen_name", "user", "first_name", "last_name", 'all_roles', "slug", "location", "key", "quota", "used", "remaining_quota")
@@ -51,3 +58,4 @@ admin.site.register(Message, MessageAdmin)
 admin.site.register(SiteUserPermission, SiteUserPermissionAdmin)
 
 admin.site.unregister(Group)
+admin.site.register(Session, SessionAdmin)

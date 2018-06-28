@@ -43,6 +43,7 @@
 ## Optimizing database performance
 
 1. Use of `select_related` and `prefetch_related`
+1. Optimize sessions
 
 ## To do
 
@@ -102,6 +103,7 @@ some
 1. GRANT ALL PRIVILEGES ON myproject_test.* TO 'chandan'@'localhost';
 1. <https://github.com/jazzband/django-model-utils>
 1. <http://www.robotstxt.org/db.html>
+1. <https://docs.djangoproject.com/en/2.0/ref/settings/#settings>
 
 ## Credits
 

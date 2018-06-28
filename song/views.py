@@ -194,6 +194,7 @@ class SongIndex(PaginationMixin, generic.ListView):
         return context
 
     def get_queryset(self):
+        print(self.request.session)
         return Song.objects.\
         select_related('voicing', 'language', 'creator').\
         prefetch_related('seasons', 'mass_parts', 'authors').filter(publish=True)
