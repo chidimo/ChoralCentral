@@ -17,7 +17,6 @@ from django_addanother.views import CreatePopupMixin
 
 from google_api.api_calls import get_youtube_video_id, get_video_information, get_playlist_id, add_video_to_playlist
 
-from siteuser.models import SiteUser
 from song.models import Song
 
 from .models import VocalPart, ScoreNotation, Score, Midi, VideoLink
@@ -47,8 +46,22 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         context['song'] = Song.objects.get(pk=self.kwargs.get('pk', None))
         return context
 
+    def generate_pdf_preview(self, instance, full_media_path):
+        thumbnail_name = full_media_path.replace('.pdf', '')
+        thumbnail_file = thumbnail_name + '.png'
+
+        cmd = "pdftoppm -png -f 1 -singlefile {} {}".format(full_media_path, thumbnail_name)
+        os.system(cmd)
+
+        try:
+            content = File(open(thumbnail_file, "rb"))
+            instance.thumbnail.save(instance.song.title + '.png', content, save=True)
+            # os.remove(thumbnail_file)
+        except FileNotFoundError:
+            print("Probably pdftoppm not installed. File not generated")
+            pass
+
     def form_valid(self, form):
-        print("view ", form.instance.notation, ": ", form.instance.part, ": ", form.instance.media_file)
         siteuser = self.request.user.siteuser
         song = Song.objects.get(pk=self.kwargs.get('pk', None))
         form.instance.creator = siteuser
@@ -57,6 +70,8 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
 
         relative_media_path = self.object.media_file.url
         full_media_path = settings.BASE_DIR + relative_media_path
+
+        self.generate_pdf_preview(self.object, full_media_path)
 
         self.object.fsize = os.path.getsize(full_media_path)
         self.object.likes.add(siteuser)
