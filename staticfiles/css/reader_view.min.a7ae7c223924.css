@@ -1,0 +1,5 @@
+.column-1 p,.column-2 p,h6{font-weight:700;line-height:15px}.about,.lyrics{min-width:100%}.column-1,.lyrics{float:left}@page{size:A4 portrait;margin:1cm .5cm}@page{@top-right {
+    content:"Page " counter(page) " of " counter(pages);
+   };}@page{@top-left {
+    content:"ChoralCentral | The best way to share sheet music";
+   };}body{background:#f2f3fb}a{text-decoration:none}h1,h2,h3,h4,h5,h6{color:#191970;margin:0}h6{font-size:12px}.column-1 p,.column-2 p{font-size:14px}.column-1,.column-2{font-weight:600;display:block;width:50%;min-height:1px}span.about-headers{color:#6868a8}.column-2{float:right}*,::after,::before{box-sizing:border-box}
