@@ -55,7 +55,7 @@ class NewScoreForm(forms.ModelForm):
             'notation' : AddAnotherWidgetWrapper(
                 forms.Select(attrs={'class' : 'form-control'}),
                 reverse_lazy('song-media:new_notation')),
-            'media_file' : ClearableFileInput(attrs={'class' : 'form-control', 'accept' : 'application/pdf'}),
+            'media_file' : ClearableFileInput(attrs={'class' : 'form-control', 'accept' : '.pdf'}),
         }
 
     def clean(self):
@@ -78,7 +78,7 @@ class NewMidiForm(forms.ModelForm):
                 forms.Select(attrs={'class' : 'form-control'}),
                 reverse_lazy('song-media:new_part')),
 
-            'media_file' : ClearableFileInput(attrs={'class' : 'form-control'}),
+            'media_file' : ClearableFileInput(attrs={'class' : 'form-control', 'accept' : '.mp3, .mid, .midi'}),
 
             'description' : forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : 'Enter a short description (optional)'}),
         }

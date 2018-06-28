@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
 from django_addanother.widgets import AddAnotherWidgetWrapper
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.forms.widgets import ClearableFileInput
 
 from .models import SiteUser, Role, Message
 
@@ -104,12 +105,16 @@ class SiteUserEditForm(forms.ModelForm):
             "location" : forms.TextInput(attrs={'class' : 'form-control', "placeholder" : "Location"}),
             "roles" : AddAnotherWidgetWrapper(
                 forms.SelectMultiple(attrs={'class' : 'form-control'}),
-                reverse_lazy('siteuser:role_create')),}
+                reverse_lazy('siteuser:role_create')),
+            'avatar' : ClearableFileInput(attrs={'class' : 'form-control', 'accept' : '.png, .PNG, .jpg, .JPG, .jpeg, .JPG'}),
+        }
+
     def clean_location(self):
         location = self.cleaned_data['location']
-        if location:
-            location = location.lower()
-        return location
+        try:
+            return location.lower().strip()
+        except AttributeError:
+            return ''
 
 class PassWordGetterForm(forms.Form):
     password = forms.CharField(

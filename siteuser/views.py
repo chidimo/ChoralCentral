@@ -257,8 +257,7 @@ class SiteUserEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     success_message = "Profile updated successfully."
 
     def get_object(self):
-        user = self.request.user
-        return SiteUser.objects.get(pk=user.pk)
+        return self.request.user.siteuser
 
     def get_success_url(self):
         return reverse('siteuser:account_management')
@@ -328,7 +327,6 @@ class RoleIndex(generic.ListView):
     template_name = 'siteuser/role_index.html'
 
 def admin_media_index(request):
-    user = request.user
     try:
         if user.is_admin is False:
             return redirect('/')
@@ -338,7 +336,7 @@ def admin_media_index(request):
     context = {}
     context['scores'] = Score.objects.all()
     context['midis'] = Midi.objects.all()
-    context['siteuser'] = SiteUser.objects.get(user=request.user)
+    context['siteuser'] = request.user.siteuser
     return render(request, template, context)
 
 class SiteUserLibrary(LoginRequiredMixin, generic.DetailView):
