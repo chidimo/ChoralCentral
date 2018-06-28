@@ -7,7 +7,7 @@
 1. Reset all app keys (facebook, twitter, google, yahoo, algolia)
 1. Remake all migrations and reset db
 1. 5 songs ready to upload (Bia nye chukwu ezi ekele, Ana kiranku)
-1. Clear media folder
+1. Clear media folder, clear google drive
 1. Delete `staticfiles` and rerun `python manage.py compress` and `python manage.py collectstatic`
 1. Change my personal account and django admin password (lastpass)
 1. Edit the sites app and replace example.com with choralcentral.net
