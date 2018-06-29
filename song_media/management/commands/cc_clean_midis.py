@@ -13,12 +13,16 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('Midi cleanup started'))
 
         midi_folder = os.path.join(settings.MEDIA_ROOT, 'midis')
-        midi_files = [each.replace('\\', '/') for each in glob.glob("media/midis/*.pdf".format(midi_folder))]
+        mid_files = [each.replace('\\', '/') for each in glob.glob("media/midis/*.mid".format(midi_folder))]
+        mp3_files = [each.replace('\\', '/') for each in glob.glob("media/midis/*.mp3".format(midi_folder))]
+        midi_files = [each.replace('\\', '/') for each in glob.glob("media/midis/*.midi".format(midi_folder))]
+
+        files = mid_files + mp3_files + midi_files
         midis = [midi.media_file.url for midi in Midi.objects.all()]
 
-        for midi in midi_files:
+        for midi in files:
             if '/{}'.format(midi) in midis:
-                self.stdout.write(self.style.SUCCESS('Cleaning started'.))
+                self.stdout.write(self.style.SUCCESS('Cleaning started'))
                 self.stdout.write(self.style.SUCCESS('Keep: Object exists for {}'.format(midi)))
             else:
                 self.stdout.write(self.style.NOTICE('Delete: No object for {}'.format(midi)))
