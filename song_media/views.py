@@ -56,7 +56,7 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         try:
             content = File(open(thumbnail_file, "rb"))
             instance.thumbnail.save(instance.song.title + '.png', content, save=True)
-            # os.remove(thumbnail_file)
+            os.remove(thumbnail_file)
         except FileNotFoundError:
             print("Probably pdftoppm not installed. File not generated")
             pass

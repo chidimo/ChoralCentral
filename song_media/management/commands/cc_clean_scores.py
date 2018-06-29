@@ -18,7 +18,6 @@ class Command(BaseCommand):
 
         for score in pdf_files:
             if '/{}'.format(score) in scores:
-                self.stdout.write(self.style.SUCCESS('Cleaning started'))
                 self.stdout.write(self.style.SUCCESS('Keep: Object exists for {}'.format(score)))
             else:
                 self.stdout.write(self.style.NOTICE('Delete: No object for {}'.format(score)))

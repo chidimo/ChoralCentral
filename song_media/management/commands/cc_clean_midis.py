@@ -22,7 +22,6 @@ class Command(BaseCommand):
 
         for midi in files:
             if '/{}'.format(midi) in midis:
-                self.stdout.write(self.style.SUCCESS('Cleaning started'))
                 self.stdout.write(self.style.SUCCESS('Keep: Object exists for {}'.format(midi)))
             else:
                 self.stdout.write(self.style.NOTICE('Delete: No object for {}'.format(midi)))
