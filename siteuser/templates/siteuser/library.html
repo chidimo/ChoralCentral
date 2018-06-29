@@ -47,13 +47,13 @@
                     <tr>
                         <td>{{ forloop.counter }}</td>
                         <td>{% if song.publish %}Public{% else %}<span class="text-danger">Private</span>{% endif %}</td>
-                        <td><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></td>
+                        <td><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title|title }}</a></td>
                         <td>{{ song.like_count }}</td>
                         <td>{{ song.created|date }}</td>
                         <td>
                             {% if is_library_owner == True %}
                                 <a href="{% url 'song:edit' song.pk song.slug %}" title='Edit'><i class="fas fa-edit"></i></a> |
-                                <a href="{% url 'song:delete' song.pk %}" title='Delete {{ song.title }}'><i class="fas fa-trash"></i></a> |
+                                <a href="{% url 'song:delete' song.pk %}" title='Delete {{ song.title|title }}'><i class="fas fa-trash"></i></a> |
                             {% endif %}
                         </td>
                     </tr>
@@ -81,7 +81,7 @@
                     <tr>
                         <td>{{ forloop.counter }}</td>
                         <td>{% if post.publish %}Public{% else %}<span class="text-danger">Private</span>{% endif %}</td>
-                        <td><a href="{% url 'blog:detail' post.pk post.slug %}">{{ post.title }}</a></td>
+                        <td><a href="{% url 'blog:detail' post.pk post.slug %}">{{ post.title|title }}</a></td>
                         <td>
                             {% if is_library_owner is True %}
                                 <a href="{% url 'blog:edit' post.pk %}"><i class="fas fa-edit"></i></a> |
@@ -196,7 +196,7 @@
                 {% for score in scores %}
                     <tr>
                         <td>{{ forloop.counter }}</td>
-                        <td><a href="{% url 'song:detail' score.song.pk score.song.slug %}">{{ score.song.title }}</a></td>
+                        <td><a href="{% url 'song:detail' score.song.pk score.song.slug %}">{{ score.song.title|title }}</a></td>
                         <td>{{ score.song.creator }}</td>
                         <td>{{ score.creator }}</td>
                         <td>{{ score.like_count }}</td>
@@ -246,7 +246,7 @@
                     {% for midi in midis %}
                         <tr>
                             <td>{{ forloop.counter }}</td>
-                            <td><a href="{% url 'song:detail' midi.song.pk midi.song.slug %}">{{ midi.song.title }}</a></td>
+                            <td><a href="{% url 'song:detail' midi.song.pk midi.song.slug %}">{{ midi.song.title|title }}</a></td>
                             <td>{{ midi.song.creator }}</td>
                             <td>{{ midi.creator }}</td>
                             <td>{{ midi.like_count }}</td>
@@ -290,7 +290,7 @@
                 {% for video in user_videos %}
                     <tr>
                         <td>{{ forloop.counter }}</td>
-                        <td><a href="{% url 'song:detail' video.song.pk video.song.slug %}">{{ video.song.title }}</a></td>
+                        <td><a href="{% url 'song:detail' video.song.pk video.song.slug %}">{{ video.song.title|title }}</a></td>
                         <td>{{ video.song.creator }}</td>
                         <td>{{ video.creator }}</td>
                         <td><a href="{{ video.channel_link }}" target="_blank"><i class="fas fa-play"></i></a></td>
