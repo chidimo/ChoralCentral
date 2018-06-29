@@ -1,1 +1,0 @@
-choralcentral.settings.prod

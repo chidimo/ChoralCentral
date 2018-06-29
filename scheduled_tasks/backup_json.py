@@ -4,7 +4,7 @@
 import os
 import time
 
-dump_directory = '/home/parousia/backups'
+dump_directory = '/home/parousia/backups/choralcentral/json'
 datetime = time.strftime('%Y_%m_%d_%H_%M_%S')
 db_save_file = "choralcentral_json_dump_{}.json".format(datetime)
 
