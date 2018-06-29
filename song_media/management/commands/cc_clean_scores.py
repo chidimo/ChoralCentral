@@ -13,20 +13,14 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('Score cleanup started'))
 
         score_folder = os.path.join(settings.MEDIA_ROOT, 'scores')
-        pdf_scores = [each for each in glob.glob("{}/*.pdf".format(score_folder))]
+        pdf_files = [each.replace('\\', '/') for each in glob.glob("media/scores/*.pdf".format(score_folder))]
         scores = [score.media_file.url for score in Score.objects.all()]
 
-        print('pdf_scores')
-        print(pdf_scores)
-        print()
-        print('scores')
-        print(scores)
-
-        for score in pdf_scores:
-            if score in scores:
-                print(score)
-                self.stdout.write(self.style.SUCCESS('{} has object. Keep'.format(score)))
+        for score in pdf_files:
+            if '/{}'.format(score) in scores:
+                self.stdout.write(self.style.SUCCESS('Cleaning started'.))
+                self.stdout.write(self.style.SUCCESS('Keep: Object exists for {}'.format(score)))
             else:
-                self.stdout.write(self.style.NOTICE('{} has no object. Deleting'.format(score)))
-                continue
+                self.stdout.write(self.style.NOTICE('Delete: No object for {}'.format(score)))
+                os.remove(score)
         self.stdout.write(self.style.SUCCESS('Score cleanup completed successfully'))
