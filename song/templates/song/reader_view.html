@@ -3,12 +3,12 @@
     <head>
         {% load song_ttags %}
         {% load static %}
-        <title>ChoralCentral | {{ song.title }} pdf sheet</title>
+        <title>ChoralCentral | {{ song.title|title }} pdf sheet</title>
         <link rel='stylesheet' type='text/css' href="{% static 'css/reader_view.min.css' %}">
     </head>
 
     <body>
-        <h2><a href="https://www.choralcentral.net/home/">ChoralCentral</a> | <a href="{{ song.get_absolute_uri }}">{{ song.title }}</a></h2>
+        <h2><a href="https://www.choralcentral.net/home/">ChoralCentral</a> | <a href="{{ song.get_absolute_uri }}">{{ song.title|title }}</a></h2>
         <hr>
 
         <div class='about'>
@@ -18,7 +18,7 @@
                 <h6><span class="about-headers">Genre:</span> {{ song.genre|title }}</h6>
                 <h6><span class="about-headers">For:</span> {{ song.voicing|upper }}</h6>
                 <h6><span class="about-headers">Tempo:</span> {{ song.tempo }}</h6>
-                <h6><span class="about-headers">Performed:</span> {{ song.tempo_text }}</h6>
+                <h6><span class="about-headers">Performed:</span> {{ song.tempo_text|title }}</h6>
                 <h6><span class="about-headers">Timing:</span> {{ song.bpm }}/{{ song.divisions }}</h6>
             </div>
 
@@ -38,7 +38,7 @@
 
                 <h6><span class="about-headers">Authors:</span> 
                     {% for author in song.authors.all %}
-                    <a href="{{ author.get_absolute_uri }}">{{ author }}</a>{% if not forloop.last %},{% endif %}
+                    <a href="{{ author.get_absolute_uri }}" target="_blank">{{ author }}</a>{% if not forloop.last %},{% endif %}
                     {% endfor %}
                 </h6>
                 <h6><span class="about-headers">Composed:</span> {{ song.year }}</h6>

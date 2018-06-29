@@ -1,5 +1,5 @@
 """Models"""
-
+import os
 from datetime import datetime
 
 from django.db import models
@@ -108,7 +108,7 @@ class Song(TimeStampedModel):
 
     def algolia_index_this(self):
         """Set which objects are indexed by Algolia"""
-        return self.publish
+        return self.publish & (os.environ['DJANGO_SETTINGS_MODULE'] == 'choralcentral.settings.prod')
 
     def save(self, *args, **kwargs):
         if self.pk:

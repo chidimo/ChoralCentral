@@ -22,6 +22,8 @@
 
     python manage.py makemigrations song_media
 
+    python manage.py makemigrations redirect301
+
     python manage.py makemigrations request
 
     python manage.py makemigrations drb

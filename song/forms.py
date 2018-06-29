@@ -155,7 +155,7 @@ class NewSongForm(forms.ModelForm):
 class SongEditForm(forms.ModelForm):
     class Meta:
         model = Song
-        fields = ["publish", "genre", "ocassion", "title", "year", "lyrics",
+        fields = ["publish", "title",  "ocassion", "genre", "year", "lyrics",
             "scripture_reference", "language", "tempo", "bpm",
             "divisions", "voicing", "authors", "seasons", "mass_parts",]
 

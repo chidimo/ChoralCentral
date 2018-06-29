@@ -25,11 +25,11 @@
 {% endblock content_content %}
 
 {% block javascript %}
-<script src="//cdn.jsdelivr.net/hogan.js/3.0.2/hogan.min.js"></script>
     {% verbatim %}
         <script type="text/template" id="hit-template">
             <div class="list-songs container">
                 <h4><a href="{{ get_absolute_url }}">{{{ _highlightResult.title.value }}}</a></h4>
+                <h4><a href="{{ get_absolute_url }}">{ {{{ _highlightResult.title.value }}} }</a></h4>
 
                 <div class="row">
                     <div class="col-sm-12 song-index-meta">

@@ -1,5 +1,5 @@
 {% extends "choralcentral_base.html" %}
-{% if song %}{% block title %}{{ song }}{% endblock title %} {% endif %}
+{% if song %}{% block title %}{{ song.title|title }}{% endblock title %} {% endif %}
 {% load thumbnail %}
 {% load social_share %}
 {% load static %}
@@ -13,7 +13,11 @@
 <div class='container-fluid song-detail-header' itemscope itemtype="https://schema.org/CreativeWork">
     <div class='row'>
         <div class='col-sm-12 head-title' id="songTitleBox">
-            <span class='float-left' itemprop="name">{{ song.title|title }}</span>
+            {% if song.publish %}
+                <span class='float-left' itemprop="name">{{ song.title|title }}</span>
+            {% else %}
+                <span class='float-left text-danger' itemprop="name">{{ song.title|title }}</span>
+            {% endif %}
 
             <span class='float-right song-icons'>
 
@@ -87,7 +91,7 @@
 
                 <div class="col-sm-12">
                     <span class="h6 float-left">Performed</span>
-                    <span class="h6 float-right">{{ song.tempo_text }}</span>
+                    <span class="h6 float-right">{{ song.tempo_text|title }}</span>
                 </div>
 
                 <div class="col-sm-12">

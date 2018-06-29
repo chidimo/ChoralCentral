@@ -51,7 +51,7 @@
                 data : {comment : comment, csrfmiddlewaretoken : csrftoken},
                 success : function(data){
                     if (data.success) {
-                        alert(data.message)
+                        //alert(data.message)
                         // reload the comments section of the page                        
                         $('#commentsSection').load(window.location.href + " #commentsSection>*","")
                         // clear form input

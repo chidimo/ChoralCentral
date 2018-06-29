@@ -36,25 +36,25 @@ def get_tempo_text(tempo):
     if not tempo:
         return "Not set"
     if tempo <= 25:
-        return "Larghissimo"
+        return "larghissimo"
     elif 40 <= tempo <= 45:
-        return "Grave"
+        return "grave"
     elif 46 <= tempo <= 50:
-        return "Largo"
+        return "largo"
     elif 51 <= tempo <= 60:
-        return "Lento"
+        return "lento"
     elif 61 <= tempo <= 80:
-        return "Andante"
+        return "andante"
     elif 81 <= tempo <= 100:
-        return "Moderato"
+        return "moderato"
     elif 101 <= tempo <= 125:
-        return "Allegretto"
+        return "allegretto"
     elif 126 <= tempo <= 145:
-        return "Vivace"
+        return "vivace"
     elif 146 <= tempo <= 200:
-        return "Presto"
+        return "presto"
     else:
-        return "Prestissimo"
+        return "prestissimo"
 
 def check_user_quota(func):
     """Checks whether a user has enough quota to make an API call"""

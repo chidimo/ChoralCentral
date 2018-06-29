@@ -10,7 +10,5 @@ from .models import Song
 def reindex_songs_on_algolia(sender, instance, **kwargs):
     """Reindex songs when a song is saved only on production system"""
 
-    if settings.SKIP_TASK is False:
-        cmd = 'python manage.py algolia_reindex'
-        os.system(cmd)
-        print('Algolia index successfully update')
+    if os.environ['DJANGO_SETTINGS_MODULE'] == 'choralcentral.settings.prod':
+        os.system('python manage.py algolia_reindex')

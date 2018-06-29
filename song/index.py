@@ -16,5 +16,6 @@ class SongIndex(AlgoliaIndex):
         'queryType': 'prefixAll',
         'highlightPreTag': '<mark>',
         'highlightPostTag': '</mark>',
-        'hitsPerPage': 20
+        # 'hitsPerPage': 20,
+        'paginationLimitedTo' : 0
     }

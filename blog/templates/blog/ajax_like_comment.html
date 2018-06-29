@@ -57,7 +57,7 @@
                 },
                 success : function(data, textStatus, jqXHR){
                     if (data.success) {
-                        alert(data.message)
+                        //alert(data.message)
                         var commentStatBox = '#commentStatBox{{ forloop.counter }}'
                         // reload title box. This doesn't refresh the like button itself.
                         $(commentStatBox).load(window.location.href +" " + commentStatBox + ">*","")
