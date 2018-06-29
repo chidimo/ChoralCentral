@@ -17,11 +17,11 @@
     <div class="row">
         {% for each in siteuser_list %}
             <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 siteuser-index-details">
-                {% thumbnail each.siteuser.avatar "150x150" crop="center" as im %}
-                   <a href="{{ each.siteuser.avatar.url }}" target="_blank"><img alt="" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="img-fluid card"></a>
-                {% empty %}
-                   <img alt="" src="{% static 'img/django-logo.png' %}" width="150" height="150" class="img-fluid card">
-                {% endthumbnail %}
+
+                {% with each.siteuser as siteuser %}
+                    {% include "siteuser/avatar.html" %}
+                {% endwith %}
+
                 <h6 class="text-left"><a href="{% url 'siteuser:library' each.siteuser.pk each.siteuser.slug %}">{{ each.siteuser.screen_name }}</a></h6>
                 <p class="text-left">
                     {% for role in each.siteuser_roles %}

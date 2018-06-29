@@ -2,13 +2,13 @@
 
 ## Production setup
 
-1. Set DEBUG False
+1. Set DEBUG False, create production branch
 1. Run `production_setup()` from `starter.py`
 1. Reset all app keys (facebook, twitter, google, yahoo, algolia)
 1. Remake all migrations and reset db
 1. 5 songs ready to upload (Bia nye chukwu ezi ekele, Ana kiranku)
 1. Clear media folder, clear google drive
-1. Delete `staticfiles` and rerun `python manage.py compress` and `python manage.py collectstatic`
+1. Delete `staticfiles` and rerun `python manage.py collectstatic`
 1. Change my personal account and django admin password (lastpass)
 1. Edit the sites app and replace example.com with choralcentral.net
 
@@ -35,6 +35,10 @@
     python manage.py cc_backup_score
 
     python manage.py cc_backup_midi
+
+    python manage.py cc_cleanup_scores
+
+    python manage.py cc_cleanup_midis
 
     python manage.py cc_reset_api_quotas
 

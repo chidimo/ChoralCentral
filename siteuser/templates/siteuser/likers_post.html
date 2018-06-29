@@ -1,7 +1,5 @@
 {% extends "choralcentral_base.html" %}
-{% block title %}People who liked {{ post.title }}{% endblock title %}
-{% load thumbnail %}
-{% load static %}
+{% block title %}People who liked {{ post.title|title }}{% endblock title %}
 {% load siteuser_tags %}
 {% block introduction %}{% endblock introduction %}
 
@@ -17,11 +15,7 @@
     <div class="row">
         {% for siteuser in siteuser_list %}
             <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
-                {% thumbnail siteuser.avatar "150x150" crop="center" as im %}
-                   <img alt="" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="img-fluid card">
-                {% empty %}
-                   <img alt="" src="{% static 'img/django-logo.png' %}" width="150" height="150" class="img-fluid card">
-                {% endthumbnail %}
+                {% include "siteuser/avatar.html" %}
                 <h6 class="text-left"><a href="{% url 'siteuser:library' siteuser.pk siteuser.slug %}">{{ siteuser.screen_name }}</a></h6>
             </div>
         {% empty %}

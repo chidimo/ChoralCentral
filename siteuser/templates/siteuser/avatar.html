@@ -1,0 +1,8 @@
+{% load thumbnail %}
+{% load static %}
+
+{% thumbnail siteuser.avatar "150x150" crop="center" as im %}
+    <a href="#"><img alt="" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="img-fluid card"></a>
+{% empty %}
+    <img alt="" src="{% static 'img/django-logo.png' %}" width="150" height="150" class="img-fluid card">
+{% endthumbnail %}

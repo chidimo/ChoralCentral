@@ -1,15 +1,9 @@
-{% load static %}
-{% load thumbnail %}
 
 <div class="container song-about">
     <div class="row">
         <div class="col-sm-3 col-md-6">
-            <a class="nav-link px-0" href="">
-                {% thumbnail siteuser.avatar "150x150" crop="center" as im %}
-                    <img class="card" src="{{ siteuser.avatar.url }}" width="150" height="150">
-                {% empty %}
-                    <img class="card" src="{% static 'img/django-logo.png' %}">
-                {% endthumbnail %}
+            <a class="nav-link px-0" href="#">
+                {% include "siteuser/avatar.html" %}
             </a>
         </div>
         <div class="col-sm-3 col-md-6">
