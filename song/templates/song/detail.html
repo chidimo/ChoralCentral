@@ -41,12 +41,12 @@
                 <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'blog:new_song' song.pk %}" title="Make a post about {{ song.title }}"><i class="fas fa-pencil-alt"></i></a>
                 <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song:reader_view' song.pk song.slug %}" title="Print {{ song.title }} in pdf format" target="_blank"><i class="fas fa-print"></i></a>
 
-                {% with song.title as link_text %}
+                {% with song.title|title as link_text %}
                     {% post_to_facebook song link_text %}
                 {% endwith %}
 
-                {% with song.title as link_text %}
-                    {% post_to_twitter "Check out {{song.title}}" song link_text %}
+                {% with song.title|title as link_text %}
+                    {% post_to_twitter "New song {{ song.title|title }}" song link_text %}
                 {% endwith %}
 
                 <a class="btn btn-sm btn-primary icon-buttons" href="" title="Email {{ song.title }}" data-toggle="modal" data-target="#emailModal">
@@ -191,7 +191,7 @@
                             {% endif %}
                         </span>
                         {% include 'song/ajax_like_score.html' %}
-        
+
                     </div>
                 </div>
             </div>
@@ -226,7 +226,7 @@
                         <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song-media:download_midi' midi.pk %}" target="_blank" title="Click to Download: {{ midi.downloads }} total downloads">
                             <span class="download-count">{{ midi.downloads }}</span> <i class="fas fa-download"></i>
                         </a>
-                        
+
                         <span id="midiDetailBox{{ forloop.counter }}">
                             <a class="btn btn-sm btn-primary icon-buttons" title="" href="#">{{ midi.like_count }} <i class="fas fa-thumbs-up"></i></a>
                             {% if user.is_authenticated %}

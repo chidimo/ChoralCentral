@@ -99,8 +99,13 @@ class Song(TimeStampedModel):
     def get_absolute_uri(self):
         return "https://www.choralcentral.net" + reverse('song:detail', kwargs={'pk' : self.pk, 'slug' : self.slug})
 
+
+    @property
+    def titled_title(self):
+        return self.title.title() + "whaterver"
+
     def __str__(self):
-        return self.title
+        return self.title.title()
 
     def all_authors(self):
         names = ["{} {}".format(author.first_name, author.last_name) for author in self.authors.all()]
