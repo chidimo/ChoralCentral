@@ -217,8 +217,8 @@ def new_siteuser(request):
             subject = "Welcome to ChoralCentral {}.".format(screen_name)
             from_email = settings.EMAIL_HOST_USER
 
-            text_email = render_to_string("welcome_email_template.txt", context)
-            html_email = render_to_string("welcome_email_template.html", context)
+            text_email = render_to_string("siteuser/welcome_email_template.txt", context)
+            html_email = render_to_string("siteuser/welcome_email_template.html", context)
 
             for each in [email, "choralcentral@gmail.com"]:
                 msg = EmailMultiAlternatives(subject, text_email, from_email, [each])
