@@ -80,9 +80,8 @@ class InstantSong(PaginationMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = SongFilterForm()
-        context['appID'] = settings.ALGOLIA['APPLICATION_ID']
-        context['searchKey'] = settings.ALGOLIA['SEARCH_API_KEY']
+        context['appId'] = settings.ALGOLIA['APPLICATION_ID']
+        context['apiKey'] = settings.ALGOLIA['SEARCH_API_KEY']
         context['indexName'] = get_adapter(Song).index_name
         return context
 
@@ -194,7 +193,6 @@ class SongIndex(PaginationMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        print(self.request.session)
         return Song.objects.\
         select_related('voicing', 'language', 'creator').\
         prefetch_related('seasons', 'mass_parts', 'authors').filter(publish=True)
@@ -312,62 +310,6 @@ class SongDelete(generic.DeleteView):
             return self.render_to_response(self.get_context_data())
         messages.error(self.request, CONTEXT_MESSAGES['OPERATION_FAILED'])
         return redirect(self.get_success_url())
-
-class FilterSongs(PaginationMixin, SuccessMessageMixin, generic.ListView):
-    model = Song
-    template_name = "song/index.html"
-    context_object_name = "songs"
-    paginate_by = 20
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form'] = SongFilterForm()
-        context['is_filter'] = "yes"
-        return context
-
-    def get_queryset(self):
-        if self.request.method == 'GET':
-            form = SongFilterForm(self.request.GET)
-            if form.is_valid():
-                form = form.cleaned_data
-                combinator = form['combinator']
-                genre = form['genre']
-                season = form['season']
-                masspart = form['masspart']
-                language = form["language"]
-
-                if (genre == '') and (season == None) and (masspart == None) and (language == None):
-                    messages.success(self.request, "You did not make any selection.")
-                    return Song.objects.select_related('voicing', 'language', 'creator').\
-                    prefetch_related('seasons', 'mass_parts', 'authors').filter(publish=True)
-
-                queries = []
-                msg = []
-                if genre:
-                    queries.append(Q(genre=genre))
-                    msg.append("Genre '{}'".format(genre))
-                if season:
-                    queries.append(Q(seasons__id__exact=season.id))
-                    msg.append("Season '{}'".format(season))
-                if masspart:
-                    queries.append(Q(mass_parts__id__exact=masspart.id))
-                    msg.append("Masspart '{}'".format(masspart))
-                if language:
-                    queries.append(Q(language__id__exact=language.id))
-                    msg.append("Language '{}'".format(language))
-
-                if combinator == 'or':
-                    query = reduce(operator.or_, queries)
-                    query_str = " OR ".join(msg)
-                else:
-                    query = reduce(operator.and_, queries)
-                    query_str = " AND ".join(msg)
-
-                query = operator.and_(query, Q(publish=True)) # filter out unpublished songs and remove duplicates
-                results = Song.objects.filter(query).select_related('voicing', 'language', 'creator').\
-                prefetch_related('seasons', 'mass_parts', 'authors').distinct()
-                messages.success(self.request, "found {} results for {}".format(results.count(), query_str))
-                return results
 
 def reader_view(request, pk, slug):
     template = 'song/reader_view.html'

@@ -13,88 +13,80 @@
         </div>
     </div>
 
-    <div class="row search-info-box">
-        <div class="col-sm-12" id="hits-stat"></div>
-    </div>
-
-    <div class="row search-info-box">
-        <div class="col-sm-12 d-none" id="no-hits"></div>
-    </div>
-
+    <div class="row search-info-box"><div class="col-sm-12" id="hits-stat"></div></div>
+    <div class="row search-info-box"><div class="col-sm-12 d-none" id="no-hits"></div></div>
     <div id="hits-container"></div>
+
 {% endblock content_content %}
 
 {% block javascript %}
 <script src="//cdn.jsdelivr.net/hogan.js/3.0.2/hogan.min.js"></script>
-    {% verbatim %}
-        <script type="text/template" id="hit-template">
-            <div class="list-songs container">
-                <h4><a href="{{ get_absolute_url }}">{{{ _highlightResult.title.value }}}</a></h4>
 
-                <div class="row">
-                    <div class="col-sm-12 song-index-meta">
-                        <span class="song-meta float-left">
-                            <span class="btn btn-sm btn-primary icon-buttons text-voicing">{{{ _highlightResult.all_authors.value }}}</span>
-                            <span class="btn btn-sm btn-primary icon-buttons text-genre">{{{ _highlightResult.genre.value }}}</span>
-                            <span class="btn btn-sm btn-primary icon-buttons text-ocassion">{{{ _highlightResult.ocassion.value }}}</span>
-                        </span>
-                    </div>
+<script type="text/template" id="hit-template">
+    {% verbatim %}
+        <div class="list-songs container">
+            <h4><a href="{{ get_absolute_url }}">{{{ _highlightResult.title.value }}}</a></h4>
+
+            <div class="row">
+                <div class="col-sm-12 song-index-meta">
+                    <span class="song-meta float-left">
+                        <span class="btn btn-sm btn-primary icon-buttons text-voicing">{{{ _highlightResult.all_authors.value }}}</span>
+                        <span class="btn btn-sm btn-primary icon-buttons text-genre">{{{ _highlightResult.genre.value }}}</span>
+                        <span class="btn btn-sm btn-primary icon-buttons text-ocassion">{{{ _highlightResult.ocassion.value }}}</span>
+                    </span>
                 </div>
-                <p>{{{ _highlightResult.lyrics.value }}}</p>
             </div>
-        </script>
+            <p>{{{ _highlightResult.lyrics.value }}}</p>
+        </div>
     {% endverbatim %}
+</script>
+    
 <script>
 
-$(document).ready(function() {
-    var $inputField = $('#q');
-    var $hitsContainer = $('#hits-container');
-    var $noHits = $('#no-hits');
-    var $hitsStat = $('#hits-stat');
-    var hitTemplate = Hogan.compile($('#hit-template').text());
+    $(document).ready(function() {
+        var $inputField = $('#q');
+        var $hitsContainer = $('#hits-container');
+        var $noHits = $('#no-hits');
+        var $hitsStat = $('#hits-stat');
+        var hitTemplate = Hogan.compile($('#hit-template').text());
 
-    var client = algoliasearch('{{ appID }}', '{{ searchKey }}');
-    var helper = algoliasearchHelper(client, '{{ indexName }}');
+        var client = algoliasearch('{{ appId }}', '{{ apiKey }}');
+        var helper = algoliasearchHelper(client, '{{ indexName }}');
 
-    $('.search-terms a').click(function(e) {
-        $inputField.val($(this).text()).change().focus();
-        $inputField.keyup();
-    });
+        $inputField.on('keyup', function() {
+            var query = $inputField.val();
+            helper.setQuery(query).search();
+        }).focus();
 
-    $inputField.on('keyup', function() {
-        var query = $inputField.val();
-        helper.setQuery(query).search();
-    }).focus();
+        helper.on('result', function(data) {
+        renderHits(data);
+        });
 
-    helper.on('result', function(data) {
-    renderHits(data);
-    });
+        helper.search(); // start search
 
-    helper.search(); // first search
+        function renderHits(content) {
+        var hitsHtml = '';
 
-    function renderHits(content) {
-    var hitsHtml = '';
+        if (content.hits.length === 0) {
+            hitsHtml = '<p class="text-center text-danger lead">We didn\'t find any results for your search.</p>';
+            $noHits.html(hitsHtml);
+            $noHits.removeClass('d-none');
+            $hitsContainer.addClass('d-none');
+        } else {
+            for (var i = 0; i < content.hits.length; ++i) {
+            hitsHtml += hitTemplate.render(content.hits[i]);
+            }
 
-    if (content.hits.length === 0) {
-        hitsHtml = '<p class="text-center text-danger lead">We didn\'t find any results for your search.</p>';
-        $noHits.html(hitsHtml);
-        $noHits.removeClass('d-none');
-        $hitsContainer.addClass('d-none');
-    } else {
-        for (var i = 0; i < content.hits.length; ++i) {
-        hitsHtml += hitTemplate.render(content.hits[i]);
+            $hitsContainer.html(hitsHtml);
+            $hitsContainer.removeClass('d-none');
+            $noHits.addClass('d-none');
         }
 
-        $hitsContainer.html(hitsHtml);
-        $hitsContainer.removeClass('d-none');
-        $noHits.addClass('d-none');
-    }
-
-    $hitsStat.html('<div class="container"><div class="row"><div class="result-count col-sm-6">Found <b>' +
-        content.nbHits + '</b> results in <b>' + content.processingTimeMS + '</b>ms ' +
-        '</div> <div class="algolia col-sm-6 text-right"><a href="http://www.algolia.com" target="_blank">by Algolia <i class="fab fa-algolia fa-2x"></i></a></div></div></div>'
-    );
-    }
-});
+        $hitsStat.html('<div class="container"><div class="row"><div class="result-count col-sm-6">Found <b>' +
+            content.nbHits + '</b> results in <b>' + content.processingTimeMS + '</b>ms ' +
+            '</div> <div class="algolia col-sm-6 text-right"><a href="http://www.algolia.com" target="_blank">by Algolia <i class="fab fa-algolia fa-2x"></i></a></div></div></div>'
+        );
+        }
+    });
 </script>
 {% endblock javascript %}

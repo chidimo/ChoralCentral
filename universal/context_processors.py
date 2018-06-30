@@ -5,7 +5,6 @@ def site_stats(request):
     return {
         'lang_count' : Language.objects.count(),
         'voice_count' : Voicing.objects.count(),
-        'song_count' : Song.objects.filter(publish=True).count(),
     }
 
 def unread_messages(request):

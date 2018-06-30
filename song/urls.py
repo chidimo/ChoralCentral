@@ -25,7 +25,6 @@ urlpatterns += [
     path("new-song/", views.NewSong.as_view(), name="new"),
     path('ajax/check-song-exists/', views.check_song_exists, name='check_song_exists'),
     path("edit-song/<int:pk>/<slug:slug>/", views.SongEdit.as_view(), name="edit"),
-    # path("filter/", views.FilterSongs.as_view(), name="filter"),
     path("song/<int:pk>/<slug:slug>/", views.song_detail_view, name="detail"),
     path("song/<int:pk>/<slug:slug>/reader/", views.reader_view, name="reader"),
     path("delete-song/<int:pk>/", views.SongDelete.as_view(), name='delete'),
@@ -39,6 +38,6 @@ urlpatterns += [
 urlpatterns += [
     path("feed-<str:feed_type>/", feeds.SongFeed(), name="song_feed"),
     path("midi-feed/", feeds.MidiFeed(), name="midi_feed"),
-    path("search/", views.InstantSong.as_view(), name="instant_song"),
+    path("song-search/", views.InstantSong.as_view(), name="instant_search_song"),
     path("auto-complete/", views.auto_song, name="auto_song"),
 ]

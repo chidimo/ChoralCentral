@@ -49,7 +49,7 @@
 					<li class="nav-item"><a class="nav-link" href="{% url 'request:index' %}" title="Song requests">Requests</a></li>
 					<li class="nav-item"><a class="nav-link" href="{% url 'blog:index' %}" title="Blog entries">Blog</a></li>
 					<li class="nav-item"><a class="nav-link" href="{% url 'siteuser:index' %}" title="Users">Users</a></li>
-					<li class="nav-item"><a class="nav-link" href="{% url 'song:instant_song' %}" title="Search ChoralCentral"><i class="fas fa-search"></i></a></li>
+					<li class="nav-item"><a class="nav-link" href="{% url 'song:instant_search_song' %}" title="Search ChoralCentral"><i class="fas fa-search"></i></a></li>
 				</ul>
 
 				<ul class="navbar-nav ml-auto righthand-navigation">
@@ -133,7 +133,7 @@
 
                 <p class="my-0">
                 	<a href="{% url 'siteuser:new' %}" class="btn btn-primary join-campaign">
-	                    Join us celebrate over {{ song_count }} songs in {{ lang_count }} languages and {{ voice_count }} voices
+	                    Join us celebrate over music in {{ lang_count }} languages and {{ voice_count }} voices
 	                </a>
                 </p>
             </div>
@@ -222,8 +222,8 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous" async></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous" async></script>
 
-		<script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js" async></script>
-		<script src="//cdn.jsdelivr.net/g/algoliasearch,algoliasearch.helper" async></script>
+		<script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+		<script src="//cdn.jsdelivr.net/g/algoliasearch,algoliasearch.helper"></script>
 		<script src="//cdn.jsdelivr.net/hogan.js/3.0.2/hogan.min.js" async></script>
 		<script defer src='https://www.google.com/recaptcha/api.js' async></script>
 		<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js" async></script>
