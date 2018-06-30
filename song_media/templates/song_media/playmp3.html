@@ -1,9 +1,9 @@
 {% extends "choralcentral_base.html" %}
-{% block title %}Now laying {{ sound.song.title }} ...{% endblock title %}
+{% block title %}Now playing {{ sound.song.title }} ...{% endblock title %}
 {% block content_content %}
 {% block introduction %}{% endblock introduction %}
 
-<h2>Now playing ... {{ sound.song.title }}</h2>
+<h2>Now playing ... {{ sound.song.title|title }}</h2>
 <hr>
 <p>Return to <a href="{% url 'song:detail' song.pk song.slug %}">{{ song }}</a></p>
 
