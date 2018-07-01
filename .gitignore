@@ -10,3 +10,4 @@ choralcentral_stage.log
 htmlcov
 .coveragestaticfiles
 .env
+staticfiles/

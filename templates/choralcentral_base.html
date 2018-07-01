@@ -60,7 +60,7 @@
 								{% thumbnail user.siteuser.avatar "35x35" crop="center" as im %}
 									<div class="profile-image"><img class="card" src="{{ user.siteuser.avatar.url }}"></div>
 								{% empty %}
-    								<div class="profile-image"><img class="card" src="{% static 'img/django-logo.png' %}"></div>
+    								<div class="profile-image"><img class="card" src="{% static 'img/cc_logo.png' %}"></div>
 								{% endthumbnail %}
 								<div class="profile-name">{{ user.siteuser.screen_name }}</div>
 							 </a>

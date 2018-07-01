@@ -111,6 +111,11 @@ some
 1. <http://www.robotstxt.org/db.html>
 1. <https://docs.djangoproject.com/en/2.0/ref/settings/#settings>
 
+## Helps
+
+1. `pipenv install -e git+https://github.com/jazzband/django-robots.git#egg=django-robots`
+1. `C:\Users\Chidimmo\.virtualenvs\choralcentral-tTmRE27-\Scripts\activate.bat`
+
 ## Credits
 
 1. <https://stackoverflow.com/">
