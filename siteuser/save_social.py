@@ -32,7 +32,7 @@ def save_avatar(image_url, model_object):
 
 def process_response(request, backend, response):
     """Process the response returned by a backend"""
-    save_name = "response-{}.json".format(backend)
+    save_name = "response-{}.json".format(backend.name)
     with open(save_name, "w+") as fh:
         json.dump(response, fh)
     if backend.name == "twitter":

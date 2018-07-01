@@ -124,7 +124,7 @@
             <h4>Google</h4>
              {% if google_login %}
 
-                <p>Connected as <a href="https://plus.google.com/u/0/+{{ google_login.uid }}/" target="_blank">{{ google_login.uid }}</a></p>
+                <p>Connected as <a href="#/" target="_blank">{{ google_login.uid }}</a></p>
 
                 {% if can_disconnect %}
                  <form method="post" action="{% url 'social:disconnect' 'google-oauth2' %}">
