@@ -4,13 +4,13 @@ from django.contrib import admin
 from .models import VocalPart, ScoreNotation, Score, Midi, VideoLink
 
 class ScoreAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'part', 'creator', 'media_file', 'drive_view_link', 'drive_download_link', 'embed_link', 'thumbnail')
+    list_display = ('__str__', 'part', 'like_count', 'creator', 'media_file', 'drive_view_link', 'drive_download_link', 'embed_link', 'thumbnail')
 
     def creator(self, obj):
         return obj.creator.screen_name
 
 class MidiAdmin(admin.ModelAdmin):
-    list_display = ('__str__', "fformat", 'fsize', 'part', 'creator', 'description', 'media_file', 'drive_view_link', 'drive_download_link')
+    list_display = ('__str__', 'part', 'like_count', "fformat", 'fsize', 'creator', 'description', 'media_file', 'drive_view_link', 'drive_download_link')
     def creator(self, obj):
         return obj.creator.screen_name
 
@@ -25,4 +25,3 @@ admin.site.register(ScoreNotation)
 admin.site.register(Score, ScoreAdmin)
 admin.site.register(VideoLink, VideoLinkAdmin)
 admin.site.register(Midi, MidiAdmin)
-# python manage.py migrate

@@ -34,9 +34,9 @@
 {% for song in author_songs %}
     <div class="list-author-songs">
         {% if song.publish %}
-            <h5><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h5>
+            <h5><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title|title }}</a></h5>
         {% else %}
-            <h5><a class="text-danger" href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h5>
+            <h5><a class="text-danger" href="{% url 'song:detail' song.pk song.slug %}">{{ song.title|title }}</a></h5>
         {% endif %}
     </div>
 {% empty %}
