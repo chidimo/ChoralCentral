@@ -114,7 +114,6 @@ some
 ## Helps
 
 1. `pipenv install -e git+https://github.com/jazzband/django-robots.git#egg=django-robots`
-1. `C:\Users\Chidimmo\.virtualenvs\choralcentral-tTmRE27-\Scripts\activate.bat`
 
 ## Credits
 

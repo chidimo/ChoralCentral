@@ -94,19 +94,6 @@
 							    <a class="dropdown-item" href="{% url 'siteuser:logout' %}">Logout</a>
 							</div>
 						</li>
-
-						{% if user.is_admin %}
-						<li class="nav-item dropdown">
-						    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
-							<div class="dropdown-menu">
-    							<a class="dropdown-item" href="{% url 'google-api:drive_authorize' %}" target="_blank">Drive</a>
-    							<a class="dropdown-item" href="{% url 'google-api:youtube_authorize' %}" target="_blank">YouTube</a>
-							    <div class="dropdown-divider"></div>
-    							<a class="dropdown-item" href="/admin/">Django admin</a>
-    							<a class="dropdown-item" href="{% url 'siteuser:admin_media_index' %}">Media index</a>
-							</div>
-						</li>
-						{% endif %}
 					{% else %}
 						<li class="nav-item login-logout"><a class="btn btn-info btn-sm upload-button" href="{% url 'siteuser:login' %}">Log In</a></li>
 						<li class="nav-item login-logout"><a class="btn btn-primary btn-sm upload-button" href="{% url 'siteuser:new' %}">Sign Up</a></li>

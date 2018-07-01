@@ -328,7 +328,7 @@ class RoleIndex(generic.ListView):
 
 def admin_media_index(request):
     try:
-        if user.is_admin is False:
+        if request.user.is_admin is False:
             return redirect('/')
     except AttributeError:
         return redirect('/')
