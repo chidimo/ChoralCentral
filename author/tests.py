@@ -30,46 +30,40 @@ class AuthorModelTests(TestCase):
         self.assertEqual(self.author.get_absolute_url(), abs_url)
 
 class AuthorIndexViewTests(TestCase):
-
-    @classmethod    
-    def setUpClass(cls):
-        super(AuthorIndexViewTests, cls).setUpClass()
+    def setUp(self):
         creator = mommy.make('siteuser.SiteUser')
-        for _ in range(35):
-            mommy.make('author.Author', creator=creator)
+        mommy.make('author.Author', creator=creator, _quantity=25)
 
-    @classmethod
-    def tearDownClass(cls):
+    def tearDown(self):
         for each in Author.objects.all():
             each.delete()
-        super(AuthorIndexViewTests, cls).tearDownClass()     
 
-    def test_view_url_exists_at_desired_location(self):
+    def test_index_view(self):
         resp = self.client.get('/author/')
         self.assertEqual(resp.status_code, 200)
 
-    def test_view_url_accessible_by_name(self):
+        # test url reversal
         resp = self.client.get(reverse('author:index'))
         self.assertEqual(resp.status_code, 200)
 
-    def test_view_renders_correct_template(self):
-        resp = self.client.get(reverse('author:index'))
-        self.assertEqual(resp.status_code, 200)
+        # correct template
         self.assertTemplateUsed(resp, 'author/index.html')
 
-    def test_correct_pagination(self):
-        resp = self.client.get(reverse('author:index'))
-        self.assertEqual(resp.status_code, 200)
+        # correct pagination
         self.assertTrue('is_paginated' in resp.context)
         self.assertTrue(resp.context['is_paginated'])
-        self.assertTrue(len(resp.context['authors']) == 25)
+        self.assertTrue(len(resp.context['authors']) == 20)
 
-    def test_that_all_authors_are_listed(self):
+        # next page
         resp = self.client.get(reverse('author:index')+'?page=2')
         self.assertEqual(resp.status_code, 200)
         self.assertTrue('is_paginated' in resp.context)
         self.assertTrue(resp.context['is_paginated'])
-        self.assertTrue(len(resp.context['authors']) == 10)
+        self.assertTrue(len(resp.context['authors']) == 5)
+
+        # test page 3
+        resp = self.client.get(reverse('author:index') + "?page=3")
+        self.assertEqual(resp.status_code, 404)
 
 class AuthorDetailViewTests(TestCase):
     def setUp(self):
@@ -85,20 +79,21 @@ class AuthorDetailViewTests(TestCase):
     def tearDown(self):
         self.author.delete()
 
-    def test_view_fails_when_not_logged_in(self):
+    def test_detail_view(self):
         resp = self.client.get('/author/detail/{}/{}/'.format(self.author.pk, self.author.slug))
+
+        # test view redirects when user is not logged in
         self.assertEqual(resp.status_code, 302)
         self.assertRedirects(resp, '/users/login/?next=/author/detail/{}/{}/'.format(self.author.pk, self.author.slug))
 
-    def test_view_exists_at_desired_location(self):
         login = self.client.login(username='test@user.app', password='testpassword')
         # test url reversal gives correct view
         resp = self.client.get(reverse('author:detail', kwargs={'pk' : self.author.pk, 'slug' : self.author.slug}))
         self.assertEqual(resp.status_code, 200)
-
-        resp = self.client.get('/author/detail/{}/{}/'.format(self.author.pk, self.author.slug))
-        self.assertEqual(resp.status_code, 200)
+        
+        # test template
         self.assertTemplateUsed(resp, 'author/detail.html')
+        # test context
         self.assertTrue('author' in resp.context)
 
 class NewAuthorViewTests(TestCase):

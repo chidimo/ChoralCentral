@@ -40,7 +40,7 @@ class SongModelTests(TestCase):
         self.assertIsInstance(self.song, Song)
 
         # model representation
-        self.assertEqual(self.song.__str__(), self.song.title)
+        self.assertEqual(self.song.__str__(), self.song.title.title())
 
         abs_url = reverse('song:detail', kwargs={'pk' : self.song.pk, 'slug' : self.song.slug})
         self.assertEqual(self.song.get_absolute_url(), abs_url)
@@ -60,13 +60,11 @@ class SongIndexViewTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         creator = mommy.make('siteuser.SiteUser')
-        mommy.make('song.Song', creator=creator, publish=True, _quantity=27)
-        mommy.make('song.Song', creator=creator, publish=False, _quantity=27)
+        mommy.make('song.Song', creator=creator, publish=True, _quantity=22)
+        mommy.make('song.Song', creator=creator, publish=False, _quantity=22)
 
     def test_view(self):
-        # Total number of songs created is 27+27=54
-        songs = Song.objects.count()
-        self.assertEqual(songs, 54)
+        self.assertEqual(Song.objects.count(), 44)
 
         resp = self.client.get('/')
         self.assertEqual(resp.status_code, 200)
@@ -80,13 +78,12 @@ class SongIndexViewTests(TestCase):
 
         # context
         self.assertTrue('songs' in resp.context)
-        self.assertTrue('form' in resp.context)
 
         # pagination test
         self.assertTrue('is_paginated' in resp.context)
         self.assertTrue(resp.context['is_paginated'])
         # 25 songs on this page
-        self.assertTrue(len(resp.context['songs']) == 25)
+        self.assertTrue(len(resp.context['songs']) == 20)
 
         # test page 2
         resp = self.client.get(reverse('song:index') + "?page=2")
