@@ -78,9 +78,6 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
   'fields': 'id, link, name, email'
 }
 
-SOCIAL_AUTH_YAHOO_OAUTH2_KEY = config('SOCIAL_AUTH_YAHOO_OAUTH2_KEY')
-SOCIAL_AUTH_YAHOO_OAUTH2_SECRET = config('SOCIAL_AUTH_YAHOO_OAUTH2_SECRET')
-
 GOOGLE_RECAPTCHA_SECRET_KEY = config('GOOGLE_RECAPTCHA_SECRET_KEY')
 
 REST_FRAMEWORK = {
@@ -138,8 +135,6 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.twitter.TwitterOAuth',
-    'social_core.backends.yahoo.YahooOAuth2',
-    'social_core.backends.yahoo.YahooOpenId',
     'rules.permissions.ObjectPermissionBackend',
     'django.contrib.auth.backends.ModelBackend',
     )

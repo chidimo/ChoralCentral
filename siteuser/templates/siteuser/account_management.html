@@ -101,7 +101,7 @@
 
 <div class="container">
     <div class="row text-center text-lg-left">
-        <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
+        <div class="col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
             <h4>Facebook</h4>
              {% if facebook_login %}
                 <p>Connected as <a href="https://facebook.com/{{ facebook_login.extra_data.id }}/" target="_blank">{{ facebook_login.extra_data.id }}</a></p>
@@ -120,7 +120,7 @@
             {% endif %}
         </div>
 
-        <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
+        <div class="col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
             <h4>Google</h4>
              {% if google_login %}
 
@@ -140,7 +140,7 @@
             {% endif %}
         </div>
 
-        <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
+        <div class="col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
             <h4>Twitter</h4>
              {% if twitter_login %}
                 <p>Connected as <a href="https://twitter.com/{{ twitter_login.extra_data.access_token.screen_name }}/" target="_blank">{{ twitter_login.extra_data.access_token.screen_name }}</a></p>
@@ -156,25 +156,6 @@
                 {% endif %}
             {% else %}
                 <a class="btn btn-sm btn-primary" href="{% url 'social:begin' 'twitter' %}">Connect</a>
-            {% endif %}
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-xs-6 col-sm-6 py-2 my-2 love-bird-detail">
-            <h4>Yahoo</h4>
-             {% if yahoo_login %}
-                <p>Connected as <a href="https://yahoo.com/{{ yahoo_login.extra_data.login }}/" target="_blank">{{ yahoo_login.extra_data.login }}</a></p>
-
-                {% if can_disconnect %}
-                 <form method="post" action="{% url 'social:disconnect' 'yahoo-oauth2' %}">
-                    {% csrf_token %}
-                    <button type="submit">Disconnect</button>
-                 </form>
-                {% else %}
-                    <button type="button" disabled>Disconnect</button>
-                    <p class="text-warning">Set a <a href="{% url 'siteuser:social_password' %}">password</a> if you wish to disconnect this account</p>
-                {% endif %}
-            {% else %}
-                <a class="btn btn-sm btn-primary" href="{% url 'social:begin' 'yahoo-oauth2' %}">Connect</a>
             {% endif %}
         </div>
     </div>

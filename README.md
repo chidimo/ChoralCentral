@@ -4,7 +4,7 @@
 
 1. Set DEBUG False, create production branch
 1. Run `production_setup()` from `starter.py`
-1. Reset all app keys (facebook, twitter, google, yahoo, algolia)
+1. Reset all app keys (facebook, twitter, google, algolia)
 1. Remake all migrations and reset db
 1. 5 songs ready to upload (Bia nye chukwu ezi ekele, Ana kiranku)
 1. Clear media folder, clear google drive

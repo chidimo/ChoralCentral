@@ -780,10 +780,6 @@ input#id_password {
     background: #3b5998;
 }
 
-.social-logins > a.yahoo-login {
-    background: #7B0099;
-}
-
 .social-logins > a.twitter-login {
     background: #00aced;
 }

@@ -93,6 +93,7 @@ def login_siteuser(request, user, screen_name, email, image, first_name, last_na
 
 def get_or_create_user_from_social_detail(request, screen_name, email, image, first_name, last_name, location):
     """Create new user from social profile details"""
+
     if CustomUser.objects.filter(email=email).exists():
         user = CustomUser.objects.get(email=email)
     else:

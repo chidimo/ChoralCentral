@@ -402,11 +402,6 @@ def account_management(request):
     except UserSocialAuth.DoesNotExist:
         context['twitter_login'] = None
 
-    try:
-        context['yahoo_login'] = user.social_auth.get(provider='yahoo-oauth2')
-    except UserSocialAuth.DoesNotExist:
-        context['yahoo_login'] = None
-
     context['can_disconnect'] = (user.social_auth.count() > 1 or user.has_usable_password())
 
     context['siteuser'] = siteuser
