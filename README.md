@@ -11,6 +11,7 @@
 1. Delete `staticfiles` and rerun `python manage.py collectstatic`
 1. Change my personal account and django admin password (lastpass)
 1. Edit the sites app and replace example.com with choralcentral.net
+1. Fix django-social-share templates
 
     python manage.py makemigrations siteuser
 
