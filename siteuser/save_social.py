@@ -57,7 +57,7 @@ def process_response(request, backend, response):
         first_name = response['name']['givenName']
         last_name = response['name']['familyName']
         image = response['image']['url'].split('?')[0]
-        location = "Not set"
+        location = "Unknown location"
 
     elif backend.name == 'facebook':
         first_name = response['name'].split()[0]
@@ -68,7 +68,7 @@ def process_response(request, backend, response):
         screen_name = slugify("{}-{}".format(first_name, last_name))
         email = response.get('email', None)
         image = 'https://graph.facebook.com/{}/picture?type=large'.format(response['id'])
-        location = "Not set"
+        location = "Unknown location"
 
     elif backend.name == 'yahoo-oauth2':
         screen_name = slugify(response['nickname']) # not unique. check for collisions
@@ -78,9 +78,9 @@ def process_response(request, backend, response):
         We have created a dummy email {} for you for purpose of registration.
         Please be sure to change it to a real email.""".format(email)
         messages.success(request, msg)
-        first_name = "Not set"
-        last_name = "Not set"
-        location = "Not set"
+        first_name = "Unknown location"
+        last_name = "Unknown location"
+        location = "Unknown location"
     else:
         print("Backend not found")
         return
