@@ -50,6 +50,8 @@ def process_response(request, backend, response):
             We have created a dummy email {} for you for purpose of registration.
             Please be sure to change it to a real email.""".format(email)
             messages.success(request, msg)
+        if not location:
+            location = 'Unknown location'
 
     elif backend.name == 'google-oauth2':
         screen_name = slugify(response['displayName'].strip())
@@ -78,8 +80,8 @@ def process_response(request, backend, response):
         We have created a dummy email {} for you for purpose of registration.
         Please be sure to change it to a real email.""".format(email)
         messages.success(request, msg)
-        first_name = "Unknown location"
-        last_name = "Unknown location"
+        first_name = "First name"
+        last_name = "Last name"
         location = "Unknown location"
     else:
         print("Backend not found")
