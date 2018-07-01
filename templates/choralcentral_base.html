@@ -11,6 +11,8 @@
 			ChoralCentral | {% block title %}How to share sheet music {% endblock title %}
 		</title>
 
+		<link href="https://fonts.googleapis.com/css?family=Sunflower:300" rel="stylesheet">
+
 		{% load staticfiles %}
 		{% load static %}
 		{% load thumbnail %}
@@ -115,7 +117,7 @@
 
                 <p class="my-0">
                 	<a href="{% url 'siteuser:new' %}" class="btn btn-primary join-campaign">
-	                    Join us celebrate over music in {{ lang_count }} languages and {{ voice_count }} voices
+	                    Join us celebrate music in {{ lang_count }} languages and {{ voice_count }} voices
 	                </a>
                 </p>
             </div>
