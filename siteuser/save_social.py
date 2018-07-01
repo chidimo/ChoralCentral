@@ -7,13 +7,13 @@ import requests
 from django.template.defaultfilters import slugify
 
 from django.db import IntegrityError
-# from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import ContentFile
 from django.contrib.auth import login
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 
 from .models import SiteUser
+from .views import send_email_upon_registration
 
 CustomUser = get_user_model()
 
@@ -22,7 +22,6 @@ login_backends['django'] = 'django.contrib.auth.backends.ModelBackend'
 login_backends['twitter'] = 'social_core.backends.twitter.TwitterOAuth'
 login_backends['google_oauth2'] = 'social_core.backends.google.GoogleOAuth2'
 login_backends['facebook'] = 'social_core.backends.facebook.FacebookOAuth2'
-login_backends['yahoo'] = 'social_core.backends.yahoo.YahooOAuth2'
 
 def save_avatar(image_url, model_object):
     response = requests.get(image_url)
@@ -32,9 +31,11 @@ def save_avatar(image_url, model_object):
 
 def process_response(request, backend, response):
     """Process the response returned by a backend"""
+
     save_name = "response-{}.json".format(backend.name)
     with open(save_name, "w+") as fh:
         json.dump(response, fh)
+
     if backend.name == "twitter":
         screen_name = slugify(response['screen_name']) # twitter response contains a screen_name
         email = response.get('email', None)
@@ -46,10 +47,7 @@ def process_response(request, backend, response):
         except IndexError:
             last_name = ''
         if email is None:
-            msg = """It appears you have no email set in your twitter account.
-            We have created a dummy email {} for you for purpose of registration.
-            Please be sure to change it to a real email.""".format(email)
-            messages.success(request, msg)
+            messages.error(request, "It appears you have no email connected with your twitter account. Registration not completed.")
         if not location:
             location = 'Unknown location'
 
@@ -71,24 +69,11 @@ def process_response(request, backend, response):
         email = response.get('email', None)
         image = 'https://graph.facebook.com/{}/picture?type=large'.format(response['id'])
         location = "Unknown location"
-
-    elif backend.name == 'yahoo-oauth2':
-        screen_name = slugify(response['nickname']) # not unique. check for collisions
-        email = "{}@yahoo.com".format(response['guid'].lower()) # make email from guid
-        image = response['image']['imageUrl']
-        msg = """We couldn't find your yahoo mail address so
-        We have created a dummy email {} for you for purpose of registration.
-        Please be sure to change it to a real email.""".format(email)
-        messages.success(request, msg)
-        first_name = "First name"
-        last_name = "Last name"
-        location = "Unknown location"
     else:
-        print("Backend not found")
         return
     return screen_name, email, image, first_name, last_name, location
 
-def get_and_login_siteuser(request, user, screen_name, email, image, first_name, last_name, location):
+def login_siteuser(request, user, screen_name, email, image, first_name, last_name, location):
     """If siteuser exists, just log it in and move on, else create it and log it in"""
     if SiteUser.objects.filter(user=user).exists():
         pass
@@ -97,6 +82,9 @@ def get_and_login_siteuser(request, user, screen_name, email, image, first_name,
             try:
                 su = SiteUser.objects.create(user=user, screen_name=screen_name, first_name=first_name, last_name=last_name, location=location)
                 save_avatar(image, su)
+                # send registration email
+                send_email_upon_registration(request, su, via_social=True)
+                messages.success(request, 'Your account has been successfully created and an email has been sent to you.')
                 break
             except IntegrityError:
                 screen_name = "{}{}".format(screen_name, randint(10, 1000)) # append a random string
@@ -108,16 +96,28 @@ def get_or_create_user_from_social_detail(request, screen_name, email, image, fi
     if CustomUser.objects.filter(email=email).exists():
         user = CustomUser.objects.get(email=email)
     else:
-        user = CustomUser.objects.create_user(email=email, password=None)
-        user.is_active = True
-        user.save()
-    get_and_login_siteuser(request, user, screen_name, email, image, first_name, last_name, location)
+        try:
+            user = CustomUser.objects.create_user(email=email, password=None)
+            user.is_active = True
+            user.save()
+        except ValueError:
+            messages.error(request, "Invalid email")
+            return
+    login_siteuser(request, user, screen_name, email, image, first_name, last_name, location)
 
 def save_social_profile(backend, user, response, *args, **kwargs):
+    """
+    Create a user account via social media account
+    If user is already logged in, simply connect their social media account
+    """
     request = kwargs['request']
 
-    # if a user is already logged in and just wants to connect a social media account, just login the user
+    backend_name = backend.name
+    if backend.name == 'google-oauth2':
+        backend_name = 'google'
+
     if request.user.is_authenticated:
+        messages.success(request, 'Your {} account has been successfully connected.'.format(backend_name))
         login(request, request.user, backend=login_backends['django'])
     else:
         screen_name, email, image, first_name, last_name, location = process_response(request, backend, response)

@@ -79,10 +79,26 @@ class SiteUserRegistrationForm(forms.Form):
 
     def clean(self):
         data = self.cleaned_data
-        email = data.get("email", None).strip()
-        password1 = data.get('password1', None).strip()
-        password2 = data.get('password2', None).strip()
-        screen_name = data.get("screen_name", None).strip()
+
+        try:
+            email = data.get("email", None).strip()
+        except AttributeError:
+            self.add_error('email', 'Email field is required')
+
+        try:
+            password1 = data.get('password1', None).strip()
+        except AttributeError:
+            self.add_error('password1', 'Please provide a password')
+
+        try:
+            password2 = data.get('password2', None).strip()
+        except AttributeError:
+            self.add_error('password2', 'Please provide a confirmation password')
+
+        try:
+            screen_name = data.get("screen_name", None).strip()
+        except AttributeError:
+            self.add_error('screen_name', 'Display name field is required')
 
         User = get_user_model()
         if User.objects.filter(email=email).exists():

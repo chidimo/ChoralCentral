@@ -191,39 +191,52 @@ def validate_screen_name(request):
         data['error_message'] = 'Sorry, this screen name is not available.'
     return JsonResponse(data)
 
+def send_email_upon_registration(request, new_siteuser, via_social=False):
+    """Sends an email to a newly registered user"""
+
+    screen_name = new_siteuser.screen_name
+    email = new_siteuser.user.email
+    subject = "ChoralCentral - Welcome {}.".format(screen_name)
+    from_email = settings.EMAIL_HOST_USER
+
+    if via_social:
+        context = {'screen_name' : screen_name}
+        text_email = render_to_string("siteuser/welcome_email_social.txt", context)
+        html_email = render_to_string("siteuser/welcome_email_social.html", context)
+    else:
+        activation_link = request.build_absolute_uri(new_siteuser.get_user_creation_url())
+        context = {'screen_name' : screen_name, 'activation_link' : activation_link}
+        text_email = render_to_string("siteuser/welcome_email.txt", context)
+        html_email = render_to_string("siteuser/welcome_email.html", context)
+
+    for each in [email, "choralcentral@gmail.com"]:
+        msg = EmailMultiAlternatives(subject, text_email, from_email, [each])
+        msg.attach_alternative(html_email, "text/html")
+        msg.send()
+
 @check_recaptcha
 def new_siteuser(request):
     template = "siteuser/new_siteuser.html"
     if request.method == 'POST':
         form = SiteUserRegistrationForm(request.POST)
-        if form.is_valid() and request.recaptcha_is_valid:
-            form = form.cleaned_data
-            email = form['email']
-            screen_name = form['screen_name']
-            password1 = form['password1']
+        if form.is_valid():
+            if request.recaptcha_is_valid:
+                form = form.cleaned_data
+                email = form['email']
+                screen_name = form['screen_name']
+                password1 = form['password1']
 
-            user = CustomUser(email=email)
-            user.set_password(password1)
-            user.save()
+                user = CustomUser(email=email)
+                user.set_password(password1)
+                user.save()
+                new_siteuser = SiteUser(user=user, screen_name=screen_name)
+                new_siteuser.save()
 
-            new_user = SiteUser(user=user, screen_name=screen_name)
-            new_user.save()
+                send_email_upon_registration(request, new_siteuser)
+            else:
+                form.add_error(None, 'Error: Please complete the reCAPTCHA.')
+                return render(request, template, {'form' : form})
 
-            # 2. send email
-            activation_link = request.build_absolute_uri(new_user.get_user_creation_url())
-            screen_name = new_user.screen_name
-            context = {'screen_name' : screen_name, 'activation_link' : activation_link}
-
-            subject = "Welcome to ChoralCentral {}.".format(screen_name)
-            from_email = settings.EMAIL_HOST_USER
-
-            text_email = render_to_string("siteuser/welcome_email_template.txt", context)
-            html_email = render_to_string("siteuser/welcome_email_template.html", context)
-
-            for each in [email, "choralcentral@gmail.com"]:
-                msg = EmailMultiAlternatives(subject, text_email, from_email, [each])
-                msg.attach_alternative(html_email, "text/html")
-                msg.send()
             return redirect(reverse('siteuser:new_success', args=[screen_name]))
         else:
             return render(request, template, {'form' : form})
