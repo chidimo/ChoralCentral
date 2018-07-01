@@ -11,3 +11,4 @@ htmlcov
 .coveragestaticfiles
 .env
 staticfiles/
+.coverage
