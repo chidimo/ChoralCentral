@@ -2,7 +2,6 @@
 body {
   color: midnightblue;
   padding-top: 2.4rem;
-  font-family: 'Inconsolata', monospace;
 }
 
 /*NAVIGATION*/
@@ -14,7 +13,6 @@ nav {
 .fixed-top {
     font-size: 15px;
     padding:0;
-    font-family: 'Inconsolata', monospace;
 }
 
 /* fix nav items scrolling in small screens */
@@ -120,15 +118,10 @@ ul.righthand-navigation {
 
 h1, h2, h3, h4, h5, h6 {
 	color: midnightblue;
-	font-family: 'Inconsolata', monospace;
 }
 
 a {
     color: #0062cc;
-}
-
-p, ol.terms-of-use li, ol.privacy-policy li, ol.help-page li {
-    font-family: 'Sunflower', sans-serif;
 }
 
 a:hover {
@@ -698,7 +691,6 @@ span.download-count {
 
 .social-google .login-using-text-div {
     color: white;
-    font-family: 'Inconsolata', monospace;
     background: #468dfa;
     border-top-right-radius: .15rem;
     border-bottom-right-radius: .15rem;
