@@ -12,6 +12,8 @@ from django.contrib.auth import login
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 
+from social_django.models import UserSocialAuth
+
 from .models import SiteUser
 from .views import send_email_upon_registration
 
@@ -58,6 +60,7 @@ def process_response(request, backend, response):
         last_name = response['name']['familyName']
         image = response['image']['url'].split('?')[0]
         location = "Unknown location"
+        url = response['url']
 
     elif backend.name == 'facebook':
         first_name = response['name'].split()[0]
@@ -91,28 +94,42 @@ def login_siteuser(request, user, screen_name, email, image, first_name, last_na
                 continue
     login(request, user, backend=login_backends['django'])
 
-def get_or_create_user_from_social_detail(request, screen_name, email, image, first_name, last_name, location):
-    """Create new user from social profile details"""
-
+def get_or_create_user_from_social_detail(request, provider, backend_name, screen_name, email, image, first_name, last_name, location):
+    """
+    Create new user from social profile details
+    """
     if CustomUser.objects.filter(email=email).exists():
         user = CustomUser.objects.get(email=email)
+        
+        # check whether account is already associated with a social account.
+        # if yes, delete the association so that a new one can be established later in the pipeline.               
+        try:
+            social_account = user.social_auth.get(provider=provider)
+            messages.success(request, 'The {} account {} was replaced.'.format(backend_name, social_account.uid))
+            social_account.delete()
+        except UserSocialAuth.DoesNotExist:
+            pass
+        login_siteuser(request, user, screen_name, email, image, first_name, last_name, location)
     else:
         try:
             user = CustomUser.objects.create_user(email=email, password=None)
             user.is_active = True
             user.save()
+            login_siteuser(request, user, screen_name, email, image, first_name, last_name, location)
         except ValueError:
             messages.error(request, "Invalid email")
             return
-    login_siteuser(request, user, screen_name, email, image, first_name, last_name, location)
 
 def save_social_profile(backend, user, response, *args, **kwargs):
     """
     Create a user account via social media account
-    If user is already logged in, simply connect their social media account
+    If user is already logged in, simply connect the invoked social media account.
+    If a social media account from same provide has already been connect with the user, then don't connect another one
+    to avoid MultipleObjectsReturned error in account management view. Exit the pipeline
     """
     request = kwargs['request']
 
+    provider = backend.name
     backend_name = backend.name
     if backend.name == 'google-oauth2':
         backend_name = 'google'
@@ -122,4 +139,4 @@ def save_social_profile(backend, user, response, *args, **kwargs):
         login(request, request.user, backend=login_backends['django'])
     else:
         screen_name, email, image, first_name, last_name, location = process_response(request, backend, response)
-        get_or_create_user_from_social_detail(request, screen_name, email, image, first_name, last_name, location)
+        get_or_create_user_from_social_detail(request, provider, backend_name, screen_name, email, image, first_name, last_name, location)

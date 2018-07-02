@@ -102,7 +102,7 @@ some
 1. Minified js files with <https://javascript-minifier.com>
 1. Compressed my custom css and js files using django-compressor
 1. Moved some render-blocking javascripts to the bottom of the `<body>` tag of my base template, but jquery had to stay at top of page.
-1. Compress bootstrap.min.css and choralcentral.min.css in that order (important)
+1. Compress choralcentral.min.css
 
 ## Resources
 
@@ -128,3 +128,8 @@ some
 1. <http://hilite.me">
 1. <https://github.com/fcurella/django-social-share">
 1. <https://en.wikipedia.org/wiki/List_of_musical_genres_by_era">
+
+## Scenarios in social auth
+
+1. **A clash of emails:** A valid email, `A`, exists as a `primary` account. A social account email, `B`, is now associated with `A`. Someone tries to create a new `primary` account using email `B` that is `secondary` to account `A`. I don't want that.
+1. **A clash of providers:** A valid email, `A`, exists as a `primary` account *created non-socially (which means no association was made), but is nonetheless a valid email from provider `X`*. A social account email, `B`, from provider `X` is now associated with `A`. A **non-logged-in** user *invokes* provider `X` with email `A` which already has email `B` secondary to it. Result: `A` is logged-in **AND** a social association is made using provider `X`. Now there are two emails from provider `X` associated with `A`. I don't want that.
