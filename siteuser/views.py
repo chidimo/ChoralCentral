@@ -32,8 +32,7 @@ from request.models import Request
 from author.models import Author
 from song_media.models import Score, Midi, VideoLink
 
-from .utils import star_or_unstar_object
-from .utils import check_recaptcha
+from .utils import star_or_unstar_object, check_recaptcha
 from .models import SiteUser, Role, Message
 from .forms import (PassWordGetterForm, EmailAndPassWordGetterForm, SiteUserRegistrationForm,
     SiteUserEditForm, NewRoleForm, NewMessageForm, ReplyMessageForm
