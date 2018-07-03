@@ -52,6 +52,7 @@ def process_response(request, backend, response):
             messages.error(request, "It appears you have no email connected with your twitter account. Registration not completed.")
         if not location:
             location = 'Unknown location'
+        id_current_resp = response['id']
 
     elif backend.name == 'google-oauth2':
         screen_name = slugify(response['displayName'].strip())
@@ -60,6 +61,7 @@ def process_response(request, backend, response):
         last_name = response['name']['familyName']
         image = response['image']['url'].split('?')[0]
         location = "Unknown location"
+        id_current_resp = email
         try:
             url = response['url']
         except KeyError:
@@ -75,16 +77,18 @@ def process_response(request, backend, response):
         email = response.get('email', None)
         image = 'https://graph.facebook.com/{}/picture?type=large'.format(response['id'])
         location = "Unknown location"
+        id_current_resp = response['id']
     else:
         return
-    return screen_name, email, image, first_name, last_name, location
+    return screen_name, email, image, first_name, last_name, location, id_current_resp
 
-def login_siteuser(request, user, screen_name, email, image, first_name, last_name, location):
-    """If siteuser exists, just log it in and move on, else create it and log it in"""
+def get_and_login_siteuser(request, user, screen_name, email, image, first_name, last_name, location):
+    """If siteuser exists, just log in and move on, else create it and log in"""
     if SiteUser.objects.filter(user=user).exists():
         pass
     else:
-        while True: # keep looping until a SiteUser is successfully created
+        # keep looping until a SiteUser is successfully created
+        while True:
             try:
                 su = SiteUser.objects.create(user=user, screen_name=screen_name, first_name=first_name, last_name=last_name, location=location)
                 save_avatar(image, su)
@@ -97,7 +101,7 @@ def login_siteuser(request, user, screen_name, email, image, first_name, last_na
                 continue
     login(request, user, backend=login_backends['django'])
 
-def get_or_create_user_from_social_detail(request, provider, backend_name, screen_name, email, image, first_name, last_name, location):
+def get_or_create_user_from_social_detail(request, provider, backend_name, screen_name, email, image, first_name, last_name, location, id_current_resp):
     """
     Create new user from social profile details
     """
@@ -108,16 +112,17 @@ def get_or_create_user_from_social_detail(request, provider, backend_name, scree
         # if yes, delete the association so that a new one can be established later in the pipeline.               
         try:
             social_account = user.social_auth.get(provider=provider)
-            if social_account.uid != email:
+            if social_account.uid != id_current_resp:
                 messages.success(request, 'The {} account, {}, previously associated with {} was replaced.'.format(backend_name, social_account.uid, str(user)))
                 social_account.delete()
         except UserSocialAuth.DoesNotExist:
             pass
-        login_siteuser(request, user, screen_name, email, image, first_name, last_name, location)
+        get_and_login_siteuser(request, user, screen_name, email, image, first_name, last_name, location)
     else:
         # uid field of UserSocialAuth for google is the email address. So this line specifically applies to google logins.
-        social_auth_emails = [each.uid for each in UserSocialAuth.objects.all()]
-        if email in social_auth_emails:
+        # here the user tries to create a new primary account with an email that is already secondary to another account.
+        social_ids = [each.uid for each in UserSocialAuth.objects.all()]
+        if email in social_ids:
             connected_user = str(UserSocialAuth.objects.get(uid=email))
             messages.error(request, '{} is already connected to account {}'.format(email, connected_user))
             return
@@ -126,7 +131,7 @@ def get_or_create_user_from_social_detail(request, provider, backend_name, scree
                 user = CustomUser.objects.create_user(email=email, password=None)
                 user.is_active = True
                 user.save()
-                login_siteuser(request, user, screen_name, email, image, first_name, last_name, location)
+                get_and_login_siteuser(request, user, screen_name, email, image, first_name, last_name, location)
             except ValueError:
                 messages.error(request, "Invalid email")
                 return
@@ -149,5 +154,5 @@ def save_social_profile(backend, user, response, *args, **kwargs):
         messages.success(request, 'Your {} account has been successfully connected.'.format(backend_name))
         login(request, request.user, backend=login_backends['django'])
     else:
-        screen_name, email, image, first_name, last_name, location = process_response(request, backend, response)
-        get_or_create_user_from_social_detail(request, provider, backend_name, screen_name, email, image, first_name, last_name, location)
+        screen_name, email, image, first_name, last_name, location, id_current_resp = process_response(request, backend, response)
+        get_or_create_user_from_social_detail(request, provider, backend_name, screen_name, email, image, first_name, last_name, location, id_current_resp)
