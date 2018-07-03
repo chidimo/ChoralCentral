@@ -1,10 +1,18 @@
 {% extends "choralcentral_base.html" %}
-{% if song %}{% block title %}{{ song.title|title }}{% endblock title %} {% endif %}
+{% load song_ttags %}
+
+{% block meta_tags %}
+	<meta property="og:url" content="https://www.choralcentral.net{{ song.get_absolute_url }}"/>
+	<meta property="og:title" content="{{ song.title|title }}"/>
+	<meta property="og:description" content="{{ song.lyrics }}"/>
+{% endblock meta_tags %}
+
+{% block title %}{{ song.title|title }}{% endblock title %}
+
 {% load thumbnail %}
 {% load social_share %}
 {% load static %}
 
-{% load song_ttags %}
 
 {% block introduction %}{% endblock introduction %}
 
@@ -46,7 +54,7 @@
                 {% endwith %}
 
                 {% with song.title|title as link_text %}
-                    {% post_to_twitter "New song {{ song.title|title }}" song link_text %}
+                    {% post_to_twitter "{{ song.title|title }}" song link_text %}
                 {% endwith %}
 
                 <a class="btn btn-sm btn-primary icon-buttons" href="" title="Email {{ song.title|title }}" data-toggle="modal" data-target="#emailModal">
