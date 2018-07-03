@@ -100,7 +100,7 @@ def get_or_create_user_from_social_detail(request, provider, backend_name, scree
     """
     if CustomUser.objects.filter(email=email).exists():
         user = CustomUser.objects.get(email=email)
-        
+
         # check whether account is already associated with a social account.
         # if yes, delete the association so that a new one can be established later in the pipeline.               
         try:
@@ -111,14 +111,21 @@ def get_or_create_user_from_social_detail(request, provider, backend_name, scree
             pass
         login_siteuser(request, user, screen_name, email, image, first_name, last_name, location)
     else:
-        try:
-            user = CustomUser.objects.create_user(email=email, password=None)
-            user.is_active = True
-            user.save()
-            login_siteuser(request, user, screen_name, email, image, first_name, last_name, location)
-        except ValueError:
-            messages.error(request, "Invalid email")
+        # uid field of UserSocialAuth for google is the email address. So this line specifically applies to google logins.
+        social_auth_emails = [each.uid for each in UserSocialAuth.objects.all()]
+        if email in social_auth_emails:
+            connected_user = str(UserSocialAuth.objects.get(uid=email))
+            messages.error(request, '{} is already connected to account {}'.format(email, connected_user))
             return
+        else:
+            try:
+                user = CustomUser.objects.create_user(email=email, password=None)
+                user.is_active = True
+                user.save()
+                login_siteuser(request, user, screen_name, email, image, first_name, last_name, location)
+            except ValueError:
+                messages.error(request, "Invalid email")
+                return
 
 def save_social_profile(backend, user, response, *args, **kwargs):
     """
