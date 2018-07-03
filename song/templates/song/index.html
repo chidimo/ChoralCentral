@@ -25,7 +25,7 @@
                     {% if not song.publish %}
                         <h4><a class="text-danger" href="{% url 'song:detail' song.pk song.slug %}">{{ song.title|title }}</a></h4>
                     {% else %}
-                        <h4><a id="songLink{{ forloop.counter }}" href="{% url 'song:detail' song.pk song.slug %}" itemprop="name">{{ song.title|title }}</a></h4>
+                        <h4 style="font-weight:bold;font-size:24px"><a id="songLink{{ forloop.counter }}" href="{% url 'song:detail' song.pk song.slug %}" itemprop="name">{{ song.title|title }}</a></h4>
                         {% include 'song/ajax_like_song_index.html' %}
                     {% endif %}
     

@@ -240,7 +240,7 @@ def song_detail_view(request, pk, slug):
 
 def check_song_exists(request):
     title = request.GET.get('title', None).lower().strip()
-    data = {'exists': Song.objects.filter(title=title).exists()}
+    data = {'exists': Song.objects.filter(publish=True).filter(title=title).exists()}
     if data['exists']:
         data['song_url'] = Song.objects.get(title=title).get_absolute_url()
     return JsonResponse(data)

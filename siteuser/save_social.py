@@ -105,7 +105,7 @@ def get_or_create_user_from_social_detail(request, provider, backend_name, scree
         # if yes, delete the association so that a new one can be established later in the pipeline.               
         try:
             social_account = user.social_auth.get(provider=provider)
-            messages.success(request, 'The {} account {} was replaced.'.format(backend_name, social_account.uid))
+            messages.success(request, 'The {} account, {}, previously associated with {} was replaced.'.format(backend_name, str(user), social_account.uid))
             social_account.delete()
         except UserSocialAuth.DoesNotExist:
             pass
