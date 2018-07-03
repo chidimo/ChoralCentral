@@ -60,7 +60,10 @@ def process_response(request, backend, response):
         last_name = response['name']['familyName']
         image = response['image']['url'].split('?')[0]
         location = "Unknown location"
-        url = response['url']
+        try:
+            url = response['url']
+        except KeyError:
+            pass # user has no google plus profile
 
     elif backend.name == 'facebook':
         first_name = response['name'].split()[0]
