@@ -32,7 +32,7 @@ class NewVoicingForm(forms.ModelForm):
 
     def clean(self):
         name = self.cleaned_data["name"].lower()
-        if Voicing.objects.filter(voicing=voicing).exists():
+        if Voicing.objects.filter(name=name).exists():
             self.add_error("name", _("{} already exists".format(name)))
 
 class EditVoicingForm(forms.ModelForm):
