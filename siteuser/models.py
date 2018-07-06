@@ -84,9 +84,9 @@ class SiteUser(TimeStampedModel):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     slug = AutoSlugField(set_using="screen_name")
     roles = models.ManyToManyField(Role, default=1)
-    screen_name = models.CharField(max_length=50, unique=True)
-    first_name = models.CharField(max_length=50, blank=True, null=True)
-    last_name = models.CharField(max_length=50, blank=True, null=True)
+    screen_name = models.CharField(max_length=20, unique=True)
+    first_name = models.CharField(max_length=20, blank=True, null=True)
+    last_name = models.CharField(max_length=20, blank=True, null=True)
     location = models.CharField(max_length=100, blank=True, null=True)
     avatar = ImageField(upload_to=save_avatar, null=True, blank=True)
 

@@ -63,7 +63,7 @@ class SiteUserRegistrationForm(forms.Form):
 
     screen_name = forms.CharField(
         required=True,
-        widget=forms.TextInput(attrs={'class':'form-control', "placeholder" : "Screen name"}))
+        widget=forms.TextInput(attrs={'class':'form-control', "placeholder" : "Screen name (maximum of 20 characters)"}))
 
     email = forms.EmailField(
         required=True,
@@ -116,9 +116,9 @@ class SiteUserEditForm(forms.ModelForm):
         fields = ["first_name", "last_name", "location", "avatar", "roles"]
 
         widgets = {
-            "first_name" : forms.TextInput(attrs={'class' : 'form-control', "placeholder" : "First name"}),
-            "last_name" : forms.TextInput(attrs={'class' : 'form-control', "placeholder" : "Last name"}),
-            "location" : forms.TextInput(attrs={'class' : 'form-control', "placeholder" : "Location"}),
+            "first_name" : forms.TextInput(attrs={'class' : 'form-control', "placeholder" : "First name (maximum of 20 characters)"}),
+            "last_name" : forms.TextInput(attrs={'class' : 'form-control', "placeholder" : "Last name (maximum of 20 characters)"}),
+            "location" : forms.TextInput(attrs={'class' : 'form-control', "placeholder" : "Location (maximum of 50 characters)"}),
             "roles" : AddAnotherWidgetWrapper(
                 forms.SelectMultiple(attrs={'class' : 'form-control'}),
                 reverse_lazy('siteuser:role_create')),

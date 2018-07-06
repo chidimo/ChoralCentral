@@ -90,14 +90,14 @@ def get_and_login_siteuser(request, user, screen_name, email, image, first_name,
         # keep looping until a SiteUser is successfully created
         while True:
             try:
-                su = SiteUser.objects.create(user=user, screen_name=screen_name, first_name=first_name, last_name=last_name, location=location)
+                su = SiteUser.objects.create(user=user, screen_name=screen_name[:20], first_name=first_name, last_name=last_name, location=location)
                 save_avatar(image, su)
                 # send registration email
                 send_email_upon_registration(request, su, via_social=True)
                 messages.success(request, 'Your account has been successfully created and an email has been sent to you.')
                 break
             except IntegrityError:
-                screen_name = "{}{}".format(screen_name, randint(10, 1000)) # append a random string
+                screen_name = "{}{}".format(screen_name[:16], randint(1, 1000)) # append a random string
                 continue
     login(request, user, backend=login_backends['django'])
 
