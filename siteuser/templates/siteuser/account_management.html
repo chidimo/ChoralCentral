@@ -50,7 +50,7 @@
                         <td>{% if message.read %}Read{% else %}<span class="text-danger">Unread</span>{% endif %}</td>
                         <td>{{ message.creator }}</td>
                         <td>
-                            {% with message.body|truncatechars:10 as msg %}
+                            {% with msg=message.body|truncatewords:1 %}
                                 <a href="{% url 'siteuser:view_message' message.pk %}">{{ msg|markdown_format }}</a>
                             {% endwith %}
                         </td>
@@ -87,7 +87,7 @@
                         <td>{% if message.read %}Read{% else %}<span class="text-danger">Unread</span>{% endif %}</td>
                         <td>{{ message.receiver }}</td>
                         <td>
-                            {% with message.body|truncatechars:10 as msg %}
+                            {% with msg=message.body|truncatewords:1 %}
                                 <a href="{% url 'siteuser:view_message' message.pk %}">{{ msg|markdown_format }}</a>
                             {% endwith %}
                         </td>
