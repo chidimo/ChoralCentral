@@ -1,5 +1,5 @@
 {% extends "choralcentral_base.html" %}
-{% block title %}{{ chapter.book }} chapter {{ chapter.number }}{% endblock title %}
+{% block title %}{{ chapter.book|title }} {{ chapter.number }}{% endblock title %}
 {% load bible_ttags %}
 {% block introduction %}{% endblock introduction %}
 
@@ -7,7 +7,7 @@
 
 <div class='container siteuser-index-heading'>
     <div class='row'>
-        <h3 class='float-left'>{{ chapter.book }} chapter {{ chapter.number }}</h3>
+        <h3 class='float-left'>{{ chapter.book|title }} {{ chapter.number }}</h3>
     </div>
 </div>
 
@@ -15,10 +15,12 @@
     <div class="row">
         <div class="col-sm-12">
             {% for verse in chapter.verse_set.all %}
-                {{ verse.number }}<p>{{ verse.text|markdown_format }}</p>
+                <p><strong>{{ verse.number }}:</strong> {{ verse.text|markdown_format }}</p>
             {% endfor %}
         </div>
     </div>
 </div>
+
+<p><a href="">Next</a></p>
 
 {% endblock content_content %}
