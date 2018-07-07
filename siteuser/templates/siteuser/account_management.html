@@ -2,6 +2,7 @@
 {% block title %}Account manager{% endblock title %}
 {% block introduction %}{% endblock introduction %}
 {% load thumbnail %}
+{% load song_ttags %}
 {% load static %}
 
 {% block content_content %}
@@ -48,7 +49,11 @@
                         <td>{{ forloop.counter }}</td>
                         <td>{% if message.read %}Read{% else %}<span class="text-danger">Unread</span>{% endif %}</td>
                         <td>{{ message.creator }}</td>
-                        <td><a href="{% url 'siteuser:view_message' message.pk %}">{{ message.body|truncatechars:15 }}</a></td>
+                        <td>
+                            {% with message.body|truncatechars:15 as msg %}
+                                <a href="{% url 'siteuser:view_message' message.pk %}">{{ msg|markdown_format }}</a>
+                            {% endwith %}
+                        </td>
                         <td>{{ message.created|date }}</td>
                         <td>
                             <a href="{% url 'siteuser:view_message_thread' message.pk %}" title="Message thread"><i class="fas fa-history"></i></a> |
@@ -81,7 +86,11 @@
                         <td>{{ forloop.counter }}</td>
                         <td>{% if message.read %}Read{% else %}<span class="text-danger">Unread</span>{% endif %}</td>
                         <td>{{ message.receiver }}</td>
-                        <td><a href="{% url 'siteuser:view_message' message.pk %}">{{ message.body|truncatechars:15 }}</a></td>
+                        <td>
+                            {% with message.body|truncatechars:15 as msg %}
+                                <a href="{% url 'siteuser:view_message' message.pk %}">{{ message.body|markdown_format }}</a>
+                            {% endwith %}
+                        </td>
                         <td>{{ message.created|date }}</td>
                     </tr>
                 {% empty %}
