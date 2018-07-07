@@ -31,4 +31,5 @@ class Author(TimeStampedModel):
         return "https://www.choralcentral.net" + reverse('author:detail', kwargs={'pk' : self.pk, 'slug' : self.slug})
 
     def __str__(self):
-        return "{} {}".format(self.first_name, self.last_name)
+        name = "{} {}".format(self.first_name, self.last_name)
+        return name.title()

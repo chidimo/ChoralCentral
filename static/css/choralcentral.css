@@ -10,6 +10,8 @@ nav {
     padding: 0;
     font-family: 'Inconsolata', monospace;
 }
+
+/* fix nav scrolling on small screens */
 @media (min-width: 300px) {
     .navbar-collapse.navcontent.collapse.show {
         max-height: 540px !important;
@@ -335,6 +337,10 @@ a.upload-button {
 .song-detail-header span.float-right {
     padding-top: 0.6rem;
     padding-bottom: 0.5rem;
+}
+
+.song-detail-header span.detail-view-title {
+    font-family: 'Inconsolata', monospace;
 }
 .song-about {
     background: #f2f3fb;

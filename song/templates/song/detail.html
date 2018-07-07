@@ -20,11 +20,11 @@
 
 <div class='container-fluid song-detail-header' itemscope itemtype="https://schema.org/CreativeWork">
     <div class='row'>
-        <div class='col-sm-12 head-title' id="songTitleBox">
+        <div class='col-sm-12' id="songTitleBox">
             {% if song.publish %}
-                <span class='float-left' itemprop="name">{{ song.title|title }}</span>
+                <span class='float-left detail-view-title' itemprop="name">{{ song.title|title }}</span>
             {% else %}
-                <span class='float-left text-danger' itemprop="name">{{ song.title|title }}</span>
+                <span class='float-left detail-view-title text-danger' itemprop="name">{{ song.title|title }}</span>
             {% endif %}
 
             <span class='float-right song-icons'>
