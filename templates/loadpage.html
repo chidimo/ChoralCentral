@@ -1,8 +1,0 @@
-$("{{ loadbutton_id }}").click(function(){
-    load_page(
-        {{ page_url }},
-        {{ pagination_id|default:"#pagination-id" }},
-        {{ loadbutton_id|default:"#load-id" }},
-        {{ pagediv_id|default:"#pagediv-id" }},
-      );
-});
