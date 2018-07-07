@@ -297,6 +297,16 @@ class SongEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
         messages.success(self.request, "Song was successfully updated")
         return redirect(self.get_success_url())
 
+def publish_song_shortcut(request, pk):
+    song = Song.objects.get(pk=pk)
+    if song.publish:
+        song.publish = False
+        song.save(update_fields=['publish'])
+    else:
+        song.publish=True
+        song.save(update_fields=['publish'])
+    return redirect(reverse('siteuser:library', kwargs={'pk' : request.user.siteuser.pk, 'slug' : request.user.siteuser.slug}))
+
 class SongDelete(generic.DeleteView):
     model = Song
     template_name = "song/song_delete.html"

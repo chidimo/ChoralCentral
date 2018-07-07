@@ -17,6 +17,7 @@ urlpatterns += [
     path("edit-language/<int:pk>/", views.LanguageEdit.as_view(), name="edit_language"),
     path("view/<int:pk>/", views.LanguageDetail.as_view(), name="detail"),
     path("delete-language/<int:pk>/", views.LanguageDelete.as_view(), name='delete'),
+    path("publish-shortcut/<int:pk>/", views.publish_song_shortcut, name="publish_song_shortcut"),
 ]
 
 urlpatterns += [

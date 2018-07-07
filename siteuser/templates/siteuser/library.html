@@ -54,6 +54,11 @@
                             {% if is_library_owner == True %}
                                 <a href="{% url 'song:edit' song.pk song.slug %}" title='Edit'><i class="fas fa-edit"></i></a> |
                                 <a href="{% url 'song:delete' song.pk %}" title='Delete {{ song.title|title }}'><i class="fas fa-trash"></i></a> |
+                                {% if song.publish %}
+                                    <a title="Unpublish this song" href="{% url 'song:publish_song_shortcut' song.pk %}"><i class="fas fa-check"></i></a>
+                                {% else %}
+                                    <a title="publish this song" href="{% url 'song:publish_song_shortcut' song.pk %}"><i class="fas fa-check text-danger"></i></a>
+                                {% endif %}
                             {% endif %}
                         </td>
                     </tr>
