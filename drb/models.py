@@ -98,7 +98,7 @@ class CommentaryText(TimeStampedModel):
     class Meta:
         ordering = ("commentary", "book", "chapter", "verse")
 
-    def commentary_book_chapter_verse(self):
+    def commentary_source(self):
         return "{} {} : {}".format(self.book, self.chapter, self.verse)
 
     def __str__(self):

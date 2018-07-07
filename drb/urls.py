@@ -7,8 +7,8 @@ app_name = 'douay-rheims'
 
 urlpatterns = [
     path('', views.Index.as_view(), name='bible_index'),
-    path('book/<int:pk>/<slug:slug>/', views.BookChapters.as_view(), name='book_detail'),
-    path('chapter/<int:pk>/', views.ChapterDetail.as_view(), name='chapter_detail'),
+    path('book/<slug:slug>/<int:pk>/', views.BookChapters.as_view(), name='book_detail'),
+    path('<str:book_name>-<int:number>/<int:pk>/', views.ChapterDetail.as_view(), name='chapter_detail'),
     path('verse/<int:pk>/', views.VerseDetail.as_view(), name='verse_detail'),
 ]
 

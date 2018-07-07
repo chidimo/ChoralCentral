@@ -11,14 +11,16 @@
     
 <div class="container">
     <div class="row">
-        {% for commentary in commentaries %}
-            <h4>{{ commentary.heading }}</h4>
-            <p>{{ commentary.commentary_book_chapter_verse }}</p>
-            <p>{{ commentary.text }}</p>
-
-        {% empty %}
-            <p style="margin-bottom:25rem">Coming soon</p>                
-        {% endfor %}
+        <div class="col-sm-12">
+            {% for commentary in commentaries %}
+                <h4>{{ commentary.heading }}</h4>
+                <h6>{{ commentary.commentary_source }}</h6>
+                <p>{{ commentary.text }}</p>
+    
+            {% empty %}
+                <p style="margin-bottom:25rem">Coming soon</p>                
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock content_content %}
