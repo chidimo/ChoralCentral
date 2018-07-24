@@ -264,6 +264,11 @@ class NewSong(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
         messages.success(self.request, "Song was successfully added")
         return redirect(self.get_success_url())
 
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['new_language_form'] = NewLanguageForm(auto_id="language_%s")
+    #     return context
+
 class SongEdit(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     model = Song
     form_class = SongEditForm

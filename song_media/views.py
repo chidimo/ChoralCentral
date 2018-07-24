@@ -8,6 +8,7 @@ from django.views import generic
 from django.shortcuts import reverse, render
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.template.defaultfilters import slugify
@@ -81,6 +82,7 @@ class NewScore(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         messages.success(self.request, "Score successfully added to {}".format(song.title))
         return redirect(song.get_absolute_url())
 
+@login_required
 def show_score(request, pk):
     """Display pdf score stored locally by django"""
     score = get_object_or_404(Score, pk=pk)
@@ -131,6 +133,7 @@ class NewMidi(LoginRequiredMixin, SuccessMessageMixin, CreatePopupMixin, generic
         messages.success(self.request, "Midi successfully added to {}".format(song.title))
         return redirect(song.get_absolute_url())
 
+@login_required
 def play_mp3(request, pk):
     context = {}
     template = 'song_media/playmp3.html'
@@ -141,6 +144,7 @@ def play_mp3(request, pk):
     context['song'] = sound.song
     return render(request, template, context)
 
+@login_required
 def download_midi(self, pk):
     sound = get_object_or_404(Midi, pk=pk)
     sound.downloads += 1

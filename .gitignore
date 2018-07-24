@@ -1,5 +1,6 @@
 media/
 .vscode/
+.vs/
 keys
 **/__pycache__
 **__pycache__
