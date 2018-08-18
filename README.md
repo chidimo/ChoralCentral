@@ -112,6 +112,13 @@ some
 1. <http://www.robotstxt.org/db.html>
 1. <https://docs.djangoproject.com/en/2.0/ref/settings/#settings>
 
+## Renew site certificate
+<https://help.pythonanywhere.com/pages/LetsEncrypt/>
+
+`cd ~/letsencrypt`
+
+`~/dehydrated/dehydrated --cron --domain www.choralcentral.net --out . --challenge http-01`
+
 ## Helps
 
 1. `pipenv install -e git+https://github.com/jazzband/django-robots.git#egg=django-robots`

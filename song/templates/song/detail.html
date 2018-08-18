@@ -237,6 +237,8 @@
 
                         <span id="midiDetailBox{{ forloop.counter }}">
                             <a class="btn btn-sm btn-primary icon-buttons" title="" href="#">{{ midi.like_count }} <i class="fas fa-thumbs-up"></i></a>
+                            <a href="#" class="btn btn-sm btn-primary icon-buttons" onClick="MIDIjs.play('{{ midi.media_file.url }}');"><i class="fas fa-play"></i></a>
+                            <a href="#" class="btn btn-sm btn-primary icon-buttons" onClick="MIDIjs.stop();"><i class='fas fa-stop'></i></a>
                             {% if user.is_authenticated %}
                                 {% if request.user.siteuser in midi.likes.all %}
                                     <span class="btn btn-sm btn-primary star-icon-button like-midi-{{ forloop.counter }}-on-click" data-pk="{{ midi.pk }}" data-app-label="song_media" data-model="midi"><i class="fas fa-thumbs-up text-primary"></i></span>
