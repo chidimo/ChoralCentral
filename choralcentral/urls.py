@@ -35,7 +35,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("author/", include('author.urls')),
     path("blog/", include('blog.urls')),
-    path("douay-rheims/", include('drb.urls')),
     path("request/", include('request.urls')),
     path("users/", include('siteuser.urls')),
     path("song-media/", include('song_media.urls')),
