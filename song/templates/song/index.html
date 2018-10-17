@@ -2,21 +2,18 @@
 
 {% load static %}
 
-{% block left_sidebar %}
 
-{% if filter_form %}
-    {% if user.is_authenticated %}
-        <div class="d-none d-md-block filter-block">
-            <form data-url="{% url 'song:index' %}" method="get" enctype="multipart/form-data" id="filterForm">
-                {{ filter_form.as_p }}
-                <button class="btn btn-primary btn-sm float-right" type="submit" value="Filter songs">Apply</button>
-            </form>
-        </div>
-    {% endif %}
-{% endif %}
-{% endblock left_sidebar %}
 
 {% block content_content %}
+
+<h1>Song Index</h1>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/song">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Songs</li>
+    </ol>
+</nav>
 
     {% for song in songs %}
         <div class="list-songs container" itemscope itemtype="https://schema.org/CreativeWork">

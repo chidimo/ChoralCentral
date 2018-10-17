@@ -26,13 +26,18 @@
 			ChoralCentral | {% block title %}How to share choral music{% endblock title %}
 		</title>
 
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-        <link href="https://fonts.googleapis.com/css?family=Inconsolata:700" rel="stylesheet">
+		<!--
+			<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+		-->
+		
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/darkly/bootstrap.min.css">
+		
+		<link href="https://fonts.googleapis.com/css?family=Inconsolata:700" rel="stylesheet">
 
 		<!-- <script type='text/javascript' src='//www.midijs.net/lib/midi.js'></script> -->
 
 		<link rel="shortcut icon" type="image/png" href="{% static 'favicons/favicon.ico' %}"/>
-		<link rel="stylesheet" href="{% static 'css/choralcentral.min.css' %}">
+		<link rel="stylesheet" href="{% static 'css/choralcentral.css' %}">
 
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
@@ -42,11 +47,9 @@
 	{% block body %}
 	<body>
 		{% block navigation %}
-		<nav class="navbar fixed-top navbar-expand-lg">
-			<a class="navbar-brand" href="/">
-				<h3 style="color:blanchedalmond" title="https://www.choralcentral.net/">
-					ChoralCentral{% if unread %}<sup class="notification" title="{{ unread }} unread messages">{{ unread }}</sup>{% endif %}
-				</h3>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+			<a class="navbar-brand" href="/song">
+				ChoralCentral{% if unread %}<sup class="notification" title="{{ unread }} unread messages">{{ unread }}</sup>{% endif %}
 			</a>
 
 			<button type="button" class="navbar-toggler my-toggler" data-toggle="collapse" data-target=".navcontent">
@@ -56,7 +59,7 @@
 
 			<div class="collapse navbar-collapse navcontent">
 				<ul class="nav navbar-nav lefthand-navigation">
-					<li class="nav-item"><a class="nav-link" href="/" title="Home">Home</a></li>
+					<li class="nav-item"><a class="nav-link" href="/songs" title="Home">Home</a></li>
 					<li class="nav-item"><a class="nav-link" href="{% url 'author:index' %}" title="Lyricists and composers">Authors</a></li>
 					<li class="nav-item"><a class="nav-link" href="{% url 'request:index' %}" title="Song requests">Requests</a></li>
 					<li class="nav-item"><a class="nav-link" href="{% url 'blog:index' %}" title="Blog entries">Blog</a></li>
@@ -67,7 +70,7 @@
 				<ul class="navbar-nav ml-auto righthand-navigation">
 					{% if user.is_authenticated %}
 
-						<li class="nav-item logged-in-username">
+						<li class="nav-item">
 							<a class="nav-link" href="{% url 'siteuser:account_management' %}">
 								{% thumbnail user.siteuser.avatar "35x35" crop="center" as im %}
 									<div class="profile-image"><img class="card" src="{{ user.siteuser.avatar.url }}"></div>
@@ -117,28 +120,6 @@
 		</nav>
 		{% endblock navigation %}
 
-		{% block introduction %}
-		{% if not user.is_authenticated %}
-		<section class="jumbotron text-center d-none d-sm-block">
-            <div class="container">
-                <h1 class="jumbotron-heading">ChoralCentral</h1>
-                <p>If music be the food of love ...<p>
-                    <a href="{% url 'song:new' %}" class="btn btn-primary">UPLOAD</a>
-                    <a href="{% url 'blog:new' %}" class="btn btn-secondary">Blog</a>
-                    <a href="{% url 'request:new' %}" class="btn btn-secondary">Request</a>
-                    <a href="{% url 'song:instant_search_song' %}" class="btn btn-secondary">Search</a>
-                </p>
-
-                <p class="my-0">
-                	<a href="{% url 'siteuser:new' %}" class="btn btn-primary join-campaign">
-	                    Join us celebrate music in {{ lang_count }} languages and {{ voice_count }} voices
-	                </a>
-                </p>
-            </div>
-        </section>
-        {% endif %}
-		{% endblock introduction %}
-
 		<div class="container-fluid">
 		    {% include 'messages.html' %}
 			<div class="row">
@@ -167,40 +148,10 @@
 		</div>
 
 		<footer>
-			{% block footer_top %}{% include "footer_top.html" %}{% endblock footer_top %}
-			{% block footer_middle %}{% include "footer_middle.html" %}{% endblock footer_middle %}
-			{% block footer_bottom %}{% include "footer_bottom.html" %}{% endblock footer_bottom %}
+			{% block footer %}{% include "footer.html" %}{% endblock footer %}
 		</footer>
 
 		{% endblock body %}
-
-		<!--
-		<script>
-        // Add .active class to navigation menu item.
-            $(document).ready(function() {
-            //   $('li.active').removeClass('active');
-              $('a[href="' + location.pathname + '"]').closest('li').addClass('active');
-
-            //   Remove the class from the big upload button
-              $('#uploadButtonNav').removeClass('active');
-              $('.logged-in-username').removeClass('active');
-              $('.social-management').removeClass('active');
-			});
-		</script>
-		-->
-
-		<!--
-		<script>
-			// Initialize tooltip component
-			$(function () {
-				$('[data-toggle="tooltip"]').tooltip()
-			})
-            // Initialize popover component
-			$(function () {
-				$('[data-toggle="popover"]').popover()
-			})
-		</script>
-		-->
 
 		<!-- Sentry JS SDK 2.1.+ required -->
 		<script src="https://cdn.ravenjs.com/2.3.0/raven.min.js"></script>
@@ -225,8 +176,6 @@
 		<script src="//cdn.jsdelivr.net/hogan.js/3.0.2/hogan.min.js" async></script>
 		<script defer src='https://www.google.com/recaptcha/api.js' async></script>
 		<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js" async></script>
-
-		
 
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.5"></script>

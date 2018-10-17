@@ -5,11 +5,13 @@
 
 {% block content_content %}
 
-<div class='container author-heading'>
-    <div class='row'>
-        <h3 class='float-left'>Lyricists and Composers</h3>
-    </div>
-</div>
+<h1>Authors</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/song">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Authors</li>
+    </ol>
+</nav>
 
 {% for author in authors %}
 <div class="list-authors">

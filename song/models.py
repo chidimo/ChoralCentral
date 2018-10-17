@@ -23,7 +23,7 @@ class Voicing(TimeStampedModel):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('song:index')
+        return reverse('song:song_index')
 
 class Language(TimeStampedModel):
     name = models.CharField(max_length=25, unique=True)
@@ -35,14 +35,14 @@ class Language(TimeStampedModel):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('song:index')
+        return reverse('song:song_index')
 
 class Season(TimeStampedModel):
     name = models.CharField(max_length=15, unique=True)
     about = models.CharField(max_length=200, blank=True, null=True)
 
     def get_absolute_url(self):
-        return reverse('song:index')
+        return reverse('song:song_index')
 
     def __str__(self):
         return self.name
@@ -52,7 +52,7 @@ class MassPart(TimeStampedModel):
     about = models.CharField(max_length=200, blank=True, null=True)
 
     def get_absolute_url(self):
-        return reverse('song:index')
+        return reverse('song:song_index')
 
     def __str__(self):
         return self.name

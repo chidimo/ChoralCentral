@@ -19,7 +19,7 @@ class VoicingModelTests(TestCase):
         # model representation
         self.assertEqual(self.voicing.__str__(), 'satb')
         # absolute url
-        self.assertEqual(self.voicing.get_absolute_url(), reverse('song:index'))
+        self.assertEqual(self.voicing.get_absolute_url(), reverse('song:song_index'))
 
 class LanguageModelTests(TestCase):
     def setUp(self):
@@ -29,7 +29,7 @@ class LanguageModelTests(TestCase):
         # model representation
         self.assertEqual(self.language.__str__(), 'igbo')
         # absolute url
-        self.assertEqual(self.language.get_absolute_url(), reverse('song:index'))
+        self.assertEqual(self.language.get_absolute_url(), reverse('song:song_index'))
 
 class SongModelTests(TestCase):
     def setUp(self):
@@ -70,7 +70,7 @@ class SongIndexViewTests(TestCase):
         self.assertEqual(resp.status_code, 200)
 
         # url accessible by reverse
-        resp = self.client.get(reverse('song:index'))
+        resp = self.client.get(reverse('song:song_index'))
         self.assertEqual(resp.status_code, 200)
 
         # correct template rendered
@@ -86,13 +86,13 @@ class SongIndexViewTests(TestCase):
         self.assertTrue(len(resp.context['songs']) == 20)
 
         # test page 2
-        resp = self.client.get(reverse('song:index') + "?page=2")
+        resp = self.client.get(reverse('song:song_index') + "?page=2")
         self.assertEqual(resp.status_code, 200)
         # only two songs on this page
         self.assertTrue(len(resp.context['songs']) == 2)
 
         # test page 3
-        resp = self.client.get(reverse('song:index') + "?page=3")
+        resp = self.client.get(reverse('song:song_index') + "?page=3")
         self.assertEqual(resp.status_code, 404)
 
 class SongDetailViewTests(TestCase):

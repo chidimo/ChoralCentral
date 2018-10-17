@@ -21,8 +21,7 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    path('', views.SongIndex.as_view(), name="index"),
-    # path('', views.song_index, name="index"),
+    path('', views.SongIndex.as_view(), name="song_index"),
     path("new-song/", views.NewSong.as_view(), name="new"),
     path('ajax/check-song-exists/', views.check_song_exists, name='check_song_exists'),
     path("edit-song/<int:pk>/<slug:slug>/", views.SongEdit.as_view(), name="edit"),

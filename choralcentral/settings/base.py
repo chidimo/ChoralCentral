@@ -113,7 +113,6 @@ PROJECT_APPS = [
     'song_media',
     'redirect301',
     'request',
-    'drb',
 ]
 
 THIRD_PARTY_APPS = [

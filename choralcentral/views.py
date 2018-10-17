@@ -1,5 +1,9 @@
 from django.shortcuts import render
 
+def home(request):
+    template = "home.html"
+    return render(request, template, {})
+
 def help_page(request):
     template = "help_page.html"
     return render(request, template, {})

@@ -1,0 +1,61 @@
+{% extends "choralcentral_base.html" %}
+{% block title %}Welcome{% endblock title %}
+
+{% block body %}
+
+{% block navigation %}{% endblock navigation %}
+
+<div class="jumbotron text-center">
+    <div class="container">
+        <h1><a href="/song">ChoralCentral</a></h1>
+        <p>For the love of music.<p>
+            <a href="{% url 'song:new' %}" class="btn btn-primary">UPLOAD</a>
+            <a href="{% url 'blog:new' %}" class="btn btn-secondary">Blog</a>
+            <a href="{% url 'request:new' %}" class="btn btn-secondary">Request</a>
+            <a href="{% url 'song:instant_search_song' %}" class="btn btn-secondary">Search</a>
+        </p>
+
+        <p class="my-0">
+            <a href="{% url 'siteuser:new' %}" class="btn btn-primary join-campaign">
+                Join us celebrate music in {{ lang_count }} languages and {{ voice_count }} voices
+            </a>
+        </p>
+    </div>
+</div>
+
+<div class="large-print text-left">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6 large-print-item">
+                    <h3>Find music</h3>
+                    <p><span class="h5 text-primary">Instant search</span><br>
+                        Find the song you're looking for in an instant.</p>
+                    <p><a class="btn btn-primary" href="{% url 'song:instant_search_song' %}">Search</a></p>
+                </div>
+                
+                <div class="col-md-3 col-sm-6 large-print-item">
+                    <h3>Contribute</h3>
+                    <p><span class="h5 text-primary">We appreciate you.</span><br>
+                        A big thanks to all our members for their contribution.
+                    </p>
+                    <p><a class="btn btn-primary" href="{% url 'song:new' %}">Upload</a></p>
+                </div>
+                
+                <div class="col-md-3 col-sm-6 large-print-item">
+                    <h3>Blog</h3>
+                    <p><span class="h5 text-primary">Share your thoughts</span><br>
+                        Discuss your favourite song or musical topic.
+                    </p>
+                    <p><a class="btn btn-primary" href="{% url 'blog:new' %}">Blog</a></p>
+                </div>
+            
+                <div class="col-md-3 col-sm-6 large-print-item">
+                    <h3>Request</h3>
+                    <p><span class="h5 text-primary">Trust the community.</span><br>
+                        Request for songs and get notified when someone responds.</p>
+                    <p><a class="btn btn-primary" href="{% url 'request:new' %}">Request</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
