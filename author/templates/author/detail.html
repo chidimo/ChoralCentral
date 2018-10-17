@@ -1,15 +1,19 @@
 {% extends "choralcentral_base.html" %}
 {% block title %}{{ author }}{% endblock title %}
-{% block introduction %}{% endblock introduction %}
+
 {% load author_ttags %}
 
 {% block content_content %}
 
-<div class='container author-heading'>
-    <div class='row'>
-        <h3 class="float-left">{{ author }} - {{ author.author_type|title}}</h3>
-    </div>
-</div>
+<h1>{{ author }} - {{ author.author_type|title}}</h1>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/song">Home</a></li>
+        <li class="breadcrumb-item"><a href="/author">Authors</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ author }} - {{ author.author_type|title}}</li>
+    </ol>
+</nav>
 
 <div class='container author-bio-heading'>
     <div class='row'>

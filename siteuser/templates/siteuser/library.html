@@ -1,36 +1,36 @@
 {% extends "choralcentral_base.html" %}
 {% block title %}{{ siteuser.screen_name }}'s library{% endblock title %}
-{% block introduction %}{% endblock introduction %}
+
 {% load author_ttags %}
 
 {% block content_content %}
 
-<div class='container siteuser-index-heading'>
-    <div class='row'>
-        <h3 class='float-left'>{% if user == siteuser.user %}My{% else %}{{ siteuser.screen_name }}'s {% endif %} library</h3>
-    </div>
-</div>
+<h1>{% if user == siteuser.user %}My{% else %}{{ siteuser.screen_name }}'s {% endif %} library</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/song">Home</a></li>
+        <li class="breadcrumb-item"><a href="/users">Users</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{% if user == siteuser.user %}My{% else %}{{ siteuser.screen_name }}'s {% endif %} library</li>
+    </ol>
+</nav>
 
 {% include 'siteuser/account_user_details.html' %}
 
-<div class="library-tabs">
-    <ul class="nav nav-tabs">
-        <li class="nav-item"><a class="nav-link" href="#songs" aria-controls="songs" role="tab" data-toggle="tab">Songs</a></li>
-        <li class="nav-item"><a class="nav-link" href="#posts" aria-controls="posts" role="tab" data-toggle="tab">Blog posts</a></li>
-        <li class="nav-item"><a class="nav-link" href="#requests" aria-controls="requests" role="tab" data-toggle="tab">Request</a></li>
-        <li class="nav-item"><a class="nav-link" href="#authors" aria-controls="authors" role="tab" data-toggle="tab">Authors</a></li>
-        <li class="nav-item"><a class="nav-link" href="#scores" aria-controls="scores" role="tab" data-toggle="tab">Scores</a></li>
-        <li class="nav-item"><a class="nav-link" href="#midis" aria-controls="midis" role="tab" data-toggle="tab">Midi</a></li>
-        <li class="nav-item"><a class="nav-link" href="#videos" aria-controls="videos" role="tab" data-toggle="tab">Videos</a></li>
-    </ul>
-</div>
+<ul class="nav nav-tabs">
+    <li class="nav-item"><a class="nav-link" href="#songs" aria-controls="songs" role="tab" data-toggle="tab">Songs</a></li>
+    <li class="nav-item"><a class="nav-link" href="#posts" aria-controls="posts" role="tab" data-toggle="tab">Blog posts</a></li>
+    <li class="nav-item"><a class="nav-link" href="#requests" aria-controls="requests" role="tab" data-toggle="tab">Request</a></li>
+    <li class="nav-item"><a class="nav-link" href="#authors" aria-controls="authors" role="tab" data-toggle="tab">Authors</a></li>
+    <li class="nav-item"><a class="nav-link" href="#scores" aria-controls="scores" role="tab" data-toggle="tab">Scores</a></li>
+    <li class="nav-item"><a class="nav-link" href="#midis" aria-controls="midis" role="tab" data-toggle="tab">Midi</a></li>
+    <li class="nav-item"><a class="nav-link" href="#videos" aria-controls="videos" role="tab" data-toggle="tab">Videos</a></li>
+</ul>
 
-<hr>
 <!-- Tab panes -->
 <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="songs">
         <div class="table-responsive">
-            <table class="table">
+            <table class="table table-striped">
                 <thead class="thead-dark">
                     <caption>Songs</caption>
                     <tr>
@@ -71,7 +71,7 @@
     </div>
     <div role="tabpanel" class="tab-pane" id="posts">
         <div class="table-responsive">
-            <table class="table">
+            <table class="table table-striped">
                 <thead class="thead-dark">
                     <caption>Blog posts</caption>
                     <tr>
@@ -103,7 +103,7 @@
     </div>
     <div role="tabpanel" class="tab-pane" id="requests">
         <div class="table-responsive">
-            <table class="table">
+            <table class="table table-striped">
                 <thead class="thead-dark">
                     <caption>My requests</caption>
                     <tr>
@@ -139,7 +139,7 @@
     </div>
     <div role="tabpanel" class="tab-pane" id="authors">
         <div class="table-responsive">
-            <table class="table">
+            <table class="table table-striped">
                 <thead class="thead-dark">
                     <caption>My authors</caption>
                     <tr>

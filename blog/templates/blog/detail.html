@@ -2,16 +2,24 @@
 {% block title %}{{ post }}{% endblock title %}
 {% load blog_ttags %}
 {% load social_share %}
-{% block introduction %}{% endblock introduction %}
 
 {% block content_content %}
+
+
+<h1>{{ post.title|title }}</h1>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/song">Home</a></li>
+        <li class="breadcrumb-item"><a href="/blog">Blog</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ post.title|title }}</li>
+    </ol>
+</nav>
 
 <div class='container-fluid song-detail-header'>
     <div class='row'>
         <div class='col-sm-12' id="postTitleBox">
-            <span class='float-left detail-view-title'>{{ post.title }}</span>
-
-            <span class='float-right song-icons'>
+            <span class='song-icons'>
                 
                 {% if user.is_authenticated %}
                     {% if request.user.siteuser in post.likes.all %}

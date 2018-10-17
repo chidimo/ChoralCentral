@@ -1,20 +1,28 @@
 {% extends "choralcentral_base.html" %}
 {% block title %}New Song{% endblock %}
 {% load song_ttags %}
-{% block introduction %}{% endblock introduction %}
+
 
 {% block content_content %}
-<div class="upload-form">
-    <h2>New Song
-    <span class='float-right'>
 
+<h1>New song</h1>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/song">Home</a></li>
+        <li class="breadcrumb-item"><a href="/song">Song</a></li>
+        <li class="breadcrumb-item active" aria-current="page">New song</li>
+    </ol>
+</nav>
+
+
+<div class="upload-form">
         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#markdownModal">
             Formatting help
         </button>
         {% include 'song/markdown_help.html' %}
     </span>
     </h2>
-    <hr>
 
     <form action="" method="post" class="new-song-form" enctype="multipart/form-data">
         {% csrf_token %}
@@ -37,7 +45,7 @@
                     console.log(data.song_url)
                     var msg = "A song titled " + "<a id='existingSong' href'' target='_blank'>" + title + "</a>" + " already exists. Perhaps you just want to add scores and midis.";
 
-                    $('#id_title').parent().before('<p id="someId" class="text-danger">');
+                    $('#id_title').parent().before('<p id="someId">');
                     $('#someId').html(msg).css('font-weight', 'bold');
                     $('#existingSong').attr('href', data.song_url);
                 } else {

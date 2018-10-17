@@ -1,17 +1,20 @@
 {% extends "choralcentral_base.html" %}
 {% block title %}Account manager{% endblock title %}
-{% block introduction %}{% endblock introduction %}
+
 {% load thumbnail %}
 {% load song_ttags %}
 {% load static %}
 
 {% block content_content %}
 
-<div class='container siteuser-index-heading'>
-    <div class='row'>
-        <h3 class='float-left'>{{ siteuser.first_name|title }} {{ siteuser.last_name|title }}</h3>
-    </div>
-</div>
+<h1>{{ siteuser.first_name|title }} {{ siteuser.last_name|title }}</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/song">Home</a></li>
+        <li class="breadcrumb-item"><a href="/users">Users</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ siteuser.first_name|title }} {{ siteuser.last_name|title }}</li>
+    </ol>
+</nav>
 
 {% include 'siteuser/account_user_details.html' %}
 
@@ -31,7 +34,7 @@
 <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="inbox">
         <div class="table-responsive">
-            <table class="table">
+            <table class="table table-striped">
                 <thead class="thead-dark">
                     <caption>Inbox</caption>
                     <tr>
@@ -69,7 +72,7 @@
     </div>
     <div role="tabpanel" class="tab-pane active" id="outbox">
         <div class="table-responsive">
-            <table class="table">
+            <table class="table table-striped">
                 <thead class="thead-dark">
                     <caption>Outbox</caption>
                     <tr>

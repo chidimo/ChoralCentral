@@ -1,12 +1,19 @@
 {% extends "choralcentral_base.html" %}
 {% block title %}New post{% endblock %}
-{% block introduction %}{% endblock introduction %}
+
 
 {% block content_content %}
 
+<h1>New blog post</h1>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/song">Home</a></li>
+        <li class="breadcrumb-item"><a href="/blog">Blog</a></li>
+        <li class="breadcrumb-item active" aria-current="page">New blog post</li>
+    </ol>
+</nav>
 <div class="upload-form">
-    <h2>New blog post</h2>
-    <hr class='broad'>
 
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}

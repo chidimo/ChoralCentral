@@ -1,8 +1,5 @@
 {% extends "choralcentral_base.html" %}
-
 {% load static %}
-
-
 
 {% block content_content %}
 
@@ -20,9 +17,9 @@
             <div class="row">
                 <div class="col-sm-12">
                     {% if not song.publish %}
-                        <h4><a class="text-danger" href="{% url 'song:detail' song.pk song.slug %}">{{ song.title|title }}</a></h4>
+                        <h2><a class="text-danger" href="{% url 'song:detail' song.pk song.slug %}">{{ song.title|title }}</a></h2>
                     {% else %}
-                        <h4><a id="songLink{{ forloop.counter }}" href="{% url 'song:detail' song.pk song.slug %}" itemprop="name">{{ song.title|title }}</a></h4>
+                        <h2><a id="songLink{{ forloop.counter }}" href="{% url 'song:detail' song.pk song.slug %}" itemprop="name">{{ song.title|title }}</a></h2>
                         {% include 'song/ajax_like_song_index.html' %}
                     {% endif %}
     

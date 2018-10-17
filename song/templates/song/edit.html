@@ -1,12 +1,20 @@
 {% extends "choralcentral_base.html" %}
 {% block title %}Edit Song{% endblock %}
-{% block introduction %}{% endblock introduction %}
+
 
 {% block content_content %}
 
+<h1>Edit song</h1>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/song">Home</a></li>
+        <li class="breadcrumb-item"><a href="/author">Songs</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Edit song</li>
+    </ol>
+</nav>
+
 <div class="upload-form">
-    <h2>Edit Song</h2>
-    <hr class='broad'>
 
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
