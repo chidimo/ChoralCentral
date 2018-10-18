@@ -54,27 +54,36 @@
                 <a class="btn btn-sm btn-info icon-buttons" title="" href="{% url 'siteuser:song_likers' song.pk %}">{{ song.like_count }} <i class="fas fa-thumbs-up"></i></a>
                 <a class="btn btn-sm btn-info icon-buttons" href="{% url 'blog:new_song' song.pk %}" title="Make a post about {{ song.title|title }}"><i class="fas fa-pencil-alt"></i></a>
                 <a class="btn btn-sm btn-info icon-buttons" href="{% url 'song:reader_view' song.pk song.slug %}" title="Print {{ song.title|title }} in pdf format" target="_blank"><i class="fas fa-print"></i></a>
-
+                
                 {% with song.title|title as link_text %}
-                    {% post_to_facebook song link_text %}
+                {% post_to_facebook song link_text %}
                 {% endwith %}
-
+                
                 {% with song.title|title as link_text %}
-                    {% post_to_twitter "{{ song.title|title }}" song link_text %}
+                {% post_to_twitter "{{ song.title|title }}" song link_text %}
                 {% endwith %}
-
+                
                 <a class="btn btn-sm btn-info icon-buttons" href="" title="Email {{ song.title|title }}" data-toggle="modal" data-target="#emailModal">
-                <i class="fas fa-at"></i></a>
+                    <i class="fas fa-at"></i></a>
+                    
+                    {% include 'song/song_share_modal.html' %}
 
-                {% include 'song/song_share_modal.html' %}
+                <li class="nav-item dropdown float-right" style="list-style:none;">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-plus-square"></i></a>
+                    <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
+                        <a class="dropdown-item" href="{% url 'song-media:midi_add_to_song' song.pk %}">Midi</a>
+                        <a class="dropdown-item" href="{% url 'song-media:score_add_to_song' song.pk %}">Score</a>
+                        <a class="dropdown-item" href="{% url 'song-media:add_videolink_to_song' song.pk %}">Video</a>
+                    </div>
+                </li>
             </span>
         </div>
     </div>
 </div>
 
+<hr>
 <div class="container song-about">
-    <h5 class="my-2 text-left">About</h5>
-    <hr>
+    <h2>About</h2>
 
     <div class="row text-left">
         <div class="col-lg-6 my-2">
@@ -161,14 +170,10 @@
     </div>
 </div>
 
+<hr>
+
 <div class="container song-scores">
-    <h5 class="my-2 text-left">
-        Scores
-        <span class="float-right">
-            <a class="btn btn-info btn-sm" href="{% url 'song-media:score_add_to_song' song.pk %}">Add score <i class="fas fa-upload"></i></a>
-        </span>
-        </h5>
-        <hr>
+    <h2>Scores</h2>
 
     <div class="row">
         {% for score in song.score_set.all %}
@@ -215,14 +220,10 @@
     </div>
 </div>
 
+<hr>
+
 <div class="container song-music">
-    <h5 class="my-2 text-left">
-        Midis
-        <span class="float-right">
-            <a class="btn btn-info btn-sm float-right" href="{% url 'song-media:midi_add_to_song' song.pk %}">Add midi <i class="fas fa-upload"></i></a>
-        </span>
-        </h5>
-        <hr>
+    <h2>Midis</h2>
 
     <div class="row text-left">
         {% for midi in song.midi_set.all %}
@@ -263,14 +264,10 @@
     </div>
 </div>
 
-<div class="container song-video">
-    <h5 class="my-2 text-left">
-        Video links
-        <span class="float-right">
-            <a class="btn btn-info btn-sm" href="{% url 'song-media:add_videolink_to_song' song.pk %}">Add a link <i class="fas fa-upload"></i></a>
-        </span>
-    </h5>
-    <hr>
+<hr>
+
+<div class="container">
+    <h2>Video links</h2>
 
     <div class="row text-left">
         {% for link in song.videolink_set.all %}
@@ -309,9 +306,9 @@
     </div>
 </div>
 
-<div class="container song-lyrical">
-    <h5 class="my-2 text-left">Lyrics</h5>
-    <hr>
+<hr>
+
+<h2>Lyrics</h2>
     {{ song.lyrics|markdown_format }}
 </div>
 {% endblock content_content %}

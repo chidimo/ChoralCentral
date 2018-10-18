@@ -4,9 +4,16 @@
 
 {% block content_content %}
 
+<h1>New score</h1>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/song">Home</a></li>
+        <li class="breadcrumb-item"><a href="/song">Media</a></li>
+        <li class="breadcrumb-item active" aria-current="page">New score</li>
+    </ol>
+</nav>
 <div class="upload-form">
-    <h2>New music sheet</h2>
-    <hr>
 
     <p>Return to <a href="{% url 'song:detail' song.pk song.slug %}">{{ song }}</a></p>
 

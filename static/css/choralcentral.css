@@ -15,6 +15,10 @@ body {
     }
 }
 
+h1.home-page-header {
+    font-size: 3rem;
+}
+
 .home-page-left-content {
     margin-top: 10rem;
     margin-bottom: 5rem;
@@ -194,28 +198,7 @@ a.upload-button {
 .request-detail-heading > .row > .col-sm-12 > span.float-right {
     margin-top: 0.2rem;
 }
-.list-songs {
-    padding: 0.1rem 1rem;
-    margin: 0.75rem 0;
-    border-radius: 0.15rem;
-    border: 1px solid #eee;
-}
 
-.song-scores {
-    border: 1px solid #eee;
-    margin: 0.5rem 0;
-    border-radius: 0.15rem;
-}
-.song-music {
-    border: 1px solid #eee;
-    margin: 0.5rem 0;
-    border-radius: 0.15rem;
-}
-.song-lyrical {
-    border: 1px solid #eee;
-    margin: 0.5rem 0;
-    border-radius: 0.15rem;
-}
 .score-list {
     border: 1px solid #eee;
     border-radius: 0.15rem;
@@ -272,11 +255,7 @@ span.download-count {
 .search-info-box {
     font-size: 14px;
 }
-.song-video {
-    border: 1px solid #eee;
-    margin: 0.5rem 0;
-    border-radius: 0.15rem;
-}
+
 .video-list {
     border: 1px solid #eee;
     border-radius: 0.15rem;
