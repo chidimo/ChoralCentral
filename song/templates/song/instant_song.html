@@ -7,6 +7,17 @@
 {% load song_ttags %}
 
 {% block content_content %}
+
+<h1>Search songs</h1>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/song">Home</a></li>
+        <li class="breadcrumb-item"><a href="/song">Songs</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Search</li>
+    </ol>
+</nav>
+
     <div class="row search-input-box">
         <div class="col-sm-12">
             <input id="q" name="q" placeholder="Type to find songs" autocomplete="off" autocorrect="false" spellcheck="false" class="form-control" type="search">
@@ -38,6 +49,8 @@
             </div>
             <p>{{{ _highlightResult.lyrics.value }}}</p>
         </div>
+
+        <hr>
     {% endverbatim %}
 </script>
     
