@@ -146,12 +146,23 @@ class PassWordGetterForm(forms.Form):
             self.add_error('password', 'You entered a wrong password')
 
 class EmailAndPassWordGetterForm(forms.Form):
+    email = forms.CharField(
+        required=True,
+        widget=forms.TextInput(attrs={'class':'form-control', "placeholder" : "Email"}))
     password = forms.CharField(
         required=True,
         widget=forms.PasswordInput(attrs={'class':'form-control', 'type':'password', "placeholder" : "Enter password"}))
-    email = forms.CharField(
-        required=True,
-        widget=forms.TextInput(attrs={'class':'form-control', 'type':'password', "placeholder" : "Enter password"}))
+
+    def clean(self):
+        email = self.cleaned_data['email']
+        password = self.cleaned_data['password']
+
+        try:
+            user = CustomUser.objects.get(email=email)
+            if check_password(password, user.password) is False:
+                self.add_error('email', 'Your username and password do not match')
+        except CustomUser.DoesNotExist:
+            self.add_error('email', 'This user is not registered in our system.')
 
 class NewRoleForm(forms.ModelForm):
     class Meta:

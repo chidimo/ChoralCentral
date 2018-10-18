@@ -1,13 +1,20 @@
 {% extends "choralcentral_base.html" %}
 {% block title %}Edit Author{% endblock %}
-{% block introduction %}{% endblock introduction %}
+
 
 {% block content_content %}
 
-<div class="container upload-forms">
-    <h2>Edit Author</h2>
-    <hr class='broad'>
+<h1>Edit {{ object }}</h1>
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/song">Home</a></li>
+        <li class="breadcrumb-item"><a href="/author">Authors</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Edit {{ object }}</li>
+    </ol>
+</nav>
+
+<div class="upload-form">
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}

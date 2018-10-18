@@ -6,10 +6,3 @@ def site_stats(request):
         'lang_count' : Language.objects.count(),
         'voice_count' : Voicing.objects.count(),
     }
-
-def unread_messages(request):
-    try:
-        unread = Message.objects.filter(receiver__user=request.user).filter(read=False).count()
-        return {'unread' : unread}
-    except TypeError:
-        return dict()

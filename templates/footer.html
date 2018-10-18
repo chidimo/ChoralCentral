@@ -1,0 +1,33 @@
+<div class="container">
+    <footer id="footer">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="list-unstyled list-inline">
+                    <li class="float-lg-right"><a href="#top">Back to top</a></li>
+
+                    <li class="list-inline-item"><a href="{% url 'song:midi_feed' %}">Midi feed</a></li>
+                    <li class="list-inline-item"><a href="{% url 'song:song_feed' 'popular' %}">Popular feed</a></li>
+                    <li class="list-inline-item"><a href="{% url 'song:song_feed' 'latest' %}">Latest feed</a></li>
+                    <li class="list-inline-item"><a href="{% url 'blog:post_feed' %}">Blog feed</a></li>
+
+                    <li class="list-inline-item"><a href="">Twitter</a></li>
+                    <li class="list-inline-item"><a href="">GitHub</a></li>
+                    <li class="list-inline-item"><a href="/api">API</a></li>
+                    <li class="list-inline-item"><a href="">Donate</a></li>
+                </ul>
+                <ul class="list-unstyled list-inline">
+                    <li class="list-inline-item"><a href="/terms-of-use/">Terms</a></li>
+                    <li class="list-inline-item"><a href="/privacy-policy/" title="Privacy policy">Privacy</a></li>
+                    <li class="list-inline-item"><a href="/help-page/" title="FAQ and Help">FAQ and Help</a></li>
+                    <li class="list-inline-item"><a href="/sitemap.xml" title="Sitemap"><i class="fas fa-sitemap"></i> Sitemap</a></li>
+                </ul>
+                <p>Created by <a href="http://parousia.pythonanywhere.com">Chidi Orji</a>.</p>
+                <p>Built with <a href="https://djangoproject.com" rel="nofollow">Django</a>.
+                    Theme by <a href="https://bootswatch.com/darkly/" rel="nofollow">Bootswatch</a>.
+                    Icons from <a href="http://fontawesome.io/" rel="nofollow">Font Awesome</a>.
+                    Web fonts from <a href="https://fonts.google.com/" rel="nofollow">Google</a>.
+                </p>
+            </div>
+        </div>
+    </footer>
+</div>

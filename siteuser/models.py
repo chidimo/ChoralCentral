@@ -11,7 +11,7 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from sorl.thumbnail import ImageField
 from universal.models import TimeStampedModel
 from universal.fields import AutoSlugField
-from .utils import save_avatar, badge_icon
+from .utils.utils import save_avatar, badge_icon
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None):

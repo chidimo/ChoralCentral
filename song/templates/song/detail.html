@@ -13,41 +13,47 @@
 {% load social_share %}
 {% load static %}
 
-
-{% block introduction %}{% endblock introduction %}
-
 {% block content_content %}
+
+{% if song.publish %}
+    <h1>{{ song.title|title }}</h1>
+{% else %}
+    <h1 class="text-warning">{{ song.title|title }}</h1>
+{% endif %}
+
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/song">Home</a></li>
+        <li class="breadcrumb-item"><a href="/song">Songs</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ song.title|title }}</li>
+    </ol>
+</nav>
 
 <div class='container-fluid song-detail-header' itemscope itemtype="https://schema.org/CreativeWork">
     <div class='row'>
-        <div class='col-sm-12' id="songTitleBox">
-            {% if song.publish %}
-                <span class='float-left detail-view-title' itemprop="name">{{ song.title|title }}</span>
-            {% else %}
-                <span class='float-left detail-view-title text-danger' itemprop="name">{{ song.title|title }}</span>
-            {% endif %}
-
-            <span class='float-right song-icons'>
+        <div class='col-sm-12'>
+            <span class='song-icons'>
 
                 {% if user.is_authenticated %}
                     {% if request.user.siteuser in song.likes.all %}
-                        <span class="btn btn-sm btn-primary star-icon-button like-song-on-click" data-pk="{{ song.pk }}" data-app-label="song" data-model="song" title="Unlike">
+                        <span class="btn btn-sm btn-info star-icon-button like-song-on-click" data-pk="{{ song.pk }}" data-app-label="song" data-model="song" title="Unlike">
                             <i class="fas fa-thumbs-up text-primary"></i>
                         </span>
                     {% else %}
-                        <span class="btn btn-sm btn-primary star-icon-button like-song-on-click" data-pk="{{ song.pk }}" data-app-label="song" data-model="song" title="Like">
+                        <span class="btn btn-sm btn-info star-icon-button like-song-on-click" data-pk="{{ song.pk }}" data-app-label="song" data-model="song" title="Like">
                             <i class="fas fa-thumbs-up text-secondary"></i>
                         </span>
                     {% endif %}
                 {% else %}
-                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:login' %}?next={{ request.path }}">Login to like</a>
+                        <a class="btn btn-sm btn-info icon-buttons" href="{% url 'siteuser:login' %}?next={{ request.path }}">Login to like</a>
                 {% endif %}
 
                 {% include 'song/ajax_like_song.html' %}
 
-                <a class="btn btn-sm btn-primary icon-buttons" title="" href="{% url 'siteuser:song_likers' song.pk %}">{{ song.like_count }} <i class="fas fa-thumbs-up"></i></a>
-                <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'blog:new_song' song.pk %}" title="Make a post about {{ song.title|title }}"><i class="fas fa-pencil-alt"></i></a>
-                <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song:reader_view' song.pk song.slug %}" title="Print {{ song.title|title }} in pdf format" target="_blank"><i class="fas fa-print"></i></a>
+                <a class="btn btn-sm btn-info icon-buttons" title="" href="{% url 'siteuser:song_likers' song.pk %}">{{ song.like_count }} <i class="fas fa-thumbs-up"></i></a>
+                <a class="btn btn-sm btn-info icon-buttons" href="{% url 'blog:new_song' song.pk %}" title="Make a post about {{ song.title|title }}"><i class="fas fa-pencil-alt"></i></a>
+                <a class="btn btn-sm btn-info icon-buttons" href="{% url 'song:reader_view' song.pk song.slug %}" title="Print {{ song.title|title }} in pdf format" target="_blank"><i class="fas fa-print"></i></a>
 
                 {% with song.title|title as link_text %}
                     {% post_to_facebook song link_text %}
@@ -57,7 +63,7 @@
                     {% post_to_twitter "{{ song.title|title }}" song link_text %}
                 {% endwith %}
 
-                <a class="btn btn-sm btn-primary icon-buttons" href="" title="Email {{ song.title|title }}" data-toggle="modal" data-target="#emailModal">
+                <a class="btn btn-sm btn-info icon-buttons" href="" title="Email {{ song.title|title }}" data-toggle="modal" data-target="#emailModal">
                 <i class="fas fa-at"></i></a>
 
                 {% include 'song/song_share_modal.html' %}
@@ -159,7 +165,7 @@
     <h5 class="my-2 text-left">
         Scores
         <span class="float-right">
-            <a class="btn btn-primary btn-sm" href="{% url 'song-media:score_add_to_song' song.pk %}">Add score <i class="fas fa-upload"></i></a>
+            <a class="btn btn-info btn-sm" href="{% url 'song-media:score_add_to_song' song.pk %}">Add score <i class="fas fa-upload"></i></a>
         </span>
         </h5>
         <hr>
@@ -170,29 +176,29 @@
                 <div class="row score-list-meta-container">
                     <div class="container">
                         {% if score.thumbnail %}
-                            <a class="btn btn-sm btn-primary icon-buttons" href="{{ score.thumbnail.url }}" title="Preview first page" target="_blank">Preview</a>
+                            <a class="btn btn-sm btn-info icon-buttons" href="{{ score.thumbnail.url }}" title="Preview first page" target="_blank">Preview</a>
                         {% else %}
-                        <span class="btn btn-sm btn-primary icon-buttons" title="No preview">No preview</span>
+                        <span class="btn btn-sm btn-info icon-buttons" title="No preview">No preview</span>
                         {% endif %}
 
-                        <span class="btn btn-sm btn-primary icon-buttons" title="{{ score.part|title }}">{{ score.part }}</span>
-                        <span class="btn btn-sm btn-primary icon-buttons" title="{{ score.notation|title }}">{{ score.notation }}</span>
-                        <span class="btn btn-sm btn-primary icon-buttons" title="Filesize: {{ score.fsize|filesizeformat }}">{{ score.fsize|filesizeformat }}</span>
-                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:library' score.creator.pk score.creator.slug %}" title="{{ score.creator.screen_name }}"> {{ score.creator.screen_name }}</a>
+                        <span class="btn btn-sm btn-info icon-buttons" title="{{ score.part|title }}">{{ score.part }}</span>
+                        <span class="btn btn-sm btn-info icon-buttons" title="{{ score.notation|title }}">{{ score.notation }}</span>
+                        <span class="btn btn-sm btn-info icon-buttons" title="Filesize: {{ score.fsize|filesizeformat }}">{{ score.fsize|filesizeformat }}</span>
+                        <a class="btn btn-sm btn-info icon-buttons" href="{% url 'siteuser:library' score.creator.pk score.creator.slug %}" title="{{ score.creator.screen_name }}"> {{ score.creator.screen_name }}</a>
 
-                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song-media:show_score' score.pk %}" target="_blank" title="Click to Download: {{ score.downloads }} total downloads">
+                        <a class="btn btn-sm btn-info icon-buttons" href="{% url 'song-media:show_score' score.pk %}" target="_blank" title="Click to Download: {{ score.downloads }} total downloads">
                             <span class="download-count">{{ score.downloads }}</span> <i class="fas fa-download"></i>
                         </a>
 
                         <span id="scoreDetailBox{{ forloop.counter }}">
-                        <a class="btn btn-sm btn-primary icon-buttons" title="" href="#">{{ score.like_count }} <i class="fas fa-thumbs-up"></i></a>
+                        <a class="btn btn-sm btn-info icon-buttons" title="" href="#">{{ score.like_count }} <i class="fas fa-thumbs-up"></i></a>
                             {% if user.is_authenticated %}
                                 {% if request.user.siteuser in score.likes.all %}
-                                    <span class="btn btn-sm btn-primary star-icon-button like-score-{{ forloop.counter }}-on-click" data-pk="{{ score.pk }}" data-app-label="song_media" data-model="score">
+                                    <span class="btn btn-sm btn-info star-icon-button like-score-{{ forloop.counter }}-on-click" data-pk="{{ score.pk }}" data-app-label="song_media" data-model="score">
                                         <i class="fas fa-thumbs-up text-primary"></i>
                                     </span>
                                 {% else %}
-                                    <span class="btn btn-sm btn-primary star-icon-button like-score-{{ forloop.counter }}-on-click" data-pk="{{ score.pk }}" data-app-label="song_media" data-model="score">
+                                    <span class="btn btn-sm btn-info star-icon-button like-score-{{ forloop.counter }}-on-click" data-pk="{{ score.pk }}" data-app-label="song_media" data-model="score">
                                         <i class="fas fa-thumbs-up text-secondary"></i>
                                     </span>
                                 {% endif %}
@@ -213,7 +219,7 @@
     <h5 class="my-2 text-left">
         Midis
         <span class="float-right">
-            <a class="btn btn-primary btn-sm float-right" href="{% url 'song-media:midi_add_to_song' song.pk %}">Add midi <i class="fas fa-upload"></i></a>
+            <a class="btn btn-info btn-sm float-right" href="{% url 'song-media:midi_add_to_song' song.pk %}">Add midi <i class="fas fa-upload"></i></a>
         </span>
         </h5>
         <hr>
@@ -224,26 +230,26 @@
                 <div class="row audio-list-meta-container">
                     <div class="container">
                         {% if midi.fformat == 'mp3' %}
-                            <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song-media:playmp3' midi.pk %}" title="Play {{ midi }}">{{ midi.fformat }}</a>
+                            <a class="btn btn-sm btn-info icon-buttons" href="{% url 'song-media:playmp3' midi.pk %}" title="Play {{ midi }}">{{ midi.fformat }}</a>
                         {% else %}
-                            <a class="btn btn-sm btn-primary icon-buttons" title="File format: {{ midi.fformat }}">{{ midi.fformat }}</a>
+                            <a class="btn btn-sm btn-info icon-buttons" title="File format: {{ midi.fformat }}">{{ midi.fformat }}</a>
                         {% endif %}
-                        <span class="btn btn-sm btn-primary icon-buttons" title="{{ midi.part }}">{{ midi.part }}</span>
-                        <span class="btn btn-sm btn-primary icon-buttons" title="Filesize: {{ midi.fsize|filesizeformat }}">{{ midi.fsize|filesizeformat }}</span>
-                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:library' midi.creator.pk midi.creator.slug %}" title="{{ midi.creator.screen_name }}">{{ midi.creator.screen_name }}</a>
-                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'song-media:download_midi' midi.pk %}" target="_blank" title="Click to Download: {{ midi.downloads }} total downloads">
+                        <span class="btn btn-sm btn-info icon-buttons" title="{{ midi.part }}">{{ midi.part }}</span>
+                        <span class="btn btn-sm btn-info icon-buttons" title="Filesize: {{ midi.fsize|filesizeformat }}">{{ midi.fsize|filesizeformat }}</span>
+                        <a class="btn btn-sm btn-info icon-buttons" href="{% url 'siteuser:library' midi.creator.pk midi.creator.slug %}" title="{{ midi.creator.screen_name }}">{{ midi.creator.screen_name }}</a>
+                        <a class="btn btn-sm btn-info icon-buttons" href="{% url 'song-media:download_midi' midi.pk %}" target="_blank" title="Click to Download: {{ midi.downloads }} total downloads">
                             <span class="download-count">{{ midi.downloads }}</span> <i class="fas fa-download"></i>
                         </a>
 
                         <span id="midiDetailBox{{ forloop.counter }}">
-                            <a class="btn btn-sm btn-primary icon-buttons" title="" href="#">{{ midi.like_count }} <i class="fas fa-thumbs-up"></i></a>
-                            <a href="#" class="btn btn-sm btn-primary icon-buttons" onClick="MIDIjs.play('{{ midi.media_file.url }}');"><i class="fas fa-play"></i></a>
-                            <a href="#" class="btn btn-sm btn-primary icon-buttons" onClick="MIDIjs.stop();"><i class='fas fa-stop'></i></a>
+                            <a class="btn btn-sm btn-info icon-buttons" title="" href="#">{{ midi.like_count }} <i class="fas fa-thumbs-up"></i></a>
+                            <a href="#" class="btn btn-sm btn-info icon-buttons" onClick="MIDIjs.play('{{ midi.media_file.url }}');"><i class="fas fa-play"></i></a>
+                            <a href="#" class="btn btn-sm btn-info icon-buttons" onClick="MIDIjs.stop();"><i class='fas fa-stop'></i></a>
                             {% if user.is_authenticated %}
                                 {% if request.user.siteuser in midi.likes.all %}
-                                    <span class="btn btn-sm btn-primary star-icon-button like-midi-{{ forloop.counter }}-on-click" data-pk="{{ midi.pk }}" data-app-label="song_media" data-model="midi"><i class="fas fa-thumbs-up text-primary"></i></span>
+                                    <span class="btn btn-sm btn-info star-icon-button like-midi-{{ forloop.counter }}-on-click" data-pk="{{ midi.pk }}" data-app-label="song_media" data-model="midi"><i class="fas fa-thumbs-up text-primary"></i></span>
                                 {% else %}
-                                    <span class="btn btn-sm btn-primary star-icon-button like-midi-{{ forloop.counter }}-on-click" data-pk="{{ midi.pk }}" data-app-label="song_media" data-model="midi"><i class="fas fa-thumbs-up text-secondary"></i></span>
+                                    <span class="btn btn-sm btn-info star-icon-button like-midi-{{ forloop.counter }}-on-click" data-pk="{{ midi.pk }}" data-app-label="song_media" data-model="midi"><i class="fas fa-thumbs-up text-secondary"></i></span>
                                 {% endif %}
                             {% endif %}
                             {% include 'song/ajax_like_midi.html' %}
@@ -261,7 +267,7 @@
     <h5 class="my-2 text-left">
         Video links
         <span class="float-right">
-            <a class="btn btn-primary btn-sm" href="{% url 'song-media:add_videolink_to_song' song.pk %}">Add a link <i class="fas fa-upload"></i></a>
+            <a class="btn btn-info btn-sm" href="{% url 'song-media:add_videolink_to_song' song.pk %}">Add a link <i class="fas fa-upload"></i></a>
         </span>
     </h5>
     <hr>
@@ -289,11 +295,11 @@
 
                 <div class="row video-list-icon-container">
                     <div class="container">
-                        <span class="btn btn-sm btn-primary icon-buttons" title="{{ link.youtube_likes }}">{{ link.youtube_likes }}</span>
-                        <span class="btn btn-sm btn-primary icon-buttons float-left" title="Total youtube likes"><i class="fas fa-star"></i></span>
+                        <span class="btn btn-sm btn-info icon-buttons" title="{{ link.youtube_likes }}">{{ link.youtube_likes }}</span>
+                        <span class="btn btn-sm btn-info icon-buttons float-left" title="Total youtube likes"><i class="fas fa-star"></i></span>
 
-                        <span class="btn btn-sm btn-primary icon-buttons float-right" title="Total youtube views"><i class="fas fa-eye"></i></span>
-                        <span class="btn btn-sm btn-primary icon-buttons float-right" title="{{ link.youtube_views }}">{{ link.youtube_views }}</span>
+                        <span class="btn btn-sm btn-info icon-buttons float-right" title="Total youtube views"><i class="fas fa-eye"></i></span>
+                        <span class="btn btn-sm btn-info icon-buttons float-right" title="{{ link.youtube_views }}">{{ link.youtube_views }}</span>
                     </div>
                 </div>
             </div>

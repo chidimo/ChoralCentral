@@ -1,50 +1,44 @@
 {% extends "choralcentral_base.html" %}
-
 {% load static %}
 
-{% block left_sidebar %}
-
-{% if filter_form %}
-    {% if user.is_authenticated %}
-        <div class="d-none d-md-block filter-block">
-            <form data-url="{% url 'song:index' %}" method="get" enctype="multipart/form-data" id="filterForm">
-                {{ filter_form.as_p }}
-                <button class="btn btn-primary btn-sm float-right" type="submit" value="Filter songs">Apply</button>
-            </form>
-        </div>
-    {% endif %}
-{% endif %}
-{% endblock left_sidebar %}
-
 {% block content_content %}
+
+<h1>Song Index</h1>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/song">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Songs</li>
+    </ol>
+</nav>
 
     {% for song in songs %}
         <div class="list-songs container" itemscope itemtype="https://schema.org/CreativeWork">
             <div class="row">
                 <div class="col-sm-12">
                     {% if not song.publish %}
-                        <h4><a class="text-danger" href="{% url 'song:detail' song.pk song.slug %}">{{ song.title|title }}</a></h4>
+                        <h2><a class="text-danger" href="{% url 'song:detail' song.pk song.slug %}">{{ song.title|title }}</a></h2>
                     {% else %}
-                        <h4><a id="songLink{{ forloop.counter }}" href="{% url 'song:detail' song.pk song.slug %}" itemprop="name">{{ song.title|title }}</a></h4>
+                        <h2><a id="songLink{{ forloop.counter }}" href="{% url 'song:detail' song.pk song.slug %}" itemprop="name">{{ song.title|title }}</a></h2>
                         {% include 'song/ajax_like_song_index.html' %}
                     {% endif %}
     
                     <div class="row">
                         <div class="col-sm-12 song-index-meta">
                             <span class="song-meta float-left">
-                                <span class="btn btn-sm btn-primary icon-buttons text-ocassion" title="Ocassion: {{ song.ocassion|title }}">{{ song.ocassion|title }}</span>
-                                <span class="btn btn-sm btn-primary icon-buttons text-genre" title="Genre: {{ song.genre|title }}" itemprop="genre">{{ song.genre|title }}</span>
-                                <span class="btn btn-sm btn-primary icon-buttons text-voicing" title="Voicing: {{ song.voicing|upper }}">{{ song.voicing|upper }}</span>
-                                <span class="btn btn-sm btn-primary icon-buttons text-language" title="Language: {{ song.language|title }}" itemprop="inLanguage">{{ song.language|title }}</span>
+                                <span class="btn btn-sm btn-success icon-buttons text-ocassion" title="Ocassion: {{ song.ocassion|title }}">{{ song.ocassion|title }}</span>
+                                <span class="btn btn-sm btn-success icon-buttons text-genre" title="Genre: {{ song.genre|title }}" itemprop="genre">{{ song.genre|title }}</span>
+                                <span class="btn btn-sm btn-success icon-buttons text-voicing" title="Voicing: {{ song.voicing|upper }}">{{ song.voicing|upper }}</span>
+                                <span class="btn btn-sm btn-success icon-buttons text-language" title="Language: {{ song.language|title }}" itemprop="inLanguage">{{ song.language|title }}</span>
                                 {% for masspart in song.mass_parts.all %}
-                                    <span class="btn btn-sm btn-primary icon-buttons text-masspart" title="Masspart: {{ masspart|title }}">{{ masspart|title }}</span>
+                                    <span class="btn btn-sm btn-success icon-buttons text-masspart" title="Masspart: {{ masspart|title }}">{{ masspart|title }}</span>
                                 {% endfor %}
                                 {% for season in song.seasons.all %}
-                                    <span class="btn btn-sm btn-primary icon-buttons text-season" title="Season: {{ season|title }}">{{ season|title }}</span>
+                                    <span class="btn btn-sm btn-success icon-buttons text-season" title="Season: {{ season|title }}">{{ season|title }}</span>
                                 {% endfor %}
                             </span>
                             <span class="float-right">
-                                <a class="btn btn-sm btn-primary icon-buttons" title="" href="{% url 'siteuser:song_likers' song.pk %}">{{ song.like_count }} <i class="fas fa-thumbs-up"></i></a>
+                                <a class="btn btn-sm btn-success icon-buttons" title="" href="{% url 'siteuser:song_likers' song.pk %}">{{ song.like_count }} <i class="fas fa-thumbs-up"></i></a>
                             </span>
     
                         </div>

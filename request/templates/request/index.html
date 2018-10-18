@@ -1,13 +1,16 @@
 {% extends "choralcentral_base.html" %}
 {% block title %}Requests{% endblock %}
-{% block introduction %}{% endblock introduction %}
+
 
 {% block content_content %}
-<div class='container siteuser-index-heading'>
-    <div class='row'>
-        <h3 class='float-left'>Requests</h3>
-    </div>
-</div>
+
+<h1>Requests</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/song">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Requests</li>
+    </ol>
+</nav>
 
 {% for request in requests %}
     <div class="list-requests">

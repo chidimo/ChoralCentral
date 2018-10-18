@@ -1,21 +1,21 @@
 {% extends "choralcentral_base.html" %}
 {% block title %}{{ author }}{% endblock title %}
-{% block introduction %}{% endblock introduction %}
+
 {% load author_ttags %}
 
 {% block content_content %}
 
-<div class='container author-heading'>
-    <div class='row'>
-        <h3 class="float-left">{{ author }} - {{ author.author_type|title}}</h3>
-    </div>
-</div>
+<h1>{{ author }} - {{ author.author_type|title}}</h1>
 
-<div class='container author-bio-heading'>
-    <div class='row'>
-        <h5 class='float-left'>Biography</h5>
-    </div>
-</div>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/song">Home</a></li>
+        <li class="breadcrumb-item"><a href="/author">Authors</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ author }} - {{ author.author_type|title}}</li>
+    </ol>
+</nav>
+
+<h2>Biography</h2>
 
 <div class='container author-bio-text'>
     {% if author.bio %}
@@ -25,20 +25,12 @@
     {% endif %}
 </div>
 
-<div class='container author-songs-heading'>
-    <div class='row'>
-        <h5 class='h5 float-left'>Songs</h5>
-    </div>
-</div>
+<hr>
+
+<h2>Songs</h2>
 
 {% for song in author_songs %}
-    <div class="list-author-songs">
-        {% if song.publish %}
-            <h5><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title|title }}</a></h5>
-        {% else %}
-            <h5><a class="text-danger" href="{% url 'song:detail' song.pk song.slug %}">{{ song.title|title }}</a></h5>
-        {% endif %}
-    </div>
+    <h3>{{ forloop.counter }} - <a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title|title }}</a></h3>
 {% empty %}
     <p>Author has no song</p>
 {% endfor %}
