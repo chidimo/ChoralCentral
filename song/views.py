@@ -169,7 +169,7 @@ def song_index(request):
         context['songs'] = songs
         return render(request, template, context)
 
-@method_decorator(cache_control(must_revalidate=True, max_age=60*5), name='dispatch')
+# # @method_decorator(cache_control(must_revalidate=True, max_age=60*1), name='dispatch')
 class SongIndex(PaginationMixin, generic.ListView):
     model = Song
     context_object_name = 'songs'
