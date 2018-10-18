@@ -14,14 +14,14 @@
 </nav>
 
 {% for author in authors %}
-<div class="list-authors">
-    <h5><a href="{% url 'author:detail' author.pk author.slug %}">{{ author }}</a></h5>
+    <h2>{{ forloop.counter }} - <a href="{% url 'author:detail' author.pk author.slug %}">{{ author }}</a></h2>
     <p>{{ author.author_type|title }} &#124;
         {% with auth=author.song_set.all %}
             {{ auth|count_published }}
         {% endwith %} published songs</a>
     </p>
-</div>
+    
+    <hr>
 {% empty %}
     <p style="margin-bottom:25rem">No authors added yet</p>
 {% endfor %}

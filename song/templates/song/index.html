@@ -26,19 +26,19 @@
                     <div class="row">
                         <div class="col-sm-12 song-index-meta">
                             <span class="song-meta float-left">
-                                <span class="btn btn-sm btn-primary icon-buttons text-ocassion" title="Ocassion: {{ song.ocassion|title }}">{{ song.ocassion|title }}</span>
-                                <span class="btn btn-sm btn-primary icon-buttons text-genre" title="Genre: {{ song.genre|title }}" itemprop="genre">{{ song.genre|title }}</span>
-                                <span class="btn btn-sm btn-primary icon-buttons text-voicing" title="Voicing: {{ song.voicing|upper }}">{{ song.voicing|upper }}</span>
-                                <span class="btn btn-sm btn-primary icon-buttons text-language" title="Language: {{ song.language|title }}" itemprop="inLanguage">{{ song.language|title }}</span>
+                                <span class="btn btn-sm btn-success icon-buttons text-ocassion" title="Ocassion: {{ song.ocassion|title }}">{{ song.ocassion|title }}</span>
+                                <span class="btn btn-sm btn-success icon-buttons text-genre" title="Genre: {{ song.genre|title }}" itemprop="genre">{{ song.genre|title }}</span>
+                                <span class="btn btn-sm btn-success icon-buttons text-voicing" title="Voicing: {{ song.voicing|upper }}">{{ song.voicing|upper }}</span>
+                                <span class="btn btn-sm btn-success icon-buttons text-language" title="Language: {{ song.language|title }}" itemprop="inLanguage">{{ song.language|title }}</span>
                                 {% for masspart in song.mass_parts.all %}
-                                    <span class="btn btn-sm btn-primary icon-buttons text-masspart" title="Masspart: {{ masspart|title }}">{{ masspart|title }}</span>
+                                    <span class="btn btn-sm btn-success icon-buttons text-masspart" title="Masspart: {{ masspart|title }}">{{ masspart|title }}</span>
                                 {% endfor %}
                                 {% for season in song.seasons.all %}
-                                    <span class="btn btn-sm btn-primary icon-buttons text-season" title="Season: {{ season|title }}">{{ season|title }}</span>
+                                    <span class="btn btn-sm btn-success icon-buttons text-season" title="Season: {{ season|title }}">{{ season|title }}</span>
                                 {% endfor %}
                             </span>
                             <span class="float-right">
-                                <a class="btn btn-sm btn-primary icon-buttons" title="" href="{% url 'siteuser:song_likers' song.pk %}">{{ song.like_count }} <i class="fas fa-thumbs-up"></i></a>
+                                <a class="btn btn-sm btn-success icon-buttons" title="" href="{% url 'siteuser:song_likers' song.pk %}">{{ song.like_count }} <i class="fas fa-thumbs-up"></i></a>
                             </span>
     
                         </div>

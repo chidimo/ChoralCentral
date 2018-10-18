@@ -4,20 +4,26 @@
 
 {% block content_content %}
 
-<h2>Delete sound</h2>
+<h1>Delete {{ object }}</h1>
 
-<p>Please confirm if you really want to delete <span class="text-danger">{{ object }}</span></p>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/song">Home</a></li>
+        <li class="breadcrumb-item"><a href="/author">Authors</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Delete {{ object }}</li>
+    </ol>
+</nav>
 
-<p>This author's name will be removed from the following songs</p>
+<p>Please confirm if you really want to delete <span class="text-info">{{ object }}</span></p>
+
+<p>{{ object }} will be removed from the following songs</p>
 
 {% for song in author_songs %}
-    <div class="list-author-songs">
-        {% if song.publish %}
-            <h5><a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h5>
-        {% else %}
-            <h5><a class="text-danger" href="{% url 'song:detail' song.pk song.slug %}">{{ song.title }}</a></h5>
-        {% endif %}
-    </div>
+    {% if song.publish %}
+        <h3>{{ forloop.counter }} - <a href="{% url 'song:detail' song.pk song.slug %}">{{ song.title|title }}</a></h3>
+    {% else %}
+        <h3>{{ forloop.counter }} - <a class="text-warning" href="{% url 'song:detail' song.pk song.slug %}">{{ song.title|title }}</a></h3>
+    {% endif %}
 {% empty %}
     <p>Author has no song</p>
 {% endfor %}
