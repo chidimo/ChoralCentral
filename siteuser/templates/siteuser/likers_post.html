@@ -5,11 +5,14 @@
 
 {% block content_content %}
 
-<div class='container siteuser-index-heading'>
-    <div class='row'>
-        <h3 class='float-left'>People who liked {{ post.title|title }}</h3>
-    </div>
-</div>
+<h1>People who liked {{ post.title|title }}</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/song">Home</a></li>
+        <li class="breadcrumb-item"><a href="/users">Users</a></li>
+        <li class="breadcrumb-item active" aria-current="page">People who liked {{ post.title|title }}</li>
+    </ol>
+</nav>
 
 <div class="container">
     <div class="row">

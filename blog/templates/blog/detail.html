@@ -16,30 +16,32 @@
     </ol>
 </nav>
 
-<div class='container-fluid song-detail-header'>
+<div class='container'>
     <div class='row'>
-        <div class='col-sm-12' id="postTitleBox">
+        <div class='col-sm-12'>
             <span class='song-icons'>
                 
                 {% if user.is_authenticated %}
                     {% if request.user.siteuser in post.likes.all %}
-                        <span class="btn btn-sm btn-primary star-icon-button like-post-on-click" data-pk="{{ post.pk }}" data-app-label="blog" data-model="post" title="Unlike">
+                        <span class="btn btn-sm btn-success star-icon-button like-post-on-click" data-pk="{{ post.pk }}" data-app-label="blog" data-model="post" title="Unlike">
                             <i class="fas fa-thumbs-up text-primary"></i>
                         </span>
                     {% else %}
-                        <span class="btn btn-sm btn-primary star-icon-button like-post-on-click" data-pk="{{ post.pk }}" data-app-label="blog" data-model="post" title="Like">
+                        <span class="btn btn-sm btn-success star-icon-button like-post-on-click" data-pk="{{ post.pk }}" data-app-label="blog" data-model="post" title="Like">
                             <i class="fas fa-thumbs-up text-secondary"></i>
                         </span>
                     {% endif %}
                 {% else %}
-                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:login' %}?next={{ request.path }}">Login to like</a>
+                        <a class="btn btn-sm btn-success icon-buttons" href="{% url 'siteuser:login' %}?next={{ request.path }}">Login to like</a>
                 {% endif %}
+
                 {% include 'blog/ajax_like_post.html' %}
 
-                <a class="btn btn-sm btn-primary icon-buttons" title="{{ post.like_count }} likes" href="{% url 'siteuser:post_likers' post.pk %}">{{ post.like_count }} <i class="fas fa-thumbs-up"></i></a>
 
-                <span class="btn btn-sm btn-primary icon-buttons" title="{{ post.comment_set.count }} comments">{{ post.comment_set.count }} <i class="fas fa-comments"></i></span>
-                <a class="btn btn-sm btn-primary icon-buttons" href="" title="Print {{ post.title }} in pdf format" target="_blank"><i class="fas fa-print"></i></a>
+                <a class="btn btn-sm btn-success icon-buttons" title="{{ post.like_count }} likes" href="{% url 'siteuser:post_likers' post.pk %}">{{ post.like_count }} <i class="fas fa-thumbs-up"></i></a>
+
+                <span class="btn btn-sm btn-success icon-buttons" title="{{ post.comment_set.count }} comments">{{ post.comment_set.count }} <i class="fas fa-comments"></i></span>
+                <a class="btn btn-sm btn-success icon-buttons" href="" title="Print {{ post.title }} in pdf format" target="_blank"><i class="fas fa-print"></i></a>
 
                 {% with post.title as link_text %}
                     {% post_to_facebook song link_text %}
@@ -49,7 +51,7 @@
                     {% post_to_twitter "Check out {{ post.title }}" post link_text %}
                 {% endwith %}
 
-                <a class="btn btn-sm btn-primary icon-buttons"href="" title="Email {{ post.title }}" data-toggle="modal" data-target="#postModal">
+                <a class="btn btn-sm btn-success icon-buttons"href="" title="Email {{ post.title }}" data-toggle="modal" data-target="#postModal">
                     <i class="fas fa-at"></i>
                 </a>
                 {% include 'blog/post_share_modal.html' %}
@@ -58,29 +60,31 @@
     </div>
 </div>
 
-<div class='container song-about'>
+<hr>
+
+<div class='container'>
     <div class='row'>
         <div class='col-sm-12'>
             <div class='post-subtitle'>
-                <h6>by <a href="{% url 'siteuser:library' post.creator.pk post.creator.slug %}">
+                <h4>by <a href="{% url 'siteuser:library' post.creator.pk post.creator.slug %}">
                     {{ post.creator.screen_name }}</a> | {{ post.created|date }} | Updated {{ post.modified|date }}
-                </h6>
+                </h4>
             </div>
             {% if post.subtitle %}
-                <div class='post-subtitle'>
-                    <em>{{ post.subtitle|markdown_format }}</em>
-                </div>
+                    <h4><em>{{ post.subtitle|markdown_format }}</em></h4>
             {% endif %}
             {% if post.song %}
                 <div class='post-song'>
-                    <p>on <a href="{% url 'song:detail' post.song.pk post.song.slug %}">{{ post.song }}</a></p>
+                    <h4>on <a href="{% url 'song:detail' post.song.pk post.song.slug %}">{{ post.song }}</a></h4>
                 </div>
             {% endif %}
         </div>
     </div>
 </div>
 
-<div class='container post-body'>
+<hr>
+
+<div class='container'>
     {{ post.body|markdown_format }}
 </div>
 <hr>
@@ -108,28 +112,28 @@
                 <span class='float-left' id="commentStatBox{{ forloop.counter }}">
                     {% if user.is_authenticated %}
                         {% if request.user.siteuser in comment.likes.all %}
-                            <span class="btn btn-sm btn-primary star-icon-button like-comment-{{ forloop.counter}}-on-click" data-pk="{{ comment.pk }}" data-app-label="blog" data-model="comment" title="Unlike">
+                            <span class="btn btn-sm btn-success star-icon-button like-comment-{{ forloop.counter}}-on-click" data-pk="{{ comment.pk }}" data-app-label="blog" data-model="comment" title="Unlike">
                                 <i class="fas fa-thumbs-up text-primary"></i>
                             </span>
                         {% else %}
-                            <span class="btn btn-sm btn-primary star-icon-button like-comment-{{ forloop.counter}}-on-click" data-pk="{{ comment.pk }}" data-app-label="blog" data-model="comment" title="Like">
+                            <span class="btn btn-sm btn-success star-icon-button like-comment-{{ forloop.counter}}-on-click" data-pk="{{ comment.pk }}" data-app-label="blog" data-model="comment" title="Like">
                                 <i class="fas fa-thumbs-up text-secondary"></i>
                             </span>
                         {% endif %}
                     {% else %}
-                            <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'siteuser:login' %}?next={{ request.path }}">Login to like</a>
+                            <a class="btn btn-sm btn-success icon-buttons" href="{% url 'siteuser:login' %}?next={{ request.path }}">Login to like</a>
                     {% endif %}
                     {% include "blog/ajax_like_comment.html" %}
 
-                    <a class="btn btn-sm btn-primary icon-buttons" title="{{ comment.like_count }} likes" href="{% url 'siteuser:comment_likers' comment.pk %}">{{ comment.like_count }} <i class="fas fa-thumbs-up"></i></a>
+                    <a class="btn btn-sm btn-success icon-buttons" title="{{ comment.like_count }} likes" href="{% url 'siteuser:comment_likers' comment.pk %}">{{ comment.like_count }} <i class="fas fa-thumbs-up"></i></a>
                 </span>
     
                 <span class="float-right">
                     {% if request.user == comment.creator.user %}
-                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'blog:edit_comment' comment.pk %}" title="Edit"><i class="fas fa-edit"></i></a>
-                        <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'blog:comment_delete' comment.pk %}" title="Delete"><i class="fas fa-trash"></i></a>
+                        <a class="btn btn-sm btn-success icon-buttons" href="{% url 'blog:edit_comment' comment.pk %}" title="Edit"><i class="fas fa-edit"></i></a>
+                        <a class="btn btn-sm btn-success icon-buttons" href="{% url 'blog:comment_delete' comment.pk %}" title="Delete"><i class="fas fa-trash"></i></a>
                     {% endif %}
-                    <a class="btn btn-sm btn-primary icon-buttons" href="{% url 'blog:comment_reply' comment.pk post.pk %}" title="Reply"><i class="fas fa-reply"></i></a>
+                    <a class="btn btn-sm btn-success icon-buttons" href="{% url 'blog:comment_reply' comment.pk post.pk %}" title="Reply"><i class="fas fa-reply"></i></a>
                 </span>
             </div>
         {% empty %}

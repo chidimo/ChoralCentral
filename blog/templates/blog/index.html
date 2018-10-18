@@ -1,7 +1,6 @@
 {% extends "choralcentral_base.html" %}
 {% block title %}Blog{% endblock %}
 
-
 {% block content_content %}
 
 <h1>Blog posts</h1>
@@ -13,24 +12,24 @@
 </nav>
 
 {% for post in posts %}
-    <div class="list-blog-posts">
-        <h4><a href="{% url 'blog:detail' post.pk post.slug %}">{{ post }}</a></h4>
+    <h2>{{ forloop.counter }} - <a href="{% url 'blog:detail' post.pk post.slug %}">{{ post.title|title }}</a></h2>
 
-        {% if post.song %}
-            <h6> on <a href="{% url 'song:detail' post.song.pk post.song.slug %}">{{ post.song }}</a></h6>
-        {% endif %}
+    {% if post.song %}
+        <h4> on <a href="{% url 'song:detail' post.song.pk post.song.slug %}">{{ post.song }}</a></h4>
+    {% endif %}
 
-        <h6><em>
-            by <a href="{% url 'siteuser:library' post.creator.pk post.creator.slug %}">{{ post.creator.screen_name }}</a>
-            | {{ post.created }}
-            </em>
-        </h6>
+    <h4><em>
+        by <a href="{% url 'siteuser:library' post.creator.pk post.creator.slug %}">{{ post.creator.screen_name }}</a>
+        | {{ post.created }}
+        </em>
+    </h4>
 
-        <span class="float-right">
-            <a class="btn btn-sm btn-primary icon-buttons" title="{{ post.like_count }} likes" href="{% url 'siteuser:post_likers' post.pk %}">{{ post.like_count }} <i class="fas fa-thumbs-up"></i></a>
-            <span class="btn btn-sm btn-primary icon-buttons" title="{{ post.comment_set.count }} Comments">{{ post.comment_set.count }} <i class="fas fa-comments"></i></span>
-        </span>
-    </div>
+    <span class="float-right">
+        <a class="btn btn-sm btn-primary icon-buttons" title="{{ post.like_count }} likes" href="{% url 'siteuser:post_likers' post.pk %}">{{ post.like_count }} <i class="fas fa-thumbs-up"></i></a>
+        <span class="btn btn-sm btn-primary icon-buttons" title="{{ post.comment_set.count }} Comments">{{ post.comment_set.count }} <i class="fas fa-comments"></i></span>
+    </span>
+
+    <hr>
 {% empty %}
     <p style="margin-bottom:25rem">No post.</p>
 {% endfor %}

@@ -43,7 +43,7 @@ label {
 }
 hr {
     border: 0;
-    border-top: 1px solid midnightblue;
+    border-top: 1px solid #3498DB;
 }
 
 .instant-search {
@@ -98,18 +98,6 @@ a.upload-button {
     margin-top: 0.3rem;
 }
 
-.author-bio-heading, .author-heading, .author-songs-heading {
-    border: 1px solid #eee;
-    margin: 0.5rem 0;
-    border-radius: 0.15rem;
-}
-
-.list-blog-posts {
-    padding: 0.1rem 1rem 2.2rem;
-    margin: 0.75rem 0;
-    border-radius: 0.15rem;
-    border: 1px solid #eee;
-}
 .post-detail-heading {
     border: 1px solid #eee;
     margin: 0.5rem 0;
@@ -123,16 +111,12 @@ a.upload-button {
     margin: 0.5rem 0;
     border-radius: 0.15rem;
 }
-.post-body {
-    border: 1px solid #eee;
-    margin: 0.5rem 0;
-    border-radius: 0.15rem;
-}
+
 .list-comments {
     padding: 0.1rem 1rem 2.2rem;
     margin: 0.75rem 0;
     border-radius: 0.15rem;
-    border: 1px solid #eee;
+    border: 1px solid #3498DB;
     border-top: none;
 }
 .comment-form {
@@ -143,7 +127,8 @@ a.upload-button {
     margin-bottom: 0.5rem;
 }
 .commenter-stats {
-    border: 0.5px solid midnightblue;
+    border: 0.5px solid #3498DB;
+    background:#333;
     border-radius: 0.15rem;
     margin-top: -2px;
     margin-left: -16px;
@@ -207,27 +192,7 @@ a.upload-button {
     border-radius: 0.15rem;
     border: 1px solid #eee;
 }
-.song-detail-header {
-    border: 1px solid #eee;
-    margin: 0.5rem 0;
-    border-radius: 0.15rem;
-}
-.song-detail-header span.float-left {
-    font-size: 22px;
-    padding-top: 0.6rem;
-    padding-bottom: 0.5rem;
-    font-weight: bold;
-}
-.song-detail-header span.float-right {
-    padding-top: 0.6rem;
-    padding-bottom: 0.5rem;
-}
 
-.song-about {
-    border: 1px solid #eee;
-    margin: 0.5rem 0;
-    border-radius: 0.15rem;
-}
 .song-scores {
     border: 1px solid #eee;
     margin: 0.5rem 0;
@@ -484,7 +449,7 @@ input#id_password {
     font-size: 22px;
 }
 .password-reset-conditions {
-    border: 1px solid midnightblue;
+    border: 1px solid #3498DB;
     text-align: left;
     border-radius: 0.15rem;
 }
