@@ -31,7 +31,7 @@ sitemaps = {
 urlpatterns = [
     # path('home/', SongIndex.as_view()),
     path('', views.home),
-
+    path('login/', views.home),
     path("song/", include('song.urls')),
     path("admin/", admin.site.urls),
     path("author/", include('author.urls')),

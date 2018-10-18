@@ -69,7 +69,7 @@ class Migration(migrations.Migration):
                 ('first_name', models.CharField(blank=True, max_length=30, null=True)),
                 ('last_name', models.CharField(blank=True, max_length=30, null=True)),
                 ('location', models.CharField(blank=True, max_length=100, null=True)),
-                ('avatar', sorl.thumbnail.fields.ImageField(blank=True, null=True, upload_to=siteuser.utils.save_avatar)),
+                ('avatar', sorl.thumbnail.fields.ImageField(blank=True, null=True, upload_to=siteuser.utils.utils.save_avatar)),
                 ('quota', models.IntegerField(default=1000)),
                 ('used', models.IntegerField(default=0)),
                 ('key', models.CharField(blank=True, default=uuid.uuid4, max_length=50, null=True, unique=True)),

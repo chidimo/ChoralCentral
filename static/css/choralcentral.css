@@ -15,6 +15,15 @@ body {
     }
 }
 
+.home-page-left-content {
+    margin-top: 10rem;
+    margin-bottom: 5rem;
+}
+
+.home-page-right-content {
+    margin-top:15rem;
+}
+
 ul.righthand-navigation {
     padding: 0;
     margin-right: 8rem;
@@ -36,7 +45,6 @@ ul.righthand-navigation {
     padding-left: 0.3rem;
     float: left!important;
 }
-
 
 label {
     font-weight: bold;
@@ -371,21 +379,22 @@ span.download-count {
     position: relative;
 }
 input#id_username {
-    text-indent: 30px;
+    text-indent: 2rem;
     position: relative;
-    box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
+}
+input#id_email {
+    text-indent: 2rem;
+    position: relative;
 }
 input#id_password {
-    text-indent: 30px;
+    text-indent: 2rem;
     position: relative;
-    box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
 }
 .fa-user {
     position: absolute;
     top: 5px;
     left: 10px;
     font-size: 25px;
-    color: rebeccapurple;
     border-right: 1px solid #ccc;
     padding-right: 5px;
 }
@@ -394,7 +403,6 @@ input#id_password {
     top: 5px;
     left: 10px;
     font-size: 25px;
-    color: rebeccapurple;
     border-right: 1px solid #ccc;
     padding-right: 5px;
 }
@@ -416,18 +424,7 @@ input#id_password {
     height: 40px;
     padding: 3px;
 }
-.social-logins > a.google-login {
-    background: #dd4b39;
-}
-.social-logins > a.facebook-login {
-    background: #3b5998;
-}
-.social-logins > a.yahoo-login {
-    background: #7B0099;
-}
-.social-logins > a.twitter-login {
-    background: #00aced;
-}
+
 .login-form {
     max-width: 350px;
     margin: auto;
@@ -533,7 +530,6 @@ ul.errorlist {
 .form-control {
     border: 1px solid #aaa;
     border-radius: 0.15rem;
-    box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
 }
 
 .list-unstyled {
