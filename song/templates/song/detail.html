@@ -308,8 +308,12 @@
 
 <hr>
 
-<h2>Lyrics</h2>
-    {{ song.lyrics|markdown_format }}
+<div class="container">
+    <h2>Lyrics</h2>
+    <div class="row">
+        {{ song.lyrics|markdown_format }}
+    </div>
+</div>
 </div>
 {% endblock content_content %}
 
