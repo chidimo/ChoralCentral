@@ -76,33 +76,13 @@
 1. Write terms of use
 1. Custom authentication for all API views
 
-## Badges
-
-1. First song, first post, first request, first midi, first score, enthusiast, helping hand
-
-git+https://github.com/immensity/django-likes.git
-
-## Groups
-
-Add later
-
-## Optimize for search engine
-
-some
-
-## Libraries
-
-1. Whitenoise
-1. django-compressor. For windows, needs install Visual C++ build tools
-1. django-robots
-
 ## Optimizing my page
 
-1. Minified css files with <https://cssminifier.com>
-1. Minified js files with <https://javascript-minifier.com>
-1. Compressed my custom css and js files using django-compressor
-1. Moved some render-blocking javascripts to the bottom of the `<body>` tag of my base template, but jquery had to stay at top of page.
-1. Compress choralcentral.min.css
+1. Minified `.css` files with <https://cssminifier.com>
+1. Minified `.js` files with <https://javascript-minifier.com>
+1. Compressed my custom `.css` and `.js` files using `django-compressor`
+1. Moved some render-blocking javascripts to the bottom of the `<body>` tag of my base template, but `jquery` had to stay at top of page.
+1. Compress `choralcentral.min.css`
 
 ## Resources
 
@@ -112,12 +92,28 @@ some
 1. <http://www.robotstxt.org/db.html>
 1. <https://docs.djangoproject.com/en/2.0/ref/settings/#settings>
 
-## Renew site certificate
-<https://help.pythonanywhere.com/pages/LetsEncrypt/>
+## Site certificate
 
-`cd ~/letsencrypt`
+1. <https://help.pythonanywhere.com/pages/LetsEncrypt/>
+1. `export API_TOKEN=my-api-token`
+1. `pip3.5 install --user --upgrade pythonanywhere # do this in a new bash console`
 
-`~/dehydrated/dehydrated --cron --domain www.choralcentral.net --out . --challenge http-01`
+### Creation
+
+1. `cd ~/letsencrypt`
+1. `/home/parousia/dehydrated/dehydrated --register --accept-terms`
+1. `~/dehydrated/dehydrated --config ~/letsencrypt/config --cron --domain www.choralcentral.net --out ~/letsencrypt --challenge http-01`
+
+### Renewal
+
+1. `~/dehydrated/dehydrated --config ~/letsencrypt/config --cron --domain www.choralcentral.net --out ~/letsencrypt --challenge http-01`
+1. `cd ~/letsencrypt && ~/dehydrated/dehydrated --cron --domain www.choralcentral.net --out . --challenge http-01 && pa_install_webapp_letsencrypt_ssl.py www.choralcentral.net # set daily task to auto-renew certificate`
+
+### Installation
+
+1. `cd ~/letsencrypt`
+1. `~/dehydrated/dehydrated --cron --domain www.choralcentral.net --out . --challenge http-01`
+1. `pa_install_webapp_letsencrypt_ssl.py www.choralcentral.net # install certificate`
 
 ## Helps
 
