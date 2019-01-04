@@ -13,3 +13,4 @@ htmlcov
 .env
 staticfiles/
 .coverage
+log.txt
