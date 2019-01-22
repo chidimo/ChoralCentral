@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.contrib.auth.models import Group, Permission
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from .models import CustomUser, Role, SiteUser, Message, SiteUserPermission
+from .models import CustomUser, Role, SiteUser, Message, SiteUserPermission, ApiKey
 from .forms import UserChangeForm, UserCreationForm
 
 from django.contrib.sessions.models import Session
@@ -15,7 +15,7 @@ class SessionAdmin(admin.ModelAdmin):
     list_display = ('session_key', '_session_data', 'expire_date')
 
 class SiteUserAdmin(admin.ModelAdmin):
-    list_display = ("pk", "screen_name", "user", "first_name", "last_name", 'all_roles', "slug", "location", "key", "quota", "used", "remaining_quota")
+    list_display = ("pk", "screen_name", "user", "first_name", "last_name", 'all_roles', "slug", "location", "quota", "used", "remaining_quota")
     # list_editable = ('location', )
 
     def all_roles(self, obj):
@@ -56,6 +56,7 @@ admin.site.register(Role)
 admin.site.register(Permission)
 admin.site.register(Message, MessageAdmin)
 admin.site.register(SiteUserPermission, SiteUserPermissionAdmin)
+admin.site.register(ApiKey)
 
 admin.site.unregister(Group)
 admin.site.register(Session, SessionAdmin)

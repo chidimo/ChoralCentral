@@ -92,7 +92,7 @@ class SiteUser(TimeStampedModel):
 
     quota = models.IntegerField(default=1000)
     used = models.IntegerField(default=0)
-    key = models.CharField(max_length=50, default=uuid.uuid4, null=True, blank=True, unique=True)
+    # key = models.CharField(max_length=50, default=uuid.uuid4, null=True, blank=True, unique=True)
 
     class Meta:
         ordering = ('created', 'screen_name', )
@@ -148,42 +148,9 @@ class SiteUserPermission(TimeStampedModel):
     def permitted_siteusers(self):
         return ", ".join([siteuser.screen_name for siteuser in self.siteuser.all()])
 
-# class SiteUserGroup(TimeStampedModel):
-#     name = models.CharField(max_length=30, blank=True, null=True)
-#     about_group = models.TextField()
-#     group_social = models.URLField(blank=True, null=True)
-#     members = models.ManyToManyField(SiteUser, through='GroupMembership')
 
-#     def __str__(self):
-#         return self.name
+class ApiKey(TimeStampedModel):
+    key = models.CharField(max_length=50, default=uuid.uuid4, null=True, blank=True, unique=True)
 
-#     def get_absolute_url(self):
-#         return reverse('siteuser:group_detail', kwargs={'pk' : self.pk})
-
-# class GroupMembership(TimeStampedModel):
-#     creator = models.ForeignKey(SiteUser, blank=True, null=True, on_delete=models.SET_NULL)
-#     group = models.ForeignKey(SiteUserGroup, blank=True, null=True, on_delete=models.SET_NULL)
-#     is_group_admin = models.BooleanField(default=False)
-
-#     def __str__(self):
-#         return self.group.name + " membership"
-
-#     def get_absolute_url(self):
-#         return reverse('siteuser:group_detail', kwargs={'pk' : self.group.pk})
-
-# class GroupJoinRequest(TimeStampedModel):
-#     creator = models.ForeignKey(SiteUser, null=True, blank=True, on_delete=models.SET_NULL)
-#     group_of_interest = models.ForeignKey(SiteUserGroup, null=True, blank=True, on_delete=models.SET_NULL)
-
-# class Badge(TimeStampedModel):
-#     name = models.CharField(max_length=30)
-#     description = models.CharField(max_length=200)
-#     hierarchy = models.IntegerField()
-#     color = models.CharField(max_length=30)
-#     siteuser = models.ManyToManyField(SiteUser)
-
-#     class Meta:
-#         ordering = ('hierarchy', )
-
-#     def __str__(self):
-#         return self.name
+    def __str__(self):
+        return self.key
