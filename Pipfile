@@ -35,6 +35,7 @@ markdown = "==2.6.9"
 django-robots = {git = "https://github.com/jazzband/django-robots.git", editable = true}
 django-social-share = "*"
 pywebber = "*"
+django-debug-toolbar = "*"
 
 [dev-packages]
 "beautifulsoup4" = "==4.6.0"

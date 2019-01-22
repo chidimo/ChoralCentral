@@ -6,9 +6,9 @@ SKIP_TASK = config('SKIP_TASK', default=True, cast=bool) # custom variable to be
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'choral',
+        'NAME': 'choralcentral',
         'USER': 'postgres',
-        'PASSWORD': config('DB_PASSWORD'),
+        'PASSWORD': config('DEV_DB_PASSWORD'),
         'HOST': 'localhost',
         'PORT': 5432
     }

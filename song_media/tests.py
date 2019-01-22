@@ -35,7 +35,7 @@ from .forms import NewScoreForm
 
 #     def test_absolute_url(self):
 #         self.assertEqual(self.score.get_absolute_url(), reverse('song:detail', kwargs={'pk' : self.song.id, 'slug' : self.song.slug}))
-    
+
 # class NewScoreViewTests(TestCase):
 #     def setUp(self):
 #         # create a  user
@@ -82,7 +82,7 @@ from .forms import NewScoreForm
 #         score_data = {'notation' : self.notation, 'part' : self.part, 'media_file' : BytesIO(b'filepath')}
 #         resp = self.client.post(reverse('song-media:score_add_to_song', kwargs={'pk' : self.song.pk}), score_data)
 
-#         # assert view redirects        
+#         # assert view redirects
 #         self.assertEqual(resp.status_code, 302)
 #         # assert author count has increased
 #         self.assertEqual(Score.objects.count(), self.score_count+1)
@@ -111,7 +111,7 @@ class NewScoreFormTests(TestCase):
         part = mommy.make('song_media.VocalPart', name="Some name")
         notation = mommy.make('song_media.ScoreNotation', name="Some name")
         media_file = BytesIO(b'filepath')
-        data = {'notation' : notation, 'part' : part, 'media_file' : media_file}
+        data = {'notation' : notation.pk, 'part' : part.pk, 'media_file' : media_file}
 
         form = NewScoreForm(data=data)
         self.assertTrue(form.is_valid())
@@ -119,6 +119,6 @@ class NewScoreFormTests(TestCase):
         self.assertEqual(score.song.title, song.title)
         self.assertEqual(score.notation, notation)
         self.assertEqual(score.part, part)
- 
+
 if __name__ == "__main__":
     unittest.main()
