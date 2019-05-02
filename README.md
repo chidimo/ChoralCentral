@@ -1,27 +1,7 @@
 # ChoralCentral
 
-## Site certificate
-
-1. <https://help.pythonanywhere.com/pages/LetsEncrypt/>
-1. `export API_TOKEN=my-api-token`
-1. `pip3.5 install --user --upgrade pythonanywhere # do this in a new bash console`
-
-### Creation
-
-1. `cd ~/letsencrypt`
-1. `/home/parousia/dehydrated/dehydrated --register --accept-terms`
-1. `~/dehydrated/dehydrated --config ~/letsencrypt/config --cron --domain www.choralcentral.net --out ~/letsencrypt --challenge http-01`
-
-### Renewal
-
-1. `~/dehydrated/dehydrated --config ~/letsencrypt/config --cron --domain www.choralcentral.net --out ~/letsencrypt --challenge http-01`
-1. `cd ~/letsencrypt && ~/dehydrated/dehydrated --cron --domain www.choralcentral.net --out . --challenge http-01 && pa_install_webapp_letsencrypt_ssl.py www.choralcentral.net # set daily task to auto-renew certificate`
-
-### Installation
-
-1. `cd ~/letsencrypt`
-1. `~/dehydrated/dehydrated --cron --domain www.choralcentral.net --out . --challenge http-01`
-1. `pa_install_webapp_letsencrypt_ssl.py www.choralcentral.net # install certificate`
+[![Build Status](https://travis-ci.com/chidimo/ChoralCentral.svg?branch=master)](https://travis-ci.com/chidimo/ChoralCentral)
+[![Coverage Status](https://coveralls.io/repos/github/chidimo/ChoralCentral/badge.svg?branch=master)](https://coveralls.io/github/chidimo/ChoralCentral?branch=master)
 
 ## To do
 
