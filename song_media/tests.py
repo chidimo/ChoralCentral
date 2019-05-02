@@ -104,15 +104,12 @@ class NewScoreFormTests(TestCase):
         self.creator = mommy.make('siteuser.SiteUser', pk=1, user=self.user, screen_name='screen_name')
 
     def test_valid_data(self):
-        # file_path = os.path.join(settings.BASE_DIR, 'song_media', 'skills.pdf')
-        # data = {'notation' : self.notation, 'part' : self.part, 'media_file' : open(file_path, 'rb')}
-        song = mommy.make('song.Song', creator=self.creator, pk=1, title="Some title")
-        # song = Song.objects.create(creator=self.creator, title="Song title")
-        part = mommy.make('song_media.VocalPart', name="Some name")
-        notation = mommy.make('song_media.ScoreNotation', name="Some name")
-        media_file = BytesIO(b'filepath')
-        data = {'notation' : notation.pk, 'part' : part.pk, 'media_file' : media_file}
-
+        part = mommy.make('song_media.VocalPart', name="Part name")
+        notation = mommy.make('song_media.ScoreNotation', name="Notation name")
+        
+        # upload_file = open(Path(__file__).parent / 'skills.pdf', 'rb')
+        # media_file = SimpleUploadedFile(upload_file.name, upload_file.read())
+        
         form = NewScoreForm(data=data)
         self.assertTrue(form.is_valid())
         score = form.save()
