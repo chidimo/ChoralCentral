@@ -4,7 +4,6 @@ media/
 **__pycache__
 geckodriver.log
 choralcentral_dev.log
-choralcentral_stage.log
 htmlcov
 .env
 staticfiles/
