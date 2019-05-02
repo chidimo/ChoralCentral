@@ -24,7 +24,7 @@ class NewVocalPartForm(forms.ModelForm):
     def clean_name(self):
         name = self.cleaned_data.get("name", None)
         if VocalPart.objects.filter(name=name).exists():
-            raise forms.ValidationError(_("{} already exists".format(name)))
+            raise forms.ValidationError(_(f"{name} already exists"))
         return name.lower()
 
 class NewScoreNotationForm(forms.ModelForm):
@@ -40,7 +40,7 @@ class NewScoreNotationForm(forms.ModelForm):
     def clean_name(self):
         name = self.cleaned_data.get("name", None)
         if VocalPart.objects.filter(name=name).exists():
-            raise forms.ValidationError(_("{} already exists".format(name)))
+            raise forms.ValidationError(_(f"{name} already exists"))
         return name.lower()
 
 class NewScoreForm(forms.ModelForm):
@@ -60,12 +60,11 @@ class NewScoreForm(forms.ModelForm):
 
     def clean(self):
         data = super().clean()
-        print("cleaned data", data)
         media_file = data['media_file']
-        fsize = media_file.size/1048576
-        max_size = 5242880/1048576# limit size to 5MB
+        fsize = media_file.size/(1024 * 1024)
+        max_size = (1024 * 1024 * 5)/(1024 * 1024)# limit size to 5MB
         if fsize > max_size:
-            msg = "Attempting to upload {:.2f}MB file. Size must not exceed {:.2f}MB".format(fsize, max_size)
+            msg = f"Attempting to upload {fsize}MB file. Size must not exceed {max_size:.2f}MB"
             self.add_error("media_file", msg)
 
 class NewMidiForm(forms.ModelForm):
@@ -88,7 +87,7 @@ class NewMidiForm(forms.ModelForm):
         fsize = media_file.size/1048576
         max_size = 2097152/1048576 # limit size to 2MB
         if fsize > max_size:
-            msg = "File is {:.2f}MB. Maximum allowed file size is {:.2f}MB".format(fsize, max_size)
+            msg = f"File is {fsize}MB. Maximum allowed file size is {max_size}MB"
             self.add_error("media_file", msg)
 
 class NewVideoLinkForm(forms.ModelForm):

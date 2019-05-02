@@ -23,7 +23,8 @@ class AuthorModelTests(TestCase):
     def test_model_representation(self):
         self.assertIsInstance(self.author, Author)
         self.assertEqual(
-            self.author.__str__(), "{} {}".format(self.author.first_name, self.author.last_name))
+            self.author.__str__(), f'{self.author.first_name} {self.author.last_name}'.title()
+        )
 
     def test_absolute_url(self):
         abs_url = reverse('author:detail', kwargs={'pk' : self.author.pk, 'slug' : self.author.slug})
@@ -80,11 +81,11 @@ class AuthorDetailViewTests(TestCase):
         self.author.delete()
 
     def test_detail_view(self):
-        resp = self.client.get('/author/detail/{}/{}/'.format(self.author.pk, self.author.slug))
+        resp = self.client.get(f'/author/detail/{self.author.pk}/{self.author.slug}/')
 
         # test view redirects when user is not logged in
         self.assertEqual(resp.status_code, 302)
-        self.assertRedirects(resp, '/users/login/?next=/author/detail/{}/{}/'.format(self.author.pk, self.author.slug))
+        self.assertRedirects(resp, f'/users/login/?next=/author/detail/{self.author.pk}/{self.author.slug}/')
 
         login = self.client.login(username='test@user.app', password='testpassword')
         # test url reversal gives correct view
@@ -128,8 +129,6 @@ class NewAuthorViewTests(TestCase):
         author_data = {"author_type" : "lyricist", "first_name" : "first name", "last_name" : "last name", "bio" :"some random text"}
         resp = self.client.post(reverse('author:new'), author_data)
 
-        print("\ncheck the author pk: {}".format(resp['Location']))
-
         # assert view redirects
         self.assertEqual(resp.status_code, 302)
         # assert author count has increased
@@ -139,7 +138,7 @@ class NewAuthorViewTests(TestCase):
         # assert creator is logged in user
         self.assertEqual(author.creator, self.creator)
         # assert redirected to author detail url
-        self.assertEqual(resp['Location'], '/author/detail/{}/{}/'.format(author.pk, author.slug))
+        self.assertEqual(resp['Location'], f'/author/detail/{author.pk}/{author.slug}/')
 
     def test_duplicate_author_creation(self):
         login = self.client.login(username='test@user.app', password='testpassword')
@@ -156,7 +155,7 @@ class NewAuthorViewTests(TestCase):
         author = Author.objects.get(first_name='first name', last_name='last name', author_type="composer")
         self.assertEqual(author.creator, self.creator)
         self.assertEqual(resp.status_code, 302)
-        self.assertEqual(resp['Location'], '/author/detail/{}/{}/'.format(author.pk, author.slug))
+        self.assertEqual(resp['Location'], f'/author/detail/{author.pk}/{author.slug}/')
 
         form2 = NewAuthorForm(data=data)
         self.assertFalse(form2.is_valid())
