@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from ..models import Author
-from siteuser.api.serializers import SiteUserSerializer
+from .models import Author
+from siteuser.serializers import SiteUserSerializer
 
 class AuthorSerializer(serializers.ModelSerializer):
     url = serializers.CharField(source='get_absolute_url', read_only=True)

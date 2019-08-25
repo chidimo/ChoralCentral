@@ -35,19 +35,3 @@ class Post(TimeStampedModel):
         if self.pk:
             self.like_count = self.likes.count()
         return super().save(*args, **kwargs)
-
-class Comment(TimeStampedModel):
-    creator = models.ForeignKey(SiteUser, on_delete=models.SET_DEFAULT, default=1)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    likes = models.ManyToManyField(SiteUser, related_name='comment_likes')
-    like_count = models.IntegerField(default=0)
-    comment = models.TextField()
-
-    class Meta:
-        ordering = ('-like_count', 'created',)
-
-    def get_absolute_url(self):
-        return reverse('blog:detail', args=[str(self.post.id), str(self.post.slug)])
-
-    def __str__(self):
-        return self.comment

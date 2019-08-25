@@ -1,5 +1,5 @@
 """
-Django settings for choralcentral project. 2.0.5
+Django settings for choralcentral project. 2.2.2
 """
 
 import os
@@ -7,6 +7,7 @@ import pygments.formatters
 from django.urls import reverse_lazy
 from django.core.exceptions import ImproperlyConfigured
 from django.contrib.messages import constants as messages
+from corsheaders.defaults import default_headers
 
 import raven
 from decouple import config, Csv
@@ -92,6 +93,17 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 SESSION_COOKIE_AGE = 60 * 60 * 24
 # SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_METHODS = [
+    'GET',
+]
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'Access-Control-Allow-Origin',
+    'Access-Control-Allow-Methods',
+    'Access-Control-Allow-Headers',
+    'Access-Control-Max-Age',
+]
 # Application definition
 
 PREREQ_APPS = [
@@ -111,11 +123,10 @@ PROJECT_APPS = [
     'blog',
     'author',
     'song_media',
-    'redirect301',
-    'request',
 ]
 
 THIRD_PARTY_APPS = [
+    'corsheaders',
     'robots',
     'rest_framework',
     'sorl.thumbnail',
@@ -125,6 +136,7 @@ THIRD_PARTY_APPS = [
     'django_extensions',
     'algoliasearch_django',
     'django_social_share',
+    'drf_yasg',
     'rules.apps.AutodiscoverRulesConfig',
 ]
 
@@ -210,8 +222,7 @@ TIME_ZONE = 'Africa/Lagos'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
+USE_THOUSAND_SEPARATOR = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

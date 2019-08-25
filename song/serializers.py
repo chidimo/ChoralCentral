@@ -1,8 +1,8 @@
 from rest_framework import serializers
 
-from ..models import Voicing, Language, Season, MassPart, Song
-from author.api.serializers import AuthorSerializer
-from siteuser.api.serializers import SiteUserSerializer
+from .models import Voicing, Language, Season, MassPart, Song
+from author.serializers import AuthorSerializer
+from siteuser.serializers import SiteUserSerializer
 
 class VoicingSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,13 +17,12 @@ class LanguageSerializer(serializers.ModelSerializer):
 class SeasonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Season
-        fields = ('name', )
+        fields = ('name', 'about',)
 
 class MassPartSerializer(serializers.ModelSerializer):
-    part = serializers.CharField(source='__str__', read_only=True)
     class Meta:
         model = MassPart
-        fields = ('name', )
+        fields = ('name', 'about',)
 
 class SongSerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.CharField(source='get_absolute_url', read_only=True)

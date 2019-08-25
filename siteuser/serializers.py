@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ..models import CustomUser, SiteUser, Role
+from .models import CustomUser, SiteUser, Role
 
 class CustomUserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
