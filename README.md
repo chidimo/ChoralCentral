@@ -20,3 +20,9 @@
 
 1. **A clash of emails:** A valid email, `A`, exists as a `primary` account. A social account email, `B`, is now associated with `A`. Someone tries to create a new `primary` account using email `B` that is `secondary` to account `A`. I don't want that.
 1. **A clash of providers:** A valid email, `A`, exists as a `primary` account *created non-socially (which means no association was made), but is nonetheless a valid email from provider `X`*. A social account email, `B`, from provider `X` is now associated with `A`. A **non-logged-in** user *invokes* provider `X` with email `A` which already has email `B` secondary to it. Result: `A` is logged-in **AND** a social association is made using provider `X`. Now there are two emails from provider `X` associated with `A`. I don't want that.
+
+## Postgres
+
+1. pg_ctl -D /usr/local/var/postgres start
+1. psql postgres
+1. CREATE DATABASE name;
