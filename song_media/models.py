@@ -55,7 +55,7 @@ class Score(TimeStampedModel):
         return "{}-{}-{}".format(self.song.title, self.part, self.notation)
 
     def get_absolute_url(self):
-        return reverse('song:detail', kwargs={'pk' : self.song.id, 'slug' : self.song.slug})
+        return #reverse('song:detail', kwargs={'pk' : self.song.id, 'slug' : self.song.slug})
 
     def score_download_path(self):
         return "https://www.choralcentral.net" + self.media_file.url
@@ -89,7 +89,7 @@ class Midi(TimeStampedModel):
         return "{}-{}".format(self.song.title, self.part)
 
     def get_absolute_url(self):
-        return reverse('song:detail', kwargs={'pk' : (self.song.id), 'slug' : self.song.slug})
+        return #reverse('song:detail', kwargs={'pk' : (self.song.id), 'slug' : self.song.slug})
         
     def save(self, *args, **kwargs):
         if self.id:
@@ -115,4 +115,4 @@ class VideoLink(TimeStampedModel):
         return self.song.title
 
     def get_absolute_url(self):
-        return reverse('song:detail', args=[str(self.song.id), str(self.song.slug)])
+        return #reverse('song:detail', args=[str(self.song.id), str(self.song.slug)])

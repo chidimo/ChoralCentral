@@ -60,8 +60,6 @@ IPYTHON_KERNEL_DISPLAY_NAME = "Django Shell-Plus"
 SHELL_PLUS_POST_IMPORTS = [
     ('fixtures', '*'),
     ('fixtures'),
-    ('drb_fixtures', '*'),
-    ('drb_fixtures'),
 ]
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
@@ -86,7 +84,7 @@ REST_FRAMEWORK = {
     #     'blog.api.authentication.VerifyUserIsActive',
     #  ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE' : 100,
+    'PAGE_SIZE' : 50,
 }
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"

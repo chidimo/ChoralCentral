@@ -26,7 +26,7 @@ class Post(TimeStampedModel):
         ordering = ('-like_count', '-created', 'title')
 
     def get_absolute_url(self):
-        return reverse('blog:detail', args=[str(self.id), str(self.slug)])
+        return #everse('blog:detail', args=[str(self.id), str(self.slug)])
 
     def __str__(self):
         return self.title

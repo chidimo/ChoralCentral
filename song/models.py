@@ -23,7 +23,7 @@ class Voicing(TimeStampedModel):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('song:song_index')
+        return #reverse('song:song_index')
 
 class Language(TimeStampedModel):
     name = models.CharField(max_length=25, unique=True)
@@ -35,14 +35,14 @@ class Language(TimeStampedModel):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('song:song_index')
+        return #reverse('song:song_index')
 
 class Season(TimeStampedModel):
     name = models.CharField(max_length=15, unique=True)
     about = models.CharField(max_length=200, blank=True, null=True)
 
     def get_absolute_url(self):
-        return reverse('song:song_index')
+        return #reverse('song:song_index')
 
     def __str__(self):
         return self.name
@@ -52,7 +52,7 @@ class MassPart(TimeStampedModel):
     about = models.CharField(max_length=200, blank=True, null=True)
 
     def get_absolute_url(self):
-        return reverse('song:song_index')
+        return #reverse('song:song_index')
 
     def __str__(self):
         return self.name
@@ -94,7 +94,7 @@ class Song(TimeStampedModel):
         ordering = ("-like_count", "title", "-created", "publish", 'tempo_text')
 
     def get_absolute_url(self):
-        return reverse('song:detail', args=[str(self.id), str(self.slug)])
+        return #reverse('song:detail', args=[str(self.id), str(self.slug)])
 
     def get_absolute_uri(self):
         return "https://www.choralcentral.net" + reverse('song:detail', kwargs={'pk' : self.pk, 'slug' : self.slug})

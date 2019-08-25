@@ -78,7 +78,7 @@ class Role(TimeStampedModel):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('siteuser:role_index')
+        return #reverse('siteuser:role_index')
 
 class SiteUser(TimeStampedModel):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -106,7 +106,7 @@ class SiteUser(TimeStampedModel):
         return self.screen_name
 
     def get_absolute_url(self):
-        return reverse('siteuser:library', kwargs={'pk' : self.pk, 'slug' : self.slug})
+        return #reverse('siteuser:library', kwargs={'pk' : self.pk, 'slug' : self.slug})
 
     def get_absolute_uri(self):
         return "https://www.choralcentral.net" + reverse('siteuser:library', kwargs={'pk' : self.pk, 'slug' : self.slug})
@@ -131,7 +131,7 @@ class Message(TimeStampedModel):
         return "Message for {}".format(self.receiver.screen_name)
 
     def get_absolute_url(self):
-        return reverse('siteuser:library', kwargs={'pk' : self.creator.pk, 'slug' : self.creator.slug})
+        return #reverse('siteuser:library', kwargs={'pk' : self.creator.pk, 'slug' : self.creator.slug})
 
 class SiteUserPermission(TimeStampedModel):
     name = models.CharField(max_length=50)
@@ -147,7 +147,6 @@ class SiteUserPermission(TimeStampedModel):
     @property
     def permitted_siteusers(self):
         return ", ".join([siteuser.screen_name for siteuser in self.siteuser.all()])
-
 
 class ApiKey(TimeStampedModel):
     key = models.CharField(max_length=50, default=uuid.uuid4, null=True, blank=True, unique=True)

@@ -16,10 +16,13 @@ from pywebber import LoremPysum
 from author.models import Author
 from siteuser.models import SiteUser, Role
 from song.models import Voicing, Language, Season, MassPart, Song
-from song.forms import GENRES, OCASSIONS
 from song_media.models import VocalPart, ScoreNotation, Score, Midi, VideoLink
-from blog.models import Post, Comment
-from request.models import Request, Reply
+from blog.models import Post
+
+OCASSIONS = ["sacred", "liturgical", "secular", "na"]
+GENRES = [
+    "anthem", "carol", "chorus", "folk music", "gregorian chant", "hymn", "litany", "madrigral", 
+    "march", "mass", "motet", "popular music", "psalm", "requiem", "sequence", "na"]
 
 AVATAR_PATH = os.path.join(settings.BASE_DIR, 'fixtures/wallpaper/')
 IMAGES = [os.path.abspath(each) for each in glob.glob("{}/*.jpg".format(AVATAR_PATH))]
@@ -64,41 +67,6 @@ def voice_notation():
        VocalPart.objects.get_or_create(name=each)
     for each in NOTATIONS:
         ScoreNotation.objects.get_or_create(name=each)
-
-def default_user():
-    try:
-        su = CustomUser.objects.create_user(email='unknown@user.net', password='unknownuser')
-        su.is_active = False
-        su.save()
-    except IntegrityError:
-        su = CustomUser.objects.get(email='default@user.net')
-    try:
-        SiteUser.objects.create(user=su, screen_name="Unknown-User", first_name="Unknown", last_name="User")
-    except IntegrityError:
-        pass
-
-def my_account():
-    try:
-        su = CustomUser.objects.create_user(email='orjichidi95@gmail.com', password='dwarfstar')
-        su.is_active = True
-        su.save()
-    except IntegrityError:
-        su = CustomUser.objects.get(email='orjichidi95@gmail.com')
-    try:
-        SiteUser.objects.create(user=su, screen_name="parousia", first_name="Chidi", last_name="Orji", location="Abu Dhabi")
-    except IntegrityError:
-        pass
-
-def superuser():
-    try:
-        su = CustomUser.objects.create_user(email='admin@choralcentral.net', password='dwarfstar')
-        su.is_superuser = True
-        su.is_admin = True
-        su.is_active = True
-        su.save()
-    except IntegrityError:
-        su = CustomUser.objects.get(email='admin@choralcentral.net')
-        pass
 
 def members():
     roles = Role.objects.all()
@@ -214,31 +182,6 @@ def add_manyfields():
         if not song.authors:
             song.authors.add(randint(1, aut-1), randint(1, aut-1))
 
-def requests():
-    numb = int(input("Enter number of requests to create "))
-    users = SiteUser.objects.all()
-    lorem = LoremPysum()
-    for _ in range(numb):
-        _ = Request.objects.create(
-            creator=choice(users),
-            request=lorem.title(),
-            status=choice([True, False]))
-
-def replies():
-    songs = Song.objects.all()
-    users = SiteUser.objects.all()
-    requests = Request.objects.all()
-
-    for request in requests[:len(requests)//2]:
-        # if request.status == ""
-        try:
-            Reply.objects.get_or_create(
-                creator=choice(users),
-                request=request,
-                song=choice(songs))
-        except (IntegrityError, IndexError):
-            continue
-
 def authors():
     numb = int(input("Enter number of authors to create "))
     users = SiteUser.objects.all()
@@ -276,25 +219,11 @@ def posts():
                     body=body,
                     publish=choice([True, False]))
 
-def comments():
-    users = SiteUser.objects.all()
-    lorem = LoremPysum()
-
-    for post in Post.objects.all():
-        for _ in range(randint(5, 50)):
-            _ = Comment.objects.create(
-                creator=choice(users),
-                post=post,
-                comment=lorem.sentence())
-
 def production_setup():
     roles()
     seasons_massparts()
     voice_notation()
     voicing_language()
-    default_user()
-    superuser()
-    my_account()
 
 def independents():
     roles()
@@ -304,7 +233,6 @@ def independents():
 
 def run_all():
     independents()
-    superuser()
     members()
 
 if __name__ == "__main__":

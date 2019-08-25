@@ -25,7 +25,7 @@ class Author(TimeStampedModel):
         ordering = ("last_name", '-created')
 
     def get_absolute_url(self):
-        return reverse('author:detail', kwargs={'pk' : self.pk, 'slug' : self.slug })
+        return #reverse('author:detail', kwargs={'pk' : self.pk, 'slug' : self.slug })
 
     def get_absolute_uri(self):
         return "https://www.choralcentral.net" + reverse('author:detail', kwargs={'pk' : self.pk, 'slug' : self.slug})
