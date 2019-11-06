@@ -1,188 +1,226 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
-	<head>
-		{% load staticfiles %}
-		{% load static %}
-		{% load thumbnail %}
 
-		<meta charset="utf-8">
-		<meta content="text/html">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<meta property="og:image" content="https://www.choralcentral.net{% static 'img/cc_logo.png' %}"/>
-		<meta name="twitter:image" content="https://www.choralcentral.net{% static 'img/cc_logo.png' %}">
-		<meta property="fb:app_id" content="977674249054153"/>
-		<meta property="og:type" content="website"/>
+<head>
+	{% load staticfiles %}
+	{% load static %}
+	{% load thumbnail %}
 
-		{% block meta_tags %}
-    		<meta property="og:url" content="https://www.choralcentral.net"/>
-    		<meta property="og:title" content="How to share choral music"/>
-    		<meta property="og:description" content="Find the best choral music scores."/>
-    	{% endblock meta_tags %}
+	<meta charset="utf-8">
+	<meta content="text/html">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta property="og:image" content="https://www.choralcentral.net{% static 'img/cc_logo.png' %}" />
+	<meta name="twitter:image" content="https://www.choralcentral.net{% static 'img/cc_logo.png' %}">
+	<meta property="fb:app_id" content="977674249054153" />
+	<meta property="og:type" content="website" />
 
-		<title>
-			{% if unread %}
-				({{ unread }})
-			{% endif %}
-			ChoralCentral | {% block title %}How to share choral music{% endblock title %}
-		</title>
+	{% block meta_tags %}
+	<meta property="og:url" content="https://www.choralcentral.net" />
+	<meta property="og:title" content="How to share choral music" />
+	<meta property="og:description" content="Find the best choral music scores." />
+	{% endblock meta_tags %}
 
-		<!--
+	<title>
+		{% if unread %}
+		({{ unread }})
+		{% endif %}
+		ChoralCentral | {% block title %}How to share choral music{% endblock title %}
+	</title>
+
+	<!--
 			<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 		-->
-		
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/darkly/bootstrap.min.css">
-		
-		<link href="https://fonts.googleapis.com/css?family=Inconsolata:700" rel="stylesheet">
 
-		<!-- <script type='text/javascript' src='//www.midijs.net/lib/midi.js'></script> -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/darkly/bootstrap.min.css">
 
-		<link rel="shortcut icon" type="image/png" href="{% static 'favicons/favicon.ico' %}"/>
-		<link rel="stylesheet" href="{% static 'css/choralcentral.min.css' %}">
+	<link href="https://fonts.googleapis.com/css?family=Inconsolata:700" rel="stylesheet">
 
-		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<!-- <script type='text/javascript' src='//www.midijs.net/lib/midi.js'></script> -->
 
-		<script type='text/javascript' src='//www.midijs.net/lib/midi.js' defer></script>
-	</head>
+	<link rel="shortcut icon" type="image/png" href="{% static 'favicons/favicon.ico' %}" />
+	<link rel="stylesheet" href="{% static 'css/choralcentral.min.css' %}">
 
-	{% block body %}
-	<body>
-		{% block navigation %}
-		<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-			<a class="navbar-brand" href="/song">
-				ChoralCentral{% if unread %}<sup class="notification" title="{{ unread }} unread messages">{{ unread }}</sup>{% endif %}
-			</a>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
-			<button type="button" class="navbar-toggler my-toggler" data-toggle="collapse" data-target=".navcontent">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="navbar-toggler-icon"></span>
-			</button>
+	<script type='text/javascript' src='//www.midijs.net/lib/midi.js' defer></script>
+</head>
 
-			<div class="collapse navbar-collapse navcontent">
-				<ul class="nav navbar-nav lefthand-navigation">
-					<li class="nav-item"><a class="nav-link" href="/song" title="Home">Home</a></li>
-					<li class="nav-item"><a class="nav-link" href="{% url 'author:index' %}" title="Lyricists and composers">Authors</a></li>
-					<li class="nav-item"><a class="nav-link" href="{% url 'request:index' %}" title="Song requests">Requests</a></li>
-					<li class="nav-item"><a class="nav-link" href="{% url 'blog:index' %}" title="Blog entries">Blog</a></li>
-					<li class="nav-item"><a class="nav-link" href="{% url 'siteuser:index' %}" title="Users">Users</a></li>
-					<li class="nav-item"><a class="nav-link" href="{% url 'song:instant_search_song' %}" title="Search ChoralCentral"><i class="fas fa-search"></i></a></li>
-				</ul>
+{% block body %}
 
-				<ul class="navbar-nav ml-auto righthand-navigation">
-					{% if user.is_authenticated %}
+<body>
+	{% block navigation %}
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+		<a class="navbar-brand" href="/song">
+			ChoralCentral{% if unread %}<sup class="notification"
+				title="{{ unread }} unread messages">{{ unread }}</sup>{% endif %}
+		</a>
 
-						<li class="nav-item">
-							<a class="nav-link" href="{% url 'siteuser:account_management' %}">
-								{% thumbnail user.siteuser.avatar "35x35" crop="center" as im %}
-									<div class="profile-image"><img class="card" src="{{ user.siteuser.avatar.url }}"></div>
-								{% empty %}
-    								<div class="profile-image"><img class="card" src="{% static 'img/cc_logo.png' %}"></div>
-								{% endthumbnail %}
-								<div class="profile-name">{{ user.siteuser.screen_name }}</div>
-							 </a>
-						</li>
+		<button type="button" class="navbar-toggler my-toggler" data-toggle="collapse" data-target=".navcontent">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="navbar-toggler-icon"></span>
+		</button>
 
-						<li class="nav-item dropdown">
-						    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-plus"></i></a>
-							<div class="dropdown-menu">
-							    <a class="dropdown-item" href="{% url 'song:new' %}">Song</a>
-							    <a class="dropdown-item" href="{% url 'blog:new' %}">Blog post</a>
-							    <a class="dropdown-item" href="{% url 'request:new' %}">Request</a>
-							</div>
-						</li>
+		<div class="collapse navbar-collapse navcontent">
+			<ul class="nav navbar-nav lefthand-navigation">
+				<li class="nav-item"><a class="nav-link" href="/song" title="Home">Home</a></li>
+				<li class="nav-item"><a class="nav-link" href="{% url 'author:index' %}"
+						title="Lyricists and composers">Authors</a></li>
+				<li class="nav-item"><a class="nav-link" href="{% url 'request:index' %}"
+						title="Song requests">Requests</a></li>
+				<li class="nav-item"><a class="nav-link" href="{% url 'blog:index' %}" title="Blog entries">Blog</a>
+				</li>
+				<li class="nav-item"><a class="nav-link" href="{% url 'siteuser:index' %}" title="Users">Users</a></li>
+				<li class="nav-item"><a class="nav-link" href="{% url 'song:instant_search_song' %}"
+						title="Search ChoralCentral"><i class="fas fa-search"></i></a></li>
+			</ul>
 
-						<li class="nav-item dropdown">
-						    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i></a>
-						    <div class="dropdown-menu">
-						        <a class="dropdown-item" href="{% url 'siteuser:account_management' %}">My account</a>
-						        <a class="dropdown-item" href="{% url 'siteuser:edit_profile' %}">Edit profile</a>
-							    <a class="dropdown-item" href="{% url 'siteuser:password_change' %}">Change password</a>
-							    <a class="dropdown-item" href="{% url 'siteuser:password_reset' %}">Reset password</a>
-							    <div class="dropdown-divider"></div>
-						        <a class="dropdown-item" href="{% url 'siteuser:library' user.siteuser.pk user.siteuser.slug %}">Library</a>
-						        <div class="dropdown-divider"></div>
-							    {% if user.siteuser.key %}
-							        <a class="dropdown-item" href="{% url 'siteuser:reset_api_key' %}">Reset API key</a>
-							    {% else %}
-							        <a class="dropdown-item" href="{% url 'siteuser:new_api_key' %}">Get API key</a>
-							    {% endif %}
-							    <div class="dropdown-divider"></div>
-							    <a class="dropdown-item" href="{% url 'siteuser:logout' %}">Logout</a>
-							</div>
-						</li>
-					{% else %}
-						<li class="nav-item login-logout"><a class="btn btn-info btn-sm upload-button" href="{% url 'siteuser:login' %}">Log In</a></li>
-						<li class="nav-item login-logout"><a class="btn btn-primary btn-sm upload-button" href="{% url 'siteuser:new' %}">Sign Up</a></li>
-					    <li class="nav-item login-logout" id=uploadButtonNav><a href="{% url 'song:new' %}" class="btn btn-primary btn-sm upload-button">UPLOAD</a></li>
-					{% endif %}
+			<ul class="navbar-nav ml-auto righthand-navigation">
+				{% if user.is_authenticated %}
 
-				</ul>
+				<li class="nav-item">
+					<a class="nav-link" href="{% url 'siteuser:account_management' %}">
+						{% thumbnail user.siteuser.avatar "35x35" crop="center" as im %}
+						<div class="profile-image"><img class="card" src="{{ user.siteuser.avatar.url }}"></div>
+						{% empty %}
+						<div class="profile-image"><img class="card" src="{% static 'img/cc_logo.png' %}"></div>
+						{% endthumbnail %}
+						<div class="profile-name">{{ user.siteuser.screen_name }}</div>
+					</a>
+				</li>
+
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+						aria-haspopup="true" aria-expanded="false"><i class="fas fa-plus"></i></a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="{% url 'song:new' %}">Song</a>
+						<a class="dropdown-item" href="{% url 'blog:new' %}">Blog post</a>
+						<a class="dropdown-item" href="{% url 'request:new' %}">Request</a>
+					</div>
+				</li>
+
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+						aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle"></i></a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="{% url 'siteuser:account_management' %}">My account</a>
+						<a class="dropdown-item" href="{% url 'siteuser:edit_profile' %}">Edit profile</a>
+						<a class="dropdown-item" href="{% url 'siteuser:password_change' %}">Change password</a>
+						<a class="dropdown-item" href="{% url 'siteuser:password_reset' %}">Reset password</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item"
+							href="{% url 'siteuser:library' user.siteuser.pk user.siteuser.slug %}">Library</a>
+						<div class="dropdown-divider"></div>
+						{% if user.siteuser.key %}
+						<a class="dropdown-item" href="{% url 'siteuser:reset_api_key' %}">Reset API key</a>
+						{% else %}
+						<a class="dropdown-item" href="{% url 'siteuser:new_api_key' %}">Get API key</a>
+						{% endif %}
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="{% url 'siteuser:logout' %}">Logout</a>
+					</div>
+				</li>
+				{% else %}
+				<li class="nav-item login-logout"><a class="btn btn-info btn-sm upload-button"
+						href="{% url 'siteuser:login' %}">Log In</a></li>
+				<li class="nav-item login-logout"><a class="btn btn-primary btn-sm upload-button"
+						href="{% url 'siteuser:new' %}">Sign Up</a></li>
+				<li class="nav-item login-logout" id=uploadButtonNav><a href="{% url 'song:new' %}"
+						class="btn btn-primary btn-sm upload-button">UPLOAD</a></li>
+				{% endif %}
+
+			</ul>
+		</div>
+	</nav>
+	{% endblock navigation %}
+
+	<div style="border-radius: 5px;margin-top: 5px;" class="container text-left bg-light">
+		<p>
+			Hello friend,<br />
+			apologies if this site hasn't work as you expected.
+			I built it at a time when I was just beginning to learn the Django technology.
+			It is a project dear to my heart and I'll keep working on it.
+			To that end, I plan to do a complete overhaul, which is why I haven't done any maintenance for some time.
+			If you have feature or design suggestions kindly help me fill out this short <a
+				href="https://docs.google.com/forms/d/e/1FAIpQLSeVNCr4Y9FS9xqWDPRzwSi3SNrbScDeQJC8b-fSQPVr95Bnpw/viewform?usp=pp_url">form</a>.
+			It has only two fields.<br />
+			<code>For developers</code>:
+			I plan to use <code>Express</code> (with <code>MongoDB</code>) for the backend and <code>React</code> (with
+			<code>Material UI</code>) for the frontend.
+			UI/UX designers are also welcome to contribute.<br />
+			Tentative start date is sometime in February next year<br />
+			If you would like to reach out, my email is <a href="#">orjichidi95@gmail.com</a>
+			</p>
+	</div>
+
+	<div class="container-fluid">
+		{% include 'messages.html' %}
+		<div class="row">
+			<div class="col-sm-3 leftsidebar">
+				{% block left_sidebar %}
+				{% endblock left_sidebar %}
 			</div>
-		</nav>
-		{% endblock navigation %}
-		
-		<div class="container-fluid">
-		    {% include 'messages.html' %}
-			<div class="row">
-				<div class="col-sm-3 leftsidebar">
-					{% block left_sidebar %}
-					{% endblock left_sidebar %}
-				</div>
 
-				<div class="col-sm-6 centerspread" role='main' style="margin-top:2rem;">
-					{% block content_content %}
-					    content-block
-					{% endblock content_content %}
+			<div class="col-sm-6 centerspread" role='main' style="margin-top:2rem;">
+				{% block content_content %}
+				content-block
+				{% endblock content_content %}
 
-					{% if is_paginated %}
-						{% include "pure_pagination.html" %}
-					{% endif %}
-				</div>
+				{% if is_paginated %}
+				{% include "pure_pagination.html" %}
+				{% endif %}
+			</div>
 
-				<div class="col-sm-3 rightsidebar">
-					{% block right_sidebar %}
-					{% endblock right_sidebar %}
-				</div>
+			<div class="col-sm-3 rightsidebar">
+				{% block right_sidebar %}
+				{% endblock right_sidebar %}
 			</div>
 		</div>
+	</div>
 
-		{% include "footer.html" %}
+	{% include "footer.html" %}
 
-		{% endblock body %}
+	{% endblock body %}
 
-		<!-- Sentry JS SDK 2.1.+ required -->
-		<script src="https://cdn.ravenjs.com/2.3.0/raven.min.js"></script>
-		{% if request.sentry.id %}
-			<script>
-			Raven.showReportDialog({
-				eventId: '{{ request.sentry.id }}',
+	<!-- Sentry JS SDK 2.1.+ required -->
+	<script src="https://cdn.ravenjs.com/2.3.0/raven.min.js"></script>
+	{% if request.sentry.id %}
+	<script>
+		Raven.showReportDialog({
+			eventId: '{{ request.sentry.id }}',
 
-				// use the public DSN (dont include your secret!)
-				dsn: 'https://b6ecc578313140618b41d13175ed6152@sentry.io/1222272'
-			});
-			</script>
-		{% endif %}
+			// use the public DSN (dont include your secret!)
+			dsn: 'https://b6ecc578313140618b41d13175ed6152@sentry.io/1222272'
+		});
+	</script>
+	{% endif %}
 
-		<!--These javascript files are render-blocking and are not needed to render initial page, so I moved them here-->
+	<!--These javascript files are render-blocking and are not needed to render initial page, so I moved them here-->
 
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous" async></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+		integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"
+		async></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+		integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"
+		async></script>
 
-		<script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
-		<script src="//cdn.jsdelivr.net/g/algoliasearch,algoliasearch.helper"></script>
-		<script src="//cdn.jsdelivr.net/hogan.js/3.0.2/hogan.min.js" async></script>
-		<script defer src='https://www.google.com/recaptcha/api.js' async></script>
-		<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js" async></script>
-		
-		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.5"></script>
+	<script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+	<script src="//cdn.jsdelivr.net/g/algoliasearch,algoliasearch.helper"></script>
+	<script src="//cdn.jsdelivr.net/hogan.js/3.0.2/hogan.min.js" async></script>
+	<script defer src='https://www.google.com/recaptcha/api.js' async></script>
+	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js" async></script>
 
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.5"></script>
 
-		<!--Django add another, for view popup. These two below lines must follow one another in the same order.-->
-		<script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
-		{{ form.media }}
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
 
-		{% block page_js %}{% endblock page_js %}
+	<!--Django add another, for view popup. These two below lines must follow one another in the same order.-->
+	<script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+	{{ form.media }}
 
-	</body>
+	{% block page_js %}{% endblock page_js %}
+
+</body>
+
 </html>
