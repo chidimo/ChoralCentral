@@ -84,7 +84,7 @@ REST_FRAMEWORK = {
     #     'blog.api.authentication.VerifyUserIsActive',
     #  ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE' : 50,
+    'PAGE_SIZE' : 10,
 }
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
